@@ -81,6 +81,16 @@
 	    <servlet-name>default</servlet-name>
 	    <url-pattern>/fonts/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>/assets/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>/umeditor/*</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
