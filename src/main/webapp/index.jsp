@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/css/amazeui.min.css">
 <link rel="stylesheet" href="assets/css/app.css">
 <!-- umeditor css -->
-<link href="umeditor/themes/default/css/umeditor.css" rel="stylesheet">
+<link href="ueditor/themes/default/css/ueditor.css" rel="stylesheet">
 <style>
 .title {
   text-align: center;
@@ -31,7 +31,7 @@
   <div class="title">
     <div class="am-g am-g-fixed">
       <div class="am-u-sm-12">
-        <h1 class="am-text-primary">ShiYanLou Chat</h1>
+        <h1 class="am-text-primary">纯爷们与地下城</h1>
       </div>
     </div>
   </div>
@@ -77,14 +77,14 @@
   <!--[if lte IE 8 ]>
   <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
   <![endif]-->
-  <!-- umeditor js -->
-  <script charset="utf-8" src="umeditor/umeditor.config.js"></script>
-  <script charset="utf-8" src="umeditor/umeditor.min.js"></script>
-  <script src="umeditor/lang/zh-cn/zh-cn.js"></script>
+  <!-- ueditor js -->
+  <script charset="utf-8" src="ueditor/ueditor.config.js"></script>
+  <script charset="utf-8" src="ueditor/ueditor.all.min.js"></script>
+  <script src="ueditor/lang/zh-cn/zh-cn.js"></script>
   <script>
     $(function() {
       // 初始化消息输入框
-      var um = UM.getEditor('myEditor');
+      var ue = UE.getEditor('myEditor');
       // 使昵称框获取焦点
       $('#nickname')[0].focus();
     });
