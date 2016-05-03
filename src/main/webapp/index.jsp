@@ -81,13 +81,6 @@
   <script charset="utf-8" src="ueditor/ueditor.config.js"></script>
   <script charset="utf-8" src="ueditor/ueditor.all.min.js"></script>
   <script src="ueditor/lang/zh-cn/zh-cn.js"></script>
-  <script>
-    $(function() {
-      // 初始化消息输入框
-      var ue = UE.getEditor('myEditor');
-      // 使昵称框获取焦点
-      $('#nickname')[0].focus();
-    });
-  </script>
+  <script src="js/index.js"></script>
 </body>
 </html>

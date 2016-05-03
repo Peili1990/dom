@@ -9,9 +9,9 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+import org.springframework.web.socket.server.HandshakeInterceptor;
 
-public class ChatHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
+public class ChatHandshakeInterceptor implements HandshakeInterceptor {
 	
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
@@ -22,17 +22,15 @@ public class ChatHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
             if (session != null) {
                 //使用userName区分WebSocketHandler，以便定向发送消息
                 Long userId = (Long) session.getAttribute(Constants.WEBSOCKET_USERID);
-                attributes.put(Constants.WEBSOCKET_USERID,userId);
-                
+                attributes.put(Constants.WEBSOCKET_USERID,userId);           
             }
         }
-        return super.beforeHandshake(request, response, wsHandler, attributes);
+        return true;
 	}
 
 	@Override
 	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception ex) {
 		System.out.println("After Handshake");
-		super.afterHandshake(request, response, wsHandler, ex);
 	}
 
 }

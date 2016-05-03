@@ -41,6 +41,8 @@ public class ChatMessageHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session,
 			TextMessage message) throws Exception {
+		System.out.println("message received:"+message);
+		sendMessageToUsers(message);
 		super.handleTextMessage(session, message);
 				
 	}
@@ -84,13 +86,13 @@ public class ChatMessageHandler extends TextWebSocketHandler {
         if(session.isOpen()){
             session.close();
         }
-        logger.debug("websocket connection closed......");
+        System.out.println("websocket connection closed......");
         users.remove(session);
     }
     
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        logger.debug("websocket connection closed......");
+        System.out.println("websocket connection closed......");
         users.remove(session);
     }
     
