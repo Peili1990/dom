@@ -1,10 +1,13 @@
 package org.nv.dom.websocket.handler;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.nv.dom.websocket.config.Constants;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,6 +18,7 @@ public class ChatMessageHandler extends TextWebSocketHandler {
 	
 	private static final Map<Long, WebSocketSession> users;
 	private static Logger logger = Logger.getLogger(ChatMessageHandler.class);
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");	
 	static {
 		users = new HashMap<Long, WebSocketSession>();
 	}
@@ -42,7 +46,8 @@ public class ChatMessageHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session,
 			TextMessage message) throws Exception {
 		System.out.println("message received:"+message);
-		sendMessageToUsers(message);
+		sendMessageToUsers(MessageProcessor.addAttr(message, "date", 
+				sdf.format(new Date())));
 		super.handleTextMessage(session, message);
 				
 	}
