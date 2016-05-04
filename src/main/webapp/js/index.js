@@ -21,7 +21,7 @@ $('#send')
 								"$('.edui-container').removeClass('am-animation-shake')",
 								1000);
 					} else if (nickname == '') { // 判断昵称框是否为空
-						//昵称框获取焦点
+						// 昵称框获取焦点
 						$('#nickname')[0].focus();
 						// 添加抖动效果
 						$('#message-input-nickname').addClass(
