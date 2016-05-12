@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.account.AccountMapper">
+
+	<select id="getUserByAccountDao" parameterType="LoginDTO" resultType="User">
+	
+		SELECT
+			t.id,
+			t.account,
+			t.password,
+			t.nickname,
+			t.avatar
+		FROM
+			d_user t
+		WHERE
+			t.account=#{account} AND t.password=#{password};	
+	
+	</select>
+	
+	<select id="getCountByAccountDao" parameterType="String" resultType="Integer">
+	
+		SELECT 
+			count(1)
+		FROM
+			d_user t
+		WHERE
+			t.account=#{account};
+	
+	</select>
+	
+	<insert id="insertUserDao" parameterType="RegisterDTO">
+	
+		INSERT INTO d_user (
+			 account,
+			 password,
+			 nickname,
+			 createTime
+		)
+		VALUES (
+			#{account},
+			#{password},
+			#{nickname},
+			NOW()	
+		)
+
+	</insert>
+	
+
+</mapper>

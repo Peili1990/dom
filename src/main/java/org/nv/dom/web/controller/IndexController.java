@@ -17,7 +17,7 @@ public class IndexController extends BaseController {
 	public ModelAndView indexView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
 		if(session.getAttribute(PageParamType.user_in_session)==null){
-			mav.setViewName("login/login");
+			mav.setViewName("account/login");
 			return mav;
 		}
 		mav.addAllObjects(basicService.getSessionUserService(session));

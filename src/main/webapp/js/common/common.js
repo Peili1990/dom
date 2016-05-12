@@ -556,13 +556,18 @@ function setNavAjax(obj,cur_page,total_page,data,url,callback){
 }
 
 function myAlert(text){
-	$(".am-modal-hd").html(text);
+	$("#my-modal-loading .am-modal-hd").html(text);
 	$('#my-modal-loading').modal('open');
 	setTimeout(function(){
 		$('#my-modal-loading').modal('close');
 	},1000);
 }
 
+function myInfo(text,callback){
+	$("#my-alert .am-modal-bd").html(text);
+	$('#my-alert').modal('open');
+	$('#my-alert .am-modal-btn').on('click',callback);	
+}
 
 
 
