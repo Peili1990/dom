@@ -8,7 +8,7 @@
 	</div>
 
 	<h1 class="am-header-title">
-		<a href="#title-link" class="">三国版杀</a>
+		<a href="#title-link" class="">纯爷们地下城</a>
 	</h1>
 
 	<div class="am-header-right am-header-nav">
