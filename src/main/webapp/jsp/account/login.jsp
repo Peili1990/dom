@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="utf-8">
 <link rel="stylesheet" href="css/account/account.css">
 <jsp:include page="../layout/common.jsp"></jsp:include>
 <title>纯爷们地下城登录</title>
