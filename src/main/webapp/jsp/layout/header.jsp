@@ -8,7 +8,7 @@
 	</div>
 
 	<h1 class="am-header-title">
-		<a href="#title-link" class="">纯爷们地下城</a>
+		<a href="#title-link" class="">维多利亚的噩梦</a>
 	</h1>
 
 	<div class="am-header-right am-header-nav">

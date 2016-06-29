@@ -205,7 +205,7 @@ code,pre {
 	margin-top:2em
 }
 ol,ul {
-	padding-left:2em
+	padding-left:0
 }
 ol>li>ol,ol>li>ul,ul>li>ol,ul>li>ul {
 	margin:1em 0
@@ -9269,8 +9269,8 @@ select {
 }
 .am-header .am-header-title {
 	margin:0 30%;
-	font-size:2rem;
-	font-weight:400;
+	font-size:1.6rem;
+	font-weight:300;
 	text-align:center;
 	display:block;
 	word-wrap:normal;
