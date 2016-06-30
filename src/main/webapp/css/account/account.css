@@ -1,10 +1,2 @@
 @CHARSET "UTF-8";
 
-.wrapper .am-input-group{
-	margin-bottom:10px;
-}
-
-.wrapper input[type=button]{
-	width:50%;
-	margin-right:-5px;
-}

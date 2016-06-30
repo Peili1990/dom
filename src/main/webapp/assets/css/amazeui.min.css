@@ -187,7 +187,7 @@ address,blockquote,dl,fieldset,figure,hr,ol,p,pre,ul {
 	margin-top:1.6rem
 }
 h1,h2,h3,h4,h5,h6 {
-	margin:0 0 1.6rem;
+	margin:0;
 	font-weight:600;
 	font-size:100%
 }
@@ -11690,3 +11690,4 @@ select {
 	margin-top:1rem;
 	margin-bottom:1rem
 }
+

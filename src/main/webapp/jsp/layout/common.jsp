@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" href="assets/css/amazeui.min.css">
-<link rel="stylesheet" href="assets/css/amaze.min.css">
 <script src="js/common/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/common/common.js" type="text/javascript"></script>
 <script src="js/common/frame.min.js" type="text/javascript"></script>
