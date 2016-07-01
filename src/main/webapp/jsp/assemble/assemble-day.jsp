@@ -20,12 +20,13 @@
 			6版维多利亚：效果显著，犯罪继续<br/>
 			7版文化：如何避免做无用功<br/>
 		</div>
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
 		<div class="card-body">
 			<h2 class="card-title">重要公告</h2>
 			哈代死亡。<br/><br/>
 			哈代遗言：
 		</div>
-		
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
 		<div class="card-body">
 			<table>
 				<tbody>
