@@ -14,7 +14,7 @@
     <ul id="pages" class="view-container" style="transform: translate3d(-200%, 0px, 0px); transition: 300ms;">
       <!-- pageA container -->
       <li id="pageA" class="page-container"> 
-      	<jsp:include page="index/welcome.jsp"></jsp:include> 
+      	<jsp:include page="pages/welcome.jsp"></jsp:include> 
       </li>
     </ul>
    

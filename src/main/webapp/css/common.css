@@ -54,6 +54,10 @@ input[type=button]{
 	margin-right:-5px;
 }
 
+table{
+	width:100%
+}
+
 .view-container {
 	position: relative;
 	width: 100%;

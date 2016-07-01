@@ -4,13 +4,13 @@
       id="">
       <ul class="am-navbar-nav am-cf am-avg-sm-4">
           <li >
-            <a href="tel:123456789" class="">
+            <a href="${ baseUrl }index" class="">
                   <span class="am-icon-table"></span>
                 <span class="am-navbar-label">主页</span>
             </a>
           </li>
-          <li data-am-navbar-share>
-            <a href="###" class="">
+          <li >
+            <a href="${ baseUrl }assemble" class="">
                   <span class="am-icon-bell"></span>
                 <span class="am-navbar-label">集会</span>
             </a>
