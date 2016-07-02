@@ -2884,7 +2884,8 @@ a.am-badge:focus,a.am-badge:hover {
 	position:relative;
 	margin-left:42px;
 	border:1px solid #dedede;
-	border-radius:0
+	border-radius:0;
+	background-color:white
 }
 .am-btn-group-stacked>.am-btn-group:not(:first-child):not(:last-child)>.am-btn,.am-btn-group-stacked>.am-btn:not(:first-child):not(:last-child),.am-btn-group>.am-btn-group:not(:first-child):not(:last-child)>.am-btn,.am-btn-group>.am-btn:not(:first-child):not(:last-child):not(.am-dropdown-toggle) {
 	border-radius:0
@@ -2906,14 +2907,14 @@ a.am-badge:focus,a.am-badge:hover {
 .am-comment-hd,.am-pureview-slider li {
 	display:-webkit-box;
 	display:-webkit-flex;
-	display:-ms-flexbox
+	display:-ms-flexbox;
 }
 .am-comment-main:before {
 	border-right-color:#dedede;
 	z-index:1
 }
 .am-comment-main:after {
-	border-right-color:#f8f8f8;
+	border-right-color:white;
 	margin-left:1px;
 	z-index:2
 }
@@ -2932,19 +2933,29 @@ a.am-badge:focus,a.am-badge:hover {
 	line-height:1.2
 }
 .am-comment-actions,.am-comment-meta {
-	font-size:13px;
-	color:#999
+	font-size:16px;
+	color:#999;
 }
+
+.am-comment .am-comment-meta{
+	text-align:left;
+}
+
+.am-comment-flip .am-comment-meta{
+	text-align:left;
+}
+
 .am-comment-meta {
 	-webkit-box-flex:1;
 	-webkit-flex:1;
 	-ms-flex:1;
 	flex:1;
 	padding:10px 15px;
-	line-height:1.2;
+	line-height:1.8;
 	white-space:nowrap;
 	text-overflow:ellipsis;
-	overflow:hidden
+	overflow:hidden;
+	background-color:white;
 }
 .am-comment-meta a {
 	color:#999
@@ -2955,7 +2966,7 @@ a.am-badge:focus,a.am-badge:hover {
 }
 .am-comment-bd {
 	padding:15px;
-	overflow:hidden
+	overflow:hidden;
 }
 .am-comment-bd>:last-child {
 	margin-bottom:0
@@ -3003,7 +3014,7 @@ a.am-badge:focus,a.am-badge:hover {
 	border-left-color:#dedede
 }
 .am-comment-flip .am-comment-main:after {
-	border-left-color:#f8f8f8;
+	border-left-color:white;
 	margin-right:1px;
 	margin-left:auto
 }
@@ -3073,19 +3084,22 @@ a.am-badge:focus,a.am-badge:hover {
 	border-left-color:#f8f8f8
 }
 .am-comments-list {
+	margin:.625rem .9375rem;
 	padding:0;
 	list-style:none
 }
-.am-comments-list .am-comment {
+.am-comments-list .am-comment,
+.am-comments-list .am-comment-flip{
 	margin:1.6rem 0 0;
-	list-style:none
+	list-style:none;	
 }
+
 @media only screen and (min-width:641px) {
 	.am-comments-list-flip .am-comment-main {
 	margin-right:64px
 }
 .am-comments-list-flip .am-comment-flip .am-comment-main {
-	margin-left:64px
+	margin-left:64px;
 }
 }.am-btn-group,.am-btn-group-stacked {
 	position:relative;
