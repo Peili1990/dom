@@ -2935,14 +2935,7 @@ a.am-badge:focus,a.am-badge:hover {
 .am-comment-actions,.am-comment-meta {
 	font-size:16px;
 	color:#999;
-}
-
-.am-comment .am-comment-meta{
-	text-align:left;
-}
-
-.am-comment-flip .am-comment-meta{
-	text-align:left;
+	text-align:left
 }
 
 .am-comment-meta {
