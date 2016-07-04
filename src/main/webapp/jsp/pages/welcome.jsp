@@ -39,8 +39,8 @@
 		<div class="group-body">
 			<input type="button" class="am-btn am-btn-success" value="提交特权" onclick="submitPrivilege()">
 			<input type="button" class="am-btn am-btn-secondary" value="提交行动" onclick="submitAction()">
-			<input type="button" class="am-btn am-btn-default" value="提交投票">
-			<input type="button" class="am-btn am-btn-danger" value="提交发言">		
+			<input type="button" class="am-btn am-btn-default" value="提交投票" onclick="submitVote()">
+			<input type="button" class="am-btn am-btn-danger" value="提交发言" onclick="submitSpeech()">		
 			<input type="button" class="am-btn am-btn-warning" value="我要托管">
 			<input type="button" class="am-btn am-btn-primary" value="查看特权">
 		</div>

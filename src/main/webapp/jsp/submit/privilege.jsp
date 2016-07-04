@@ -40,7 +40,7 @@
 				<option value="9">San Francisco</option>
 			</select>
 		</div>
-		<input type="button" class="am-btn am-btn-secondary"
+		<input type="button" class="am-btn am-btn-secondary sumbit-btn"
 			style="width: 100%" value="提交">
 	</div>
 </div>

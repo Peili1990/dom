@@ -24,18 +24,6 @@
    <jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 
-
-
 	<script type="text/javascript" src="${baseUrl}js/assemble/assemble.js"></script>
-
-	<script type="text/javascript">
-		$(".am-header-title").find("a").text("新芝加哥日报");
-		
 	
-		
-		
-	</script>
-
-
-
 </html>
