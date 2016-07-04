@@ -568,8 +568,3 @@ function myInfo(text,callback){
 	$('#my-alert').modal('open');
 	$('#my-alert .am-modal-btn').on('click',callback);	
 }
-
-
-
-	
-    

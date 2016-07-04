@@ -105,7 +105,7 @@
 	
 	<servlet-mapping>
 	    <servlet-name>default</servlet-name>
-	    <url-pattern>/ueditor/*</url-pattern>
+	    <url-pattern>/mobiscroll/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

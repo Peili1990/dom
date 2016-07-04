@@ -9,7 +9,6 @@ html {
 	height: 100%;
 }
 body {
-	overflow:hidden;
 	min-width: 320px;
 	margin: 0;padding: 0;
 	font-family: Verdana;
@@ -52,6 +51,15 @@ footer {
 input[type=button]{
 	width:50%;
 	margin-right:-5px;
+}
+
+input[type=text]{
+	width:100%;
+	vertical-align: middle;
+	height: 38px;
+	display: table-cell;
+	padding: .5em;
+	border-radius: 0;
 }
 
 table{
@@ -146,7 +154,6 @@ table{
 .group-body {
     display: block;
     padding: .9375rem;
-    background: #fff;
 }
 
 .group-body .am-btn{

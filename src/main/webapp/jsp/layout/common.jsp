@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" href="assets/css/amazeui.min.css">
+<link href="mobiscroll/css/mobiscroll.custom-2.6.2.min.css" rel="stylesheet" type="text/css">
 <script src="js/common/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/common/common.js" type="text/javascript"></script>
 <script src="js/common/frame.min.js" type="text/javascript"></script>
 <script src="assets/js/amazeui.min.js" type="text/javascript"></script>
+<script src="mobiscroll/js/mobiscroll.custom-2.6.2.min.js" type="text/javascript"></script>
 
 <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
   <div class="am-modal-dialog">
@@ -28,3 +30,5 @@
     </div>
   </div>
 </div>
+
+<div class="dw-hidden" role="alert"></div>
