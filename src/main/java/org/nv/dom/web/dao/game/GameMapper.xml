@@ -5,10 +5,10 @@
 	<select id="getUserCurGameDao" parameterType="long" resultType="UserCurGame">
 	
 		SELECT 
-			du.id,
-			du.nickname,
-			dg.id,
-			dg.desc
+			du.id AS userId,
+			du.nickname AS userNickName,
+			dg.id AS gameId,
+			dg.desc AS gameDesc
 		FROM 
 			d_user du LEFT JOIN (d_game dg JOIN d_player dp ON dp.game_id = dg.id AND dg.status != 4)
 		ON

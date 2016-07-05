@@ -6,17 +6,17 @@
 			<h2 class="card-title">你好，${ userCurGame.userNickName }！</h2>
 		</div>
 			<c:choose>
-				<c:when test="${ userCurGame.gameId != null }">
+				<c:when test="${ userCurGame.gameId != 0 }">
 					<div class="card-body">
 					目前你正在参加${ userCurGame.gameDesc }
+					<span style="float:right">去看看 》</span>
 					</div>
-					<div class="card-footer">去看看 》</div>
 				</c:when>
 				<c:otherwise>
 					<div class="card-body">
 					目前你没有参加任何版杀
+					<span style="float:right" onclick="pageSwitch('#pageA','#pageF')">去报名 》</span>
 					</div>
-					<div class="card-footer">去报名 》</div>
 				</c:otherwise>
 			</c:choose>
 	</div>
@@ -50,10 +50,10 @@
 	<div class="group">
 		<header class="group-header">请选择操作</header>
 		<div class="group-body">
-			<input type="button" class="am-btn am-btn-success" value="提交特权" onclick="submitPrivilege()">
-			<input type="button" class="am-btn am-btn-secondary" value="提交行动" onclick="submitAction()">
-			<input type="button" class="am-btn am-btn-default" value="提交投票" onclick="submitVote()">
-			<input type="button" class="am-btn am-btn-danger" value="提交发言" onclick="submitSpeech()">		
+			<input type="button" class="am-btn am-btn-success" value="提交特权" onclick="pageSwitch('#pageA','#pageB')">
+			<input type="button" class="am-btn am-btn-secondary" value="提交行动" onclick="pageSwitch('#pageA','#pageC')">
+			<input type="button" class="am-btn am-btn-default" value="提交投票" onclick="pageSwitch('#pageA','#pageD')">
+			<input type="button" class="am-btn am-btn-danger" value="提交发言" onclick="pageSwitch('#pageA','#pageE')">		
 			<input type="button" class="am-btn am-btn-warning" value="我要托管">
 			<input type="button" class="am-btn am-btn-primary" value="查看特权">
 		</div>

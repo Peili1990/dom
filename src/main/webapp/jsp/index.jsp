@@ -28,6 +28,9 @@
       <li id="pageE" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="submit/speech.jsp" ></jsp:include> 
       </li>
+      <li id="pageF" class="page-container" style="left:100%;display:none"> 
+      	<jsp:include page="pages/apply.jsp" ></jsp:include> 
+      </li>
     </ul>
    
   </section>

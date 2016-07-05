@@ -15,7 +15,8 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public UserCurGame getUserCurGame(User user) {
-		return gameMapper.getUserCurGameDao(user.getId());
+		UserCurGame ucg = gameMapper.getUserCurGameDao(user.getId());
+		return ucg;
 	}
 
 }
