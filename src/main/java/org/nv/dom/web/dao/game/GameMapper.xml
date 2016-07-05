@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.game.GameMapper">
+
+	<select id="getUserCurGameDao" parameterType="long" resultType="UserCurGame">
+	
+		SELECT 
+			du.id,
+			du.nickname,
+			dg.id,
+			dg.desc
+		FROM 
+			d_user du LEFT JOIN (d_game dg JOIN d_player dp ON dp.game_id = dg.id AND dg.status != 4)
+		ON
+			du.id = dp.user_id
+		WHERE
+			du.id = #{userId};
+			
+	
+	</select>
+
+</mapper>

@@ -3,9 +3,22 @@
 <div class="default">
 	<div class="card">
 		<div class="card-header">
-			<h2 class="card-title">你好，小风！</h2>
+			<h2 class="card-title">你好，${ userCurGame.userNickName }！</h2>
 		</div>
-		<div class="card-body">目前你正在参加15NV</div>
+			<c:choose>
+				<c:when test="${ userCurGame.gameId != null }">
+					<div class="card-body">
+					目前你正在参加${ userCurGame.gameDesc }
+					</div>
+					<div class="card-footer">去看看 》</div>
+				</c:when>
+				<c:otherwise>
+					<div class="card-body">
+					目前你没有参加任何版杀
+					</div>
+					<div class="card-footer">去报名 》</div>
+				</c:otherwise>
+			</c:choose>
 	</div>
 	
 	<div class="card">
