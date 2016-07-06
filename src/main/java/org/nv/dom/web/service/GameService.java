@@ -1,12 +1,15 @@
 package org.nv.dom.web.service;
 
 
-import org.nv.dom.domain.user.User;
-import org.nv.dom.domain.user.UserCurGame;
+import java.util.Map;
+
+import org.nv.dom.dto.game.ApplyDTO;
 
 public interface GameService {
 	
-	public UserCurGame getUserCurGame(User user);
+	public Map<String, Object> getApplyingGames();
+	
+	public Map<String, Object> applyForGame(ApplyDTO applyDTO);
 
 
 }

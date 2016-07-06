@@ -2,21 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.nv.dom.web.dao.game.GameMapper">
 
-	<select id="getUserCurGameDao" parameterType="long" resultType="UserCurGame">
+	<resultMap type="ApplyingGame" id="applyingGame">
+		<id property="id" column="id"/>
+		<result property="gameDesc" column="desc"/>
+		<result property="playerNum" column="player_num"/>
+		<result property="playCurNum" column="COUNT(dp.role)"/>
+		<result property="startDate" column="estimated_start_date"/>
+		<collection property="Judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
+	</resultMap>
+
+	<select id="getApplyingGamesDao" resultMap="applyingGame">
+	
+		SELECT
+			dg.id,
+			dg.desc,
+			dg.player_num,
+			COUNT(dp.role),
+			dg.estimated_start_date
+		FROM
+			d_game dg LEFT JOIN d_player dp
+		ON
+			dg.status = 1 AND dp.role='player' AND dp.game_id=dg.id
+		GROUP BY
+			dg.id
+				
+	</select>
+	
+	<select id="queryGameJudgerDao" parameterType="long" resultType="String">
 	
 		SELECT 
-			du.id AS userId,
-			du.nickname AS userNickName,
-			dg.id AS gameId,
-			dg.desc AS gameDesc
-		FROM 
-			d_user du LEFT JOIN (d_game dg JOIN d_player dp ON dp.game_id = dg.id AND dg.status != 4)
-		ON
-			du.id = dp.user_id
+			du.nickname
+		FROM
+			d_user du, d_player dp
 		WHERE
-			du.id = #{userId};
-			
+			dp.role = "judger" AND dp.user_id = du.id
 	
 	</select>
+	
+	<select id="queryHasAttendGameDao" parameterType="ApplyDTO" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player
+		WHERE
+			user_id = #{userId}
+	
+	</select>
+	
+	<insert id="applyForGameDao" parameterType="ApplyDTO">
+	
+		INSERT INTO d_player (
+			user_id,
+			role,
+			game_id			
+		) 
+		VALUES (
+			#{userId},
+			"player",
+			#{gameId}
+		)
+	
+	</insert>
 
 </mapper>

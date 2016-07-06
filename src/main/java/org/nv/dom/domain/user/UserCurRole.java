@@ -1,12 +1,14 @@
 package org.nv.dom.domain.user;
 
-public class UserCurGame {
+public class UserCurRole {
 	
 	
 	/** 用户Id */
 	private long userId;
 	/** 用户昵称 */
 	private String userNickName;
+	/** 用户当前角色 */
+	private String userCurRole;
 	/** 游戏Id */
 	private long gameId;
 	/** 游戏名称 */
@@ -22,6 +24,12 @@ public class UserCurGame {
 	}
 	public void setUserNickName(String userNickName) {
 		this.userNickName = userNickName;
+	}
+	public String getUserCurRole() {
+		return userCurRole;
+	}
+	public void setUserCurRole(String userCurRole) {
+		this.userCurRole = userCurRole;
 	}
 	public long getGameId() {
 		return gameId;

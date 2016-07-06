@@ -3,19 +3,26 @@
 <div class="default">
 	<div class="card">
 		<div class="card-header">
-			<h2 class="card-title">你好，${ userCurGame.userNickName }！</h2>
+			<h2 class="card-title">你好，${ userInfo.userNickName }！</h2>
+			<input id="user-id" type="hidden" value="${ userInfo.userId }">
 		</div>
 			<c:choose>
-				<c:when test="${ userCurGame.gameId != 0 }">
+				<c:when test="${ userInfo.userCurRole eq 'judger' }">
 					<div class="card-body">
-					目前你正在参加${ userCurGame.gameDesc }
+					目前你正在主持${ userInfo.gameDesc }
+					<span style="float:right">去看看 》</span>
+					</div>
+				</c:when>
+				<c:when test="${ userInfo.userCurRole eq 'player' }">
+					<div class="card-body">
+					目前你正在参加${ userInfo.gameDesc }
 					<span style="float:right">去看看 》</span>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="card-body">
 					目前你没有参加任何版杀
-					<span style="float:right" onclick="pageSwitch('#pageA','#pageF')">去报名 》</span>
+					<span style="float:right" onclick="pageSwitch('#pageA','#pageF','getApplyingGames()')">去报名 》</span>
 					</div>
 				</c:otherwise>
 			</c:choose>

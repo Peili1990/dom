@@ -572,13 +572,14 @@ $(window).load(function(){
 	FastClick.attach(document.body);
 })
 
-function pageSwitch(pageA,pageB){
+function pageSwitch(pageA,pageB,callback){
 	window.scroll(0,0);
+	setGoback(pageB,pageA);
+	eval(callback);
 	$('#pages').css({'-webkit-transform' : 'translate3d(-100%, 0px, 0px)' , '-webkit-transition' : '300ms'});
 	$(pageA).css({'display' : 'none'});
 	$(pageB).css({'display' : 'block'});
     $("#container").css({"height":$(pageB+' .default').height()+120>$("html").height()?$(pageB+' .default').height()+120+"px":$("html").height() });
-    setGoback(pageB,pageA);
 }
 
 function setGoback(pageA,pageB){
@@ -590,3 +591,5 @@ function setGoback(pageA,pageB){
 		$(".am-header-left").find("i").removeClass("am-icon-chevron-left").addClass("am-icon-home");
 	})
 }
+
+
