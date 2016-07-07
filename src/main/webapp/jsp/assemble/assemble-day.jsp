@@ -98,7 +98,7 @@
 		</div>
 		</li>
 		<li class="am-comment-flip">
-			<a href=""><img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar"></a>
+			<a href=""><img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50" class="am-comment-avatar"></a>
 		<div class="am-comment-main">
 			<header class="am-comment-hd">
 				<div class="am-comment-meta">

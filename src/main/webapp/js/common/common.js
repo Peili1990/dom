@@ -583,12 +583,15 @@ function pageSwitch(pageA,pageB,callback){
 }
 
 function setGoback(pageA,pageB){
-	$(".am-header-left").find("i").removeClass("am-icon-home").addClass("am-icon-chevron-left").click(function(){
+	$("#icon-home").css({"display":"none"});
+	$("#icon-arrow").css({"display":"block"}).click(function(){
 		$('#pages').css({'-webkit-transform' : 'translate3d(0px, 0px, 0px)' , '-webkit-transition' : '300ms'});
 		$(pageA).css({'display' : 'none'});
 		$(pageB).css({'display' : 'block'});
 		$("#container").css({"height":$(pageB+' .default').height()+90+"px"});
-		$(".am-header-left").find("i").removeClass("am-icon-chevron-left").addClass("am-icon-home");
+		$("#icon-arrow").css({"display":"none"});
+		$("#icon-home").css({"display":"block"});
+		
 	})
 }
 

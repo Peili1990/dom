@@ -8,7 +8,15 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<section id="container">
+	<ul id="pages" class="view-container">
+      <!-- pageA container -->
+      <li id="pageA" class="page-container" style="display:block"> 
+		 <jsp:include page="mine-index.jsp"></jsp:include>
+      </li>
+      
+    </ul>   
+	</section>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
-
 </body>
 </html>

@@ -2,8 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <header data-am-widget="header" class="am-header am-header-default">
 	<div class="am-header-left am-header-nav">
-		<a href="${baseUrl}" class="">
+		<a href="${ baseUrl }" id="icon-home">
 			<i class="am-header-icon am-icon-home"></i>
+		</a>
+		<a href="#left-link" id="icon-arrow" style="display:none">
+		<i class="am-header-icon am-icon-chevron-left"></i>
 		</a>
 	</div>
 
