@@ -4,7 +4,7 @@
 <head>
 <link rel="stylesheet" href="css/account/account.css">
 <jsp:include page="../layout/common.jsp"></jsp:include>
-<title>纯爷们地下城注册</title>
+<title>维多利亚的噩梦注册</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>

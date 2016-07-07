@@ -28,7 +28,7 @@
             </a>
           </li>
           <li >
-            <a href="http://amazeui.org/getting-started" class="">
+            <a href="${ baseUrl }mine" class="">
                   <span class="am-icon-dashboard"></span>
                 <span class="am-navbar-label">我的</span>
             </a>
