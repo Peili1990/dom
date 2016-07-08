@@ -1,2 +1,6 @@
 @CHARSET "UTF-8";
 
+body {
+	background:url("../../img/login-bg.png") 0px 0px no-repeat;
+	background-size: 100%
+}

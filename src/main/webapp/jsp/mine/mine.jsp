@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<link rel="stylesheet" href="css/mine/mine.css">
 <jsp:include page="../layout/common.jsp"></jsp:include>
+<link rel="stylesheet" href="css/mine/mine.css">
 <title>用户中心</title>
 </head>
 <body>

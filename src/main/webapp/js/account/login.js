@@ -36,3 +36,6 @@ function submitForm(){
 function register(){
 	window.location = getRootPath() + "/register";
 }
+
+$("#loginForm").css({"padding-top":$("body").height()*0.6+"px"});
+

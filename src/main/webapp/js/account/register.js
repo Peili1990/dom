@@ -40,3 +40,6 @@ function register(){
 		}
 	});
 }
+
+$("#registerForm").css({"padding-top":$("body").height()*0.6+"px"});
+

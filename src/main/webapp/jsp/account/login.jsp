@@ -7,7 +7,6 @@
 <title>维多利亚的噩梦登录</title>
 </head>
 <body>
-	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<form action="${ baseUrl }account/loginAction" class="wrapper" method="post" id="loginForm">
 		<div class="am-input-group">
 			<span class="am-input-group-label"><i
