@@ -23,8 +23,8 @@
           </li>
           <li >
             <a href="https://github.com/allmobilize/amazeui" class="">
-                  <span class="am-icon-book"></span>
-                <span class="am-navbar-label">笔记</span>
+                  <span class="am-icon-comment"></span>
+                <span class="am-navbar-label">反馈</span>
             </a>
           </li>
           <li >

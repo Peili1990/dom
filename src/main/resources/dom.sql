@@ -13,6 +13,8 @@ File Encoding         : 65001
 Date: 2016-07-06 18:32:09
 */
 
+use dom;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------

@@ -1,7 +1,36 @@
 @CHARSET "UTF-8";
 
+h3{
+	padding:0.5em 1em;
+	margin-top:1em;
+}
+
 .am-comment-avatar {
 	width:15%;
 	height:15%;
-	margin-left:5%;
+	margin-right:5%;
+}
+
+.am-icon-chevron-right{
+	color: hsla(0,0%,53%,.45);
+	position:absolute;
+	top:50%;
+	right:1em;
+	margin-top:-8px;
+}
+
+.mine-box{
+	position:relative;
+	padding:1em;
+	background-color:white;
+}
+
+.mine-box p{
+	margin-top:0px;
+	color:#aaaaaa;
+	overflow: hidden;
+	-webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: clip;
+    display: -webkit-box;
 }

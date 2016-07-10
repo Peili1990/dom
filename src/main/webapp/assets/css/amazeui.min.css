@@ -179,7 +179,7 @@ ins,mark {
 abbr[title],dfn[title] {
 	cursor:help
 }
-address,blockquote,dl,fieldset,figure,hr,ol,p,pre,ul {
+address,blockquote,dl,fieldset,figure,hr,ol,pre,ul {
 	margin:0 0 1.6rem
 }
 *+address,*+blockquote,*+dl,*+fieldset,*+figure,*+hr,*+ol,*+p,*+pre,*+ul {
