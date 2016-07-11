@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : dom
+Source Server         : localhost
 Source Server Version : 50624
 Source Host           : localhost:3306
 Source Database       : dom
@@ -10,10 +10,8 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-07-06 18:32:09
+Date: 2016-07-11 18:29:21
 */
-
-use dom;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -29,13 +27,14 @@ CREATE TABLE `d_game` (
   `estimated_start_date` date DEFAULT NULL,
   `actual_start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_game
 -- ----------------------------
-INSERT INTO `d_game` VALUES ('1', '16NV', '22', '1', '2016-07-14', null, null);
+INSERT INTO `d_game` VALUES ('1', '16NV', '22', '1', '2016-07-14', null, null, null);
 
 -- ----------------------------
 -- Table structure for `d_player`
@@ -46,16 +45,18 @@ CREATE TABLE `d_player` (
   `user_id` bigint(11) DEFAULT NULL,
   `role` varchar(32) DEFAULT NULL,
   `game_id` bigint(11) DEFAULT NULL,
+  `apply_time` datetime NOT NULL,
   `character_id` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_player
 -- ----------------------------
-INSERT INTO `d_player` VALUES ('1', '2', 'judger', '1', null);
-INSERT INTO `d_player` VALUES ('2', '3', 'judger', '1', null);
-INSERT INTO `d_player` VALUES ('7', '1', 'player', '1', null);
+INSERT INTO `d_player` VALUES ('1', '2', 'judger', '1', '0000-00-00 00:00:00', null);
+INSERT INTO `d_player` VALUES ('2', '3', 'judger', '1', '0000-00-00 00:00:00', null);
+INSERT INTO `d_player` VALUES ('4', '1', 'player', '1', '2016-07-11 13:58:15', null);
+INSERT INTO `d_player` VALUES ('5', '4', 'player', '1', '2016-07-11 14:38:24', null);
 
 -- ----------------------------
 -- Table structure for `d_user`
@@ -69,7 +70,7 @@ CREATE TABLE `d_user` (
   `createTime` datetime DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_user
@@ -78,3 +79,4 @@ INSERT INTO `d_user` VALUES ('1', 'jack3173', 'yesterday', '小风', null, null)
 INSERT INTO `d_user` VALUES ('2', 'jack3174', 'yesterday', '大风', '2016-07-05 13:47:10', null);
 INSERT INTO `d_user` VALUES ('3', 'jack3175', 'yesterday', '微风', '2016-07-06 13:12:35', null);
 INSERT INTO `d_user` VALUES ('4', 'jack3176', 'yesterday', '飓风', '2016-07-06 15:54:53', null);
+INSERT INTO `d_user` VALUES ('5', 'jack3178', 'yesterday', '轻风', '2016-07-11 14:50:47', null);

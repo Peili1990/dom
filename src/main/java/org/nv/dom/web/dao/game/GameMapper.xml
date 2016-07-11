@@ -35,7 +35,7 @@
 		FROM
 			d_user du, d_player dp
 		WHERE
-			dp.role = "judger" AND dp.user_id = du.id
+			dp.role = "judger" AND dp.user_id = du.id AND dp.game_id = #{gameId}
 	
 	</select>
 	
@@ -55,12 +55,14 @@
 		INSERT INTO d_player (
 			user_id,
 			role,
-			game_id			
+			game_id,
+			apply_time		
 		) 
 		VALUES (
 			#{userId},
 			"player",
-			#{gameId}
+			#{gameId},
+			NOW()
 		)
 	
 	</insert>

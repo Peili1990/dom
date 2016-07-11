@@ -18,7 +18,4 @@ public class ApplyDTO {
 	public void setGameId(long gameId) {
 		this.gameId = gameId;
 	}
-	
-	
-
 }
