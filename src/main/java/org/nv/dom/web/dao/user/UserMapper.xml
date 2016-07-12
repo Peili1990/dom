@@ -9,7 +9,7 @@
 			du.nickname AS userNickName,
 			dp.role AS userCurRole,
 			dg.id AS gameId,
-			dg.desc AS gameDesc
+			dg.description AS gameDesc
 		FROM 
 			d_user du LEFT JOIN (d_game dg JOIN d_player dp ON dp.game_id = dg.id AND dg.status != 4)
 		ON

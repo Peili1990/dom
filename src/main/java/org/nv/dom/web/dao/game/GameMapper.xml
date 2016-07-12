@@ -4,7 +4,7 @@
 
 	<resultMap type="ApplyingGame" id="applyingGame">
 		<id property="id" column="id"/>
-		<result property="gameDesc" column="desc"/>
+		<result property="gameDesc" column="description"/>
 		<result property="playerNum" column="player_num"/>
 		<result property="playCurNum" column="COUNT(dp.role)"/>
 		<result property="startDate" column="estimated_start_date"/>
@@ -15,7 +15,7 @@
 	
 		SELECT
 			dg.id,
-			dg.desc,
+			dg.description,
 			dg.player_num,
 			COUNT(dp.role),
 			dg.estimated_start_date
