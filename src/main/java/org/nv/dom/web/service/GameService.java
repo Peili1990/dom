@@ -10,6 +10,8 @@ public interface GameService {
 	public Map<String, Object> getApplyingGames();
 	
 	public Map<String, Object> applyForGame(ApplyDTO applyDTO);
+	
+	public Map<String, Object> getCurStatus(long userId);
 
 
 }

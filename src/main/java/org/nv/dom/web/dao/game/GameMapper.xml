@@ -8,6 +8,7 @@
 		<result property="playerNum" column="player_num"/>
 		<result property="playCurNum" column="COUNT(dp.role)"/>
 		<result property="startDate" column="estimated_start_date"/>
+		<result property="identitySelect" column="identity_select"/>
 		<collection property="Judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
 	</resultMap>
 
@@ -18,7 +19,8 @@
 			dg.description,
 			dg.player_num,
 			COUNT(dp.role),
-			dg.estimated_start_date
+			dg.estimated_start_date,
+			dg.identity_select
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
@@ -56,15 +58,33 @@
 			user_id,
 			role,
 			game_id,
-			apply_time		
+			apply_time,
+			status		
 		) 
 		VALUES (
 			#{userId},
 			"player",
 			#{gameId},
-			NOW()
+			NOW(),
+			<if test='identitySelect=="A"'>
+			1
+			</if>
+			<if test='identitySelect=="B"'>
+			0
+			</if>
 		)
 	
 	</insert>
+	
+	<select id="queryCurStatusDao" parameterType="long" resultType="Integer">
+	
+		SELECT 
+			dp.status
+		FROM
+			d_player dp
+		WHERE
+			dp.user_id=#{userId}
+	
+	</select>
 
 </mapper>

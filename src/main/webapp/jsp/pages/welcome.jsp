@@ -61,7 +61,7 @@
 			<input type="button" class="am-btn am-btn-secondary" value="提交行动" onclick="pageSwitch('#pageA','#pageC')">
 			<input type="button" class="am-btn am-btn-default" value="提交投票" onclick="pageSwitch('#pageA','#pageD')">
 			<input type="button" class="am-btn am-btn-danger" value="提交发言" onclick="pageSwitch('#pageA','#pageE')">		
-			<input type="button" class="am-btn am-btn-warning" value="我要托管">
+			<input type="button" class="am-btn am-btn-warning" value="身份抽取" onclick="pageSwitch('#pageA','#pageF')">
 			<input type="button" class="am-btn am-btn-primary" value="查看特权">
 		</div>
 	</div>

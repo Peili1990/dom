@@ -27,9 +27,10 @@
 							builder.appendFormat('{0} ',judger);
 						})
 						builder.appendFormat('<br>人数配置：{0}人（当前已报{1}人）<br>', game.playerNum, game.playCurNum);
-						builder.appendFormat('预计开版时间：{0}</div>',game.startDate);
+						builder.appendFormat('预计开版时间：{0} <br> 角色选取方式：',game.startDate);
+						builder.appendFormat(game.identitySelect=="A" ? '个人选取</div>':'3选1</div>');
 						builder.append('<input type="button" class="am-btn am-btn-secondary sumbit-btn"style="width: 100%" value="我要报名"');
-						builder.appendFormat('onclick="apply({0})"></div>',game.id);
+						builder.appendFormat('onclick=apply({0},"{1}")></div>',game.id,game.identitySelect);
 						panel.append(builder.toString());
 					})
 				} else {
@@ -41,12 +42,13 @@
 		}
 	}
 	
-	function apply(gameId){
+	function apply(gameId,identitySelect){
 		var common = new Common();
 		var url = getRootPath() + "/game/apply";
 		var options = {
 			userId : $("#user-id").val(),
-			gameId : gameId
+			gameId : gameId,
+			identitySelect : identitySelect
 		}
 		common.callAction(options, url, function(data) {
 			if(!data){

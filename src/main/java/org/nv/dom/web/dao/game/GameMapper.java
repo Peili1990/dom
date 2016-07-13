@@ -25,5 +25,8 @@ public interface GameMapper {
 	 * <p>报名版杀</p>
 	 */
 	public int applyForGameDao(ApplyDTO applyDTO);
-	
+	/**
+	 * <p>查询玩家当前的状态</p>
+	 */
+	public Integer queryCurStatusDao(long userId);
 }

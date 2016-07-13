@@ -1,5 +1,6 @@
 package org.nv.dom.web.service.impl;
 
+import org.apache.log4j.Logger;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.web.dao.user.UserMapper;
@@ -8,14 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("userServiceImpl")
-public class UserServiceImpl implements UserService {	
+public class UserServiceImpl implements UserService {
+	
+	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
 	
 	@Autowired
 	UserMapper userMapper;
 	
 	@Override
 	public UserCurRole getUserCurRole(User user) {
-		return userMapper.getUserCurRoleDao(user.getId());
+		try{
+			return userMapper.getUserCurRoleDao(user.getId());
+		} catch (Exception e){
+			logger.error(e.getMessage(), e);
+			return null;
+		}
 	}
 
 }
