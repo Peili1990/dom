@@ -9,12 +9,21 @@ import org.nv.dom.cache.CacheData;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.util.ConfigUtil;
+import org.nv.dom.util.RedisClient;
 import org.nv.dom.web.service.BasicService;
 import org.springframework.stereotype.Service;
 
 @Service("basicServiceImpl")
 public class BasicServiceImpl implements BasicService {
+	
+	private String host = ConfigUtil.getVersionConfigProperty("redis.host");
+	
+	private String name = ConfigUtil.getVersionConfigProperty("redis.name");
+	
+	private int port = Integer.parseInt(ConfigUtil.getVersionConfigProperty("redis.port")); 
 
+	protected RedisClient redisClient = new RedisClient(host, port, name);
+	
 	@Override
 	public Map<String, Object> getSessionUserService(HttpSession session) {
 		Map<String, Object> result = new HashMap<String, Object>();

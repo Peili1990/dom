@@ -2,11 +2,8 @@ package org.nv.dom.web.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
-import org.nv.dom.config.PageParamType;
-import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,10 +32,9 @@ public class GameController extends BaseController{
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/getCurStatus", method = RequestMethod.POST)
-	public Map<String,Object> getCurStatus(HttpSession session){
-		User user = (User) session.getAttribute(PageParamType.user_in_session);
-		return null;
+	@RequestMapping(value = "/getCharacterListThree", method = RequestMethod.POST)
+	public Map<String,Object> getCurStatus(@ModelAttribute("getCharacterListDTO") GetCharacterListDTO getCharacterListDTO){
+		return gameService.getCharacterListThree(getCharacterListDTO);
 	}
 	
 

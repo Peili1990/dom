@@ -28,6 +28,37 @@
 			</c:choose>
 	</div>
 	
+	<c:if test="${ userInfo.userCurRole eq 'player' }">
+		<div class="card">
+			<div class="card-header">
+				<h2 class="card-title">角色信息</h2>
+				<input id="player-id" type="hidden" value="${ userInfo.playerId }">
+				<input id="game-id" type="hidden" value="${ userInfo.gameId }">
+			</div>
+			<div class="card-body">
+				外在角色：
+				<c:choose>
+					<c:when test="${ playerInfo == null }">
+						还未选择
+						<span style="float:right" onclick="pageSwitch('#pageA','#pageG','getCharacterList(${userInfo.status})')">去选身份 》</span>
+					</c:when>
+					<c:otherwise>
+						<span style="float:right">查看详情 》</span>
+					</c:otherwise>
+				</c:choose>
+				<br>实际身份：
+				<c:choose>
+					<c:when test="${ playerInfo == null }">
+						还未发放
+					</c:when>
+					<c:otherwise>
+						<span style="float:right">查看详情 》</span>
+					</c:otherwise>
+				</c:choose>
+			</div>	
+		</div>
+	</c:if>
+	
 	<div class="card">
 		<div class="card-header">
 			<h2 class="card-title">《新芝加哥日报》7月7日日刊</h2>

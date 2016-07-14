@@ -8,7 +8,7 @@
 		<result property="playerNum" column="player_num"/>
 		<result property="playCurNum" column="COUNT(dp.role)"/>
 		<result property="startDate" column="estimated_start_date"/>
-		<result property="identitySelect" column="identity_select"/>
+		<result property="characterSelect" column="character_select"/>
 		<collection property="Judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
 	</resultMap>
 
@@ -20,7 +20,7 @@
 			dg.player_num,
 			COUNT(dp.role),
 			dg.estimated_start_date,
-			dg.identity_select
+			dg.character_select
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
@@ -66,11 +66,11 @@
 			"player",
 			#{gameId},
 			NOW(),
-			<if test='identitySelect=="A"'>
+			<if test='characterSelect=="A"'>
 			1
 			</if>
-			<if test='identitySelect=="B"'>
-			0
+			<if test='characterSelect=="B"'>
+			2
 			</if>
 		)
 	
@@ -83,8 +83,24 @@
 		FROM
 			d_player dp
 		WHERE
-			dp.user_id=#{userId}
+			dp.id=#{playerId}
 	
+	</select>
+	
+	<select id="queryCharacterListThree" resultType="NVCharacter">
+	
+		SELECT 
+			dc.id,
+			dc.name,
+			dc.avatar
+		FROM
+			d_character dc
+		WHERE
+			dc.id IN
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+			
 	</select>
 
 </mapper>

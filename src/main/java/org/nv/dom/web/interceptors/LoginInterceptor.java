@@ -3,8 +3,7 @@ package org.nv.dom.web.interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.nv.dom.config.PageParamType;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,9 +15,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        if(true) {
-            sessionTimeoutHandle.timeout(httpServletRequest, httpServletResponse);
-            return false;
+        if(httpServletRequest.getSession().getAttribute(PageParamType.user_in_session)==null) {
+            return sessionTimeoutHandle.timeout(httpServletRequest, httpServletResponse);
         }
         return true;
     }

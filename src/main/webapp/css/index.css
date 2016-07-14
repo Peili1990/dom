@@ -1,1 +1,9 @@
 @CHARSET "UTF-8";
+
+.character-box{
+	text-align:center;
+}
+
+.character-box .am-comment-avatar{
+	width:100%;
+}

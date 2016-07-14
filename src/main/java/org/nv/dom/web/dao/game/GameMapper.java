@@ -2,6 +2,7 @@ package org.nv.dom.web.dao.game;
 
 import java.util.List;
 
+import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,7 @@ public interface GameMapper {
 	 */
 	public List<String> queryGameJudgerDao(long gameId);
 	/**
-	 * <p>查询玩家是否报名或参与其他版杀</p>
+	 * <p>查询用户是否报名或参与其他版杀</p>
 	 */
 	public int queryHasAttendGameDao(ApplyDTO applyDTO);
 	/**
@@ -28,5 +29,9 @@ public interface GameMapper {
 	/**
 	 * <p>查询玩家当前的状态</p>
 	 */
-	public Integer queryCurStatusDao(long userId);
+	public Integer queryCurStatusDao(long playerId);
+	/**
+	 * <p>获取可选的3人名单</p>
+	 */
+	public List<NVCharacter> queryCharacterListThree(List<Integer> availableList);
 }

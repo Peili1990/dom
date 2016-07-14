@@ -16,8 +16,8 @@ public class ApplyingGame {
 	private Integer playCurNum;
 	/** 预计开始时间 */
 	private String startDate;
-	/** 身份选取方式 */
-	private String identitySelect;
+	/** 外在身份选取方式 */
+	private String characterSelect;
 	
 	public long getId() {
 		return id;
@@ -55,11 +55,12 @@ public class ApplyingGame {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public String getIdentitySelect() {
-		return identitySelect;
+	public String getCharacterSelect() {
+		return characterSelect;
 	}
-	public void setIdentitySelect(String identitySelect) {
-		this.identitySelect = identitySelect;
+	public void setCharacterSelect(String characterSelect) {
+		this.characterSelect = characterSelect;
 	}
+	
 	
 }

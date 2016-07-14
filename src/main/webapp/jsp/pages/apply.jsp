@@ -15,40 +15,50 @@
 				if(!data){
 					return;
 				}
-				var games = data.applyingGames;
-				if(games.length>0){
-					panel.empty();
-					$.each(games,function(index,game){
-						var builder = new StringBuilder();
-						builder.append('<div class="card"><div class="card-header"><h2 class="card-title">版杀信息</h2></div>');
-						builder.append('<div class="card-body">');
-						builder.appendFormat('{0}<br>法官配置：',game.gameDesc);
-						$.each(game.judgers,function(index,judger){
-							builder.appendFormat('{0} ',judger);
+				switch (data.status){
+				case 1:
+					var games = data.applyingGames;
+					if(games.length>0){
+						panel.empty();
+						$.each(games,function(index,game){
+							var builder = new StringBuilder();
+							builder.append('<div class="card"><div class="card-header"><h2 class="card-title">版杀信息</h2></div>');
+							builder.append('<div class="card-body">');
+							builder.appendFormat('{0}<br>法官配置：',game.gameDesc);
+							$.each(game.judgers,function(index,judger){
+								builder.appendFormat('{0} ',judger);
+							})
+							builder.appendFormat('<br>人数配置：{0}人（当前已报{1}人）<br>', game.playerNum, game.playCurNum);
+							builder.appendFormat('预计开版时间：{0} <br> 角色选取方式：',game.startDate);
+							builder.appendFormat(game.characterSelect=="A" ? '个人选取</div>':'3选1</div>');
+							builder.append('<input type="button" class="am-btn am-btn-secondary sumbit-btn"style="width: 100%" value="我要报名"');
+							builder.appendFormat('onclick=apply({0},"{1}")></div>',game.id,game.characterSelect);
+							panel.append(builder.toString());
 						})
-						builder.appendFormat('<br>人数配置：{0}人（当前已报{1}人）<br>', game.playerNum, game.playCurNum);
-						builder.appendFormat('预计开版时间：{0} <br> 角色选取方式：',game.startDate);
-						builder.appendFormat(game.identitySelect=="A" ? '个人选取</div>':'3选1</div>');
-						builder.append('<input type="button" class="am-btn am-btn-secondary sumbit-btn"style="width: 100%" value="我要报名"');
-						builder.appendFormat('onclick=apply({0},"{1}")></div>',game.id,game.identitySelect);
-						panel.append(builder.toString());
-					})
-				} else {
-					myInfo("暂无版杀信息",function(){
-						$(".am-header-left").find("i").click();
-					});
-				}
+					} else {
+						myInfo("暂无版杀信息",function(){
+							$(".am-header-left").find("i").click();
+						});
+					}
+					return;
+				case 0:
+					timeoutHandle();
+					return;
+				default:
+					myAlert(data.message);
+					return;
+				}		
 			});
 		}
 	}
 	
-	function apply(gameId,identitySelect){
+	function apply(gameId,characterSelect){
 		var common = new Common();
 		var url = getRootPath() + "/game/apply";
 		var options = {
 			userId : $("#user-id").val(),
 			gameId : gameId,
-			identitySelect : identitySelect
+			characterSelect : characterSelect
 		}
 		common.callAction(options, url, function(data) {
 			if(!data){
@@ -59,6 +69,9 @@
 				myInfo("恭喜，报名成功！",function(){
 					window.location = getRootPath() + "/index";
 				});
+				return;
+			case 0:
+				timeoutHandle();
 				return;
 			default:
 				myAlert(data.message);

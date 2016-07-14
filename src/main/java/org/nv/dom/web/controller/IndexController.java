@@ -27,6 +27,7 @@ public class IndexController extends BaseController {
 		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		mav.addObject("userInfo", userService.getUserCurRole((User) session.getAttribute(PageParamType.user_in_session)));
+		mav.addObject("playerInfo", null);
 		return mav;
 	}
 

@@ -7,6 +7,10 @@ public class UserCurRole {
 	private long userId;
 	/** 用户昵称 */
 	private String userNickName;
+	/** 用户对应玩家Id */
+	private long playerId;
+	/** 玩家当前状态 */
+	private Integer status;
 	/** 用户当前角色 */
 	private String userCurRole;
 	/** 游戏Id */
@@ -24,6 +28,18 @@ public class UserCurRole {
 	}
 	public void setUserNickName(String userNickName) {
 		this.userNickName = userNickName;
+	}
+	public long getPlayerId() {
+		return playerId;
+	}
+	public void setPlayerId(long playerId) {
+		this.playerId = playerId;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	public String getUserCurRole() {
 		return userCurRole;

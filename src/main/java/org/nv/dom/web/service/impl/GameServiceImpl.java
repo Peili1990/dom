@@ -1,20 +1,26 @@
 package org.nv.dom.web.service.impl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.config.RedisConstant;
+import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.player.GetCharacterListDTO;
+import org.nv.dom.util.StringUtil;
+import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("gameServiceImpl")
-public class GameServiceImpl implements GameService {
+public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	private static Logger logger = Logger.getLogger(GameServiceImpl.class);
 	
@@ -61,14 +67,38 @@ public class GameServiceImpl implements GameService {
 	}
 
 	@Override
-	public Map<String, Object> getCurStatus(long userId) {
+	public Map<String, Object> getCharacterListThree(GetCharacterListDTO getCharacterListDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			Integer status = gameMapper.queryCurStatusDao(userId);
+			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
+					String.valueOf(getCharacterListDTO.getPlayerId()));
+			List<NVCharacter> characters = null;
+			if(StringUtil.isNullOrEmpty(characterStr)){
+				List<Integer> availableList = JacksonJSONUtils.jsonToList(
+					redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
+						String.valueOf(getCharacterListDTO.getGameId())),Integer.class);
+				if(availableList != null && availableList.size() > 2){
+					Collections.shuffle(availableList);
+					List<Integer> availableListThree = availableList.subList(0, 3);
+					availableList = availableList.subList(3, availableList.size());
+					redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(getCharacterListDTO.getGameId()),
+							JacksonJSONUtils.beanToJSON(availableList).toString());
+					characters = gameMapper.queryCharacterListThree(availableListThree);
+					redisClient.setHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(getCharacterListDTO.getPlayerId()), 
+							JacksonJSONUtils.beanToJSON(characters).toString());
+				}
+			} else {
+				characters = JacksonJSONUtils.jsonToList(characterStr, NVCharacter.class);
+			}
+			result.put("characters",characters);
+			result.put(PageParamType.BUSINESS_STATUS,1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取角色名单成功");	
 		} catch(Exception e){
 			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS,-1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");	
 		}
-		return null;
+		return result;
 	}
 
 }
