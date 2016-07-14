@@ -2,8 +2,20 @@
 
 .character-box{
 	text-align:center;
+	margin-top:20px;
 }
 
-.character-box .am-comment-avatar{
-	width:100%;
+.character-box .radio-box{
+	margin-top:10px;
+	clear:both;
 }
+
+.character-box img{
+	border-radius:50%;
+}
+
+.radio-box .selected{
+	color:#0e90d2;
+}
+
+

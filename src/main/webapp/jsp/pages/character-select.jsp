@@ -8,13 +8,40 @@
 		<div class="card-body">
 			点击头像可以查看特权
 			<ul class="am-avg-sm-3">
-  				<li class="character-box"><img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50"
-			></li>
-  				<li class="character-box"><img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50"
-			></li>
- 				<li class="character-box"><img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50"
-			></li>
+  				<li class="character-box">
+  					<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50">
+  					<div class="radio-box">
+  					<i class="am-icon-check-circle am-icon-md selected">朗斯特里特</i>
+  					</div>
+  					
+  				</li>
+  				<li class="character-box">
+  					<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50">
+  					<div class="radio-box">
+  					<i class="am-icon-circle-thin am-icon-md">普拉马逊斯</i>
+  					</div>
+  				</li>
+ 				<li class="character-box">
+ 					<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50">
+ 					<div class="radio-box">
+ 					<i class="am-icon-circle-thin am-icon-md">叶什（妹）</i>
+ 					</div>
+ 				</li>
  			</ul>
+		</div>
+		<hr style="margin:0" class="am-divider am-divider-default" />
+		<div class="card-body">
+			是否选sp<input class="mui-switch mui-switch-animbg" type="checkbox">
+		</div>
+		<hr style="margin:0" class="am-divider am-divider-default" />
+		<div class="card-body">
+			是否申请先驱<input class="mui-switch mui-switch-animbg" type="checkbox">
+		</div>
+	</div>
+	<div class="group">
+		<div class="group-body">
+			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
+				value="提交">
 		</div>
 	</div>
 </div>

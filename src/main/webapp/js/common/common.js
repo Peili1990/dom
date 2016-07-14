@@ -324,7 +324,7 @@ function pageSwitch(pageA,pageB,callback){
 	$('#pages').css({'-webkit-transform' : 'translate3d(-100%, 0px, 0px)' , '-webkit-transition' : '300ms'});
 	$(pageA).css({'display' : 'none'});
 	$(pageB).css({'display' : 'block'});
-    $("#container").css({"height":$(pageB+' .default').height()+120>$("html").height()?$(pageB+' .default').height()+120+"px":$("html").height() });
+    $("#container").css({"height":$(pageB+' .default').height()+100>$("html").height()?$(pageB+' .default').height()+100+"px":$("html").height() });
 }
 
 function setGoback(pageA,pageB){
