@@ -1,5 +1,6 @@
 package org.nv.dom.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
+import org.nv.dom.dto.player.SelectCharacterDTO;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
@@ -72,7 +74,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		try{
 			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 					String.valueOf(getCharacterListDTO.getPlayerId()));
-			List<NVCharacter> characters = null;
+			List<NVCharacter> characters = new ArrayList<NVCharacter>();
 			if(StringUtil.isNullOrEmpty(characterStr)){
 				List<Integer> availableList = JacksonJSONUtils.jsonToList(
 					redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
@@ -99,6 +101,50 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");	
 		}
 		return result;
+	}
+
+	@Override
+	public Map<String, Object> selectCharacter(SelectCharacterDTO selectCharacterDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(gameMapper.selectCharacterDAO(selectCharacterDTO) == 1){
+				String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
+						String.valueOf(selectCharacterDTO.getPlayerId()));
+				if(StringUtil.isNullOrEmpty(characterStr)){
+					
+				} else {
+					List<NVCharacter> characters = JacksonJSONUtils.jsonToList(characterStr, NVCharacter.class);
+					List<Integer> availableList = JacksonJSONUtils.jsonToList(
+							redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
+								String.valueOf(selectCharacterDTO.getGameId())),Integer.class);
+					availableList.addAll(getCharacterList(characters, selectCharacterDTO.getCharacterId()));
+					redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(selectCharacterDTO.getGameId()),
+							JacksonJSONUtils.beanToJSON(availableList).toString());
+					redisClient.delHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
+				}
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "角色选择成功");	
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS,-3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "角色选择失败");	
+			}
+		} catch(Exception e){
+			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS,-1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+	
+	private List<Integer> getCharacterList(List<NVCharacter> characters, long characterId){
+		List<Integer> characterList = new ArrayList<Integer>();
+		for(NVCharacter character:characters){
+			if(character.getId() == characterId){
+				continue;
+			}
+			characterList.add(character.getId());
+		}
+		return characterList;
 	}
 
 }

@@ -92,7 +92,8 @@
 		SELECT 
 			dc.id,
 			dc.name,
-			dc.avatar
+			dc.avatar,
+			dc.has_sp AS hasSp
 		FROM
 			d_character dc
 		WHERE
@@ -102,5 +103,21 @@
         </foreach>
 			
 	</select>
+	
+	<insert id="selectCharacterDAO" parameterType="SelectCharacterDTO">
+	
+		INSERT INTO d_player_record (
+			player_id,
+			character_id,
+			is_sp,
+			apply_pioneer
+		) 
+		VALUES (
+			#{playerId},
+			#{characterId},
+			#{isSp},
+			#{applyPioneer}
+		)
+	</insert>
 
 </mapper>

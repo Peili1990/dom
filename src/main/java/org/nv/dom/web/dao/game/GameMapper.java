@@ -5,6 +5,7 @@ import java.util.List;
 import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.player.SelectCharacterDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -34,4 +35,8 @@ public interface GameMapper {
 	 * <p>获取可选的3人名单</p>
 	 */
 	public List<NVCharacter> queryCharacterListThree(List<Integer> availableList);
+	/**
+	 * <p>选择角色</p>
+	 */
+	public int selectCharacterDAO(SelectCharacterDTO selectCharacterDTO);
 }

@@ -8,6 +8,8 @@ public class NVCharacter {
 	private String name;
 	/** 角色头像 */
 	private String avatar;
+	/** 是否有sp */
+	private String hasSp;
 	
 	public int getId() {
 		return id;
@@ -27,4 +29,10 @@ public class NVCharacter {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	public String getHasSp() {
+		return hasSp;
 	}
+	public void setHasSp(String hasSp) {
+		this.hasSp = hasSp;
+	}
+}

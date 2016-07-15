@@ -263,3 +263,11 @@ table{
 .mui-switch.mui-switch-anim:checked:before {
 	transition: left 0.3s;
 }
+
+.invisible{
+	display:none;
+}
+
+.float-right{
+	float:right;
+}

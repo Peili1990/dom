@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
+import org.nv.dom.dto.player.SelectCharacterDTO;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,12 @@ public class GameController extends BaseController{
 	@RequestMapping(value = "/getCharacterListThree", method = RequestMethod.POST)
 	public Map<String,Object> getCurStatus(@ModelAttribute("getCharacterListDTO") GetCharacterListDTO getCharacterListDTO){
 		return gameService.getCharacterListThree(getCharacterListDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectCharacter", method = RequestMethod.POST)
+	public Map<String,Object> selectCharacter(@ModelAttribute("selectCharacterDTO") SelectCharacterDTO selectCharacterDTO){
+		return gameService.selectCharacter(selectCharacterDTO);
 	}
 	
 

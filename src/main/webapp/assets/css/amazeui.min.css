@@ -3633,6 +3633,9 @@ a.am-close:hover {
 .am-icon-times-circle:before {
 	content:"\f057"
 }
+.am-icon-circle-thin:before {
+	content:"\f1db"
+}
 .am-icon-check-circle:before {
 	content:"\f058"
 }
@@ -4679,9 +4682,6 @@ a.am-close:hover {
 }
 .am-icon-history:before {
 	content:"\f1da"
-}
-.am-icon-circle-thin:before {
-	content:"\f1db"
 }
 .am-icon-header:before {
 	content:"\f1dc"

@@ -21,7 +21,8 @@ public class RedisTest {
 
 	@Test
 	public void testGet() {
-		redisClient.setHSet("gameId", "1", "12347832");
+		String string = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, "7");
+		System.out.println(string);
 	}
 	
 	@Test
