@@ -107,6 +107,11 @@
 	    <servlet-name>default</servlet-name>
 	    <url-pattern>/mobiscroll/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>/file/*</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>

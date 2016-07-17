@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.player.PlayerMapper">
+
+	<select id="getPlayerInfo" parameterType="long" resultType="PlayerInfo">
+	
+		SELECT 
+			dpr.player_id AS playerId,
+			dpr.character_id AS characterId,
+			dpr.is_sp AS isSp,
+			dc.name AS characterName,
+			dpr.identity AS identity		
+		FROM 
+			d_player_record dpr, d_character dc
+		WHERE
+			dpr.player_id = #{playerId} AND dc.id = dpr.character_id
+	
+	</select>
+
+</mapper>

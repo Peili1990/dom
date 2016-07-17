@@ -38,21 +38,23 @@
 			<div class="card-body">
 				外在角色：
 				<c:choose>
-					<c:when test="${ playerInfo == null }">
+					<c:when test="${ playerInfo != null && playerInfo.characterId != null }">
+						${ playerInfo.characterName }
+						<span style="float:right">查看详情 》</span>
+					</c:when>
+					<c:otherwise>	
 						还未选择
 						<span style="float:right" onclick="pageSwitch('#pageA','#pageG','getCharacterList(${userInfo.status})')">去选身份 》</span>
-					</c:when>
-					<c:otherwise>
-						<span style="float:right">查看详情 》</span>
 					</c:otherwise>
 				</c:choose>
 				<br>实际身份：
 				<c:choose>
-					<c:when test="${ playerInfo == null }">
-						还未发放
+					<c:when test="${ playerInfo != null && playerInfo.identity != 0 }">
+						${ playerInfo.identity }
+						<span style="float:right">查看详情 》</span>
 					</c:when>
 					<c:otherwise>
-						<span style="float:right">查看详情 》</span>
+						还未发放
 					</c:otherwise>
 				</c:choose>
 			</div>	

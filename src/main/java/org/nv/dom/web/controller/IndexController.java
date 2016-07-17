@@ -4,6 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.domain.user.UserCurRole;
+import org.nv.dom.web.service.PlayerService;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ public class IndexController extends BaseController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	PlayerService playerService;
+	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
@@ -26,9 +31,19 @@ public class IndexController extends BaseController {
 			return mav;
 		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
-		mav.addObject("userInfo", userService.getUserCurRole((User) session.getAttribute(PageParamType.user_in_session)));
-		mav.addObject("playerInfo", null);
+		UserCurRole userInfo = userService.getUserCurRole((User) session.getAttribute(PageParamType.user_in_session));
+		mav.addObject("userInfo", userInfo);
+		if(userInfo.getPlayerId()>0L){
+			mav.addObject("playerInfo", playerService.getPlayerInfo(userInfo.getPlayerId()));
+		}
 		return mav;
 	}
+	
+	@RequestMapping(value = "/rule", method = RequestMethod.GET)
+	public ModelAndView ruleView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("rule/rule");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	} 
 
 }

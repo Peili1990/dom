@@ -15,8 +15,8 @@
                 <span class="am-navbar-label">集会</span>
             </a>
           </li>
-          <li data-am-navbar-qrcode>
-            <a href="###" class="">
+          <li>
+            <a href="${ baseUrl }rule" class="">
                   <span class="am-icon-thumb-tack"></span>
                 <span class="am-navbar-label">规则</span>
             </a>

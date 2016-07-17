@@ -271,3 +271,11 @@ table{
 .float-right{
 	float:right;
 }
+
+.rule-panel{
+	padding:49px 10px 0px 10px;
+}
+
+.rule-panel img{
+	width:30%
+}
