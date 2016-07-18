@@ -30,6 +30,19 @@
 				
 	</select>
 	
+	<select id="getPlayerNumDao" parameterType="long" resultType="Integer">
+	
+		SELECT
+			COUNT(dp.role)
+		FROM
+			d_player dp
+		WHERE
+			dp.game_id=#{gameId} AND dp.role="player"
+		GROUP BY
+			dp.game_id
+	
+	</select>
+	
 	<select id="queryGameJudgerDao" parameterType="long" resultType="String">
 	
 		SELECT 

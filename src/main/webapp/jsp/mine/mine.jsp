@@ -18,5 +18,8 @@
     </ul>   
 	</section>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
+<script>
+    $("#container").css({"height":$("#pageA .default").height()+100>$("html").height()?$("#pageA .default").height()+100+"px":$("html").height() });
+</script>
 </body>
 </html>

@@ -16,6 +16,10 @@ public interface GameMapper {
 	 */
 	public List<ApplyingGame> getApplyingGamesDao();
 	/**
+	 * <p>获取报名中的版杀玩家人数</p>
+	 */
+	public Integer getPlayerNumDao(long gameId);
+	/**
 	 * <p>获取版杀主持法官信息</p>
 	 */
 	public List<String> queryGameJudgerDao(long gameId);

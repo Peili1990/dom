@@ -25,5 +25,43 @@
 		复盘攻略
 		<span class="am-icon-chevron-right"></span>
 	</div>
+	<div class="group">
+		<div class="group-body">
+			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
+				value="退出登录" onclick="logout(this)">
+		</div>
+	</div>
 	
+	<script type="text/javascript">
+	
+		function logout(btn){
+			$(btn).attr("disabled","disabled");
+			var url = getRootPath()+"/logoutAction";
+			var common = new Common();
+			common.callAction(null, url, function(data) {
+				if (!data) {
+					myAlert("系统或网络异常");
+					$(btn).removeAttr("disabled");
+					return;
+				}
+				switch (data.status) {
+				case 1:
+					delCookie("nv_account");
+					delCookie("nv_password");
+					myInfo("登出成功！",function(){
+						window.location = getRootPath() + "/login";
+					});
+					return;
+				case 0:
+					timeoutHandle();
+					return;
+				default:
+					myAlert(data.message);
+					$(btn).removeAttr("disabled");
+					return;
+				}
+			})
+		}	
+	
+	</script>	
 </div>

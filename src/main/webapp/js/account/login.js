@@ -2,12 +2,14 @@
  * 
  */
 
-function submitForm(){
+function submitForm(btn){
+	$(btn).attr("disabled","disabled");
 	var account = $("#userName").val().trim();
 	var password = $("#userPwd").val().trim();
 	$("#userPwd").val("");
 	if(account==""||password==""){
 		myAlert("用户名或密码不能为空");
+		$(btn).removeAttr("disabled");
 		return false;
 	}
 	//登陆验证
@@ -20,6 +22,7 @@ function submitForm(){
 	common.callAction(options, url, function(data) {
 		if (!data) {
 			myAlert("系统或网络异常");
+			$(btn).removeAttr("disabled");
 			return;
 		}
 		switch (data.status) {
@@ -30,6 +33,7 @@ function submitForm(){
 			return;
 		default:
 			myAlert(data.message);
+			$(btn).removeAttr("disabled");
 			return;
 		}
 	});

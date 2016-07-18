@@ -26,7 +26,7 @@
 		</div>
 		<input type="button" class="am-btn am-btn-primary" onclick="login()"
 			value="登录"> <input type="button" class="am-btn am-btn-danger"
-			onclick="register()" value="注册">
+			onclick="register(this)" value="注册">
 	</form>
 	<script src="js/account/register.js" type="text/javascript"></script>
 </body>

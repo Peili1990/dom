@@ -16,5 +16,16 @@
 			dpr.player_id = #{playerId} AND dc.id = dpr.character_id
 	
 	</select>
+	
+	<update id="changePlayerStatus" parameterType="ChangeStatusDTO">
+	
+		UPDATE 
+			d_player dp
+		SET
+			dp.status=#{status}
+		WHERE
+			dp.id=#{playerId}
+		
+	</update>
 
 </mapper>

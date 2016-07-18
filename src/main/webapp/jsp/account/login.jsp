@@ -18,7 +18,7 @@
 				class="am-icon-lock am-icon-fw"></i></span> <input type="password"
 				class="am-form-field" id="userPwd" placeholder="Password">
 		</div>
-		<input type="button" class="am-btn am-btn-primary" onclick="submitForm()" value="登录">
+		<input type="button" class="am-btn am-btn-primary" onclick="submitForm(this)" value="登录">
 		<input type="button" class="am-btn am-btn-danger" onclick="register()" value="注册">
 	</form>
 	<script src="js/account/login.js" type="text/javascript"></script>	

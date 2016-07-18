@@ -1,5 +1,6 @@
 package org.nv.dom.web.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,16 @@ public class AccountController extends BaseController {
 	@RequestMapping(value = "/registerAction", method = RequestMethod.POST)
 	public Map<String, Object> registerAction(@ModelAttribute("registerDTO") RegisterDTO registerDTO, HttpServletRequest request) {
 		Map<String, Object> result = accountService.registerAction(registerDTO);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/logoutAction", method = RequestMethod.POST)
+	public Map<String, Object> registerAction(HttpServletRequest request) {
+		request.getSession().removeAttribute(PageParamType.user_in_session);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(PageParamType.BUSINESS_STATUS,1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "登出成功");
 		return result;
 	}
 

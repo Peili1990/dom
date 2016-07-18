@@ -40,7 +40,6 @@
 				<c:choose>
 					<c:when test="${ playerInfo != null && playerInfo.characterId != null }">
 						${ playerInfo.characterName }
-						<span style="float:right">查看详情 》</span>
 					</c:when>
 					<c:otherwise>	
 						还未选择
@@ -51,7 +50,6 @@
 				<c:choose>
 					<c:when test="${ playerInfo != null && playerInfo.identity != 0 }">
 						${ playerInfo.identity }
-						<span style="float:right">查看详情 》</span>
 					</c:when>
 					<c:otherwise>
 						还未发放

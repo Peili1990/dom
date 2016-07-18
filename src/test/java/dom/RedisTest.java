@@ -21,7 +21,7 @@ public class RedisTest {
 
 	@Test
 	public void testGet() {
-		String string = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, "7");
+		String string = redisClient.getHSet(RedisConstant.AVAILABLE_LIST, "1");
 		System.out.println(string);
 	}
 	

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-07-15 17:46:58
+Date: 2016-07-18 18:35:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,7 +97,7 @@ CREATE TABLE `d_game` (
   `description` varchar(32) DEFAULT NULL,
   `character_select` varchar(1) DEFAULT NULL COMMENT 'A 个人选择 B 3选1',
   `player_num` int(5) DEFAULT NULL,
-  `status` int(5) DEFAULT NULL COMMENT '0 取消 1 报名中 2 报名结束 3 进行中 4 已结束',
+  `status` int(5) DEFAULT NULL COMMENT '0 取消 1 报名中 2 报名结束 3 进行中 4 复盘中 9 已结束',
   `estimated_start_date` date DEFAULT NULL,
   `actual_start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `d_game` (
 -- ----------------------------
 -- Records of d_game
 -- ----------------------------
-INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '22', '1', '2016-07-14', null, null, null, null);
+INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '19', '2', '2016-07-14', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `d_player`
@@ -123,16 +123,32 @@ CREATE TABLE `d_player` (
   `status` int(5) DEFAULT NULL COMMENT '0 已报名 1待选外在角色 2待3选1 3已选外在身份 4已查看实际身份',
   `apply_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_player
 -- ----------------------------
 INSERT INTO `d_player` VALUES ('1', '2', 'judger', '1', null, '0000-00-00 00:00:00');
 INSERT INTO `d_player` VALUES ('2', '3', 'judger', '1', null, '0000-00-00 00:00:00');
-INSERT INTO `d_player` VALUES ('5', '4', 'player', '1', '0', '2016-07-11 14:38:24');
-INSERT INTO `d_player` VALUES ('7', '1', 'player', '1', '2', '2016-07-14 17:12:49');
-INSERT INTO `d_player` VALUES ('8', '6', 'player', '1', '2', '2016-07-15 11:45:32');
+INSERT INTO `d_player` VALUES ('5', '4', 'player', '1', '3', '2016-07-11 14:38:24');
+INSERT INTO `d_player` VALUES ('8', '6', 'player', '1', '3', '2016-07-15 11:45:32');
+INSERT INTO `d_player` VALUES ('10', '1', 'player', '1', '3', '2016-07-18 10:02:41');
+INSERT INTO `d_player` VALUES ('11', '5', 'player', '1', '3', '2016-07-18 11:01:23');
+INSERT INTO `d_player` VALUES ('12', '7', 'player', '1', '3', '2016-07-18 11:01:39');
+INSERT INTO `d_player` VALUES ('13', '8', 'player', '1', '3', '2016-07-18 11:01:52');
+INSERT INTO `d_player` VALUES ('14', '9', 'player', '1', '3', '2016-07-18 11:02:01');
+INSERT INTO `d_player` VALUES ('15', '10', 'player', '1', '3', '2016-07-18 11:02:22');
+INSERT INTO `d_player` VALUES ('16', '11', 'player', '1', '3', '2016-07-18 11:02:31');
+INSERT INTO `d_player` VALUES ('17', '12', 'player', '1', '3', '2016-07-18 11:02:40');
+INSERT INTO `d_player` VALUES ('18', '13', 'player', '1', '3', '2016-07-18 11:02:48');
+INSERT INTO `d_player` VALUES ('19', '14', 'player', '1', '3', '2016-07-18 11:03:31');
+INSERT INTO `d_player` VALUES ('20', '15', 'player', '1', '3', '2016-07-18 11:03:36');
+INSERT INTO `d_player` VALUES ('21', '16', 'player', '1', '3', '2016-07-18 11:03:42');
+INSERT INTO `d_player` VALUES ('22', '17', 'player', '1', '3', '2016-07-18 11:04:10');
+INSERT INTO `d_player` VALUES ('23', '18', 'player', '1', '3', '2016-07-18 11:04:15');
+INSERT INTO `d_player` VALUES ('24', '19', 'player', '1', '3', '2016-07-18 11:04:21');
+INSERT INTO `d_player` VALUES ('25', '20', 'player', '1', '3', '2016-07-18 11:04:26');
+INSERT INTO `d_player` VALUES ('26', '21', 'player', '1', '3', '2016-07-18 11:04:31');
 
 -- ----------------------------
 -- Table structure for `d_player_record`
@@ -143,13 +159,31 @@ CREATE TABLE `d_player_record` (
   `character_id` int(5) DEFAULT NULL,
   `is_sp` varchar(1) DEFAULT '' COMMENT '是否是sp',
   `apply_pioneer` varchar(1) DEFAULT NULL,
+  `identity` int(5) DEFAULT '0',
   PRIMARY KEY (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_player_record
 -- ----------------------------
-INSERT INTO `d_player_record` VALUES ('7', '17', '0', '0');
+INSERT INTO `d_player_record` VALUES ('5', '6', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('8', '5', '1', '0', '0');
+INSERT INTO `d_player_record` VALUES ('10', '40', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('11', '19', '1', '0', '0');
+INSERT INTO `d_player_record` VALUES ('12', '1', '0', '1', '0');
+INSERT INTO `d_player_record` VALUES ('13', '35', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('14', '38', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('15', '4', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('16', '37', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('17', '30', '0', '1', '0');
+INSERT INTO `d_player_record` VALUES ('18', '16', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('19', '21', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('20', '9', '0', '1', '0');
+INSERT INTO `d_player_record` VALUES ('21', '27', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('22', '47', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('23', '41', '1', '1', '0');
+INSERT INTO `d_player_record` VALUES ('24', '54', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('25', '48', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `d_user`
@@ -164,7 +198,7 @@ CREATE TABLE `d_user` (
   `createTime` datetime DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_user
@@ -175,3 +209,18 @@ INSERT INTO `d_user` VALUES ('3', 'jack3175', 'yesterday', '微风', null, '2016
 INSERT INTO `d_user` VALUES ('4', 'jack3176', 'yesterday', '飓风', null, '2016-07-06 15:54:53', null);
 INSERT INTO `d_user` VALUES ('5', 'jack3178', 'yesterday', '轻风', null, '2016-07-11 14:50:47', null);
 INSERT INTO `d_user` VALUES ('6', 'jack3179', 'yesterday', '凉风', null, '2016-07-15 11:45:15', null);
+INSERT INTO `d_user` VALUES ('7', 'jack3180', 'yesterday', '大大', null, '2016-07-18 10:39:08', null);
+INSERT INTO `d_user` VALUES ('8', 'jack3181', 'yesterday', '小小', null, '2016-07-19 10:39:26', null);
+INSERT INTO `d_user` VALUES ('9', 'jack3182', 'yesterday', '多多', null, '2016-07-18 10:39:50', null);
+INSERT INTO `d_user` VALUES ('10', 'jack3183', 'yesterday', '少少', null, '2016-07-18 10:40:26', null);
+INSERT INTO `d_user` VALUES ('11', 'jack3184', 'yesterday', '慢慢', null, '2016-07-18 10:40:45', null);
+INSERT INTO `d_user` VALUES ('12', 'jack3185', 'yesterday', '快快', null, '2016-07-18 10:41:03', null);
+INSERT INTO `d_user` VALUES ('13', 'jack3186', 'yesterday', '宁静', null, '2016-07-19 10:41:23', null);
+INSERT INTO `d_user` VALUES ('14', 'jack3187', 'yesterday', '行行', null, '2016-07-18 10:41:38', null);
+INSERT INTO `d_user` VALUES ('15', 'jack3188', 'yesterday', '是的', null, '2016-07-18 10:58:11', null);
+INSERT INTO `d_user` VALUES ('16', 'jack3189', 'yesterday', '期望', null, '2016-07-18 10:58:27', null);
+INSERT INTO `d_user` VALUES ('17', 'jack3190', 'yesterday', '欧尼', null, '2016-07-18 10:58:45', null);
+INSERT INTO `d_user` VALUES ('18', 'jack3191', 'yesterday', '而我', null, '2016-07-18 10:59:04', null);
+INSERT INTO `d_user` VALUES ('19', 'jack3192', 'yesterday', '人头', null, '2016-07-18 10:59:18', null);
+INSERT INTO `d_user` VALUES ('20', 'jack3193', 'yesterday', '框架', null, '2016-07-18 10:59:32', null);
+INSERT INTO `d_user` VALUES ('21', 'jack3194', 'yesterday', '吃饭', null, '2016-07-18 11:00:25', null);

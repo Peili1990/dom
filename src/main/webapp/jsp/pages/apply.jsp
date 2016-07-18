@@ -32,7 +32,7 @@
 							builder.appendFormat('预计开版时间：{0} <br> 角色选取方式：',game.startDate);
 							builder.appendFormat(game.characterSelect=="A" ? '个人选取</div>':'3选1</div>');
 							builder.append('<input type="button" class="am-btn am-btn-secondary sumbit-btn"style="width: 100%" value="我要报名"');
-							builder.appendFormat('onclick=apply({0},"{1}")></div>',game.id,game.characterSelect);
+							builder.appendFormat('onclick=apply({0},"{1}",{2},this)></div>',game.id,game.characterSelect,game.playNum);
 							panel.append(builder.toString());
 						})
 					} else {
@@ -52,16 +52,19 @@
 		}
 	}
 	
-	function apply(gameId,characterSelect){
+	function apply(gameId,characterSelect,playerNum,btn){
+		$(btn).attr("disabled","disabled");
 		var common = new Common();
 		var url = getRootPath() + "/game/apply";
 		var options = {
 			userId : $("#user-id").val(),
 			gameId : gameId,
+			playerNum : playerNum,
 			characterSelect : characterSelect
 		}
 		common.callAction(options, url, function(data) {
 			if(!data){
+				$(btn).removeAttr("disabled");
 				return;
 			}
 			switch (data.status) {
@@ -75,8 +78,10 @@
 				return;
 			default:
 				myAlert(data.message);
+				$(btn).removeAttr("disabled");
 				return;
 			}
 		});	
+		
 	}
 </script>

@@ -6,7 +6,6 @@
 			<h2 class="card-title">请选择你的外在身份：</h2>
 		</div>
 		<div class="card-body">
-			点击头像可以查看特权
 			<ul class="am-avg-sm-3">
   			
  			</ul>
@@ -23,7 +22,7 @@
 	<div class="group">
 		<div class="group-body">
 			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
-				value="提交" onclick="selectCharacter()">
+				value="提交" onclick="selectCharacter(this)">
 		</div>
 	</div>
 </div>
@@ -101,12 +100,14 @@
 		})
 	}
 	
-	function selectCharacter(){
+	function selectCharacter(btn){
+		$(btn).attr("disabled","disabled");
 		var playerId = $("#player-id").val();
 		var gameId = $("#game-id").val();
 		var characterId = $("#selected-character").val();
 		if(characterId == ""){
 			myAlert("请选择角色");
+			$(btn).removeAttr("disabled");
 			return;
 		}
 		var isSp;
@@ -129,6 +130,7 @@
 		common.callAction(options, url, function(data) {
 			if (!data) {
 				myAlert("系统或网络异常");
+				$(btn).removeAttr("disabled");
 				return;
 			}
 			switch (data.status) {
@@ -137,8 +139,12 @@
 					window.location = getRootPath() + "/index";
 				});
 				return;
+			case 0:
+				timeoutHandle();
+				return;
 			default:
 				myAlert(data.message);
+				$(btn).removeAttr("disabled");
 				return;
 			}
 		});

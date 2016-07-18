@@ -6,13 +6,15 @@ function login(){
 	window.location = getRootPath() + "/login";
 }
 
-function register(){
+function register(btn){
+	$(btn).attr("disabled","disabled");
 	var account = $("#userName").val().trim();
 	var password = $("#userPwd").val().trim();
 	var nickname = $("#nickName").val().trim();
 	$("#userPwd").val("");
 	if(account==""||password==""){
 		myAlert("用户名或密码不能为空");
+		$(btn).removeAttr("disabled");
 		return false;
 	}
 	//注册
@@ -26,6 +28,7 @@ function register(){
 	common.callAction(options, url, function(data) {
 		if (!data) {
 			myAlert("系统或网络异常");
+			$(btn).removeAttr("disabled");
 			return;
 		}
 		switch (data.status) {
@@ -36,6 +39,7 @@ function register(){
 			return;
 		default:
 			myAlert(data.message);
+			$(btn).removeAttr("disabled");
 			return;
 		}
 	});

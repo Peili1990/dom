@@ -38,10 +38,9 @@
    
   </section>
    <jsp:include page="layout/footer.jsp"></jsp:include>
-	<script type="text/javascript" src="js/index.js"></script>
 	<script>
 
-        $("#container").css({"height":$(".default").height()+90+"px"});
+        $("#container").css({"height":$(".default").height()+100+"px"});
         
   </script>
 </body>

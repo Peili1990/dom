@@ -12,11 +12,14 @@ import org.nv.dom.config.RedisConstant;
 import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
+import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
+import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,9 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	@Autowired
 	GameMapper gameMapper;
+	
+	@Autowired
+	PlayerMapper playerMapper;
 
 	@Override
 	public Map<String, Object> getApplyingGames() {
@@ -53,6 +59,9 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			if(gameMapper.queryHasAttendGameDao(applyDTO)>0){
 				result.put(PageParamType.BUSINESS_STATUS, -3);
 				result.put(PageParamType.BUSINESS_MESSAGE, "您已报名或参加其他版杀");
+			} else if(gameMapper.getPlayerNumDao(applyDTO.getGameId()) == applyDTO.getPlayerNum()){
+				result.put(PageParamType.BUSINESS_STATUS, -5);
+				result.put(PageParamType.BUSINESS_MESSAGE, "人数已报满");
 			} else if(gameMapper.applyForGameDao(applyDTO) == 1){
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "报名成功");
@@ -122,6 +131,10 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 							JacksonJSONUtils.beanToJSON(availableList).toString());
 					redisClient.delHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
 				}
+				ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
+				changeStatusDTO.setPlayerId(selectCharacterDTO.getPlayerId());
+				changeStatusDTO.setStatus(PlayerStatus.CHARACTER_SELECTED.getCode());
+				playerMapper.changePlayerStatus(changeStatusDTO);
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "角色选择成功");	
 			} else {
