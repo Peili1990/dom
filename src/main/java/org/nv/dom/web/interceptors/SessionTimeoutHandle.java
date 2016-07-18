@@ -1,10 +1,10 @@
 package org.nv.dom.web.interceptors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.account.LoginDTO;
 import org.nv.dom.util.CookiesUtil;
+import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.service.AccountService;
 import org.slf4j.Logger;
@@ -68,13 +68,12 @@ public class SessionTimeoutHandle {
 	        } else {
 	            //http
 	            String url = httpServletRequest.getContextPath() + loginUrl;
-
-	            String referer = httpServletRequest.getRequestURL().toString() +
-	                                    (StringUtils.isNotBlank(httpServletRequest.getQueryString()) ?
-	                                            "?" + httpServletRequest.getQueryString() : "");
-	            if (referer != null && referer.contains("?r=")==false) {
-	                url += "?r=" + URLEncoder.encode(referer, "utf-8");
-	            }
+				String referer = httpServletRequest.getRequestURL().toString()
+						+ (StringUtil.isNullOrEmpty(httpServletRequest.getQueryString())
+								? "?" + httpServletRequest.getQueryString() : "");
+				if (referer != null && referer.contains("?r=") == false) {
+					url += "?r=" + URLEncoder.encode(referer, "utf-8");
+				}
 	            httpServletResponse.sendRedirect(url);
 	        }
 		}
