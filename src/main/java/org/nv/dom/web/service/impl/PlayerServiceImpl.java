@@ -20,7 +20,6 @@ public class PlayerServiceImpl implements PlayerService {
 		if(playerInfo == null){
 			return null;
 		}
-		playerInfo.setIdentityDesc(IdentityCode.getMessageByCode(playerInfo.getIdentity()));
 		playerInfo.setCharacterName(playerInfo.getIsSp().equals(NVTermConstant.IS_SP) ? 
 				"sp"+playerInfo.getCharacterName():playerInfo.getCharacterName());
 		return playerInfo;

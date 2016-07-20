@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-07-18 18:35:29
+Date: 2016-07-20 18:14:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,7 +97,7 @@ CREATE TABLE `d_game` (
   `description` varchar(32) DEFAULT NULL,
   `character_select` varchar(1) DEFAULT NULL COMMENT 'A 个人选择 B 3选1',
   `player_num` int(5) DEFAULT NULL,
-  `status` int(5) DEFAULT NULL COMMENT '0 取消 1 报名中 2 报名结束 3 进行中 4 复盘中 9 已结束',
+  `status` int(5) DEFAULT NULL COMMENT '0 取消 1 报名中 2 报名结束 3游戏开始前 4 进行中 5 复盘中 9 已结束',
   `estimated_start_date` date DEFAULT NULL,
   `actual_start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `d_game` (
 -- ----------------------------
 -- Records of d_game
 -- ----------------------------
-INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '19', '2', '2016-07-14', null, null, null, null);
+INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '19', '3', '2016-07-14', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `d_player`
@@ -159,31 +159,83 @@ CREATE TABLE `d_player_record` (
   `character_id` int(5) DEFAULT NULL,
   `is_sp` varchar(1) DEFAULT '' COMMENT '是否是sp',
   `apply_pioneer` varchar(1) DEFAULT NULL,
-  `identity` int(5) DEFAULT '0',
+  `sign` int(5) DEFAULT '0',
+  `identity_desc` varchar(32) DEFAULT NULL,
+  `isLife` int(1) DEFAULT NULL COMMENT '0 死亡 1 存活 ',
+  `action` varchar(255) DEFAULT NULL,
+  `action_time` datetime DEFAULT NULL,
+  `privilege` varchar(255) DEFAULT NULL,
+  `privilege_time` datetime DEFAULT NULL,
+  `feedback` varchar(255) DEFAULT NULL,
+  `vote` varchar(255) DEFAULT NULL,
+  `vote_time` datetime DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_player_record
 -- ----------------------------
-INSERT INTO `d_player_record` VALUES ('5', '6', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('8', '5', '1', '0', '0');
-INSERT INTO `d_player_record` VALUES ('10', '40', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('11', '19', '1', '0', '0');
-INSERT INTO `d_player_record` VALUES ('12', '1', '0', '1', '0');
-INSERT INTO `d_player_record` VALUES ('13', '35', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('14', '38', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('15', '4', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('16', '37', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('17', '30', '0', '1', '0');
-INSERT INTO `d_player_record` VALUES ('18', '16', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('19', '21', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('20', '9', '0', '1', '0');
-INSERT INTO `d_player_record` VALUES ('21', '27', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('22', '47', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('23', '41', '1', '1', '0');
-INSERT INTO `d_player_record` VALUES ('24', '54', '0', '0', '0');
-INSERT INTO `d_player_record` VALUES ('25', '48', '0', '0', '0');
+INSERT INTO `d_player_record` VALUES ('5', '6', '0', '1', '1', '警察（手铐）', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('8', '5', '1', '0', '22', '暴徒', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('10', '40', '0', '0', '11', '平民', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('11', '19', '1', '0', '10', '官员', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('12', '1', '0', '1', '11', '平民', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('13', '35', '0', '0', '17', '杀手（棍）', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('14', '38', '0', '0', '7', '牧师', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('15', '4', '0', '0', '8', '刺客', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('16', '37', '0', '0', '3', '警察（星型警徽）', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('17', '30', '0', '0', '19', '小偷', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('18', '16', '0', '0', '20', '间谍', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('19', '21', '0', '0', '11', '平民', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('20', '9', '0', '0', '13', '杀手（刀）', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('21', '27', '0', '0', '11', '平民', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('22', '47', '0', '1', '12', '先驱', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('23', '41', '1', '0', '11', '平民', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('24', '54', '0', '0', '9', '医生', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('25', '48', '0', '0', '21', '巫师', null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('26', '2', '0', '1', '23', '帮众', null, null, null, null, null, null, null, null, null);
+
+-- ----------------------------
+-- Table structure for `d_sign`
+-- ----------------------------
+DROP TABLE IF EXISTS `d_sign`;
+CREATE TABLE `d_sign` (
+  `id` int(5) NOT NULL DEFAULT '0',
+  `identity` varchar(32) DEFAULT NULL,
+  `desc` varchar(32) DEFAULT NULL,
+  `camp` int(1) DEFAULT NULL COMMENT '1 好人方 2 杀手方 3 契约方',
+  `avatar` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of d_sign
+-- ----------------------------
+INSERT INTO `d_sign` VALUES ('1', '警察', '手铐', '1', null);
+INSERT INTO `d_sign` VALUES ('2', '警察', '放大镜', '1', null);
+INSERT INTO `d_sign` VALUES ('3', '警察', '星型警徽', '1', null);
+INSERT INTO `d_sign` VALUES ('4', '警察', '雨伞', '1', null);
+INSERT INTO `d_sign` VALUES ('5', '警察', '问号', '1', null);
+INSERT INTO `d_sign` VALUES ('6', '警察', '天窗', '1', null);
+INSERT INTO `d_sign` VALUES ('7', '牧师', '十字架', '1', null);
+INSERT INTO `d_sign` VALUES ('8', '刺客', '弓箭', '1', null);
+INSERT INTO `d_sign` VALUES ('9', '医生', '针筒', '1', null);
+INSERT INTO `d_sign` VALUES ('10', '官员', '橡皮印章', '1', null);
+INSERT INTO `d_sign` VALUES ('11', '平民', '钱币', '1', null);
+INSERT INTO `d_sign` VALUES ('12', '先驱', '燃烧的钱币', '1', null);
+INSERT INTO `d_sign` VALUES ('13', '杀手', '刀', '2', null);
+INSERT INTO `d_sign` VALUES ('14', '杀手', '手枪', '2', null);
+INSERT INTO `d_sign` VALUES ('15', '杀手', '毒药瓶', '2', null);
+INSERT INTO `d_sign` VALUES ('16', '杀手', '套索', '2', null);
+INSERT INTO `d_sign` VALUES ('17', '杀手', '棍', '2', null);
+INSERT INTO `d_sign` VALUES ('18', '杀手', '扑克牌', '2', null);
+INSERT INTO `d_sign` VALUES ('19', '小偷', '钳子', '2', null);
+INSERT INTO `d_sign` VALUES ('20', '间谍', '眼镜', '2', null);
+INSERT INTO `d_sign` VALUES ('21', '巫师', '手杖', '2', null);
+INSERT INTO `d_sign` VALUES ('22', '暴徒', '炸药', '2', null);
+INSERT INTO `d_sign` VALUES ('23', '帮众', '沾血的钱币', '2', null);
+INSERT INTO `d_sign` VALUES ('24', null, '契约', '3', null);
 
 -- ----------------------------
 -- Table structure for `d_user`

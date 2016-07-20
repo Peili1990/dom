@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="css/index.css">
 <jsp:include page="layout/common.jsp"></jsp:include>
+<link rel="stylesheet" href="css/index.css">
 <title>维多利亚的噩梦</title>
 </head>
 <body>	

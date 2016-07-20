@@ -10,10 +10,15 @@ public class PlayerInfo {
 	private String isSp;
 	/** 角色名称 */
 	private String characterName;
-	/** 实际身份 */
-	private Integer identity;
+	/** 角色头像 */
+	private String characterAvatar;
+	/** 签 */
+	private Integer sign;
 	/** 实际身份描述 */
 	private String identityDesc;
+	/** 签头像 */
+	private String signAvatar;
+	
 	public long getPlayerId() {
 		return playerId;
 	}
@@ -38,11 +43,17 @@ public class PlayerInfo {
 	public void setCharacterName(String characterName) {
 		this.characterName = characterName;
 	}
-	public Integer getIdentity() {
-		return identity;
+	public String getCharacterAvatar() {
+		return characterAvatar;
 	}
-	public void setIdentity(Integer identity) {
-		this.identity = identity;
+	public void setCharacterAvatar(String characterAvatar) {
+		this.characterAvatar = characterAvatar;
+	}
+	public Integer getSign() {
+		return sign;
+	}
+	public void setSign(Integer sign) {
+		this.sign = sign;
 	}
 	public String getIdentityDesc() {
 		return identityDesc;
@@ -50,5 +61,11 @@ public class PlayerInfo {
 	public void setIdentityDesc(String identityDesc) {
 		this.identityDesc = identityDesc;
 	}
-
+	public String getSignAvatar() {
+		return signAvatar;
+	}
+	public void setSignAvatar(String signAvatar) {
+		this.signAvatar = signAvatar;
+	}
+	
 }

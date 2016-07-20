@@ -9,11 +9,13 @@
 			dpr.character_id AS characterId,
 			dpr.is_sp AS isSp,
 			dc.name AS characterName,
-			dpr.identity AS identity		
+			dpr.sign AS sign,
+			dpr.identity_desc AS identityDesc,
+			ds.avatar AS signAvatar		
 		FROM 
-			d_player_record dpr, d_character dc
+			d_player_record dpr, d_character dc, d_sign ds
 		WHERE
-			dpr.player_id = #{playerId} AND dc.id = dpr.character_id
+			dpr.player_id = #{playerId} AND dc.id = dpr.character_id AND dpr.sign=ds.id
 	
 	</select>
 	

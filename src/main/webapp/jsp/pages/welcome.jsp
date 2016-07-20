@@ -40,6 +40,8 @@
 				<c:choose>
 					<c:when test="${ playerInfo != null && playerInfo.characterId != null }">
 						${ playerInfo.characterName }
+						<img src="http://www.goddessfantasy.net/bbs/index.php?action=dlattach;topic=58357.0;attach=43256;image"
+						class="am-comment-avatar character-avatar">
 					</c:when>
 					<c:otherwise>	
 						还未选择
@@ -48,8 +50,9 @@
 				</c:choose>
 				<br>实际身份：
 				<c:choose>
-					<c:when test="${ playerInfo != null && playerInfo.identity != 0 }">
-						${ playerInfo.identity }
+					<c:when test="${ playerInfo != null && playerInfo.sign != 0 }">
+						${ playerInfo.identityDesc }
+						<img src="${ playerInfo.signAvatar }" class="am-comment-avatar sign-avatar">
 					</c:when>
 					<c:otherwise>
 						还未发放
