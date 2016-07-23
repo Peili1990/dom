@@ -6,6 +6,7 @@ import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
+import org.nv.dom.dto.player.SubmitOpreationDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -43,4 +44,8 @@ public interface GameMapper {
 	 * <p>选择角色</p>
 	 */
 	public int selectCharacterDAO(SelectCharacterDTO selectCharacterDTO);
+	/**
+	 * <p>提交操作</p>
+	 */
+	public int submitOpreationDao(SubmitOpreationDTO submitOpreationDTO);
 }

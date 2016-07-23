@@ -17,7 +17,7 @@
       	<jsp:include page="pages/welcome.jsp"></jsp:include> 
       </li>
       <li id="pageB" class="page-container" style="left:100%;display:none"> 
-      	<jsp:include page="submit/privilege.jsp" ></jsp:include> 
+      	<jsp:include page="pages/submit.jsp" ></jsp:include> 
       </li>
       <li id="pageC" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="submit/action.jsp" ></jsp:include> 

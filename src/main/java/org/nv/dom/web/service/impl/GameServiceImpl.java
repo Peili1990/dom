@@ -15,6 +15,7 @@ import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
+import org.nv.dom.dto.player.SubmitOpreationDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
@@ -158,6 +159,25 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			characterList.add(character.getId());
 		}
 		return characterList;
+	}
+
+	@Override
+	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(gameMapper.submitOpreationDao(submitOpreationDTO)==1){
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功！");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作失败！");
+			}
+		} catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
 	}
 
 }

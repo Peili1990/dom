@@ -132,5 +132,17 @@
 			#{applyPioneer}
 		)
 	</insert>
+	
+	<update id="submitOpreationDao" parameterType="SubmitOpreationDTO">
+	
+		UPDATE d_player_record dpr
+		SET
+			dpr.action=#{action},
+			dpr.privilege=#{privilege},
+			dpr.vote=#{vote}
+		WHERE
+			dpr.player_id=#{playerId}
+	
+	</update>
 
 </mapper>

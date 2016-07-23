@@ -330,10 +330,11 @@ function pageSwitch(pageA,pageB,callback){
 function setGoback(pageA,pageB){
 	$("#icon-home").css({"display":"none"});
 	$("#icon-arrow").css({"display":"block"}).click(function(){
+		window.scroll(0,0);
 		$('#pages').css({'-webkit-transform' : 'translate3d(0px, 0px, 0px)' , '-webkit-transition' : '300ms'});
 		$(pageA).css({'display' : 'none'});
 		$(pageB).css({'display' : 'block'});
-		$("#container").css({"height":$(pageB+' .default').height()+90+"px"});
+		$("#container").css({"height":$(pageB+' .default').height()+100+"px"});
 		$("#icon-arrow").css({"display":"none"});
 		$("#icon-home").css({"display":"block"});	
 	})

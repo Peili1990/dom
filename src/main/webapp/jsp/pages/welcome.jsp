@@ -60,6 +60,12 @@
 				</c:choose>
 			</div>	
 		</div>
+		<div class="group">
+			<div class="group-body">
+				<input type="button" class="am-btn am-btn-primary" value="提交操作"
+					style="width: 100%" onclick="pageSwitch('#pageA','#pageB')">
+			</div>
+		</div>
 	</c:if>
 	
 	<div class="card">
@@ -88,15 +94,5 @@
 		<div class="card-footer">查看更多 》</div>
 	</div>
 
-	<div class="group">
-		<header class="group-header">请选择操作</header>
-		<div class="group-body">
-			<input type="button" class="am-btn am-btn-success" value="提交特权" onclick="pageSwitch('#pageA','#pageB')">
-			<input type="button" class="am-btn am-btn-secondary" value="提交行动" onclick="pageSwitch('#pageA','#pageC')">
-			<input type="button" class="am-btn am-btn-default" value="提交投票" onclick="pageSwitch('#pageA','#pageD')">
-			<input type="button" class="am-btn am-btn-danger" value="提交发言" onclick="pageSwitch('#pageA','#pageE')">		
-			<input type="button" class="am-btn am-btn-warning" value="身份抽取" onclick="pageSwitch('#pageA','#pageF')">
-			<input type="button" class="am-btn am-btn-primary" value="查看特权">
-		</div>
-	</div>
+	
 </div>
