@@ -39,6 +39,32 @@
 
 <script type="text/javascript">
 
+	function getOpreation(){
+		var common = new Common();
+		var url=getRootPath() + "/game/getPlayerOpreation";
+		var options = {
+				playerId : $("#player-id").val(),
+		}
+		common.callAction(options, url, function(data){
+			if(!data){
+				return;
+			}
+			switch (data.status){
+			case 1:
+				$("input[name='action']").val(data.opreation.action);
+				$("input[name='privilege']").val(data.opreation.privilege);
+				$("input[name='vote']").val(data.opreation.vote);
+				return;
+			case 0:
+				timeoutHandle();
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}
+		})
+	}
+
 	function submit(btn){
 		$(btn).attr("disabled","disabled");
 		var action=$("input[name='action']").val().trim();

@@ -63,7 +63,7 @@
 		<div class="group">
 			<div class="group-body">
 				<input type="button" class="am-btn am-btn-primary" value="提交操作"
-					style="width: 100%" onclick="pageSwitch('#pageA','#pageB')">
+					style="width: 100%" onclick="pageSwitch('#pageA','#pageB','getOpreation()')">
 			</div>
 		</div>
 	</c:if>

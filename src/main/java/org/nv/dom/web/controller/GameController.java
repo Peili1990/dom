@@ -7,11 +7,13 @@ import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
 import org.nv.dom.dto.player.SubmitOpreationDTO;
 import org.nv.dom.web.service.GameService;
+import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -20,6 +22,9 @@ public class GameController extends BaseController{
 	
 	@Autowired
 	GameService gameService;
+	
+	@Autowired
+	PlayerService playerService;
 	
 	
 	@ResponseBody
@@ -50,6 +55,12 @@ public class GameController extends BaseController{
 	@RequestMapping(value = "/submitOpreation", method = RequestMethod.POST)
 	public Map<String, Object> submitOpreation(@ModelAttribute("submitOpreationDTO") SubmitOpreationDTO submitOpreationDTO){
 		return gameService.submitOpreation(submitOpreationDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getPlayerOpreation", method = RequestMethod.POST)
+	public Map<String, Object> getPlayerOpreation(@RequestParam("playerId") long playerId){
+		return playerService.getPlayerOpreation(playerId);
 	}
 
 }

@@ -29,5 +29,18 @@
 			dp.id=#{playerId}
 		
 	</update>
+	
+	<select id="getPlayerOpreation" parameterType="long" resultType="PlayerOpreation">
+	
+		SELECT 
+			dpr.action,
+			dpr.privilege,
+			dpr.vote
+		FROM
+			d_player_record dpr
+		WHERE
+			dpr.player_id = #{playerId}
+			
+	</select>
 
 </mapper>
