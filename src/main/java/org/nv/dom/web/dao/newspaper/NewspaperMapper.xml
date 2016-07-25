@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.newspaper.NewspaperMapper">
+
+	<select id="getNewspaperListDao" parameterType="long" resultType="Newspaper">
+	
+		SELECT 
+			dn.id AS newspaperId,
+			dn.header AS header			
+		FROM
+			d_newspaper dn, d_player dp, d_game dg
+		WHERE
+			dp.user_id=#{userId} AND dp.game_id=dg.id AND dg.id=dn.game_id
+	
+	</select>
+
+
+</mapper>
