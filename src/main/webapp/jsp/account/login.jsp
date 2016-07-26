@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<link rel="stylesheet" href="css/account/account.css">
 <jsp:include page="../layout/common.jsp"></jsp:include>
+<link rel="stylesheet" href="css/account/account.css">
 <title>维多利亚的噩梦登录</title>
 </head>
 <body>
+	<div class="bg-top"></div>
 	<form action="${ baseUrl }account/loginAction" class="wrapper" method="post" id="loginForm">
 		<div class="am-input-group">
 			<span class="am-input-group-label"><i
@@ -20,7 +21,9 @@
 		</div>
 		<input type="button" class="am-btn am-btn-primary" onclick="submitForm(this)" value="登录">
 		<input type="button" class="am-btn am-btn-danger" onclick="register()" value="注册">
-	</form>
+		
+	</form>	
+	<div class="bg-bottom"></div>
 	<script src="js/account/login.js" type="text/javascript"></script>	
 </body>
 </html>

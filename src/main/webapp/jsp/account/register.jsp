@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<link rel="stylesheet" href="css/account/account.css">
 <jsp:include page="../layout/common.jsp"></jsp:include>
+<link rel="stylesheet" href="css/account/account.css">
 <title>维多利亚的噩梦注册</title>
 </head>
 <body>
+	<div class="bg-top"></div>
 	<form action="${ baseUrl }account/registerAction" class="wrapper"
 		method="post" id="registerForm">
 		<div class="am-input-group">
@@ -28,6 +29,7 @@
 			value="登录"> <input type="button" class="am-btn am-btn-danger"
 			onclick="register(this)" value="注册">
 	</form>
+	<div class="bg-bottom"></div>
 	<script src="js/account/register.js" type="text/javascript"></script>
 </body>
 </html>

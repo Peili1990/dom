@@ -32,7 +32,7 @@
 				<tbody>
 					<tr>
 						<td>恩菲尔德</td>
-						<td>霍尔</td>
+						<td align="center">霍尔</td>
 						<td align="right">欧内斯特</td>
 					</tr>
 					<tr>
@@ -72,7 +72,7 @@
 					</tr>
 					<tr>
 						<td>艾尔威</td>
-						<td>劳伦</td>
+						<td align="center">劳伦</td>
 						<td align="right">伊卡</td>
 					</tr>
 				</tbody>
