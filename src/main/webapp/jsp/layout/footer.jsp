@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
   <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
-      id="">
+      id="nv-footer">
       <ul class="am-navbar-nav am-cf am-avg-sm-4">
           <li >
             <a href="${ baseUrl }index" class="">

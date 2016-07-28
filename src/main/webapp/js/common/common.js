@@ -334,7 +334,7 @@ function setGoback(pageA,pageB){
 		$('#pages').css({'-webkit-transform' : 'translate3d(0px, 0px, 0px)' , '-webkit-transition' : '300ms'});
 		$(pageA).css({'display' : 'none'});
 		$(pageB).css({'display' : 'block'});
-		$("#container").css({"height":$(pageB+' .default').height()+100+"px"});
+		$("#container").css({"height":$(pageB+' .default').height()+100>$("html").height()?$(pageB+' .default').height()+100+"px":$("html").height()});
 		$("#icon-arrow").css({"display":"none"});
 		$("#icon-home").css({"display":"block"});	
 	})
@@ -381,4 +381,6 @@ function timeoutHandle(){
 		window.location = getRootPath() + "/login";
 	});
 }
+
+
 

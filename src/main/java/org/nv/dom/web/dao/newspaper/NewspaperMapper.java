@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface NewspaperMapper {
 	
 	List<Newspaper> getNewspaperListDao(long userId);
+	
+	public Newspaper getNewspaperDetailDao(long newspaperId);
 
 }

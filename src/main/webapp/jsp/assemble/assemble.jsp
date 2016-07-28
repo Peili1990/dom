@@ -17,7 +17,7 @@
 		 <jsp:include page="assemble-all.jsp"></jsp:include>
       </li>
       <li id="pageB" class="page-container" style="left:100%;display:none"> 
-		 <jsp:include page="assemble-day.jsp"></jsp:include>
+		 <jsp:include page="assemble-detail.jsp"></jsp:include>
       </li>
     </ul>   
   </section>

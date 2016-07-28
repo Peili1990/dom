@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<link rel="stylesheet" type="text/css" href="${baseUrl }css/jscrollpane1.css" />
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <link rel="stylesheet" href="${baseUrl}assets/css/amazeui.min.css">
 <link href="${baseUrl}mobiscroll/css/mobiscroll.custom-2.6.2.min.css" rel="stylesheet" type="text/css">
@@ -33,3 +34,27 @@
 </div>
 
 <div class="dw-hidden" role="alert"></div>
+
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default invisible" id="nv-chatbar">
+	<div class="talk_word">
+		<textarea class="messages"></textarea>
+		<input type="button" class="am-btn am-btn-default" value="发送"/>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$("#nv-chatbar .messages").keyup(function(){
+			var html = $("#nv-chatbar .messages").val();
+		    var count = 1;
+			html.replace(/\n/g,function(w){
+		        count++
+		    })
+		    if(count>1){
+		    	$("#nv-chatbar .messages").css({"height":count*18+"px"});
+		    	$("#nv-chatbar .talk_word").css({"height":count*18+14+"px"});
+		    	$("#nv-chatbar").css({"height":count*18+14+"px"});
+		    }
+	})
+
+</script>

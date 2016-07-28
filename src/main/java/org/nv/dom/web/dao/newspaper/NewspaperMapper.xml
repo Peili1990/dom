@@ -13,6 +13,24 @@
 			dp.user_id=#{userId} AND dp.game_id=dg.id AND dg.id=dn.game_id AND dn.status = 1
 	
 	</select>
+	
+	<select id="getNewspaperDetailDao" parameterType="long" resultType="Newspaper">
+	
+		SELECT 
+			dn.id AS newspaperId,
+			dn.header AS header,
+			dn.headline AS headline,
+			dn.headline_body AS headlineBody,
+			dn.subedition AS subedition,
+			dn.important_notice AS importantNotice,
+			dn.seat_table AS seatTable,
+			dn.type AS type
+		FROM
+			d_newspaper dn
+		WHERE
+			dn.id = #{newspaperId}
+	
+	</select>
 
 
 </mapper>

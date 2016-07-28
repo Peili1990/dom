@@ -36,6 +36,22 @@ public class AssembleServiceImpl implements AssembleService {
 		return result;
 	}
 	
+	@Override
+	public Map<String, Object> getNewspaperDetail(long newspaperId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			Newspaper newspaper = newspaperMapper.getNewspaperDetailDao(newspaperId);
+			result.put("newspaperDetail", newspaper);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取报纸详情成功");
+		}catch(Exception e){
+			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+	
 	
 
 }
