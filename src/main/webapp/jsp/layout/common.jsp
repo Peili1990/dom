@@ -38,23 +38,27 @@
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default invisible" id="nv-chatbar">
 	<div class="talk_word">
 		<textarea class="messages"></textarea>
+		<input type="button" class="am-btn am-btn-default" value="动作" id="use-gesture"/>
 		<input type="button" class="am-btn am-btn-default" value="发送"/>
 	</div>
 </div>
 
 <script type="text/javascript">
 
-	$("#nv-chatbar .messages").keyup(function(){
-			var html = $("#nv-chatbar .messages").val();
-		    var count = 1;
-			html.replace(/\n/g,function(w){
-		        count++
-		    })
-		    if(count>1){
-		    	$("#nv-chatbar .messages").css({"height":count*18+"px"});
-		    	$("#nv-chatbar .talk_word").css({"height":count*18+14+"px"});
-		    	$("#nv-chatbar").css({"height":count*18+14+"px"});
-		    }
+	$("#nv-chatbar .messages").keydown(function(){
+			
+		    	$("#nv-chatbar .messages").css({"height":"auto"}).css({"height":$("#nv-chatbar .messages")[0].scrollHeight-6+"px"});
+		    	$("#nv-chatbar .talk_word").css({"height":$("#nv-chatbar .messages")[0].scrollHeight+8+"px"});
+		    	$("#nv-chatbar").css({"height":$("#nv-chatbar .messages")[0].scrollHeight+8+"px"});
+	})
+	
+	
+	$("#use-gesture").on("click",function(){
+		if($(this).hasClass("am-btn-danger")){
+			$(this).removeClass("am-btn-danger").addClass("am-btn-default");
+		}else{
+			$(this).removeClass("am-btn-default").addClass("am-btn-danger");
+		}
 	})
 
 </script>

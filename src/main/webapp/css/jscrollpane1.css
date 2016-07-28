@@ -81,7 +81,7 @@ a{blr:expression(this.onFocus=this.blur())}/*去掉a标签的虚线框，避免�
 }
 .messages {
 	height: 36px;
-	width: 80%;
+	width: 60%;
 	margin-top:7px;
 	margin-right:10px;
 	padding-top:10px;
@@ -101,6 +101,7 @@ a{blr:expression(this.onFocus=this.blur())}/*去掉a标签的虚线框，避免�
 	width: 17%;
     height: 34px;
     margin-top:-4px;
+    margin-right:0.5%;
     font-size:1.6rem;
     text-align:center;
     border-radius: 3px;

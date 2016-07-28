@@ -337,6 +337,8 @@ function setGoback(pageA,pageB){
 		$("#container").css({"height":$(pageB+' .default').height()+100>$("html").height()?$(pageB+' .default').height()+100+"px":$("html").height()});
 		$("#icon-arrow").css({"display":"none"});
 		$("#icon-home").css({"display":"block"});	
+		$("#nv-chatbar").addClass("invisible");
+		$("#nv-footer").removeClass("invisible");
 	})
 }
 
