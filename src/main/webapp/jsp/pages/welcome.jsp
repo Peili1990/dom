@@ -16,7 +16,7 @@
 				<c:when test="${ userInfo.userCurRole eq 'player' }">
 					<div class="card-body">
 					目前你正在参加${ userInfo.gameDesc }
-					<span style="float:right">去看看 》</span>
+					<a href="${ baseUrl}assemble"><span style="float:right">去看看 》</span></a>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -60,12 +60,14 @@
 				</c:choose>
 			</div>	
 		</div>
-		<div class="group">
-			<div class="group-body">
-				<input type="button" class="am-btn am-btn-primary" value="提交操作"
-					style="width: 100%" onclick="pageSwitch('#pageA','#pageB','getOpreation()')">
+		<c:if test="${ userInfo.gameStatus >= 3 }">
+			<div class="group">
+				<div class="group-body">
+					<input type="button" class="am-btn am-btn-primary" value="提交操作"
+						style="width: 100%" onclick="pageSwitch('#pageA','#pageB','getOpreation()')">
+				</div>
 			</div>
-		</div>
+		</c:if>
 	</c:if>
 	
 	<div class="card">

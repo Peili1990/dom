@@ -327,6 +327,10 @@ function pageSwitch(pageA,pageB,callback){
     $("#container").css({"height":$(pageB+' .default').height()+100>$("html").height()?$(pageB+' .default').height()+100+"px":$("html").height() });
 }
 
+function adjustContainerHeight(page){
+	$("#container").css({"height":$(page+' .default').height()+100>$("html").height()?$(page+' .default').height()+100+"px":$("html").height() });
+}
+
 function setGoback(pageA,pageB){
 	$("#icon-home").css({"display":"none"});
 	$("#icon-arrow").css({"display":"block"}).click(function(){

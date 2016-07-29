@@ -2,9 +2,17 @@ package org.nv.dom.domain.player;
 
 public class PlayerOpreation {
 	
+	private String curStage;
 	private String action;
 	private String privilege;
 	private String vote;
+	
+	public String getCurStage() {
+		return curStage;
+	}
+	public void setCurStage(String curStage) {
+		this.curStage = curStage;
+	}
 	public String getAction() {
 		return action;
 	}

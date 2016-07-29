@@ -24,7 +24,9 @@
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
-			dg.status = 1 AND dp.role='player' AND dp.game_id=dg.id
+			dp.game_id=dg.id AND dp.role='player'
+		WHERE	
+			dg.status = 1 
 		GROUP BY
 			dg.id
 				
@@ -117,6 +119,18 @@
 			
 	</select>
 	
+	<select id="queryCharacterAvailable" parameterType="SelectCharacterDTO" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player dp,d_player_record dpr
+		WHERE
+			dp.game_id=#{gameId} AND dp.id=dpr.player_id AND dpr.character_id = #{characterId}
+	
+	</select>
+	
+	
 	<insert id="selectCharacterDAO" parameterType="SelectCharacterDTO">
 	
 		INSERT INTO d_player_record (
@@ -132,17 +146,5 @@
 			#{applyPioneer}
 		)
 	</insert>
-	
-	<update id="submitOpreationDao" parameterType="SubmitOpreationDTO">
-	
-		UPDATE d_player_record dpr
-		SET
-			dpr.action=#{action},
-			dpr.privilege=#{privilege},
-			dpr.vote=#{vote}
-		WHERE
-			dpr.player_id=#{playerId}
-	
-	</update>
 
 </mapper>

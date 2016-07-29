@@ -47,9 +47,9 @@
 
 	$("#nv-chatbar .messages").keydown(function(){
 			
-		    	$("#nv-chatbar .messages").css({"height":"auto"}).css({"height":$("#nv-chatbar .messages")[0].scrollHeight-6+"px"});
-		    	$("#nv-chatbar .talk_word").css({"height":$("#nv-chatbar .messages")[0].scrollHeight+8+"px"});
-		    	$("#nv-chatbar").css({"height":$("#nv-chatbar .messages")[0].scrollHeight+8+"px"});
+		  $("#nv-chatbar .messages").css({"height":"auto"}).css({"height":$("#nv-chatbar .messages")[0].scrollHeight-6+"px"});
+		  $("#nv-chatbar .talk_word").css({"height":$("#nv-chatbar .messages").height()+25+"px"});
+		  $("#nv-chatbar").css({"height":$("#nv-chatbar .messages").height()+25+"px"});
 	})
 	
 	

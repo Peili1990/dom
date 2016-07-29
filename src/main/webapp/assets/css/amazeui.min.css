@@ -53,7 +53,7 @@ audio:not([controls]) {
 	display:none
 }
 a {
-	color:#0e90d2
+	color:black;
 }
 a:active,a:hover {
 	outline:0

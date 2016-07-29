@@ -17,6 +17,8 @@ public class UserCurRole {
 	private long gameId;
 	/** 游戏名称 */
 	private String gameDesc;
+	/** 游戏状态 */
+	private String gameStatus;
 	public long getUserId() {
 		return userId;
 	}
@@ -58,6 +60,12 @@ public class UserCurRole {
 	}
 	public void setGameDesc(String gameDesc) {
 		this.gameDesc = gameDesc;
+	}
+	public String getGameStatus() {
+		return gameStatus;
+	}
+	public void setGameStatus(String gameStatus) {
+		this.gameStatus = gameStatus;
 	}
 
 }

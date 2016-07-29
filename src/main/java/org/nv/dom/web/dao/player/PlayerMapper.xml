@@ -13,9 +13,9 @@
 			dpr.identity_desc AS identityDesc,
 			ds.avatar AS signAvatar		
 		FROM 
-			d_player_record dpr, d_character dc, d_sign ds
+			d_character dc, d_player_record dpr LEFT JOIN d_sign ds ON dpr.sign=ds.id
 		WHERE
-			dpr.player_id = #{playerId} AND dc.id = dpr.character_id AND dpr.sign=ds.id
+			dpr.player_id = #{playerId} AND dc.id = dpr.character_id 
 	
 	</select>
 	
@@ -33,14 +33,32 @@
 	<select id="getPlayerOpreation" parameterType="long" resultType="PlayerOpreation">
 	
 		SELECT 
-			dpr.action,
-			dpr.privilege,
-			dpr.vote
+			df.header AS curStage,
+			dpr.action AS action,
+			dpr.privilege AS privilege,
+			dpr.vote AS vote
 		FROM
-			d_player_record dpr
+			d_player_record dpr, d_form df, d_player dp
 		WHERE
-			dpr.player_id = #{playerId}
+			dpr.player_id = #{playerId} AND dpr.player_id = dp.id AND dp.game_id = df.game_id
+		ORDER BY
+			df.id
+		DESC
+		LIMIT 1
 			
 	</select>
+	
+	<update id="submitOpreationDao" parameterType="SubmitOpreationDTO">
+	
+		UPDATE d_player_record dpr
+		SET
+			dpr.action=#{action},
+			dpr.privilege=#{privilege},
+			dpr.vote=#{vote},
+			dpr.submit_time=NOW()
+		WHERE
+			dpr.player_id=#{playerId}
+	
+	</update>
 
 </mapper>

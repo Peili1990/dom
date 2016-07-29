@@ -6,7 +6,6 @@ import java.util.Map;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
-import org.nv.dom.dto.player.SubmitOpreationDTO;
 
 public interface GameService {
 	
@@ -18,5 +17,4 @@ public interface GameService {
 
 	public Map<String, Object> selectCharacter(SelectCharacterDTO selectCharacterDTO);
 	
-	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO);
 }

@@ -33,4 +33,16 @@
 	margin-top:-50px
 }
 
+#select-character-all #target_select_dummy{
+	border:1px solid #cccccc;
+	width:120px;
+}
+
+#select-character-all img{
+	float:right;
+	height:50px;
+	width:50px;
+	margin-top:-54px;
+}
+
 

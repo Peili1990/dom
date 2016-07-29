@@ -8,6 +8,7 @@ import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOpreation;
+import org.nv.dom.dto.player.SubmitOpreationDTO;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,23 @@ public class PlayerServiceImpl implements PlayerService {
 		return result;
 	}
 	
+	@Override
+	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(playerMapper.submitOpreationDao(submitOpreationDTO)==1){
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功！");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作失败！");
+			}
+		} catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
 	
-
 }

@@ -15,7 +15,6 @@ import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
-import org.nv.dom.dto.player.SubmitOpreationDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
@@ -117,31 +116,31 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	public Map<String, Object> selectCharacter(SelectCharacterDTO selectCharacterDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			if(gameMapper.selectCharacterDAO(selectCharacterDTO) == 1){
-				String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
-						String.valueOf(selectCharacterDTO.getPlayerId()));
-				if(StringUtil.isNullOrEmpty(characterStr)){
-					
-				} else {
-					List<NVCharacter> characters = JacksonJSONUtils.jsonToList(characterStr, NVCharacter.class);
-					List<Integer> availableList = JacksonJSONUtils.jsonToList(
-							redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
-								String.valueOf(selectCharacterDTO.getGameId())),Integer.class);
-					availableList.addAll(getCharacterList(characters, selectCharacterDTO.getCharacterId()));
-					redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(selectCharacterDTO.getGameId()),
-							JacksonJSONUtils.beanToJSON(availableList).toString());
-					redisClient.delHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
+			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
+					String.valueOf(selectCharacterDTO.getPlayerId()));
+			if(StringUtil.isNullOrEmpty(characterStr)){
+				if(gameMapper.queryCharacterAvailable(selectCharacterDTO)==1){
+					result.put(PageParamType.BUSINESS_STATUS, -3);
+					result.put(PageParamType.BUSINESS_MESSAGE, "该角色已被选择");
+					return result;
 				}
-				ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
-				changeStatusDTO.setPlayerId(selectCharacterDTO.getPlayerId());
-				changeStatusDTO.setStatus(PlayerStatus.CHARACTER_SELECTED.getCode());
-				playerMapper.changePlayerStatus(changeStatusDTO);
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "角色选择成功");	
 			} else {
-				result.put(PageParamType.BUSINESS_STATUS,-3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "角色选择失败");	
+				List<NVCharacter> characters = JacksonJSONUtils.jsonToList(characterStr, NVCharacter.class);
+				List<Integer> availableList = JacksonJSONUtils.jsonToList(
+						redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
+							String.valueOf(selectCharacterDTO.getGameId())),Integer.class);
+				availableList.addAll(getCharacterList(characters, selectCharacterDTO.getCharacterId()));
+				redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(selectCharacterDTO.getGameId()),
+						JacksonJSONUtils.beanToJSON(availableList).toString());
+				redisClient.delHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
 			}
+			gameMapper.selectCharacterDAO(selectCharacterDTO);
+			ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
+			changeStatusDTO.setPlayerId(selectCharacterDTO.getPlayerId());
+			changeStatusDTO.setStatus(PlayerStatus.CHARACTER_SELECTED.getCode());
+			playerMapper.changePlayerStatus(changeStatusDTO);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "角色选择成功");	
 		} catch(Exception e){
 			logger.error(e.getMessage(), e);
 			result.put(PageParamType.BUSINESS_STATUS,-1);
@@ -159,25 +158,6 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			characterList.add(character.getId());
 		}
 		return characterList;
-	}
-
-	@Override
-	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			if(gameMapper.submitOpreationDao(submitOpreationDTO)==1){
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功！");
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作失败！");
-			}
-		} catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
-		return result;
 	}
 
 }

@@ -54,7 +54,7 @@ public class GameController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/submitOpreation", method = RequestMethod.POST)
 	public Map<String, Object> submitOpreation(@ModelAttribute("submitOpreationDTO") SubmitOpreationDTO submitOpreationDTO){
-		return gameService.submitOpreation(submitOpreationDTO);
+		return playerService.submitOpreation(submitOpreationDTO);
 	}
 	
 	@ResponseBody

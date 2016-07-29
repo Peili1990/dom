@@ -28,6 +28,37 @@
 </div>
 
 <div class="default invisible" id="select-character-all">
+	<div class="card">
+		<div class="card-header">
+			<h2 class="card-title">请选择你的外在身份：</h2>
+		</div>
+		<div class="card-body">
+			<div class="group-body">
+				<div class="am-input-group am-input-group-primary">
+					<span class="am-input-group-label">角色</span>
+					<input type="text" id="target_select_dummy" class="am-form-field">
+  					<select id="target_select">	
+					</select>				
+				</div>
+				<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50"
+				class="am-comment-avatar">				
+			</div>
+			<hr style="margin:0" class="am-divider am-divider-default" />
+			<div class="card-body">
+				是否选sp<input id="is-sp-all" class="mui-switch mui-switch-animbg" type="checkbox">
+			</div>
+			<hr style="margin:0" class="am-divider am-divider-default" />
+			<div class="card-body">
+				是否申请先驱<input id="apply-pioneer-all" class="mui-switch mui-switch-animbg" type="checkbox">
+			</div>
+		</div>
+	</div>
+	<div class="group">
+		<div class="group-body">
+			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
+				value="提交" onclick="selectCharacter(this)">
+		</div>
+	</div>
 
 </div>
 
@@ -35,19 +66,45 @@
 
 <script type="text/javascript">
 
+	var characters; 
+
 	function getCharacterList(characterSelect){
 		if($("#select-character-three").hasClass("invisible")&&
 				$("#select-character-all").hasClass("invisible")){
 			var playerId = $("#player-id").val();
 			var gameId = $("#game-id").val();
 			if(characterSelect == 1){
-				
+				getCharacterListAll();
 			}
 			else{
 				getCharacterListThree(playerId,gameId);
 			}
 		}
 	}
+	function getCharacterListAll(){
+		$.get('${baseUrl}file/character-list.json').success(function(data){
+			characters=data.characters;
+			$.each(characters,function(index,character){
+				$("#target_select").append("<option value='"+character.characterId+"'>"+character.characterName+"</option>");
+			})
+			$('#target_select').val('').scroller('destroy').scroller(
+		        $.extend({preset : 'select'}, { 
+		             theme:'android-ics light', 
+		              mode:'scroller', 
+		           display:'bottom', 
+		              lang:'zh'
+		        })
+			);
+			$("#select-character-all").removeClass("invisible");
+		})
+	}
+	
+	$("#target_select").change(function(){
+		var index = $("#target_select option:selected").val()-1;
+		$("#select-character-all").find("img").attr("src",characters[index].avatar);
+		$("#is-sp-all").removeAttr("checked").attr("disabled",characters[index].hasSp==1?false:true);
+		$("#selected-character").val(characters[index].characterId);
+	})
 
 	function getCharacterListThree(playerId,gameId){
 		var common = new Common();
@@ -116,7 +173,8 @@
 			isSp = $("#is-sp").is(":checked") ? "1":"0";
 			applyPioneer = $("#apply-pioneer").is(":checked") ? "1":"0";
 		} else {
-			
+			isSp = $("#is-sp-all").is(":checked") ? "1":"0";
+			applyPioneer = $("#apply-pioneer-all").is(":checked") ? "1":"0";
 		}
 		var url = getRootPath()+"/game/selectCharacter";
 		var options = {

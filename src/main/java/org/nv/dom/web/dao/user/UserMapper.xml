@@ -11,7 +11,8 @@
 			dp.status AS status,
 			dp.role AS userCurRole,
 			dg.id AS gameId,
-			dg.description AS gameDesc
+			dg.description AS gameDesc,
+			dg.status AS gameStatus
 		FROM 
 			d_user du LEFT JOIN (d_game dg JOIN d_player dp ON dp.game_id = dg.id AND dg.status != 9)
 		ON

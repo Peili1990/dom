@@ -7,7 +7,7 @@
 			<form class="am-form">
 				<fieldset>
 					<legend>提交操作</legend>
-					<span>当前第一夜，请提交你的操作：</span>
+					<span id="cur-stage"></span>
 					<div class="group">
 						<div class="group-body">
 						<label>行动</label> 
@@ -51,6 +51,7 @@
 			}
 			switch (data.status){
 			case 1:
+				$("#cur-stage").text("当前"+data.opreation.curStage+"，请提交你的操作：");
 				$("input[name='action']").val(data.opreation.action);
 				$("input[name='privilege']").val(data.opreation.privilege);
 				$("input[name='vote']").val(data.opreation.vote);
