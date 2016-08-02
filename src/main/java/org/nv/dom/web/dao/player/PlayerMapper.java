@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerMapper {
 	
-	public PlayerInfo getPlayerInfo(long playerId);
+	public PlayerInfo getPlayerInfo(long userId);
 	
 	public int changePlayerStatus(ChangeStatusDTO changeStatusDTO);
 	

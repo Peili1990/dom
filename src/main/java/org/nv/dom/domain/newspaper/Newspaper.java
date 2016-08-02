@@ -18,6 +18,8 @@ public class Newspaper {
 	private String importantNotice;
 	/** 座次表 */
 	private String seatTable;
+	/** 报纸状态 */
+	private String status;
 	/** 报纸类型 */
 	private Integer type;
 	
@@ -68,6 +70,12 @@ public class Newspaper {
 	}
 	public void setSeatTable(String seatTable) {
 		this.seatTable = seatTable;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public Integer getType() {
 		return type;

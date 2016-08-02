@@ -35,3 +35,23 @@
           </li>
       </ul>
   </div>
+  
+  <script type="text/javascript">
+  	var userId = ${user.id}
+  	var webSocket = new WebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
+  	
+	
+  	webSocket.onerror = function(event) {
+		myAlert(event.data);
+	};
+
+	webSocket.onopen = function(event) {
+		
+	};
+
+	webSocket.onmessage = function(event) {
+		myInfo(event.data);
+	};
+
+
+  </script>

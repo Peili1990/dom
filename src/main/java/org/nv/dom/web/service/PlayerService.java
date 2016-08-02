@@ -7,7 +7,7 @@ import org.nv.dom.dto.player.SubmitOpreationDTO;
 
 public interface PlayerService {
 	
-	public PlayerInfo getPlayerInfo(long playerId);
+	public PlayerInfo getPlayerInfoByUserId(long userId);
 	
 	public Map<String, Object> getPlayerOpreation(long playerId);
 	

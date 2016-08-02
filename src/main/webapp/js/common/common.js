@@ -8,7 +8,7 @@ var Common = function() {
 	// data参数：为异步传输的参数，需定义为JSON格式
 	// url参数：为异步访问路径
 	// callback参数：为AJAX执行成功的回调函数需为function(){};
-	this.callAction = function(data, url, callback) {
+	this.callAction = function(data, url, callback, dataType) {
 		$.ajax({
 			type : "POST",
 			url : url,

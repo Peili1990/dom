@@ -39,6 +39,7 @@ public class BasicServiceImpl implements BasicService {
 		}
 		result.put(PageParamType.session_user, user);
 		result.put(PageParamType.nav_show_name, showName);
+		result.put(PageParamType.CHAT_SERVER, ConfigUtil.getVersionConfigProperty("chat.server"));
 		result.put(PageParamType.pic_server, ConfigUtil.getVersionConfigProperty("pic.server"));
 		result.put(PageParamType.base_url, CacheData.getBaseUrl());
 		return result;

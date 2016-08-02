@@ -5,6 +5,7 @@
 	<select id="getPlayerInfo" parameterType="long" resultType="PlayerInfo">
 	
 		SELECT 
+			dp.game_id AS gameId,
 			dpr.player_id AS playerId,
 			dpr.character_id AS characterId,
 			dpr.is_sp AS isSp,
@@ -13,9 +14,9 @@
 			dpr.identity_desc AS identityDesc,
 			ds.avatar AS signAvatar		
 		FROM 
-			d_character dc, d_player_record dpr LEFT JOIN d_sign ds ON dpr.sign=ds.id
+			d_player dp, d_character dc, d_player_record dpr LEFT JOIN d_sign ds ON dpr.sign=ds.id
 		WHERE
-			dpr.player_id = #{playerId} AND dc.id = dpr.character_id 
+			dp.user_Id = #{userId} AND dpr.player_id = dp.id AND dp.status != 9 AND dc.id = dpr.character_id 
 	
 	</select>
 	

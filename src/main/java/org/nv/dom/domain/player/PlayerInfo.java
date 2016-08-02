@@ -2,6 +2,8 @@ package org.nv.dom.domain.player;
 
 public class PlayerInfo {
 	
+	/** 游戏id */
+	private long gameId;
 	/** 玩家id */
 	private long playerId;
 	/** 角色id */
@@ -12,6 +14,8 @@ public class PlayerInfo {
 	private String characterName;
 	/** 角色头像 */
 	private String characterAvatar;
+	/** 角色头像（杀手方） */
+	private String characterKillerAvatar;
 	/** 签 */
 	private Integer sign;
 	/** 实际身份描述 */
@@ -19,6 +23,12 @@ public class PlayerInfo {
 	/** 签头像 */
 	private String signAvatar;
 	
+	public long getGameId() {
+		return gameId;
+	}
+	public void setGameId(long gameId) {
+		this.gameId = gameId;
+	}
 	public long getPlayerId() {
 		return playerId;
 	}
@@ -48,6 +58,12 @@ public class PlayerInfo {
 	}
 	public void setCharacterAvatar(String characterAvatar) {
 		this.characterAvatar = characterAvatar;
+	}
+	public String getCharacterKillerAvatar() {
+		return characterKillerAvatar;
+	}
+	public void setCharacterKillerAvatar(String characterKillerAvatar) {
+		this.characterKillerAvatar = characterKillerAvatar;
 	}
 	public Integer getSign() {
 		return sign;

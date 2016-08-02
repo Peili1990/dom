@@ -31,10 +31,11 @@ public class IndexController extends BaseController {
 			return mav;
 		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
-		UserCurRole userInfo = userService.getUserCurRole((User) session.getAttribute(PageParamType.user_in_session));
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		UserCurRole userInfo = userService.getUserCurRole(user);
 		mav.addObject("userInfo", userInfo);
 		if(userInfo.getPlayerId()>0L){
-			mav.addObject("playerInfo", playerService.getPlayerInfo(userInfo.getPlayerId()));
+			mav.addObject("playerInfo", playerService.getPlayerInfoByUserId(user.getId()));
 		}
 		return mav;
 	}

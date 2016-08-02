@@ -42,6 +42,7 @@
 </div>
 
 <script type="text/javascript">
+var playerInfo = ${playerInfoStr}
 
 function getNewspaperDetail(newspaperId){
 	var url = getRootPath() + "/getAssembleDetail";
@@ -55,7 +56,7 @@ function getNewspaperDetail(newspaperId){
 		}
 		switch (data.status){
 		case 1:
-			var newspaperDetail = data.newspaperDetail;
+			newspaperDetail = data.newspaperDetail;
 			var builder = new StringBuilder();
 			$("#newspaper-content").empty();
 			builder.appendFormat("<div class='card-header'><h2 class='card-title'>{0}</h2></div>",newspaperDetail.header);
@@ -84,9 +85,12 @@ function getNewspaperDetail(newspaperId){
 			if(newspaperDetail.seatTable){
 				$("#seat-table").append(newspaperDetail.seatTable);
 			}
-			if(newspaperDetail.type == 1){
+			if(newspaperDetail.type == 1 && newspaperDetail.status == 1){
 				$("#nv-footer").addClass("invisible");
 				$("#nv-chatbar").removeClass("invisible");
+				$("#send-message").on("click",function(){
+					sumbitSpeech(newspaperId);
+				})
 			}
 			$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });
 			return;
@@ -98,6 +102,24 @@ function getNewspaperDetail(newspaperId){
 			return;
 		}		
 	});
+}
+
+function sumbitSpeech(newspaperId){
+	var options = {
+		newspaperId : newspaperId,
+		gameId : playerInfo.gameId,
+		playerId : playerInfo.playerId,
+		characterId : playerInfo.characterId,
+		characterName : characterName,
+		avatar : characterAvatar,
+		content : $("#nv-chatbar .messages").val(),
+		type : $("#use-gesture").hasClass("am-btn-danger") ? 2 : 1
+	}
+	var url = "http://" + "${chatServer}" + "/sumbitSpeech";
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		
+	})
 }
 
 </script>

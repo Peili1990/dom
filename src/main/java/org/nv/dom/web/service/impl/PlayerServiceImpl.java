@@ -23,9 +23,9 @@ public class PlayerServiceImpl implements PlayerService {
 	PlayerMapper playerMapper;
 
 	@Override
-	public PlayerInfo getPlayerInfo(long playerId) {
+	public PlayerInfo getPlayerInfoByUserId(long userId) {
 		try{
-			PlayerInfo playerInfo = playerMapper.getPlayerInfo(playerId);
+			PlayerInfo playerInfo = playerMapper.getPlayerInfo(userId);
 			if(playerInfo == null){
 				return null;
 			}
