@@ -110,8 +110,8 @@ function sumbitSpeech(newspaperId){
 		gameId : playerInfo.gameId,
 		playerId : playerInfo.playerId,
 		characterId : playerInfo.characterId,
-		characterName : characterName,
-		avatar : characterAvatar,
+		characterName : playerInfo.characterName,
+		avatar : playerInfo.characterAvatar,
 		content : $("#nv-chatbar .messages").val(),
 		type : $("#use-gesture").hasClass("am-btn-danger") ? 2 : 1
 	}
