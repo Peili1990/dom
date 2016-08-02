@@ -52,7 +52,7 @@
 		FROM
 			d_user du, d_player dp
 		WHERE
-			dp.role = "judger" AND dp.user_id = du.id AND dp.game_id = #{gameId}
+			dp.role = "judger" AND dp.user_id = du.id AND dp.game_id = #{gameId} 
 	
 	</select>
 	
@@ -63,7 +63,7 @@
 		FROM
 			d_player
 		WHERE
-			user_id = #{userId}
+			user_id = #{userId} AND status != 9
 	
 	</select>
 	
