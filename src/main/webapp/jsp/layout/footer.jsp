@@ -11,7 +11,9 @@
           </li>
           <li >
             <a href="${ baseUrl }assemble" class="">
-                  <span class="am-icon-bell"></span>
+                  <span class="am-icon-bell">
+                  	<span class="badge badge-alert badge-rounded invisible">1</span>
+                  </span>
                 <span class="am-navbar-label">集会</span>
             </a>
           </li>
@@ -40,18 +42,62 @@
   	var userId = ${user.id}
   	var webSocket = new WebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
-	
   	webSocket.onerror = function(event) {
 		myAlert(event.data);
 	};
 
 	webSocket.onopen = function(event) {
-		
+		var url = getRootPath() + "/getOfflineMessage";
+		var common = new Common();
+		common.callAction(null, url, function(data) {
+			if(!data){
+				return;
+			}
+			switch (data.status){
+			case 1:
+				$.each(data.offlineMessages,function(index,message){
+					if(message.type == 1){
+						offlineSpeech = message.num;
+						unreadSpeech = getCache("nv_unread_speech");
+						speech = unreadSpeech ? parseInt(offlineSpeech) + parseInt(unreadSpeech) : offlineSpeech;
+						if(speech>0){
+							$("#nv-footer .am-icon-bell .badge").text(speech).removeClass("invisible");
+						}
+					}
+				})
+				return;
+			case 0:
+				timeoutHandle();
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}	
+		});
 	};
 
 	webSocket.onmessage = function(event) {
-		myInfo(event.data);
+		content = JSON.parse(event.data);
+		switch(content.message){
+		case "speech":
+			if(window.location.href.indexOf("assemble")>0 && 
+					!$("#nv-chatbar").hasClass("invisible")){
+				appendSpeech(content);
+			} else {
+				badge = $("#nv-footer .am-icon-bell .badge");
+				if(badge.hasClass("invisible")){
+					badge.text("1").removeClass("invisible");;
+					setCache("nv_unread_speech",badge.text());
+				} else {
+					badge.text(badge.text()-1+2);
+					unreadSpeech = getCache("nv_unread_speech");
+					setCache("nv_unread_speech",unreadSpeech ? unreadSpeech-1+2 : 1); 
+				}
+			}	
+			break;
+		default:
+			break;
+		}
 	};
-
 
   </script>

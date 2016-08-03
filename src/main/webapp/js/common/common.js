@@ -388,5 +388,52 @@ function timeoutHandle(){
 	});
 }
 
+function scrollTobottom(){
+	$(window).smoothScroll({
+		position: $(document).height() - $(window).height(),
+		speed: 800
+	});
+}
+
+function replaceTag(input){
+	if(typeof(input) == "undefined")
+		return "";
+	var reg=new RegExp("<br>","g");
+	return input.replace(reg,"\r\n")
+}
+
+function recoverTag(input){
+	if(typeof(input) == "undefined")
+		return "";
+	return input.replace(/\n|\r\n/g,"<br>");
+}
+
+function setCache(name, value){
+	var storage = window.localStorage; 
+	if (storage) { 
+        storage.setItem(name, value);   
+    } else { 
+    	setCookie(name, value, "d3");
+    } 
+}
+
+function getCache(name){
+	var storage = window.localStorage; 
+	if (storage) { 
+        return storage.getItem(name);   
+    } else { 
+    	return getCookie(name);
+    } 
+}
+
+function delCache(name){
+	var storage = window.localStorage; 
+	if (storage) { 
+        return storage.removeItem(name);   
+    } else { 
+    	return delCookie(name);
+    } 
+}
+
 
 

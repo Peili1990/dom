@@ -7,7 +7,7 @@
 	</div>	
 	
 
-	<ul class="am-comments-list am-comments-list-flip">
+	<ul class="am-comments-list am-comments-list-flip" id="speech-list">
 		<li class="am-comment">
 			<a href=""><img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar"></a>
 		<div class="am-comment-main">
@@ -91,6 +91,8 @@ function getNewspaperDetail(newspaperId){
 				$("#send-message").on("click",function(){
 					sumbitSpeech(newspaperId);
 				})
+				$("#nv-footer .am-icon-bell .badge").addClass("invisible");
+				delCache("nv_unread_speech");
 			}
 			$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });
 			return;
@@ -112,9 +114,10 @@ function sumbitSpeech(newspaperId){
 		characterId : playerInfo.characterId,
 		characterName : playerInfo.characterName,
 		avatar : playerInfo.characterAvatar,
-		content : $("#nv-chatbar .messages").val(),
+		content : recoverTag($("#nv-chatbar .messages").val()),
 		type : $("#use-gesture").hasClass("am-btn-danger") ? 2 : 1
 	}
+	$("#nv-chatbar .messages").val("");
 	var url = "http://" + "${chatServer}" + "/sumbitSpeech";
 	var common = new Common();
 	common.callAction(options, url, function(data) {
@@ -122,4 +125,15 @@ function sumbitSpeech(newspaperId){
 	})
 }
 
+function appendSpeech(speech){
+	var builder = new StringBuilder();
+	builder.append(speech.playerId == playerInfo.playerId ? '<li class="am-comment-flip">':'<li class="am-comment">');
+	builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
+	builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
+	builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
+	builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',speech.content)
+	$("#speech-list").append(builder.toString());
+	adjustContainerHeight("#pageB");
+	scrollTobottom();
+}
 </script>

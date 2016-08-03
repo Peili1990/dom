@@ -2948,7 +2948,8 @@ a.am-badge:focus,a.am-badge:hover {
 	background-color:white;
 }
 .am-comment-meta a {
-	color:#999
+	color:#999;
+	margin-right: 10px;
 }
 .am-comment-author {
 	font-weight:700;

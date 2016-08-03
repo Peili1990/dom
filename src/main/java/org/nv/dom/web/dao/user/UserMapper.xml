@@ -22,6 +22,20 @@
 			
 	
 	</select>
+	
+	<select id="getOfflineMessageDao" parameterType="long" resultType="OfflineMessage">
+	
+		SELECT 
+			dom.type AS type,
+			count(dom.type) AS num
+		FROM
+			d_offline_message dom
+		WHERE
+			dom.user_id = #{userId}
+		GROUP BY
+			dom.type;	
+	
+	</select>
 
 
 </mapper>
