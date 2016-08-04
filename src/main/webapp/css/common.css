@@ -295,6 +295,16 @@ table{
     background: #dd514c;
 }
 
+.badge-card{
+	top:0;
+	left:-10px;
+	color:white;
+}
+
 .invisible{
 	display:none;
+}
+
+.gesture-style{
+	color:red;
 }

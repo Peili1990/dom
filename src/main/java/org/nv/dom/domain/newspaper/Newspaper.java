@@ -8,6 +8,8 @@ public class Newspaper {
 	private long newspaperId;
 	/** 报纸名称 */
 	private String header;
+	/** 未读发言数量 */
+	private Integer unreadSpeech;
 	/** 头版头条 */
 	private String headline;
 	/** 头版头条内容 */
@@ -37,6 +39,12 @@ public class Newspaper {
 	}
 	public String getHeader() {
 		return header;
+	}
+	public Integer getUnreadSpeech() {
+		return unreadSpeech;
+	}
+	public void setUnreadSpeech(Integer unreadSpeech) {
+		this.unreadSpeech = unreadSpeech;
 	}
 	public void setHeader(String header) {
 		this.header = header;

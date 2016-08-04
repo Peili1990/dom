@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.message.speech.Speech;
 import org.nv.dom.domain.newspaper.Newspaper;
+import org.nv.dom.dto.message.GetSpeechListDTO;
+import org.nv.dom.web.dao.message.MessageMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.service.AssembleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,9 @@ public class AssembleServiceImpl implements AssembleService {
 	
 	@Autowired
 	NewspaperMapper newspaperMapper;
+	
+	@Autowired
+	MessageMapper messageMapper;
 
 	@Override
 	public Map<String, Object> getNewspaperList(long userId) {
@@ -37,10 +44,14 @@ public class AssembleServiceImpl implements AssembleService {
 	}
 	
 	@Override
-	public Map<String, Object> getNewspaperDetail(long newspaperId) {
+	public Map<String, Object> getNewspaperDetail(GetSpeechListDTO getSpeechListDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			Newspaper newspaper = newspaperMapper.getNewspaperDetailDao(newspaperId);
+			Newspaper newspaper = newspaperMapper.getNewspaperDetailDao(getSpeechListDTO.getNewspaperId());
+			if(newspaper.getType() == NVTermConstant.DAILY_PAPER){
+				List<Speech> speechList = messageMapper.getSpeechListDao(getSpeechListDTO);
+				result.put("speechList", speechList);
+			}
 			result.put("newspaperDetail", newspaper);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取报纸详情成功");

@@ -23,17 +23,14 @@
 	
 	</select>
 	
-	<select id="getOfflineMessageDao" parameterType="long" resultType="OfflineMessage">
+	<select id="getOfflineMessageDao" parameterType="long" resultType="Integer">
 	
 		SELECT 
-			dom.type AS type,
-			count(dom.type) AS num
+			count(1) AS num
 		FROM
-			d_offline_message dom
+			d_offline_speech dos
 		WHERE
-			dom.user_id = #{userId}
-		GROUP BY
-			dom.type;	
+			dos.user_id = #{userId}		
 	
 	</select>
 

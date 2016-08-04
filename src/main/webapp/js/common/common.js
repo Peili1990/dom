@@ -371,8 +371,8 @@ function setCookie(name, value, time) {
 }
 
 function getsec(str) {
-	var str1 = str.substring(1, str.length) * 1;
-	var str2 = str.substring(0, 1);
+	var str1 = str.substring(0, str.length-1) * 1;
+	var str2 = str.substring(str.length-1, str.length);
 	if (str2 == "s") {
 		return str1 * 1000;
 	} else if (str2 == "h") {
@@ -413,7 +413,7 @@ function setCache(name, value){
 	if (storage) { 
         storage.setItem(name, value);   
     } else { 
-    	setCookie(name, value, "d3");
+    	setCookie(name, value, "3d");
     } 
 }
 

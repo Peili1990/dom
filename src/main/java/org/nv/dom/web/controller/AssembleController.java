@@ -6,14 +6,15 @@ import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.message.GetSpeechListDTO;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.service.AssembleService;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,8 +39,10 @@ public class AssembleController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getAssembleDetail", method = RequestMethod.POST)
-	public Map<String, Object> getNewspaperDetail(@RequestParam("newspaperId") long newspaperId, HttpSession session) {
-		return assembleService.getNewspaperDetail(newspaperId);
+	public Map<String, Object> getNewspaperDetail(@ModelAttribute("getSpeechListDTO") GetSpeechListDTO getSpeechListDTO, HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		getSpeechListDTO.setUserId(user.getId());
+		return assembleService.getNewspaperDetail(getSpeechListDTO);
 	}
 
 }

@@ -47,34 +47,31 @@
 	};
 
 	webSocket.onopen = function(event) {
-		var url = getRootPath() + "/getOfflineMessage";
-		var common = new Common();
-		common.callAction(null, url, function(data) {
-			if(!data){
-				return;
-			}
-			switch (data.status){
-			case 1:
-				$.each(data.offlineMessages,function(index,message){
-					if(message.type == 1){
-						offlineSpeech = message.num;
-						unreadSpeech = getCache("nv_unread_speech");
-						speech = unreadSpeech ? parseInt(offlineSpeech) + parseInt(unreadSpeech) : offlineSpeech;
-						if(speech>0){
-							$("#nv-footer .am-icon-bell .badge").text(speech).removeClass("invisible");
-						}
-					}
-				})
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
+		refresh = getCookie("refresh");
+		if(!refresh){
+			var url = getRootPath() + "/getOfflineMessage";
+			var common = new Common();
+			common.callAction(null, url, function(data) {
+				if(!data){
+					return;
+				}
+				switch (data.status){
+				case 1:
+					setCache("nv_offline_speech",parseInt(data.offlineSpeech));
+					setRedspot();
+					return;
+				case 0:
+					timeoutHandle();
+					return;
+				default:
 				myAlert(data.message);
-				return;
-			}	
-		});
-	};
+					return;
+				}	
+			});
+		} else {
+			setRedspot();
+		}
+	}
 
 	webSocket.onmessage = function(event) {
 		content = JSON.parse(event.data);
@@ -83,21 +80,31 @@
 			if(window.location.href.indexOf("assemble")>0 && 
 					!$("#nv-chatbar").hasClass("invisible")){
 				appendSpeech(content);
+				scrollTobottom();
 			} else {
-				badge = $("#nv-footer .am-icon-bell .badge");
-				if(badge.hasClass("invisible")){
-					badge.text("1").removeClass("invisible");;
-					setCache("nv_unread_speech",badge.text());
-				} else {
-					badge.text(badge.text()-1+2);
-					unreadSpeech = getCache("nv_unread_speech");
-					setCache("nv_unread_speech",unreadSpeech ? unreadSpeech-1+2 : 1); 
-				}
+				unreadSpeech = getCache("nv_unread_speech");
+				setCache("nv_unread_speech",unreadSpeech ? unreadSpeech-1+2 : 1); 
+				setRedspot();
 			}	
 			break;
 		default:
 			break;
 		}
 	};
+	
+	$(window).bind('unload', function(e) {
+		setCookie("refresh",true,"5s");
+	});
+	
+	function setRedspot(){
+		var offlineSpeech = getCache("nv_offline_speech") ? getCache("nv_offline_speech") : 0;
+		var unreadSpeech = getCache("nv_unread_speech") ? getCache("nv_unread_speech") : 0;
+		speech = parseInt(offlineSpeech) + parseInt(unreadSpeech);
+		if(speech>0){
+			$("#nv-footer .am-icon-bell .badge").text(speech).removeClass("invisible");
+		} else {
+			$("#nv-footer .am-icon-bell .badge").addClass("invisible");
+		}
+	}
 
   </script>

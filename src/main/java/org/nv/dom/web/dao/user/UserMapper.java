@@ -1,8 +1,5 @@
 package org.nv.dom.web.dao.user;
 
-import java.util.List;
-
-import org.nv.dom.domain.message.OfflineMessage;
 import org.nv.dom.domain.user.UserCurRole;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +14,6 @@ public interface UserMapper {
 	 * <p>查询用户离线消息数量</p>
 	 */
 	
-	public List<OfflineMessage> getOfflineMessageDao(long userId);
+	public Integer getOfflineMessageDao(long userId);
 
 }

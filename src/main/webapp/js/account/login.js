@@ -27,8 +27,8 @@ function submitForm(btn){
 		}
 		switch (data.status) {
 		case 1:
-			setCookie("nv_account",account,"d30");
-			setCookie("nv_password",password,"d30");
+			setCookie("nv_account",account,"30d");
+			setCookie("nv_password",password,"30d");
 			window.location = getRootPath() + "/index";
 			return;
 		default:

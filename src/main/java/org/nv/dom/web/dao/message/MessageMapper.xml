@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.message.MessageMapper">
+
+	<select id="getSpeechListDao" parameterType="GetSpeechListDTO" resultType="Speech">
+	
+		SELECT 
+			ds.player_id AS playerId,
+			ds.newspaper_id AS newspaperId,
+			ds.character_id AS characterId,
+			dc.name AS characterName,
+			dc.avatar AS avatar,
+			ds.type AS type,
+			ds.content AS content,
+			ds.create_time AS createTime
+		FROM
+			d_speech ds, d_character dc
+		WHERE
+			ds.newspaper_id = #{newspaperId} AND ds.character_id = dc.id;
+			
+		DELETE FROM
+			d_offline_speech
+		WHERE
+			user_id = #{userId} AND newspaper_id = #{newspaperId}				
+	
+	</select>
+
+
+</mapper>
