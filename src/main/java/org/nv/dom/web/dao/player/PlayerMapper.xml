@@ -12,7 +12,8 @@
 			dc.name AS characterName,
 			dpr.sign AS sign,
 			dpr.identity_desc AS identityDesc,
-			ds.avatar AS signAvatar		
+			ds.avatar AS signAvatar,
+			dpr.is_mute AS isMute		
 		FROM 
 			d_player dp, d_character dc, d_player_record dpr LEFT JOIN d_sign ds ON dpr.sign=ds.id
 		WHERE

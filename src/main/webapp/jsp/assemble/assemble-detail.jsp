@@ -83,12 +83,26 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 				$("#seat-table").append(newspaperDetail.seatTable);
 			}
 			if(newspaperDetail.type == 2){
+				$("#speech-list").empty();
 				$.each(data.speechList,function(index,speech){
 					appendSpeech(speech);
 				});
 				if(newspaperDetail.status == 1){
 					$("#nv-footer").addClass("invisible");
 					$("#nv-chatbar").removeClass("invisible");
+					if(playerInfo.isMute == 1){
+						$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
+						$("#send-message").attr("disabled","disabled");
+						$("#use-gesture").on("click",function(){
+							if($(this).hasClass("am-btn-danger")){
+								$("#nv-chatbar .messages").removeAttr("disabled").text("");
+								$("#send-message").removeAttr("disabled");	
+							}else{
+								$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
+								$("#send-message").attr("disabled","disabled");
+							}
+						})
+					}
 					$("#send-message").on("click",function(){
 						sumbitSpeech(newspaperId);
 					})
@@ -137,7 +151,12 @@ function appendSpeech(speech){
 	builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
 	builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 	builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
-	builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',speech.content)
+	if(speech.type == 1){
+		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',speech.content)
+	}else{
+		builder.appendFormat('<div class="am-comment-bd gesture-style">{0}</div></div></li>',speech.content)
+	}
+	
 	$("#speech-list").append(builder.toString());
 	adjustContainerHeight("#pageB");
 }

@@ -22,6 +22,8 @@ public class PlayerInfo {
 	private String identityDesc;
 	/** 签头像 */
 	private String signAvatar;
+	/** 是否被禁言 */
+	private Integer isMute;
 	
 	public long getGameId() {
 		return gameId;
@@ -83,5 +85,12 @@ public class PlayerInfo {
 	public void setSignAvatar(String signAvatar) {
 		this.signAvatar = signAvatar;
 	}
+	public Integer getIsMute() {
+		return isMute;
+	}
+	public void setIsMute(Integer isMute) {
+		this.isMute = isMute;
+	}
+	
 	
 }
