@@ -33,6 +33,18 @@
   </div>
 </div>
 
+<div class="am-modal-actions" id="my-actions">
+  <div class="am-modal-actions-group">
+    <ul class="am-list">
+      <li class="am-modal-actions-header">...</li>
+      
+    </ul>
+  </div>
+  <div class="am-modal-actions-group">
+    <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+  </div>
+</div>
+
 <div class="dw-hidden" role="alert"></div>
 
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default invisible" id="nv-chatbar">

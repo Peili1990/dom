@@ -308,3 +308,7 @@ table{
 .gesture-style{
 	color:red;
 }
+
+#my-actions li{
+	padding:12px;
+}

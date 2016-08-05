@@ -313,6 +313,7 @@ function myInfo(text,callback){
 	$('#my-alert').modal('open');
 	$('#my-alert .am-modal-btn').on('click',callback);	
 }
+
 $(window).load(function(){
 	FastClick.attach(document.body);
 })

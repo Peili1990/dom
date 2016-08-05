@@ -23,28 +23,30 @@
 <!-- 				今天没新凶器范围，照旧昨天，这边重点怀疑对象不变，依然为叶妹和马克唐，特别是马克唐，两天卖萌。</div> -->
 <!-- 		</div> -->
 <!-- 		</li> -->
-		<li class="am-comment-flip">
-			<a href=""><img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50" class="am-comment-avatar"></a>
-		<div class="am-comment-main">
-			<header class="am-comment-hd">
-				<div class="am-comment-meta">
-					<a href="" class="am-comment-author">莫利</a>
-					<time>2016-07-02 15:41</time>
-				</div>
-			</header>
-			<div class="am-comment-bd gesture-style">*莫利在集会上欢快的跳了起来</div>
-		</div>
-		</li>
+<!-- 		<li class="am-comment-flip"> -->
+<!-- 			<a href=""><img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50" class="am-comment-avatar"></a> -->
+<!-- 		<div class="am-comment-main"> -->
+<!-- 			<header class="am-comment-hd"> -->
+<!-- 				<div class="am-comment-meta"> -->
+<!-- 					<a href="" class="am-comment-author">莫利</a> -->
+<!-- 					<time>2016-07-02 15:41</time> -->
+<!-- 				</div> -->
+<!-- 			</header> -->
+<!-- 			<div class="am-comment-bd gesture-style">*莫利在集会上欢快的跳了起来</div> -->
+<!-- 		</div> -->
+<!-- 		</li> -->
 	</ul>	
 </div>
 
 <script type="text/javascript">
+var replaceList;
 var playerInfo = ${playerInfoStr}
 
 function getNewspaperDetail(newspaperId,newspaperNo){
 	var url = getRootPath() + "/getAssembleDetail";
 	var options = {
-			newspaperId : newspaperId
+			newspaperId : newspaperId,
+			playerId : playerInfo.playerId
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
@@ -104,7 +106,16 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 						})
 					}
 					$("#send-message").on("click",function(){
-						sumbitSpeech(newspaperId);
+						if(data.replaceList != null){
+							replaceList = data.replaceList;
+							$('#my-actions .am-list').empty().append("<li class='am-modal-actions-header'>请选择发言角色</li>");
+							$.each(replaceList,function(index,ele){
+								$('#my-actions .am-list').append("<li onclick='sumbitSpeech("+newspaperId+","+index+")'>"+ele.characterName+"</li>");
+							})
+							$('#my-actions').modal('open');
+						} else {
+							sumbitSpeech(newspaperId);
+						}
 					})
 					redspot = $("#newspaper-list .card:eq("+ newspaperNo +") .badge");
 					if(!redspot.hasClass("invisible")){
@@ -126,17 +137,17 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 	});
 }
 
-function sumbitSpeech(newspaperId){
+function sumbitSpeech(newspaperId,index){
 	var options = {
 		newspaperId : newspaperId,
 		gameId : playerInfo.gameId,
 		playerId : playerInfo.playerId,
-		characterId : playerInfo.characterId,
-		characterName : playerInfo.characterName,
-		avatar : playerInfo.characterAvatar,
+		characterName : index != null ? replaceList[index].characterName : playerInfo.characterName,
+		avatar : index != null ? replaceList[index].characterAvatar : playerInfo.characterAvatar,
 		content : recoverTag($("#nv-chatbar .messages").val()),
 		type : $("#use-gesture").hasClass("am-btn-danger") ? 2 : 1
 	}
+	$('#my-actions').modal('close');
 	$("#nv-chatbar .messages").val("");
 	var url = "http://" + "${chatServer}" + "/sumbitSpeech";
 	var common = new Common();

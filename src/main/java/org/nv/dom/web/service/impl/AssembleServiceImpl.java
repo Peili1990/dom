@@ -9,9 +9,11 @@ import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.message.speech.Speech;
 import org.nv.dom.domain.newspaper.Newspaper;
+import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.message.GetSpeechListDTO;
 import org.nv.dom.web.dao.message.MessageMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
+import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.AssembleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class AssembleServiceImpl implements AssembleService {
 	
 	@Autowired
 	MessageMapper messageMapper;
+	
+	@Autowired
+	PlayerMapper playerMapper;
 
 	@Override
 	public Map<String, Object> getNewspaperList(long userId) {
@@ -51,7 +56,11 @@ public class AssembleServiceImpl implements AssembleService {
 			if(newspaper.getType() == NVTermConstant.DAILY_PAPER){
 				List<Speech> speechList = messageMapper.getSpeechListDao(getSpeechListDTO);
 				result.put("speechList", speechList);
-			}
+				List<PlayerReplaceSkin> replaceList = playerMapper.getPlayerReplaceSkinDao(getSpeechListDTO.getPlayerId());
+				if(replaceList!=null &&!replaceList.isEmpty()){
+					result.put("replaceList", replaceList);
+				}
+			}			
 			result.put("newspaperDetail", newspaper);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取报纸详情成功");

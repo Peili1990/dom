@@ -62,5 +62,18 @@
 			dpr.player_id=#{playerId}
 	
 	</update>
+	
+	<select id="getPlayerReplaceSkinDao" parameterType="long" resultType="PlayerReplaceSkin">
+	
+		SELECT 
+			drs.character_name AS characterName,
+			drs.character_avatar AS characterAvatar
+		FROM
+			d_replace_skin drs
+		WHERE
+			drs.player_id = #{playerId}
+	
+	
+	</select>
 
 </mapper>

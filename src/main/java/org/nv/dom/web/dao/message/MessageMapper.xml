@@ -4,19 +4,19 @@
 
 	<select id="getSpeechListDao" parameterType="GetSpeechListDTO" resultType="Speech">
 	
-		SELECT 
+		SELECT
+			ds.id AS id, 
 			ds.player_id AS playerId,
 			ds.newspaper_id AS newspaperId,
-			ds.character_id AS characterId,
-			dc.name AS characterName,
-			dc.avatar AS avatar,
+			ds.character_name AS characterName,
+			ds.character_avatar AS avatar,
 			ds.type AS type,
 			ds.content AS content,
 			ds.create_time AS createTime
 		FROM
-			d_speech ds, d_character dc
+			d_speech ds
 		WHERE
-			ds.newspaper_id = #{newspaperId} AND ds.character_id = dc.id;
+			ds.newspaper_id = #{newspaperId};
 			
 		DELETE FROM
 			d_offline_speech
