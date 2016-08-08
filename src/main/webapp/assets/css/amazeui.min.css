@@ -2949,7 +2949,6 @@ a.am-badge:focus,a.am-badge:hover {
 }
 .am-comment-meta a {
 	color:#999;
-	margin-right: 10px;
 }
 .am-comment-author {
 	font-weight:700;
@@ -5429,7 +5428,7 @@ a.am-close:hover {
 	margin:0
 }
 .am-panel {
-	margin-bottom:20px;
+	margin-top: 1.6rem;
 	background-color:#fff;
 	border:1px solid transparent;
 	border-radius:0;
@@ -5472,9 +5471,10 @@ a.am-close:hover {
 	border-color:#ddd
 }
 .am-panel-default>.am-panel-hd {
+	text-align:center;
 	color:#444;
 	background-color:#f5f5f5;
-	border-color:#ddd
+	border-color:#ddd 
 }
 .am-panel-default>.am-panel-hd+.am-panel-collapse>.am-panel-bd {
 	border-top-color:#ddd

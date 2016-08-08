@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="${baseUrl}assets/css/amazeui.min.css">
 <link href="${baseUrl}mobiscroll/css/mobiscroll.custom-2.6.2.min.css" rel="stylesheet" type="text/css">
 <script src="${baseUrl}js/common/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/fastclick.min.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/amazeui.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/common.js" type="text/javascript"></script>

@@ -66,6 +66,10 @@ table{
 	width:100%
 }
 
+time{
+	margin-left:10px;
+}
+
 .view-container {
 	position: relative;
 	width: 100%;

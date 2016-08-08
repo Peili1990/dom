@@ -40,7 +40,7 @@
   
   <script type="text/javascript">
   	var userId = ${user.id}
-  	var webSocket = new WebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
+  	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
   	webSocket.onerror = function(event) {
 		myAlert(event.data);
@@ -72,6 +72,10 @@
 			setRedspot();
 		}
 	}
+	
+	setInterval(function() {
+		webSocket.send;
+	}, 5000);
 
 	webSocket.onmessage = function(event) {
 		content = JSON.parse(event.data);
@@ -82,9 +86,15 @@
 				appendSpeech(content);
 				scrollTobottom();
 			} else {
+				newspaperId = content.newspaperId;
+				newspaperSpeech = getCache("nv_newspaper"+newspaperId);
+				setCache("nv_newspaper"+newspaperId,newspaperSpeech ? ++newspaperSpeech : 1);
 				unreadSpeech = getCache("nv_unread_speech");
-				setCache("nv_unread_speech",unreadSpeech ? unreadSpeech-1+2 : 1); 
+				setCache("nv_unread_speech",unreadSpeech ? ++unreadSpeech : 1); 
 				setRedspot();
+				if(window.location.href.indexOf("assemble")>0){
+					setRedspotOnpaper(newspaperId);
+				}
 			}	
 			break;
 		default:

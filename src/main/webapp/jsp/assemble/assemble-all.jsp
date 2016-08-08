@@ -10,7 +10,45 @@
 				 	invisible
 				 </c:if>
 				">${ newspaper.unreadSpeech }</span>
+				<input type="hidden" name="newspaper-id" value="${ newspaper.newspaperId }">
 			</div>
 		</div>
 	</c:forEach>
 </div>
+
+<script type="text/javascript">
+
+$(function(){
+	setRedspotOnpaper();
+});
+
+function setRedspotOnpaper(newspaperId){
+	if(newspaperId>0){
+		$.each($("#newspaper-list .card"),function(index,newspaper){
+			if($(newspaper).find("input[type='hidden']").val() == newspaperId){
+				redspot = $(newspaper).find(".badge");
+				if(redspot.hasClass("invisible")){
+					redspot.text("1").removeClass("invisible");
+				}else{
+					redspot.text(parseInt(redspot.text())+1);
+				}
+			}
+		})
+	}else{
+		$.each($("#newspaper-list .card"),function(index,newspaper){
+			newspaperId = $(newspaper).find("input[type='hidden']").val();
+			newspaperSpeech = getCache("nv_newspaper"+newspaperId);
+			if(newspaperSpeech>0){
+				redspot = $(newspaper).find(".badge");
+				if(redspot.hasClass("invisible")){
+					redspot.text(newspaperSpeech).removeClass("invisible");
+				}else{
+					redspot.text(parseInt(newspaperSpeech)+parseInt(redspot.text()));
+				}
+			}
+		})
+	}
+}
+
+</script>
+
