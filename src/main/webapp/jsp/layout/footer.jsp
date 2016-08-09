@@ -49,53 +49,20 @@
 	webSocket.onopen = function(event) {
 		refresh = getCookie("refresh");
 		if(!refresh){
-			var url = getRootPath() + "/getOfflineMessage";
-			var common = new Common();
-			common.callAction(null, url, function(data) {
-				if(!data){
-					return;
-				}
-				switch (data.status){
-				case 1:
-					setCache("nv_offline_speech",parseInt(data.offlineSpeech));
-					setRedspot();
-					return;
-				case 0:
-					timeoutHandle();
-					return;
-				default:
-				myAlert(data.message);
-					return;
-				}	
-			});
+			getOfflineMessage();
 		} else {
 			setRedspot();
 		}
 	}
-	
-	setInterval(function() {
-		webSocket.send;
-	}, 5000);
 
 	webSocket.onmessage = function(event) {
 		content = JSON.parse(event.data);
 		switch(content.message){
 		case "speech":
-			if(window.location.href.indexOf("assemble")>0 && 
-					!$("#nv-chatbar").hasClass("invisible")){
-				appendSpeech(content);
-				scrollTobottom();
-			} else {
-				newspaperId = content.newspaperId;
-				newspaperSpeech = getCache("nv_newspaper"+newspaperId);
-				setCache("nv_newspaper"+newspaperId,newspaperSpeech ? ++newspaperSpeech : 1);
-				unreadSpeech = getCache("nv_unread_speech");
-				setCache("nv_unread_speech",unreadSpeech ? ++unreadSpeech : 1); 
-				setRedspot();
-				if(window.location.href.indexOf("assemble")>0){
-					setRedspotOnpaper(newspaperId);
-				}
-			}	
+			dealSpeech(content);
+			break;
+		case "delete":
+			dealDelete(content);
 			break;
 		default:
 			break;
@@ -106,12 +73,86 @@
 		setCookie("refresh",true,"5s");
 	});
 	
+	function getOfflineMessage(){
+		var url = getRootPath() + "/getOfflineMessage";
+		var common = new Common();
+		common.callAction(null, url, function(data) {
+			if(!data){
+				return;
+			}
+			switch (data.status){
+			case 1:
+				totalSpeech = 0;
+				$.each(data.offlineSpeech,function(index,offline){
+					setCache("nv_newspaper"+offline.newspaperId,parseInt(offline.num));
+					totalSpeech+=parseInt(offline.num);
+				})
+				setCache("nv_offline_speech",parseInt(totalSpeech));
+				setRedspot();
+				if(window.location.href.indexOf("assemble")>0){
+					setRedspotOnpaper();
+				}
+				return;
+			case 0:
+				timeoutHandle();
+				return;
+			default:
+			myAlert(data.message);
+				return;
+			}	
+		});
+	}
+	
+	function dealSpeech(content){
+		if(window.location.href.indexOf("assemble")>0 && 
+				!$("#nv-chatbar").hasClass("invisible")){
+			appendSpeech(content);
+			scrollTobottom();
+		} else {
+			newspaperId = content.newspaperId;
+			newspaperSpeech = getCache("nv_newspaper"+newspaperId);
+			setCache("nv_newspaper"+newspaperId,newspaperSpeech ? ++newspaperSpeech : 1);
+			unreadSpeech = getCache("nv_offline_speech");
+			setCache("nv_offline_speech",unreadSpeech ? ++unreadSpeech : 1); 
+			setRedspot();
+			saveOfflineSpeech(content);
+			if(window.location.href.indexOf("assemble")>0){
+				setRedspotOnpaper(newspaperId);
+			}
+		}	
+	}
+	
+	function dealDelete(content){
+		if(window.location.href.indexOf("assemble")>0 && 
+				!$("#nv-chatbar").hasClass("invisible")){
+			deleteSpeech(content);
+		} else {
+			newspaperId = content.newspaperId;
+			setCache("nv_newspaper"+newspaperId,parseInt(getCache("nv_newspaper"+newspaperId))-1);
+			setCache("nv_offline_speech",parseInt(getCache("nv_offline_speech"))-1);
+			setRedspot();
+			if(window.location.href.indexOf("assemble")>0){
+				setRedspotOnpaper();
+			}
+		}	
+	}
+	
+	function saveOfflineSpeech(content){
+		var url = getRootPath() + "/saveOfflineSpeech";
+		var common = new Common();
+		var options = {
+				speechId : content.id,
+				newspaperId : content.newspaperId
+		};
+		common.callAction(options, url, function(data) {
+			
+		})
+	}
+	
 	function setRedspot(){
 		var offlineSpeech = getCache("nv_offline_speech") ? getCache("nv_offline_speech") : 0;
-		var unreadSpeech = getCache("nv_unread_speech") ? getCache("nv_unread_speech") : 0;
-		speech = parseInt(offlineSpeech) + parseInt(unreadSpeech);
-		if(speech>0){
-			$("#nv-footer .am-icon-bell .badge").text(speech).removeClass("invisible");
+		if(offlineSpeech>0){
+			$("#nv-footer .am-icon-bell .badge").text(offlineSpeech).removeClass("invisible");
 		} else {
 			$("#nv-footer .am-icon-bell .badge").addClass("invisible");
 		}

@@ -7,10 +7,9 @@
 		<![CDATA[
 		SELECT 
 			dn.id AS newspaperId,
-			dn.header AS header,
-			count(dos.user_id) AS unreadSpeech
+			dn.header AS header
 		FROM
-			d_player dp, d_game dg, d_newspaper dn LEFT JOIN d_offline_speech dos ON dos.newspaper_id = dn.id AND dos.user_id = #{userId}
+			d_player dp, d_game dg, d_newspaper dn
 		WHERE
 			dp.user_id=#{userId} AND dp.game_id=dg.id AND dp.status != 9 AND dg.id=dn.game_id AND dn.status > 0 
 		GROUP BY

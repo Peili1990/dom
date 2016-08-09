@@ -2,23 +2,26 @@ package org.nv.dom.domain.message;
 
 public class OfflineMessage {
 	
-	/** 离线消息类型 */
-	private Integer type;
-	/** 离线消息数量 */
-	private Integer num;
-	public Integer getType() {
-		return type;
+	private long userId;
+	private long speechId;
+	private long newspaperId;
+	public long getUserId() {
+		return userId;
 	}
-	public void setType(Integer type) {
-		this.type = type;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
-	public Integer getNum() {
-		return num;
+	public long getSpeechId() {
+		return speechId;
 	}
-	public void setNum(Integer num) {
-		this.num = num;
+	public void setSpeechId(long speechId) {
+		this.speechId = speechId;
 	}
-	
-	
+	public long getNewspaperId() {
+		return newspaperId;
+	}
+	public void setNewspaperId(long newspaperId) {
+		this.newspaperId = newspaperId;
+	}
 
 }

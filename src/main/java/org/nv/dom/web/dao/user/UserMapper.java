@@ -1,5 +1,9 @@
 package org.nv.dom.web.dao.user;
 
+import java.util.List;
+
+import org.nv.dom.domain.message.OfflineMessage;
+import org.nv.dom.domain.message.speech.OfflineSpeech;
 import org.nv.dom.domain.user.UserCurRole;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +15,15 @@ public interface UserMapper {
 	public UserCurRole getUserCurRoleDao(long userId);
 	
 	/**
-	 * <p>查询用户离线消息数量</p>
+	 * <p>查询用户离线发言数量</p>
 	 */
 	
-	public Integer getOfflineMessageDao(long userId);
+	public List<OfflineSpeech> getOfflineSpeechDao(long userId);
+	
+	/**
+	 * <p>保存用户离线消息</p>
+	 */
+	
+	public int saveOfflineMessageDao(OfflineMessage offlineMessage);
 
 }

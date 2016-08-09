@@ -5474,7 +5474,9 @@ a.am-close:hover {
 	text-align:center;
 	color:#444;
 	background-color:#f5f5f5;
-	border-color:#ddd 
+	border-color:#ddd; 
+	font-weight: 700;
+    color: #999;
 }
 .am-panel-default>.am-panel-hd+.am-panel-collapse>.am-panel-bd {
 	border-top-color:#ddd

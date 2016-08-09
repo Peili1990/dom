@@ -5,11 +5,7 @@
 	 	<div class="card" onclick="pageSwitch('#pageA','#pageB','getNewspaperDetail(${newspaper.newspaperId},${newspaperNo.index})')">
 			<div class="card-header">
 				<h2 class="card-title">${newspaper.header }</h2>
-				<span class="badge badge-alert badge-rounded badge-card
-				 <c:if test="${ newspaper.unreadSpeech == 0}"> 
-				 	invisible
-				 </c:if>
-				">${ newspaper.unreadSpeech }</span>
+				<span class="badge badge-alert badge-rounded badge-card"></span>
 				<input type="hidden" name="newspaper-id" value="${ newspaper.newspaperId }">
 			</div>
 		</div>
@@ -22,32 +18,17 @@ $(function(){
 	setRedspotOnpaper();
 });
 
-function setRedspotOnpaper(newspaperId){
-	if(newspaperId>0){
-		$.each($("#newspaper-list .card"),function(index,newspaper){
-			if($(newspaper).find("input[type='hidden']").val() == newspaperId){
-				redspot = $(newspaper).find(".badge");
-				if(redspot.hasClass("invisible")){
-					redspot.text("1").removeClass("invisible");
-				}else{
-					redspot.text(parseInt(redspot.text())+1);
-				}
-			}
-		})
-	}else{
-		$.each($("#newspaper-list .card"),function(index,newspaper){
-			newspaperId = $(newspaper).find("input[type='hidden']").val();
-			newspaperSpeech = getCache("nv_newspaper"+newspaperId);
-			if(newspaperSpeech>0){
-				redspot = $(newspaper).find(".badge");
-				if(redspot.hasClass("invisible")){
-					redspot.text(newspaperSpeech).removeClass("invisible");
-				}else{
-					redspot.text(parseInt(newspaperSpeech)+parseInt(redspot.text()));
-				}
-			}
-		})
-	}
+function setRedspotOnpaper(){
+	$.each($("#newspaper-list .card"),function(index,newspaper){
+		newspaperId = $(newspaper).find("input[type='hidden']").val();
+		newspaperSpeech = getCache("nv_newspaper"+newspaperId);
+		redspot = $(newspaper).find(".badge");
+		if(newspaperSpeech>0){		
+			redspot.text(newspaperSpeech).removeClass("invisible");
+		}else{
+			redspot.addClass("invisible");
+		}
+	})
 }
 
 </script>

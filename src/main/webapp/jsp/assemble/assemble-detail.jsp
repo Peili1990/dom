@@ -98,7 +98,7 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 				if(newspaperDetail.status == 1){
 					$("#nv-footer").addClass("invisible");
 					$("#nv-chatbar").removeClass("invisible");
-					if(playerInfo.isMute == 1){
+					if(data.replaceList == null && playerInfo.isMute == 1){
 						$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
 						$("#send-message").attr("disabled","disabled");
 						$("#use-gesture").on("click",function(){
@@ -126,8 +126,7 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 					redspot = $("#newspaper-list .card:eq("+ newspaperNo +") .badge");
 					if(!redspot.hasClass("invisible")){
 						newspaperSpeech = getCache("nv_newspaper"+newspaperId);
-						setCache("nv_unread_speech",getCache("nv_unread_speech")-parseInt(newspaperSpeech));
-						setCache("nv_offline_speech",getCache("nv_offline_speech")-parseInt(redspot.text())+parseInt(newspaperSpeech));
+						setCache("nv_offline_speech",getCache("nv_offline_speech")-parseInt(newspaperSpeech));
 						delCache("nv_newspaper"+newspaperId);
 						redspot.addClass("invisible");
 						setRedspot();
@@ -151,13 +150,17 @@ function sumbitSpeech(newspaperId,index){
 	if(content == ""){
 		return;
 	}
+	if(index != null && replaceList[index].isMute == 1){
+		myInfo("该发言称呼被禁言:(");
+		return;
+	}
 	var options = {
 		newspaperId : newspaperId,
 		gameId : playerInfo.gameId,
 		playerId : playerInfo.playerId,
 		characterName : index != null ? replaceList[index].characterName : playerInfo.characterName,
 		avatar : index != null ? replaceList[index].characterAvatar : playerInfo.characterAvatar,
-		content : recoverTag(content),
+		content : recoverTag((index != null&&replaceList[index].isMute == 2) || playerInfo.isMute == 2 ? shuffle(content) : content),
 		type : $("#use-gesture").hasClass("am-btn-danger") ? 2 : 1
 	}
 	$('#my-actions').modal('close');
@@ -173,10 +176,12 @@ function appendSpeech(speech){
 	var builder = new StringBuilder();
 	if(speech.type == 3){
 		builder.append('<li class="am-panel am-panel-default">');
+		builder.appendFormat('<input type="hidden" value="{0}">',speech.id);
 		builder.appendFormat('<div class="am-panel-hd">游戏公告<time>{0}</time></div>',speech.createTime);
 		builder.appendFormat('<div class="am-panel-bd">{0}</div></li>',speech.content);	
 	} else {
 		builder.append(speech.playerId == playerInfo.playerId ? '<li class="am-comment-flip">':'<li class="am-comment">');
+		builder.appendFormat('<input type="hidden" value="{0}">',speech.id);;
 		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
@@ -187,6 +192,16 @@ function appendSpeech(speech){
 		}
 	}
 	$("#speech-list").append(builder.toString());
+	adjustContainerHeight("#pageB");
+}
+
+function deleteSpeech(content){
+	$.each($("#speech-list li"),function(index,speech){
+		if($(speech).find("input[type='hidden']").val() == content.speechId){
+			$(speech).remove();
+			return false;
+		}
+	})
 	adjustContainerHeight("#pageB");
 }
 </script>

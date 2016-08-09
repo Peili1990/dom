@@ -23,16 +23,34 @@
 	
 	</select>
 	
-	<select id="getOfflineMessageDao" parameterType="long" resultType="Integer">
+	<select id="getOfflineSpeechDao" parameterType="long" resultType="OfflineSpeech">
 	
 		SELECT 
+			dos.newspaper_id AS newspaperId,
 			count(1) AS num
 		FROM
 			d_offline_speech dos
 		WHERE
-			dos.user_id = #{userId}		
+			dos.user_id = #{userId}	
+		GROUP BY
+			dos.newspaper_id	
 	
 	</select>
+	
+	<insert id="saveOfflineMessageDao" parameterType="OfflineMessage">
+	
+		INSERT INTO d_offline_speech(
+			user_id,
+			speech_id,
+			newspaper_id
+		)
+		VALUE(
+			#{userId},
+			#{speechId},
+			#{newspaperId}
+		)
+	
+	</insert>
 
 
 </mapper>
