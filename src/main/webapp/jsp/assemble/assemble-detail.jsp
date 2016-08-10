@@ -160,7 +160,8 @@ function sumbitSpeech(newspaperId,index){
 		playerId : playerInfo.playerId,
 		characterName : index != null ? replaceList[index].characterName : playerInfo.characterName,
 		avatar : index != null ? replaceList[index].characterAvatar : playerInfo.characterAvatar,
-		content : recoverTag((index != null&&replaceList[index].isMute == 2) || playerInfo.isMute == 2 ? shuffle(content) : content),
+		isMute : index != null ? replaceList[index].isMute : playerInfo.isMute,
+		content : recoverTag(content),
 		type : $("#use-gesture").hasClass("am-btn-danger") ? 2 : 1
 	}
 	$('#my-actions').modal('close');

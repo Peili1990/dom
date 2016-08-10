@@ -4,7 +4,6 @@
 	<div class="card">
 		<div class="card-header">
 			<h2 class="card-title">你好，${ userInfo.userNickName }！</h2>
-			<input id="user-id" type="hidden" value="${ userInfo.userId }">
 		</div>
 			<c:choose>
 				<c:when test="${ userInfo.userCurRole eq 'judger' }">

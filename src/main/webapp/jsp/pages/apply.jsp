@@ -58,7 +58,6 @@
 		var common = new Common();
 		var url = getRootPath() + "/game/apply";
 		var options = {
-			userId : $("#user-id").val(),
 			gameId : gameId,
 			playerNum : playerNum,
 			characterSelect : characterSelect

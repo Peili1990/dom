@@ -48,6 +48,9 @@ public class PageParamType {
 	public static final String user_in_session = USER_IN_SESSION;
 
 	//玩家信息SESSION里面的变量
-	public static final String player_in_session = "player";
+	public static final String player_id_in_session = "playerId";
+	
+	//游戏信息SESSION里面的变量
+	public static final String game_id_in_session = "gameId";
 	
 }
