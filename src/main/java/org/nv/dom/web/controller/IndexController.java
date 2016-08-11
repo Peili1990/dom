@@ -35,6 +35,8 @@ public class IndexController extends BaseController {
 		UserCurRole userInfo = userService.getUserCurRole(user);
 		mav.addObject("userInfo", userInfo);
 		if(userInfo.getPlayerId()>0L){
+			session.setAttribute(PageParamType.game_id_in_session, userInfo.getGameId());
+			session.setAttribute(PageParamType.player_id_in_session, userInfo.getPlayerId());
 			mav.addObject("playerInfo", playerService.getPlayerInfoByUserId(user.getId()));
 		}
 		return mav;

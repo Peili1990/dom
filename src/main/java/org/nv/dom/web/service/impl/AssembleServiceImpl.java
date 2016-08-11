@@ -56,9 +56,11 @@ public class AssembleServiceImpl implements AssembleService {
 			if(newspaper.getType() == NVTermConstant.DAILY_PAPER){
 				List<Speech> speechList = messageMapper.getSpeechListDao(getSpeechListDTO);
 				result.put("speechList", speechList);
-				List<PlayerReplaceSkin> replaceList = playerMapper.getPlayerReplaceSkinDao(getSpeechListDTO.getPlayerId());
-				if(replaceList!=null &&!replaceList.isEmpty()){
-					result.put("replaceList", replaceList);
+				if(getSpeechListDTO.getPlayerId()>0L){
+					List<PlayerReplaceSkin> replaceList = playerMapper.getPlayerReplaceSkinDao(getSpeechListDTO.getPlayerId());
+					if(replaceList!=null &&!replaceList.isEmpty()){
+						result.put("replaceList", replaceList);
+					}
 				}
 			}			
 			result.put("newspaperDetail", newspaper);

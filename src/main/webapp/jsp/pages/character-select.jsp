@@ -71,13 +71,11 @@
 	function getCharacterList(characterSelect){
 		if($("#select-character-three").hasClass("invisible")&&
 				$("#select-character-all").hasClass("invisible")){
-			var playerId = $("#player-id").val();
-			var gameId = $("#game-id").val();
 			if(characterSelect == 1){
 				getCharacterListAll();
 			}
 			else{
-				getCharacterListThree(playerId,gameId);
+				getCharacterListThree();
 			}
 		}
 	}
@@ -106,14 +104,10 @@
 		$("#selected-character").val(characters[index].characterId);
 	})
 
-	function getCharacterListThree(playerId,gameId){
+	function getCharacterListThree(){
 		var common = new Common();
 		var url = getRootPath() + "/game/getCharacterListThree";
-		var options = {
-			playerId : playerId,
-			gameId : gameId			
-		}
-		common.callAction(options, url, function(data) {
+		common.callAction(null, url, function(data) {
 			if(!data){
 				return;
 			}
@@ -159,8 +153,6 @@
 	
 	function selectCharacter(btn){
 		$(btn).attr("disabled","disabled");
-		var playerId = $("#player-id").val();
-		var gameId = $("#game-id").val();
 		var characterId = $("#selected-character").val();
 		if(characterId == ""){
 			myAlert("请选择角色");
@@ -178,8 +170,6 @@
 		}
 		var url = getRootPath()+"/game/selectCharacter";
 		var options = {
-			playerId : playerId,
-			gameId : gameId,
 			characterId : characterId,
 			isSp : isSp,
 			applyPioneer : applyPioneer

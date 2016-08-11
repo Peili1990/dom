@@ -42,10 +42,7 @@
 	function getOpreation(){
 		var common = new Common();
 		var url=getRootPath() + "/game/getPlayerOpreation";
-		var options = {
-				playerId : $("#player-id").val(),
-		}
-		common.callAction(options, url, function(data){
+		common.callAction(null, url, function(data){
 			if(!data){
 				return;
 			}
@@ -55,6 +52,7 @@
 				$("input[name='action']").val(data.opreation.action);
 				$("input[name='privilege']").val(data.opreation.privilege);
 				$("input[name='vote']").val(data.opreation.vote);
+				adjustContainerHeight("#pageB");
 				return;
 			case 0:
 				timeoutHandle();
@@ -78,7 +76,6 @@
 		var common = new Common();
 		var url=getRootPath() + "/game/submitOpreation";
 		var options = {
-				playerId : $("#player-id").val(),
 				action : action,
 				privilege : privilege,
 				vote : vote

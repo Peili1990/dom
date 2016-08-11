@@ -2,11 +2,13 @@ package org.nv.dom.web.interceptors;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.account.LoginDTO;
 import org.nv.dom.util.CookiesUtil;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.service.AccountService;
+import org.nv.dom.web.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class SessionTimeoutHandle {
     
     @Autowired
     private AccountService accountService;
+    
+    @Autowired
+    private UserService userService;
 
     /**
      * 判断请求是否是ajax
@@ -55,6 +60,11 @@ public class SessionTimeoutHandle {
 			user.setPassword("");
 			httpServletRequest.getSession().setAttribute(PageParamType.user_in_session, user);
 			result.remove("user");
+			UserCurRole userInfo = userService.getUserCurRole(user);
+			if(userInfo.getPlayerId()>0L){
+				httpServletRequest.getSession().setAttribute(PageParamType.game_id_in_session, userInfo.getGameId());
+				httpServletRequest.getSession().setAttribute(PageParamType.player_id_in_session, userInfo.getPlayerId());	
+			}
 			return true;
 		} else {
 			if(isAjaxRequest(httpServletRequest)) {

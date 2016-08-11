@@ -41,6 +41,11 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> getPlayerOpreation(long playerId) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		if(playerId < 1L){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+			return result;
+		}
 		try{
 			PlayerOpreation opreation = playerMapper.getPlayerOpreation(playerId);
 			result.put("opreation", opreation);
@@ -57,6 +62,11 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		if(submitOpreationDTO.getPlayerId() < 1L){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+			return result;
+		}
 		try{
 			if(playerMapper.submitOpreationDao(submitOpreationDTO)==1){
 				result.put(PageParamType.BUSINESS_STATUS, 1);

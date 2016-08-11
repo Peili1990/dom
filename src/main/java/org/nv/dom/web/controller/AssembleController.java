@@ -42,6 +42,7 @@ public class AssembleController extends BaseController {
 	public Map<String, Object> getNewspaperDetail(@ModelAttribute("getSpeechListDTO") GetSpeechListDTO getSpeechListDTO, HttpSession session) {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		getSpeechListDTO.setUserId(user.getId());
+		getSpeechListDTO.setPlayerId((long) session.getAttribute(PageParamType.player_id_in_session));
 		return assembleService.getNewspaperDetail(getSpeechListDTO);
 	}
 

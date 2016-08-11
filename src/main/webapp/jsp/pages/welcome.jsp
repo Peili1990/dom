@@ -31,8 +31,6 @@
 		<div class="card">
 			<div class="card-header">
 				<h2 class="card-title">角色信息</h2>
-				<input id="player-id" type="hidden" value="${ userInfo.playerId }">
-				<input id="game-id" type="hidden" value="${ userInfo.gameId }">
 			</div>
 			<div class="card-body">
 				外在角色：

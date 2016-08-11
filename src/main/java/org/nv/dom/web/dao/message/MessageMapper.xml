@@ -18,10 +18,12 @@
 		WHERE
 			ds.newspaper_id = #{newspaperId};
 			
+		<if test="playerId>0">
 		DELETE FROM
 			d_offline_speech
 		WHERE
-			user_id = #{userId} AND newspaper_id = #{newspaperId}				
+			user_id = #{userId} AND newspaper_id = #{newspaperId}	
+		</if>			
 	
 	</select>
 

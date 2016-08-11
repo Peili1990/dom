@@ -51,8 +51,7 @@ var playerInfo = ${playerInfoStr}
 function getNewspaperDetail(newspaperId,newspaperNo){
 	var url = getRootPath() + "/getAssembleDetail";
 	var options = {
-			newspaperId : newspaperId,
-			playerId : playerInfo.playerId
+			newspaperId : newspaperId
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
@@ -90,6 +89,7 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 			if(newspaperDetail.seatTable){
 				$("#seat-table").append(newspaperDetail.seatTable);
 			}
+			adjustContainerHeight("#pageB");
 			if(newspaperDetail.type == 2){
 				$("#speech-list").empty();
 				$.each(data.speechList,function(index,speech){

@@ -80,6 +80,11 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	@Override
 	public Map<String, Object> getCharacterListThree(GetCharacterListDTO getCharacterListDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		if(getCharacterListDTO.getPlayerId() < 1L || getCharacterListDTO.getGameId() < 1L){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+			return result;
+		}
 		try{
 			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 					String.valueOf(getCharacterListDTO.getPlayerId()));
@@ -115,6 +120,11 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	@Override
 	public Map<String, Object> selectCharacter(SelectCharacterDTO selectCharacterDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		if(selectCharacterDTO.getPlayerId() < 1L || selectCharacterDTO.getGameId() < 1L){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+			return result;
+		}
 		try{
 			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 					String.valueOf(selectCharacterDTO.getPlayerId()));
