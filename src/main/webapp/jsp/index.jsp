@@ -40,7 +40,9 @@
    <jsp:include page="layout/footer.jsp"></jsp:include>
 	<script>
 
-        $("#container").css({"height":$(".default").height()+100+"px"});
+	$(function(){
+		adjustContainerHeight("#pageA");
+	}) 
         
   </script>
 </body>

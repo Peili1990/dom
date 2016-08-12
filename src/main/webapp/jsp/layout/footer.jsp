@@ -24,9 +24,9 @@
             </a>
           </li>
           <li >
-            <a href="https://github.com/allmobilize/amazeui" class="">
+            <a href="${ baseUrl }chat" class="">
                   <span class="am-icon-comment"></span>
-                <span class="am-navbar-label">反馈</span>
+                <span class="am-navbar-label">私聊</span>
             </a>
           </li>
           <li >
