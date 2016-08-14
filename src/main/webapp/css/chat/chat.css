@@ -1,5 +1,28 @@
 .avatar{
 	float:none;
-	width:40px;
-	height:40px;
+	width:50px;
+	height:50px;
+	display:inline-block;
+	vertical-align: text-bottom
+}
+
+.chat-content{
+	width:70%;
+	display:inline-block
+} 
+
+.chat-content p{
+	margin-top:0px;
+	color:#aaaaaa;
+	overflow: hidden;
+	-webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: clip;
+    display: -webkit-box;
+}
+
+.card .badge{
+	color:white;
+	top:-20px;
+	left:5%;
 }
