@@ -8,11 +8,12 @@ var Common = function() {
 	// data参数：为异步传输的参数，需定义为JSON格式
 	// url参数：为异步访问路径
 	// callback参数：为AJAX执行成功的回调函数需为function(){};
-	this.callAction = function(data, url, callback, dataType) {
+	this.callAction = function(data, url, callback, contentType) {
 		$.ajax({
 			type : "POST",
 			url : url,
 			data : data,
+			contentType : contentType,
 			dataType : "json",
 			success : callback,
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -444,5 +445,22 @@ function shuffle(str) {
 	var arrays = str.split("");
 	arrays.sort(randomsort);
 	return arrays.join("");
+}
+
+function getCurrentDb(userId) {
+    //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小
+    //如果数据库不存在那么创建之
+    var db = openDatabase("nv_db", "1.0", "historical chat record", 1024 * 1024); 
+    if(!db) {
+    	myAlert("您的浏览器不支持HTML5本地数据库,聊天记录可能无法保存");
+    	return;
+    }
+    db.transaction(function (trans) {
+    	trans.executeSql("create table if not exists chat_record_"+userId+"(chatId,userId,content,createTime)", [], function (trans, result) {	
+    	},function(trans, result){},function(trans, message){myAlert(message)});
+    },function(trans, result){},function(){})//启动一个事务，并设置回调函数
+       
+ 
+    return db;
 }
 

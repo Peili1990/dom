@@ -25,7 +25,9 @@
           </li>
           <li >
             <a href="${ baseUrl }chat" class="">
-                  <span class="am-icon-comment"></span>
+                  <span class="am-icon-comment">
+                  	<span class="badge badge-alert badge-rounded invisible">1</span>
+                  </span>
                 <span class="am-navbar-label">私聊</span>
             </a>
           </li>
@@ -39,7 +41,8 @@
   </div>
   
   <script type="text/javascript">
-  	var userId = ${user.id}
+  	var userId = ${user.id};
+  	var db = getCurrentDb(userId);
   	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
   	webSocket.onerror = function(event) {
@@ -64,6 +67,8 @@
 		case "delete":
 			dealDelete(content);
 			break;
+		case "chat":
+			dealChat(content);
 		default:
 			break;
 		}
@@ -88,10 +93,25 @@
 					totalSpeech+=parseInt(offline.num);
 				})
 				setCache("nv_offline_speech",parseInt(totalSpeech));
-				setRedspot();
 				if(window.location.href.indexOf("assemble")>0){
 					setRedspotOnpaper();
 				}
+				totalChat = getCache("nv_offline_chat"+userId);
+				setCache("nv_offline_chat"+userId,totalChat > 0 ? parseInt(totalChat)+parseInt(data.offlineChat.length) : parseInt(data.offlineChat.length));
+				$.each(data.offlineChat,function(index,chat){
+					chatMessage = getCache("nv_chat"+chat.chatId);
+					setCache("nv_chat"+chat.chatId, chatMessage > 0 ? ++chatMessage : 1);
+					db.transaction(function (trans) {
+			            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chat.chatId, chat.fromUserId, chat.content, chat.createTime], function (ts, data1) {
+			            }, function (ts, message) {
+			                myAlert(message);
+			            });
+			        });
+				})
+				if(window.location.href.indexOf("chat")>0){
+					createChatList();
+				}
+				setRedspot();
 				return;
 			case 0:
 				timeoutHandle();
@@ -149,12 +169,40 @@
 		})
 	}
 	
+	function dealChat(content){
+		db.transaction(function (trans) {
+            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [content.chatId, content.fromUserId, content.content, content.createTime], function (ts, data1) {
+            }, function (ts, message) {
+                myAlert(message);
+            });
+        });
+		if(window.location.href.indexOf("chat")>0 && 
+				!$("#nv-chatbar").hasClass("invisible")){
+		} else {
+			chatId = content.chatId;
+			chatMessage = getCache("nv_chat"+chatId);
+			setCache("nv_chat"+chatId,chatMessage ? ++chatMessage : 1);
+			unreadChat = getCache("nv_offline_chat"+userId);
+			setCache("nv_offline_chat"+userId,unreadChat ? ++unreadChat : 1); 
+			setRedspot();
+			if(window.location.href.indexOf("chat")>0){
+				createChatList();
+			}
+		}	
+	}
+	
 	function setRedspot(){
 		var offlineSpeech = getCache("nv_offline_speech") ? getCache("nv_offline_speech") : 0;
 		if(offlineSpeech>0){
 			$("#nv-footer .am-icon-bell .badge").text(offlineSpeech).removeClass("invisible");
 		} else {
 			$("#nv-footer .am-icon-bell .badge").addClass("invisible");
+		}
+		var offlineChat = getCache("nv_offline_chat"+userId) ? getCache("nv_offline_chat"+userId) : 0;
+		if(offlineChat>0){
+			$("#nv-footer .am-icon-comment .badge").text(offlineChat).removeClass("invisible");
+		} else {
+			$("#nv-footer .am-icon-comment .badge").addClass("invisible");
 		}
 	}
 

@@ -51,6 +51,44 @@
 		)
 	
 	</insert>
+	
+	<select id="getChatInfoDao" resultType="ChatInfo">
+	
+		SELECT 
+			du.id AS toUserId,
+			du.nickname AS toUserNickname,
+			du.avatar AS toUserAvatar,
+			du.motto AS toUserMotto
+		FROM
+			d_user du
+		WHERE
+			du.id IN
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+	
+	</select>
+	
+	<select id="getOfflineChatDao" parameterType="long" resultType="OfflineChat">
+	
+		SELECT 
+			dom.chat_id AS chatId,
+			dom.from_user_id AS fromUserId,
+			dom.content AS content,
+			dom.create_time AS createTime		
+		FROM
+			d_offline_message dom
+		WHERE
+			dom.to_user_id = #{userId};
+			
+		DELETE FROM
+			d_offline_message
+		WHERE
+			to_user_id = #{userId};
+			
+		
+	
+	</select>
 
 
 </mapper>

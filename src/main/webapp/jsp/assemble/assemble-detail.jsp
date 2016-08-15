@@ -131,6 +131,9 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 						redspot.addClass("invisible");
 						setRedspot();
 					}
+				} else {
+					$("#nv-chatbar").addClass("invisible");
+					$("#nv-footer").removeClass("invisible");
 				}
 			}
 			$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });

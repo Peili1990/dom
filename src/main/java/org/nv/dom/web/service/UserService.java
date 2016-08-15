@@ -1,5 +1,6 @@
 package org.nv.dom.web.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.domain.message.OfflineMessage;
@@ -13,5 +14,7 @@ public interface UserService {
 	public Map<String, Object> getOfflineMessage(long userId);
 
 	public Map<String, Object> saveOfflineSpeech(OfflineMessage offlineMessage);
+	
+	public Map<String, Object> getChatInfo(List<String> chatList, String userId);
 
 }

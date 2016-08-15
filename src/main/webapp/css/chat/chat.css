@@ -11,14 +11,20 @@
 	display:inline-block
 } 
 
+.chat-content h3{
+	margin-left:5px;
+}
+
 .chat-content p{
 	margin-top:0px;
 	color:#aaaaaa;
 	overflow: hidden;
-	-webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-overflow: clip;
+    text-overflow: ellipsis;
     display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    margin-left:5px;
+    line-height:28px;
 }
 
 .card .badge{
