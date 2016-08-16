@@ -15,7 +15,7 @@
 	
 </div>
 
-<script>
+<script type="text/javascript">
 
 	$(function(){
 		createChatList();
@@ -40,7 +40,7 @@
            					$("#chat-list").empty();
            					$.each(data.chatList,function(index,chatInfo){
            						var builder = new StringBuilder();
-           						builder.append('<div class="card"><div class="card-body">');
+           						builder.appendFormat('<div class="card" id="{0}" onclick="pageSwitch({1},{2},{3})"><div class="card-body">',webData.rows.item(index).chatId,"'#pageA'","'#pageB'","'getChatDetail("+chatInfo.toUserId+")'");
            						builder.appendFormat('<img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar avatar">');
            						builder.appendFormat('<div class="chat-content"><h3>{0}</h3><p>{1}</p></div>',chatInfo.toUserNickname,webData.rows.item(index).content);
            						builder.append('<span class="badge badge-alert badge-rounded invisible"></span>');
