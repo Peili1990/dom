@@ -9,22 +9,79 @@
 </div>
 
 <script type="text/javascript">
+	var activeChatId;
 
 	function getChatDetail(toUserId){
 		var chatId = userId > toUserId ? toUserId+"-"+userId : userId+"-"+toUserId;
+		activeChatId = chatId;
 		db.transaction(function (trans) {
             trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit 10 ", [chatId], function (ts, webData) {
             	if(webData){
+            		$("#chat-detail-list").empty();
             		for(var i=0;i<webData.rows.length;i++){ 
-           				
+            			appendChatDetail(webData.rows.item(i),true);
            			}
             	}
+            	$("#nv-footer").addClass("invisible");
+				$("#nv-chatbar").removeClass("invisible");
+				$("#use-gesture").addClass("invisible");
+				$("#send-message").on("click",function(){
+					sendMessage(chatId,toUserId);
+				})
             }, function (ts, message) {
                 myAlert(message);
             });
         });
 	}
 	
-	function appendChatDetail(){}
+	function appendChatDetail(chatDetail,prepend){
+		var builder = new StringBuilder();
+		builder.append(chatDetail.userId == userId ? '<li class="am-comment-flip">':'<li class="am-comment">');
+		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',chatDetail.userId == userId ? $("#user-avatar").val() : $("#"+chatDetail.chatId+" img").attr("src"));
+		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
+		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',chatDetail.userId == userId ? $("#user-nickname").val() : $("#"+chatDetail.chatId+" h3").text(),chatDetail.createTime);
+		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',chatDetail.content)
+		if(prepend){
+			$("#chat-detail-list").prepend(builder.toString());
+		}else{
+			$("#chat-detail-list").append(builder.toString());			
+		}
+		adjustContainerHeight("#pageB");
+	}
+	
+	function sendMessage(chatId,toUserId){
+		var content = $("#nv-chatbar .messages").val().trim();
+		if(content == ""){
+			return;
+		}
+		var url = "http://" + "${chatServer}" + "/sendMessage";
+		var options = {
+				chatId : chatId,
+				toUserId : toUserId,
+				fromUserId : userId,
+				content : content
+		}
+		$("#nv-chatbar .messages").val("");
+		var common = new Common();
+		common.callAction(options, url, function(data) {
+			if (!data) {
+				return;
+			}
+			switch (data.status) {
+			case 1:
+				db.transaction(function (trans) {
+	                trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatId, userId, content, data.chatDetail.createTime], function (ts, data1) {
+	                }, function (ts, message) {
+	                    myAlert(message);
+	                });
+	            });
+				appendChatDetail(data.chatDetail,false);
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}
+		})
+	}
 
 </script>

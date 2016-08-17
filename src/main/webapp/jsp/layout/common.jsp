@@ -52,6 +52,7 @@
 	<div class="talk_word">
 		<textarea class="messages"></textarea>
 		<input type="button" class="am-btn am-btn-default" value="动作" id="use-gesture"/>
+		<input type="button" class="am-btn am-btn-default" value="表情" id="show-emotion"/>
 		<input type="button" class="am-btn am-btn-default" value="发送" id="send-message"/>
 	</div>
 </div>

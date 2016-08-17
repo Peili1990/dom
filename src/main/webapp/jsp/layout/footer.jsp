@@ -176,8 +176,9 @@
                 myAlert(message);
             });
         });
-		if(window.location.href.indexOf("chat")>0 && 
-				!$("#nv-chatbar").hasClass("invisible")){
+		if(activeChatId == content.chatId){
+			appendChatDetail(content,false);
+			scrollTobottom();
 		} else {
 			chatId = content.chatId;
 			chatMessage = getCache("nv_chat"+chatId);

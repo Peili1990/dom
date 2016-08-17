@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<input type="hidden" id="user-nickname" value="${user.nickname}">
+<input type="hidden" id="user-avatar" value="${user.avatar}">
 <div class="default" id="chat-list">
 
 <!-- 	<div class="card"> -->
