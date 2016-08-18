@@ -28,6 +28,14 @@
 				$("#send-message").on("click",function(){
 					sendMessage(chatId,toUserId);
 				})
+				redspot = $("#"+chatId+" .badge")
+				if(!redspot.hasClass("invisible")){
+					chatMessage = getCache("nv_chat"+chatId);
+					setCache("nv_offline_chat"+userId,getCache("nv_offline_chat"+userId)-parseInt(chatMessage));
+					delCache("nv_chat"+chatId);
+					redspot.addClass("invisible");
+					setRedspot();
+				}
             }, function (ts, message) {
                 myAlert(message);
             });
@@ -43,10 +51,12 @@
 		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',chatDetail.content)
 		if(prepend){
 			$("#chat-detail-list").prepend(builder.toString());
+			adjustContainerHeight("#pageB");
 		}else{
-			$("#chat-detail-list").append(builder.toString());			
+			$("#chat-detail-list").append(builder.toString());
+			adjustContainerHeight("#pageB");
+			scrollTobottom();
 		}
-		adjustContainerHeight("#pageB");
 	}
 	
 	function sendMessage(chatId,toUserId){
@@ -75,6 +85,7 @@
 	                    myAlert(message);
 	                });
 	            });
+				data.chatDetail.userId = userId;
 				appendChatDetail(data.chatDetail,false);
 				return;
 			default:

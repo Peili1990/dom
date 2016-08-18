@@ -59,11 +59,17 @@
 
 <script type="text/javascript">
 
-	$("#nv-chatbar .messages").keydown(function(){
-			
-		  $("#nv-chatbar .messages").css({"height":"auto"}).css({"height":$("#nv-chatbar .messages")[0].scrollHeight-6+"px"});
-		  $("#nv-chatbar .talk_word").css({"height":$("#nv-chatbar .messages").height()+25+"px"});
-		  $("#nv-chatbar").css({"height":$("#nv-chatbar .messages").height()+25+"px"});
+	$("#nv-chatbar .messages").keyup(function(){ 
+		if($("#nv-chatbar .messages")[0].scrollHeight>=50){
+			$("#nv-chatbar .messages").css({"height":"auto"}).css({"height":$("#nv-chatbar .messages")[0].scrollHeight+"px"});
+			$("#nv-chatbar .talk_word").css({"height":$("#nv-chatbar .messages").height()+32+"px"});
+			$("#nv-chatbar").css({"height":$("#nv-chatbar .messages").height()+32+"px"});
+			if(recoverTag($("#nv-chatbar .messages").val()).indexOf("<br>")<0){
+				$("#nv-chatbar .messages").css({"height":"auto"}).css({"height":"34px"});
+				$("#nv-chatbar .talk_word").css({"height":"49px"});
+				$("#nv-chatbar").css({"height":"49px"});
+			}
+		}
 	})
 	
 	

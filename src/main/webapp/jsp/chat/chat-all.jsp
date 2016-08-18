@@ -50,7 +50,6 @@
            						$("#chat-list").append(builder.toString());
            					})
            					setRedspotOnChat();
-           					adjustContainerHeight("#pageA");
            					return;
            				case 0:
            					timeoutHandle();

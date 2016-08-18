@@ -83,12 +83,14 @@ a{blr:expression(this.onFocus=this.blur())}/*去掉a标签的虚线框，避免�
 	height: 36px;
 	width: 60%;
 	margin-top:7px;
+	margin-bottom:7px;
 	margin-right:10px;
-	padding-top:10px;
+	padding-top:8px;
+	padding-bottom:8px;
 	padding-left:3px;
 	overflow: hidden;
 	font-size: 16px;
-	line-height: 16px;
+	line-height:18px;
 	color: #666;
 	float:left;	
 	border-radius: 3px;
