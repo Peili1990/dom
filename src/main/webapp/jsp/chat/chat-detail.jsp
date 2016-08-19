@@ -9,11 +9,16 @@
 </div>
 
 <script type="text/javascript">
-	var activeChatId;
+	var activeToUserId = 0;
+	var pageNum = 0;
 
 	function getChatDetail(toUserId){
+		if(toUserId == 0 ){
+			return;
+		}
 		var chatId = userId > toUserId ? toUserId+"-"+userId : userId+"-"+toUserId;
-		activeChatId = chatId;
+		activeToUserId = toUserId;
+		pageNum = 0;
 		db.transaction(function (trans) {
             trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit 10 ", [chatId], function (ts, webData) {
             	if(webData){
@@ -22,6 +27,7 @@
             			appendChatDetail(webData.rows.item(i),true);
            			}
             	}
+            	scrollTobottom();
             	$("#nv-footer").addClass("invisible");
 				$("#nv-chatbar").removeClass("invisible");
 				$("#use-gesture").addClass("invisible");
@@ -36,6 +42,12 @@
 					redspot.addClass("invisible");
 					setRedspot();
 				}
+				
+				$(window).scroll(throttle(function(){
+					if($(window).scrollTop()<=0){
+						loadMoreChat(chatId)
+					}
+				},2000,false));
             }, function (ts, message) {
                 myAlert(message);
             });
@@ -93,6 +105,21 @@
 				return;
 			}
 		})
+	}
+	
+	function loadMoreChat(chatId){
+		pageNum++;
+		db.transaction(function (trans) {
+            trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit "+10*pageNum+",10 ", [chatId], function (ts, webData) {
+            	if(webData){
+            		for(var i=0;i<webData.rows.length;i++){ 
+            			appendChatDetail(webData.rows.item(i),true);
+           			}
+            	}
+            }, function (ts, message) {
+                myAlert(message);
+            });
+        });
 	}
 
 </script>

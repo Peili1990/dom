@@ -110,6 +110,10 @@
 				})
 				if(window.location.href.indexOf("chat")>0){
 					createChatList();
+					adjustContainerHeight("#pageA");
+					if(!$("#nv-chatbar").hasClass("invisible")){
+						getChatDetail(activeToUserId);	
+					}
 				}
 				setRedspot();
 				return;
@@ -176,7 +180,7 @@
                 myAlert(message);
             });
         });
-		if(activeChatId == content.chatId){
+		if(activeToUserId == content.fromUserId){
 			appendChatDetail(content,false);
 			scrollTobottom();
 		} else {
