@@ -180,7 +180,7 @@
                 myAlert(message);
             });
         });
-		if(activeToUserId == content.fromUserId){
+		if(window.location.href.indexOf("chat")>0 && activeToUserId==content.fromUserId){
 			appendChatDetail(content,false);
 			scrollTobottom();
 		} else {

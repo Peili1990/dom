@@ -81,9 +81,9 @@
 				chatId : chatId,
 				toUserId : toUserId,
 				fromUserId : userId,
-				content : content
+				content : recoverTag(content)
 		}
-		$("#nv-chatbar .messages").val("");
+		$("#nv-chatbar .messages").val("").keyup();
 		var common = new Common();
 		common.callAction(options, url, function(data) {
 			if (!data) {
@@ -92,7 +92,7 @@
 			switch (data.status) {
 			case 1:
 				db.transaction(function (trans) {
-	                trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatId, userId, content, data.chatDetail.createTime], function (ts, data1) {
+	                trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatId, userId, recoverTag(content), data.chatDetail.createTime], function (ts, data1) {
 	                }, function (ts, message) {
 	                    myAlert(message);
 	                });

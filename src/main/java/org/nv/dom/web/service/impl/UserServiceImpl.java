@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 			}
 			result.put("chatList", chatList);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "保存离线发言成功！");
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天信息成功！");
 		}catch(Exception e){
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");

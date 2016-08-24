@@ -169,7 +169,7 @@ function sumbitSpeech(newspaperId,index){
 		type : $("#use-gesture").hasClass("am-btn-danger") ? 2 : 1
 	}
 	$('#my-actions').modal('close');
-	$("#nv-chatbar .messages").val("");
+	$("#nv-chatbar .messages").val("").keyup();
 	var url = "http://" + "${chatServer}" + "/sumbitSpeech";
 	var common = new Common();
 	common.callAction(options, url, function(data) {
