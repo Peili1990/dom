@@ -154,7 +154,7 @@ function sumbitSpeech(newspaperId,index){
 	if(content == ""){
 		return;
 	}
-	if(index != null && replaceList[index].isMute == 1){
+	if(!$("#use-gesture").hasClass("am-btn-danger") && index != null && replaceList[index].isMute == 1){
 		myInfo("该发言称呼被禁言:(");
 		return;
 	}

@@ -36,7 +36,10 @@
 				外在角色：
 				<c:choose>
 					<c:when test="${ playerInfo != null && playerInfo.characterId != null }">
-						${ playerInfo.characterName }
+						<c:if test="${ playerInfo.isSp == 1 }">
+						sp
+						</c:if>
+						${playerInfo.characterName }
 						<img src="http://www.goddessfantasy.net/bbs/index.php?action=dlattach;topic=58357.0;attach=43256;image"
 						class="am-comment-avatar character-avatar">
 					</c:when>

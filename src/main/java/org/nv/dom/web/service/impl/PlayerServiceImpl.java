@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOpreation;
@@ -29,8 +28,6 @@ public class PlayerServiceImpl implements PlayerService {
 			if(playerInfo == null){
 				return null;
 			}
-			playerInfo.setCharacterName(playerInfo.getIsSp().equals(NVTermConstant.IS_SP) ? 
-				"sp"+playerInfo.getCharacterName():playerInfo.getCharacterName());
 			return playerInfo;
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);

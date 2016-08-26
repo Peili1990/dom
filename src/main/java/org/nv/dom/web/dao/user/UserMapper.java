@@ -29,7 +29,7 @@ public interface UserMapper {
 	public int saveOfflineMessageDao(OfflineMessage offlineMessage);
 	
 	/**
-	 * <p>保存聊天会话信息</p>
+	 * <p>查询聊天会话信息</p>
 	 */
 	
 	public List<ChatInfo> getChatInfoDao(List<Long> users);
