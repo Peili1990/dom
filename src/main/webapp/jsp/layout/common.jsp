@@ -59,6 +59,14 @@
 
 <script type="text/javascript">
 
+	$(function(){
+		if(IsPC()&&$(window).width()!=400){
+			$("body").click(function(){
+				window.open("", '', 'top=0,left=0,width=400,height=650,location=yes,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no');	
+			})	
+		}
+	})
+
 	$("#nv-chatbar .messages").keyup(function(){ 
 		if($("#nv-chatbar .messages")[0].scrollHeight>=50){
 			$("#nv-chatbar .messages").css({"height":"auto"}).css({"height":$("#nv-chatbar .messages")[0].scrollHeight+"px"});

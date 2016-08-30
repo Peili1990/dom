@@ -464,3 +464,34 @@ function getCurrentDb(userId) {
     return db;
 }
 
+function IsPC(){
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+
+function windowClose(){
+	var userAgentInfo = navigator.userAgent;
+	if (userAgentInfo.indexOf("Firefox") != -1 || userAgentInfo.indexOf("Chrome") !=-1) {
+
+		   window.location.href="about:blank";
+		   window.close();
+		} else {
+
+		   window.opener = null;
+
+		   window.open("", "_self");
+
+		   window.opener.close();
+		}
+}
+
