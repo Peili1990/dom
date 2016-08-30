@@ -2,11 +2,23 @@ package org.nv.dom.dto.account;
 
 public class RegisterDTO {
 	
+	private long id;
+	
 	private String account;
 	
 	private String password;
 	
 	private String nickname;
+	
+	private String invitecode;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getAccount() {
 		return account;
@@ -31,8 +43,13 @@ public class RegisterDTO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
-	
 
+	public String getInvitecode() {
+		return invitecode;
+	}
 
+	public void setInvitecode(String invitecode) {
+		this.invitecode = invitecode;
+	}
+	
 }

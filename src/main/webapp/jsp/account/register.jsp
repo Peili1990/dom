@@ -8,26 +8,19 @@
 </head>
 <body>
 	<div class="bg-top"></div>
-	<form action="${ baseUrl }account/registerAction" class="wrapper"
-		method="post" id="registerForm">
-		<div class="am-input-group">
-			<span class="am-input-group-label"><i
-				class="am-icon-user am-icon-fw"></i></span> <input type="text"
-				class="am-form-field" id="userName" placeholder="Username">
-		</div>
-		<div class="am-input-group">
-			<span class="am-input-group-label"><i
-				class="am-icon-lock am-icon-fw"></i></span> <input type="password"
-				class="am-form-field" id="userPwd" placeholder="Password">
-		</div>
-		<div class="am-input-group">
-			<span class="am-input-group-label"><i
-				class="am-icon-pencil-square am-icon-fw"></i></span> <input type="text"
-				class="am-form-field" id="nickName" placeholder="Nickname">
-		</div>
-		<input type="button" class="am-btn am-btn-primary" onclick="login()"
-			value="登录"> <input type="button" class="am-btn am-btn-danger"
-			onclick="register(this)" value="注册">
+	<form action="${ baseUrl }account/registerAction" method="post">
+		<section id="container">
+    		<!-- view container -->
+   			<ul id="pages" class="view-container">
+      			<!-- pageA container -->
+     			<li id="pageA" class="page-container"> 
+      			<jsp:include page="component/register-step1.jsp"></jsp:include> 
+     			</li>
+      			<li id="pageB" class="page-container" style="left:100%;display:none"> 
+      			<jsp:include page="component/register-step2.jsp" ></jsp:include> 
+      			</li>
+    		</ul>  
+  		</section>
 	</form>
 	<div class="bg-bottom"></div>
 	<script src="js/account/register.js" type="text/javascript"></script>

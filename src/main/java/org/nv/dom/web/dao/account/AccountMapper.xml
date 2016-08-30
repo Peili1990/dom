@@ -28,7 +28,18 @@
 	
 	</select>
 	
-	<insert id="insertUserDao" parameterType="RegisterDTO">
+	<select id="getInvCodeDao" parameterType="String" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_inv_code dic
+		WHERE
+			dic.inv_code = #{invitecode} AND dic.used = 0;
+	
+	</select>
+	
+	<insert id="insertUserDao" parameterType="RegisterDTO" useGeneratedKeys="true" keyProperty="id">
 	
 		INSERT INTO d_user (
 			 account,
@@ -44,6 +55,18 @@
 		)
 
 	</insert>
+	
+	<update id="updateInvCodeDao" parameterType="RegisterDTO">
+	
+		UPDATE
+			d_inv_code dic
+		SET
+			dic.used = 1,
+			dic.user_id = #{id}
+		WHERE
+			dic.inv_code = #{invitecode}
+	
+	</update>
 	
 
 </mapper>

@@ -42,7 +42,8 @@ function submitForm(btn){
 function register(){
 	window.location = getRootPath() + "/register";
 }
-
-$("#loginForm").css({"padding-top":$("body").height()*0.6+"px"});
+$(function(){
+	$(".page-container").css({"padding-top":$("body").height()*0.6+"px"});
+})
 $(".bg-bottom").css({"height":$("body").width()*0.24+"px"});
 $(".bg-top").css({"height":$("body").width()*0.84+"px"});

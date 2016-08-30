@@ -12,8 +12,7 @@ public interface AccountMapper {
 	 * <p>获取用户信息</p>
 	 * @param loginDTO
 	 * @return
-	 * 2014年10月29日 下午3:57:12
-	 * @author: z```s
+	 * 
 	 */
 	public User getUserByAccountDao(LoginDTO loginDTO);
 	
@@ -21,20 +20,36 @@ public interface AccountMapper {
 	 * <p>获取同名账号数量</p>
 	 * @param account
 	 * @return
-	 * 2014年10月29日 下午3:57:12
-	 * @author: z```s
+	 *
 	 */
 	
 	public int getCountByAccountDao(String account);
 	
 	/**
+	 * <p>查询邀请码</p>
+	 * @param registerDTO
+	 * @return
+	 * 
+	 */
+	
+	public int getInvCodeDao(String invitecode);
+	
+	/**
 	 * <p>创建账号</p>
 	 * @param registerDTO
 	 * @return
-	 * 2014年10月29日 下午3:57:12
-	 * @author: z```s
+	 * 
 	 */
 	
 	public int insertUserDao(RegisterDTO registerDTO);
+	
+	/**
+	 * <p>邀请码状态修改</p>
+	 * @param registerDTO
+	 * @return
+	 * 
+	 */
+	
+	public int updateInvCodeDao(RegisterDTO registerDTO);
 
 }

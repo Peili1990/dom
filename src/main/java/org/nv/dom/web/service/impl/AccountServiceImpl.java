@@ -46,25 +46,31 @@ public class AccountServiceImpl implements AccountService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (registerDTO == null 
 				|| StringUtil.isNullOrEmpty(registerDTO.getAccount())
-				|| StringUtil.isNullOrEmpty(registerDTO.getPassword())) {
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+				|| StringUtil.isNullOrEmpty(registerDTO.getPassword())
+				|| StringUtil.isNullOrEmpty(registerDTO.getInvitecode())) {
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "信息请填写完整");
 			return result;
 		}
 		if (accountMapper.getCountByAccountDao(registerDTO.getAccount())>0){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_STATUS, -3);
 			result.put(PageParamType.BUSINESS_MESSAGE, "该用户名已被注册");
 			return result;
 		}
+		if (accountMapper.getInvCodeDao(registerDTO.getInvitecode()) != 1){
+			result.put(PageParamType.BUSINESS_STATUS, -4);
+			result.put(PageParamType.BUSINESS_MESSAGE, "邀请码无效或已被使用");
+			return result;
+		}	
 		if (registerDTO.getNickname() == null){
 			registerDTO.setNickname(registerDTO.getAccount());
 		}
-		if (accountMapper.insertUserDao(registerDTO) == 1){
+		if (accountMapper.insertUserDao(registerDTO) == 1 && accountMapper.updateInvCodeDao(registerDTO) == 1){
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "注册成功");
 			return result;
 		} else {
-			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统或网络异常");
 			return result;
 		}

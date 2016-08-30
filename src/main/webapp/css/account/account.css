@@ -34,3 +34,12 @@ body{
 	color:black;
 	border-color:white;
 }
+
+.page-container{
+	padding:1em;
+	background-color:transparent;
+}
+
+.view-container{
+	padding-top:0;
+}
