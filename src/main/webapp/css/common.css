@@ -311,3 +311,15 @@ time{
 #my-actions li{
 	padding:12px;
 }
+
+.nv-guide{
+	margin:0 auto;
+	margin-top:200px;
+	overflow:hidden;
+	text-align:center;
+}
+
+.nv-link{
+	color:#0e90d2;
+	cursor:pointer;
+}

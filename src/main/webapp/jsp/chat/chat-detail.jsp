@@ -27,7 +27,7 @@
             			appendChatDetail(webData.rows.item(i),true);
            			}
             	}
-            	scrollTobottom();
+            	$(window).scrollTop($(window).height());
             	$("#nv-footer").addClass("invisible");
 				$("#nv-chatbar").removeClass("invisible");
 				$("#use-gesture").addClass("invisible");

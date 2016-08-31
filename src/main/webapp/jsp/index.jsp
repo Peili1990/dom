@@ -41,6 +41,7 @@
 	<script>
 
 	$(function(){
+		setCookie("nv_screen_width",$(window).width(),"7d");
 		adjustContainerHeight("#pageA");
 	}) 
         

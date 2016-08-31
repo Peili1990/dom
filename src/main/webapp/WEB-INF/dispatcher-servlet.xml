@@ -82,6 +82,10 @@
 		<property name="loginUrl" value="/login" />
 	</bean>
 	
+	<bean id="pcclientHandle" class="org.nv.dom.web.interceptors.PCclientHandle">
+		<property name="pcIndexUrl" value="/pcIndex" />
+	</bean>
+	
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
@@ -89,8 +93,19 @@
 			<mvc:exclude-mapping path="/loginAction" />
 			<mvc:exclude-mapping path="/register" />
 			<mvc:exclude-mapping path="/registerAction" />
+			<mvc:exclude-mapping path="/pcIndex" />
+			<mvc:exclude-mapping path="/notSupport" />
 			<bean class="org.nv.dom.web.interceptors.LoginInterceptor">
 				<property name="sessionTimeoutHandle" ref="sessionTimeoutHandle" />
+			</bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/pcIndex" />
+			<mvc:exclude-mapping path="/notSupport" />
+			<bean class="org.nv.dom.web.interceptors.DeviceInterceptor">
+				<property name="pcclientHandle" ref="pcclientHandle" />
 			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

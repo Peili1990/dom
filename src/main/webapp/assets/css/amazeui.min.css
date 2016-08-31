@@ -1587,9 +1587,7 @@ input[type=checkbox],input[type=radio] {
 	margin-top:1px\9;
 	line-height:normal
 }
-input[type=file] {
-	display:block
-}
+
 select[multiple],select[size] {
 	height:auto
 }

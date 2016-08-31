@@ -77,12 +77,14 @@ public class SessionTimeoutHandle {
 	            httpServletResponse.getWriter().println(JacksonJSONUtils.beanToJSON(result));
 	        } else {
 	            //http
-	            String url = httpServletRequest.getContextPath() + loginUrl;
-				String referer = httpServletRequest.getRequestURL().toString()
-						+ (StringUtil.isNullOrEmpty(httpServletRequest.getQueryString())
-								? "?" + httpServletRequest.getQueryString() : "");
+	            String url = httpServletRequest.getContextPath() + loginUrl;     
+				String referer = httpServletRequest.getRequestURL().toString();
+				String query = httpServletRequest.getQueryString();
 				if (referer != null && referer.contains("?r=") == false) {
 					url += "?r=" + URLEncoder.encode(referer, "utf-8");
+				}
+				if (!StringUtil.isNullOrEmpty(query)){
+					url += "&"+ query;
 				}
 	            httpServletResponse.sendRedirect(url);
 	        }

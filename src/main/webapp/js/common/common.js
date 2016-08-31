@@ -315,10 +315,6 @@ function myInfo(text,callback){
 	$('#my-alert .am-modal-btn').on('click',callback);	
 }
 
-$(window).load(function(){
-	FastClick.attach(document.body);
-})
-
 function pageSwitch(pageA,pageB,callback){
 	window.scroll(0,0);
 	setGoback(pageB,pageA);
@@ -451,10 +447,6 @@ function getCurrentDb(userId) {
     //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小
     //如果数据库不存在那么创建之
     var db = openDatabase("nv_db", "1.0", "historical chat record", 1024 * 1024); 
-    if(!db) {
-    	myAlert("您的浏览器不支持HTML5本地数据库,聊天记录可能无法保存");
-    	return;
-    }
     db.transaction(function (trans) {
     	trans.executeSql("create table if not exists chat_record_"+userId+"(chatId,userId,content,createTime)", [], function (trans, result) {	
     	},function(trans, result){},function(trans, message){myAlert(message)});
@@ -478,20 +470,3 @@ function IsPC(){
     }
     return flag;
 }
-
-function windowClose(){
-	var userAgentInfo = navigator.userAgent;
-	if (userAgentInfo.indexOf("Firefox") != -1 || userAgentInfo.indexOf("Chrome") !=-1) {
-
-		   window.location.href="about:blank";
-		   window.close();
-		} else {
-
-		   window.opener = null;
-
-		   window.open("", "_self");
-
-		   window.opener.close();
-		}
-}
-

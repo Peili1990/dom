@@ -53,4 +53,6 @@ public class PageParamType {
 	//游戏信息SESSION里面的变量
 	public static final String game_id_in_session = "gameId";
 	
+	//客户端信息SESSION里面的变量
+	public static final String user_agent = "userAgent";
 }

@@ -26,10 +26,6 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
-		if(session.getAttribute(PageParamType.user_in_session)==null){
-			mav.setViewName("account/login");
-			return mav;
-		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		UserCurRole userInfo = userService.getUserCurRole(user);
@@ -48,5 +44,19 @@ public class IndexController extends BaseController {
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	} 
+	
+	@RequestMapping(value = "/pcIndex", method = RequestMethod.GET)
+	public ModelAndView pcIndexView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("pages/pc-index");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
+	@RequestMapping(value = "/notSupport", method = RequestMethod.GET)
+	public ModelAndView notSupportView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("pages/not-support");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
 
 }

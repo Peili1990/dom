@@ -2,9 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="default">
 	<div class="mine-box">
+		<input id="upload-avatar" type="file" name="avatarFile" class="invisible"/>   
 		<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50"
-			class="am-comment-avatar"> <span> 小风 </span>
-		<p>我是安德安纳，猎人</p>
+			class="am-comment-avatar"> <span> ${ user.nickname } </span>
+		<p>${ user.motto }</p>
 		<span class="am-icon-chevron-right"></span>
 	</div>
 	<h3>我的版杀</h3>
@@ -33,6 +34,10 @@
 	</div>
 	
 	<script type="text/javascript">
+	
+		$(".am-comment-avatar").on('click',function(){
+ 			$("#upload-avatar").click();
+		})
 	
 		function logout(btn){
 			$(btn).attr("disabled","disabled");

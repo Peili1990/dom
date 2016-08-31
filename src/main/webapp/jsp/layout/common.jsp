@@ -60,10 +60,16 @@
 <script type="text/javascript">
 
 	$(function(){
-		if(IsPC()&&$(window).width()!=400){
-			$("body").click(function(){
-				window.open("", '', 'top=0,left=0,width=400,height=650,location=yes,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no');	
-			})	
+		//FastClick.attach(document.body);
+		if(IsPC()&&!($(window).width() > 350 && $(window).width() < 450)){
+			if(window.location.href.indexOf("pcIndex")<0&&window.location.href.indexOf("notSupport")<0){
+				window.location = getRootPath() + "/pcIndex";
+			}
+		}
+		if(typeof(openDatabase) == "undefined") {
+			if(window.location.href.indexOf("notSupport")<0){
+				window.location = getRootPath() + "/notSupport";
+			}
 		}
 	})
 

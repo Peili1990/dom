@@ -9,7 +9,8 @@
 			t.account,
 			t.password,
 			t.nickname,
-			t.avatar
+			t.avatar,
+			t.motto
 		FROM
 			d_user t
 		WHERE

@@ -21,6 +21,8 @@ public class User implements Serializable{
 	private String password;
 	// 头像
 	private String avatar;
+	// 格言
+	private String motto;
 	public long getId() {
 		return id;
 	}
@@ -57,11 +59,11 @@ public class User implements Serializable{
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	public String getMotto() {
+		return motto;
+	}
+	public void setMotto(String motto) {
+		this.motto = motto;
+	}
 	
-	
-	
-	
-	
-	
-
 }
