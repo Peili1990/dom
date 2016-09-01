@@ -6,14 +6,15 @@
 <link rel="stylesheet" type="text/css" href="${baseUrl }css/jscrollpane1.css" />
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <link rel="stylesheet" href="${baseUrl}assets/css/amazeui.min.css">
-<link href="${baseUrl}mobiscroll/css/mobiscroll.custom-2.6.2.min.css" rel="stylesheet" type="text/css">
-<script src="${baseUrl}js/common/jquery-1.11.3.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="${baseUrl}mobiscroll/css/mobiscroll.custom-2.6.2.min.css">
+<script src="${baseUrl}js/common/jquery-3.0.0.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/fastclick.min.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/amazeui.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/common.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/frame.min.js" type="text/javascript"></script>
 <script src="${baseUrl}mobiscroll/js/mobiscroll.custom-2.6.2.min.js" type="text/javascript"></script>
+
 
 <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
   <div class="am-modal-dialog">

@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<div class="default" >
+
+<div id="clipArea"></div>
+<input type="file" id="file" class="invisible">
+
+</div>
+
+<script>
+
+$(function(){
+	$("#clipArea").css("height",$(window).height()-49+"px");
+	var clipArea = new PhotoClip("#clipArea", {
+		size: [$(window).width(), $(window).width()],
+		outputSize: [640, 640],
+		file: "#file",
+		ok: "#icon-finish",
+		loadStart: function() {
+	 		pageSwitch("#pageA","#pageB");
+			$("#nv-footer").addClass("invisible");
+			$("#icon-options").css({"display":"none"});
+			$("#icon-finish").css({"display":"block"});
+		},
+		loadComplete: function() {
+			
+		},
+		clipFinish: function(dataURL) {
+			console.log(dataURL);
+			var url = getRootPath() + "/avatarUpload";
+			var options={
+					avatarFile : dataURL
+			}
+			var common = new Common();
+			common.callAction(options,url,function(data){
+				
+			});
+			$("#icon-arrow").click();
+			$(".am-comment-avatar").attr("src",dataURL);
+			$("#icon-options").css({"display":"block"});
+			$("#icon-finish").css({"display":"none"});
+		}
+	});
+})
+
+</script>

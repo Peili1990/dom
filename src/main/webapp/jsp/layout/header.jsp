@@ -15,8 +15,11 @@
 	</h1>
 
 	<div class="am-header-right am-header-nav">
-		<a href="#right-link" class="">
+		<a href="" class="" id="icon-options">
 			<i class="am-header-icon am-icon-bars"></i>
+		</a>
+		<a href="#right-link" id="icon-finish" style="display:none">
+			完成
 		</a>
 	</div>
 </header>   

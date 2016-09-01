@@ -6,6 +6,7 @@ import java.util.Map;
 import org.nv.dom.domain.message.OfflineMessage;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCurRole;
+import org.nv.dom.dto.user.AvatarUploadDTO;
 
 public interface UserService {
 	
@@ -16,5 +17,7 @@ public interface UserService {
 	public Map<String, Object> saveOfflineSpeech(OfflineMessage offlineMessage);
 	
 	public Map<String, Object> getChatInfo(List<String> chatList, String userId);
+
+	public Map<String, Object> avatarUpload(AvatarUploadDTO avatarUploadDTO);
 
 }

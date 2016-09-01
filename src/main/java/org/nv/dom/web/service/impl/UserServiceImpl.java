@@ -1,10 +1,17 @@
 package org.nv.dom.web.service.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.message.OfflineMessage;
@@ -13,15 +20,21 @@ import org.nv.dom.domain.message.chat.OfflineChat;
 import org.nv.dom.domain.message.speech.OfflineSpeech;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCurRole;
+import org.nv.dom.dto.user.AvatarUploadDTO;
+import org.nv.dom.util.EncryptUtil;
+import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
 	
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
+	
+	private String tempAvatarPath = "img/avatar/";
 	
 	@Autowired
 	UserMapper userMapper;
@@ -89,6 +102,30 @@ public class UserServiceImpl implements UserService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}
 		return result;
+	}
+
+	@Override
+	public Map<String, Object> avatarUpload(AvatarUploadDTO avatarUploadDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (StringUtil.isNullOrEmpty(avatarUploadDTO.getPath())) {
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+			return result;
+		}
+		try {
+			String base64Str = avatarUploadDTO.getAvatarFile().replace("data:image/jpeg;base64,", "");
+			byte[] bytes = Base64.decodeBase64(base64Str.getBytes("UTF-8"));
+			String imgFilePath = "E:/images/4.jpg";// 新生成的图片
+			OutputStream out = new FileOutputStream(imgFilePath);
+			out.write(bytes);
+			out.flush();
+			out.close();		
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return null;
 	}
 
 }
