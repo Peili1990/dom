@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="default">
 	<div class="mine-box"> 
-		<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50"
+		<img src="${picServer}${user.avatar}"
 			class="am-comment-avatar"> <span> ${ user.nickname } </span>
 		<p>${ user.motto }</p>
 		<span class="am-icon-chevron-right"></span>

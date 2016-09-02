@@ -86,9 +86,18 @@
 		WHERE
 			to_user_id = #{userId};
 			
-		
-	
 	</select>
+	
+	<update id="updateUserAvataDao" parameterType="AvatarUploadDTO">
+	
+		UPDATE
+			d_user
+		SET
+			avatar = #{avatar}
+		WHERE
+			id = #{userId};
+	
+	</update>
 
 
 </mapper>

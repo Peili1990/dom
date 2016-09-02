@@ -80,7 +80,7 @@
 		}
 	}
 	function getCharacterListAll(){
-		$.get('${baseUrl}file/character-list.json').success(function(data){
+		$.get('${baseUrl}file/character-list.json',function(data){
 			characters=data.characters;
 			$.each(characters,function(index,character){
 				$("#target_select").append("<option value='"+character.characterId+"'>"+character.characterName+"</option>");

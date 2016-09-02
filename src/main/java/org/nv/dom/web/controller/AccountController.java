@@ -63,6 +63,7 @@ public class AccountController extends BaseController {
 	@RequestMapping(value = "/logoutAction", method = RequestMethod.POST)
 	public Map<String, Object> registerAction(HttpServletRequest request) {
 		request.getSession().removeAttribute(PageParamType.user_in_session);
+		request.getSession().removeAttribute(PageParamType.user_agent);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put(PageParamType.BUSINESS_STATUS,1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "登出成功");

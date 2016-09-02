@@ -13,7 +13,7 @@
 
 <script type="text/javascript">
 
-$.get('file/rule-1.8.0.txt').success(function(content){ 
+$.get('file/rule-1.8.0.txt',function(content){ 
 	$(".rule-panel").html(content);
 })
 

@@ -25,7 +25,7 @@
 		FROM
 			d_user t
 		WHERE
-			t.account=#{account};
+			t.account=#{account} OR t.nickname=#{nickname}
 	
 	</select>
 	
@@ -46,12 +46,16 @@
 			 account,
 			 password,
 			 nickname,
+			 motto,
+			 avatar,
 			 createTime
 		)
 		VALUES (
 			#{account},
 			#{password},
 			#{nickname},
+			#{motto},
+			#{avatar},
 			NOW()	
 		)
 

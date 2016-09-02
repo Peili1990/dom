@@ -22,6 +22,7 @@ $(function(){
 			$("#nv-footer").addClass("invisible");
 			$("#icon-options").css({"display":"none"});
 			$("#icon-finish").css({"display":"block"});
+			$(".am-header-title").text("图片剪裁");
 		},
 		loadComplete: function() {
 			
@@ -34,12 +35,13 @@ $(function(){
 			}
 			var common = new Common();
 			common.callAction(options,url,function(data){
-				
+				$("#icon-arrow").click();
+				myAlert("头像更新成功！");
+				$(".am-comment-avatar").attr("src",dataURL);
+				$("#icon-options").css({"display":"block"});
+				$("#icon-finish").css({"display":"none"});
+				$(".am-header-title").text("维多利亚的噩梦");
 			});
-			$("#icon-arrow").click();
-			$(".am-comment-avatar").attr("src",dataURL);
-			$("#icon-options").css({"display":"block"});
-			$("#icon-finish").css({"display":"none"});
 		}
 	});
 })

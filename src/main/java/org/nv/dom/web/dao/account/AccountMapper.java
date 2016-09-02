@@ -23,7 +23,7 @@ public interface AccountMapper {
 	 *
 	 */
 	
-	public int getCountByAccountDao(String account);
+	public int getCountByAccountDao(RegisterDTO registerDTO);
 	
 	/**
 	 * <p>查询邀请码</p>

@@ -56,6 +56,10 @@ public class UserController extends BaseController{
 		avatarUploadDTO.setUserId(user.getId());
 		avatarUploadDTO.setPath(CacheData.getBasePath());
 		Map<String, Object> result = userService.avatarUpload(avatarUploadDTO);
+		if((int)result.get("status")==1){
+			user.setAvatar((String) result.get("avatar"));
+			session.setAttribute(PageParamType.user_in_session, user);
+		}
 		return result;
 	}
 	

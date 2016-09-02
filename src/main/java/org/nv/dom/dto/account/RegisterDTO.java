@@ -11,6 +11,10 @@ public class RegisterDTO {
 	private String nickname;
 	
 	private String invitecode;
+	
+	private String motto;
+	
+	private String avatar;
 
 	public long getId() {
 		return id;
@@ -50,6 +54,22 @@ public class RegisterDTO {
 
 	public void setInvitecode(String invitecode) {
 		this.invitecode = invitecode;
+	}
+
+	public String getMotto() {
+		return motto;
+	}
+
+	public void setMotto(String motto) {
+		this.motto = motto;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	
 }

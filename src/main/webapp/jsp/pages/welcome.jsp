@@ -40,7 +40,7 @@
 						sp
 						</c:if>
 						${playerInfo.characterName }
-						<img src="http://www.goddessfantasy.net/bbs/index.php?action=dlattach;topic=58357.0;attach=43256;image"
+						<img src="${picServer}${playerInfo.characterAvatar}"
 						class="am-comment-avatar character-avatar">
 					</c:when>
 					<c:otherwise>	
@@ -52,7 +52,7 @@
 				<c:choose>
 					<c:when test="${ playerInfo != null && playerInfo.sign != 0 }">
 						${ playerInfo.identityDesc }
-						<img src="${ playerInfo.signAvatar }" class="am-comment-avatar sign-avatar">
+						<img src="${picServer}${ playerInfo.signAvatar }" class="am-comment-avatar sign-avatar">
 					</c:when>
 					<c:otherwise>
 						还未发放
