@@ -57,7 +57,7 @@
 	function appendChatDetail(chatDetail,prepend){
 		var builder = new StringBuilder();
 		builder.append(chatDetail.userId == userId ? '<li class="am-comment-flip">':'<li class="am-comment">');
-		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',chatDetail.userId == userId ? $("#user-avatar").val() : $("#"+chatDetail.chatId+" img").attr("src"));
+		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',chatDetail.userId == userId ? picServer+$("#user-avatar").val() : $("#"+chatDetail.chatId+" img").attr("src"));
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',chatDetail.userId == userId ? $("#user-nickname").val() : $("#"+chatDetail.chatId+" h3").text(),chatDetail.createTime);
 		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',chatDetail.content)

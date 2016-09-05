@@ -46,6 +46,7 @@
 
 <script type="text/javascript">
 var replaceList;
+var picServer = "${picServer}";
 var playerInfo = ${playerInfoStr}
 
 function getNewspaperDetail(newspaperId,newspaperNo){
@@ -186,10 +187,10 @@ function appendSpeech(speech){
 		builder.appendFormat('<div class="am-panel-bd">{0}</div></li>',speech.content);	
 	} else {
 		builder.append(speech.playerId == playerInfo.playerId ? '<li class="am-comment-flip">':'<li class="am-comment">');
-		builder.appendFormat('<input type="hidden" value="{0}">',speech.id);;
-		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
+		builder.appendFormat('<input type="hidden" value="{0}">',speech.id);
+		builder.appendFormat('<a ><img src="{0}{1}" class="am-comment-avatar"></a>',picServer,speech.avatar);
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
-		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
+		builder.appendFormat('<a class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
 		if(speech.type == 1){
 			builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',speech.content)
 		}else if(speech.type == 2){

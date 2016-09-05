@@ -40,8 +40,7 @@
   					<select id="target_select">	
 					</select>				
 				</div>
-				<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50"
-				class="am-comment-avatar">				
+				<img src="" class="am-comment-avatar">				
 			</div>
 			<hr style="margin:0" class="am-divider am-divider-default" />
 			<div class="card-body">
@@ -65,8 +64,8 @@
 <input type="hidden" id="selected-character"/>
 
 <script type="text/javascript">
-
-	var characters; 
+	
+	var picServer = "${picServer}";
 
 	function getCharacterList(characterSelect){
 		if($("#select-character-three").hasClass("invisible")&&
@@ -81,8 +80,7 @@
 	}
 	function getCharacterListAll(){
 		$.get('${baseUrl}file/character-list.json',function(data){
-			characters=data.characters;
-			$.each(characters,function(index,character){
+			$.each(data.characters,function(index,character){
 				$("#target_select").append("<option value='"+character.characterId+"'>"+character.characterName+"</option>");
 			})
 			$('#target_select').val('').scroller('destroy').scroller(
@@ -94,15 +92,14 @@
 		        })
 			);
 			$("#select-character-all").removeClass("invisible");
+			$("#target_select").change(function(){
+				var index = $("#target_select option:selected").val()-1;
+				$("#select-character-all").find("img").attr("src",picServer+data.characters[index].avatar);
+				$("#is-sp-all").removeAttr("checked").attr("disabled",data.characters[index].hasSp==1?false:true);
+				$("#selected-character").val(data.characters[index].characterId);
+			})
 		})
 	}
-	
-	$("#target_select").change(function(){
-		var index = $("#target_select option:selected").val()-1;
-		$("#select-character-all").find("img").attr("src",characters[index].avatar);
-		$("#is-sp-all").removeAttr("checked").attr("disabled",characters[index].hasSp==1?false:true);
-		$("#selected-character").val(characters[index].characterId);
-	})
 
 	function getCharacterListThree(){
 		var common = new Common();
@@ -118,7 +115,7 @@
 					$.each(characters,function(index,character){
 						var builder = new StringBuilder();
 						builder.append('<li class="character-box">');
-						builder.append('<img src="http://app.qlogo.cn/mbloghead/e354d099f1137970f9e0/50">');
+						builder.append('<img src="{0}">',picServer+character.avatar);
 						builder.append('<div class="radio-box">');
 						builder.appendFormat('<input type="hidden" value="{0}">',character.id);
 						builder.appendFormat('<i class="am-icon-circle-thin am-icon-md">{0}</i>',character.name);

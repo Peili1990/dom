@@ -3,7 +3,6 @@
 
 <div class="default" >
 
-<div id="clipArea"></div>
-<input type="file" id="file" class="invisible">
+
 
 </div>

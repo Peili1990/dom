@@ -22,6 +22,8 @@ public class PlayerInfo {
 	private String identityDesc;
 	/** 签头像 */
 	private String signAvatar;
+	/** 阵营 */
+	private Integer camp;
 	/** 是否被禁言 */
 	private Integer isMute;
 	
@@ -84,6 +86,12 @@ public class PlayerInfo {
 	}
 	public void setSignAvatar(String signAvatar) {
 		this.signAvatar = signAvatar;
+	}
+	public Integer getCamp() {
+		return camp;
+	}
+	public void setCamp(Integer camp) {
+		this.camp = camp;
 	}
 	public Integer getIsMute() {
 		return isMute;

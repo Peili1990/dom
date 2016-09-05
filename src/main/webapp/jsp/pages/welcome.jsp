@@ -40,8 +40,16 @@
 						sp
 						</c:if>
 						${playerInfo.characterName }
-						<img src="${picServer}${playerInfo.characterAvatar}"
-						class="am-comment-avatar character-avatar">
+						<c:choose>
+							<c:when test="${ playerInfo.camp == 1 }">
+								<img src="${picServer}${playerInfo.characterAvatar}"
+								class="am-comment-avatar character-avatar">
+							</c:when>
+							<c:otherwise>
+								<img src="${picServer}${playerInfo.characterKillerAvatar}"
+								class="am-comment-avatar character-avatar">
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>	
 						还未选择
