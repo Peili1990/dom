@@ -301,6 +301,11 @@ function GetQueryString(name)
      if(r!=null)return  unescape(r[2]); return null;
 }
 
+function changeURL(url){
+	 window.history.pushState({},0,url);      
+}
+
+
 function myAlert(text){
 	$("#my-modal-loading .am-modal-hd").html(text);
 	$('#my-modal-loading').modal('open');

@@ -88,16 +88,23 @@
 			
 	</select>
 	
-	<update id="updateUserAvataDao" parameterType="AvatarUploadDTO">
+	<update id="updateUserProfileDao" parameterType="UpdateUserProfileDTO">
 	
 		UPDATE
 			d_user
 		SET
-			avatar = #{avatar}
+			update_time = NOW()
+			<if test="avatar != null">
+			,avatar = #{avatar}
+			</if>
+			<if test="motto != null">
+			,motto = #{motto}
+			</if>
 		WHERE
 			id = #{userId};
 	
 	</update>
+	
 
 
 </mapper>

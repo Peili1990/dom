@@ -15,13 +15,13 @@
 				<c:when test="${ userInfo.userCurRole eq 'player' }">
 					<div class="card-body">
 					目前你正在参加${ userInfo.gameDesc }
-					<a href="${ baseUrl}assemble"><span style="float:right">去看看 》</span></a>
+					<a href="${ baseUrl}assemble"><span style="float:right">去看看 <span class="am-icon-chevron-right"></span></span></a>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="card-body">
 					目前你没有参加任何版杀
-					<span style="float:right" onclick="pageSwitch('#pageA','#pageF','getApplyingGames()')">去报名 》</span>
+					<span style="float:right" onclick="pageSwitch('#pageA','#pageF','getApplyingGames()')">去报名 <span class="am-icon-chevron-right"></span></span>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -53,7 +53,7 @@
 					</c:when>
 					<c:otherwise>	
 						还未选择
-						<span style="float:right" onclick="pageSwitch('#pageA','#pageG','getCharacterList(${userInfo.status})')">去选身份 》</span>
+						<span style="float:right" onclick="pageSwitch('#pageA','#pageG','getCharacterList(${userInfo.status})')">去选身份  <span class="am-icon-chevron-right"></span></span>
 					</c:otherwise>
 				</c:choose>
 				<br>实际身份：
@@ -80,29 +80,33 @@
 	
 	<div class="card">
 		<div class="card-header">
-			<h2 class="card-title">《新芝加哥日报》7月7日日刊</h2>
+			<h2 class="card-title">《新芝加哥日报》${newspaper.header}</h2>
 		</div>
 		<div class="card-body">
-			<h2 class="card-title">淘金人神秘失踪 小镇人心惶惶</h2>
-			维多利亚讯 卡布莱修女被捕以后，人们都以为预告信事件能告一段落，
-			然而今天淘金热F.哈代先生的失踪打碎了他们的幻想。哈代先生通常会一大清早就去雄猫酒馆畅饮啤酒，
-			然而今天却迟迟没有出现。于是感到疑惑的朋友们前往哈代的木屋察看，排除了哈代睡懒觉的可能。
-			由于哈代先生昨天言语如常，没有流露出想要离开小镇的想法，此次失踪便显得尤为蹊跷。
-			镇长立刻派出警力对整个小镇进行搜查，却仍未发现哈代的踪迹。惊惶的镇民们自愿地前往法庭，要求镇长提供更加实际有效的安全保护。
+			<h2 class="card-title">${newspaper.headline}</h2>
+			${newspaper.headlineBody}
 			</div>
-		<div class="card-footer">查看详情 》</div>
+		<div class="card-footer" ><a href="${baseUrl}assemble?newspaperId=${newspaper.newspaperId}">查看详情  <span class="am-icon-chevron-right"></span></a></div>
 	</div>
-
+	
+	<c:if test="${speech!=null }">
 	<div class="card">
 		<div class="card-header">
 			<h2 class="card-title">最新发言</h2>
 		</div>
-		<div class="card-body">安德安纳：跳警，签为手铐。首日验霍尔是好人，昨日查验被杀手干扰，无反馈。但我把自身的技能砸给了叶妹，反馈为平民/帮众，因此暂时可以不用纠结她了。
-			以下为行动安排，拒不执行的视为杀手方：
-			伊卡、欧内斯特如未被禁言，请继续给情报。布莱克请给我+1以便夜晚继续验人。赫本请疯我、马克唐、科尔比以及另外你觉得可疑的3人，得到新身份后及时公布。威廉姆斯的身份警方不确定，欢迎各种找他撕逼。
-			</div>
-		<div class="card-footer">查看更多 》</div>
+		<div class="card-body">
+			<c:choose>
+			<c:when test="${speech.type == 1}">
+				${speech.characterName }：${speech.content }
+			</c:when>
+			<c:otherwise>
+				${speech.content }
+			</c:otherwise>
+			</c:choose>
+		</div>
+		<div class="card-footer"><a href="${baseUrl}assemble?newspaperId=${speech.newspaperId}&scroll=true">查看更多  <span class="am-icon-chevron-right"></span></a></div>
 	</div>
+	</c:if>
 
 	
 </div>

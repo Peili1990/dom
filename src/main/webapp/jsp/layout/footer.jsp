@@ -46,7 +46,7 @@
   	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
   	webSocket.onerror = function(event) {
-		myAlert(event.data);
+		myAlert("与报社取得联系中...");
 	};
 
 	webSocket.onopen = function(event) {
@@ -162,9 +162,10 @@
 	}
 	
 	function saveOfflineSpeech(content){
-		var url = getRootPath() + "/saveOfflineSpeech";
+		var url = "http://" + "${chatServer}" + "/saveOfflineSpeech";
 		var common = new Common();
 		var options = {
+				userId : userId,
 				speechId : content.id,
 				newspaperId : content.newspaperId
 		};

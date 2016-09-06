@@ -19,6 +19,9 @@
       <li id="pageB" class="page-container" style="left:100%;display:none"> 
 		 <jsp:include page="mine-photoclip.jsp"></jsp:include>
       </li>
+      <li id="pageC" class="page-container" style="left:100%;display:none"> 
+		 <jsp:include page="mine-profile.jsp"></jsp:include>
+      </li>
     </ul>   
 	</section>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>

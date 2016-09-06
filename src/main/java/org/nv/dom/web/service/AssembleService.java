@@ -9,5 +9,7 @@ public interface AssembleService {
 	public Map<String, Object> getNewspaperList(long userId);
 	
 	public Map<String, Object> getNewspaperDetail(GetSpeechListDTO getSpeechListDTO);
+	
+	public Map<String, Object> getLatestNewspaperInfo(long gameId);
 
 }

@@ -323,3 +323,7 @@ time{
 	color:#0e90d2;
 	cursor:pointer;
 }
+
+.am-icon-chevron-right {
+	color: hsla(0,0%,53%,.45);
+}

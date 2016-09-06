@@ -16,9 +16,8 @@ import org.nv.dom.domain.message.chat.OfflineChat;
 import org.nv.dom.domain.message.speech.OfflineSpeech;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCurRole;
-import org.nv.dom.dto.user.AvatarUploadDTO;
+import org.nv.dom.dto.user.UpdateUserProfileDTO;
 import org.nv.dom.util.ConfigUtil;
-import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +65,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Map<String, Object> saveOfflineSpeech(OfflineMessage offlineMessage) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{		
+		try{
+			
 			userMapper.saveOfflineMessageDao(offlineMessage);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "保存离线发言成功！");
@@ -101,24 +101,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> avatarUpload(AvatarUploadDTO avatarUploadDTO) {
+	public Map<String, Object> avatarUpload(UpdateUserProfileDTO updateUserProfileDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (StringUtil.isNullOrEmpty(avatarUploadDTO.getPath())) {
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
-			return result;
-		}
 		try {
-			String base64Str = avatarUploadDTO.getAvatarFile().replace("data:image/jpeg;base64,", "");
+			String base64Str = updateUserProfileDTO.getAvatarFile().replace("data:image/jpeg;base64,", "");
 			byte[] bytes = Base64.decodeBase64(base64Str.getBytes("UTF-8"));
-			String imgFilePath = avatarPath+"userAvatar/"+avatarUploadDTO.getUserId()+".jpg";// 新生成的图片
+			String imgFilePath = avatarPath+"userAvatar/"+updateUserProfileDTO.getUserId()+".jpg";// 新生成的图片
 			OutputStream out = new FileOutputStream(imgFilePath);
 			out.write(bytes);
 			out.flush();
 			out.close();
-			avatarUploadDTO.setAvatar("userAvatar/"+avatarUploadDTO.getUserId()+".jpg");
-			userMapper.updateUserAvataDao(avatarUploadDTO);
-			result.put("avatar", avatarUploadDTO.getAvatar());
+			updateUserProfileDTO.setAvatar("userAvatar/"+updateUserProfileDTO.getUserId()+".jpg");
+			userMapper.updateUserProfileDao(updateUserProfileDTO);
+			result.put("avatar", updateUserProfileDTO.getAvatar());
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "上传头像成功");
 		}catch(Exception e){
@@ -128,5 +123,22 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
+
+	@Override
+	public Map<String, Object> updateMotto(UpdateUserProfileDTO updateUserProfileDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			userMapper.updateUserProfileDao(updateUserProfileDTO);
+			result.put("motto", updateUserProfileDTO.getMotto());
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "个性签名修改成功");
+		}catch(Exception e){
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "个性签名修改成功");
+		}
+		return result;
+	}
+
+	
 
 }

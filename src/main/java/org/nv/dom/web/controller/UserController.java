@@ -4,11 +4,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.nv.dom.cache.CacheData;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.message.OfflineMessage;
 import org.nv.dom.domain.user.User;
-import org.nv.dom.dto.user.AvatarUploadDTO;
+import org.nv.dom.dto.user.UpdateUserProfileDTO;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,13 +50,25 @@ public class UserController extends BaseController{
 	
 	@ResponseBody
 	@RequestMapping(value = "/avatarUpload", method = RequestMethod.POST)
-	public Map<String, Object> avatarUploadAction(@ModelAttribute("AvatarUploadDTO") AvatarUploadDTO avatarUploadDTO , HttpSession session) {
+	public Map<String, Object> avatarUploadAction(@ModelAttribute("updateUserProfileDTO") UpdateUserProfileDTO updateUserProfileDTO , HttpSession session) {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
-		avatarUploadDTO.setUserId(user.getId());
-		avatarUploadDTO.setPath(CacheData.getBasePath());
-		Map<String, Object> result = userService.avatarUpload(avatarUploadDTO);
+		updateUserProfileDTO.setUserId(user.getId());
+		Map<String, Object> result = userService.avatarUpload(updateUserProfileDTO);
 		if((int)result.get("status")==1){
 			user.setAvatar((String) result.get("avatar"));
+			session.setAttribute(PageParamType.user_in_session, user);
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/updateMotto", method = RequestMethod.POST)
+	public Map<String, Object> updateMotto(@ModelAttribute("updateUserProfileDTO") UpdateUserProfileDTO updateUserProfileDTO , HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		updateUserProfileDTO.setUserId(user.getId());
+		Map<String, Object> result = userService.updateMotto(updateUserProfileDTO);
+		if((int)result.get("status")==1){
+			user.setMotto((String) result.get("motto"));
 			session.setAttribute(PageParamType.user_in_session, user);
 		}
 		return result;

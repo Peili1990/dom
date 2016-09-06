@@ -137,8 +137,12 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 					$("#nv-chatbar").addClass("invisible");
 					$("#nv-footer").removeClass("invisible");
 				}
-			}
+			}		
 			$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });
+			if(GetQueryString("scroll")){
+				scrollTobottom();	
+			}
+			changeURL(getRootPath()+"/assemble");
 			return;
 		case 0:
 			timeoutHandle();

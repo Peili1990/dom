@@ -73,6 +73,21 @@ public class AssembleServiceImpl implements AssembleService {
 		}
 		return result;
 	}
+
+	@Override
+	public Map<String, Object> getLatestNewspaperInfo(long gameId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			Newspaper newspaper = newspaperMapper.getLatestNewspaperDao(gameId);
+			newspaper.setHeader(newspaper.getHeader().replace("（开版公告）", ""));
+			Speech speech = messageMapper.getLatestSpeechDao(gameId);
+			result.put("newspaper", newspaper);
+			result.put("speech", speech);
+		}catch(Exception e){
+			logger.error(e.getMessage(), e);
+		}
+		return result;
+	}
 	
 	
 

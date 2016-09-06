@@ -79,13 +79,20 @@
 			$("#nv-chatbar .messages").css({"height":"auto"}).css({"height":$("#nv-chatbar .messages")[0].scrollHeight+"px"});
 			$("#nv-chatbar .talk_word").css({"height":$("#nv-chatbar .messages").height()+32+"px"});
 			$("#nv-chatbar").css({"height":$("#nv-chatbar .messages").height()+32+"px"});
-			if(recoverTag($("#nv-chatbar .messages").val()).indexOf("<br>")<0){
+			if(calLines()==1&&recoverTag($("#nv-chatbar .messages").val()).indexOf("<br>")<0){
 				$("#nv-chatbar .messages").css({"height":"auto"}).css({"height":"34px"});
 				$("#nv-chatbar .talk_word").css({"height":"49px"});
 				$("#nv-chatbar").css({"height":"49px"});
 			}
 		}
 	})
+	
+	function calLines(){
+		var text = $("#nv-chatbar .messages").val();
+		var areaWidth = $("#nv-chatbar .messages").width()-3;
+		lines = parseInt(text.length*16/areaWidth)+1;
+		return lines;
+	}
 	
 	
 	$("#use-gesture").on("click",function(){

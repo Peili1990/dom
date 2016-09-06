@@ -4,8 +4,8 @@
 	<div class="mine-box"> 
 		<img src="${picServer}${user.avatar}"
 			class="am-comment-avatar"> <span> ${ user.nickname } </span>
-		<p>${ user.motto }</p>
-		<span class="am-icon-chevron-right"></span>
+		<p id="user-motto">${ user.motto }</p>
+		<span class="am-icon-chevron-right" onclick="pageSwitch('#pageA','#pageC')"></span>
 	</div>
 	<h3>我的版杀</h3>
 	<div class="mine-box" style="border-bottom:1px solid #dddddd">

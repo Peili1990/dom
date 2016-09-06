@@ -7,7 +7,7 @@ import org.nv.dom.domain.message.chat.ChatInfo;
 import org.nv.dom.domain.message.chat.OfflineChat;
 import org.nv.dom.domain.message.speech.OfflineSpeech;
 import org.nv.dom.domain.user.UserCurRole;
-import org.nv.dom.dto.user.AvatarUploadDTO;
+import org.nv.dom.dto.user.UpdateUserProfileDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -42,9 +42,9 @@ public interface UserMapper {
 	public List<OfflineChat> getOfflineChatDao(long userId);
 	
 	/**
-	 * <p>更新用户头像信息</p>
+	 * <p>更新用户资料</p>
 	 */
 	
-	public int updateUserAvataDao(AvatarUploadDTO avatarUploadDTO);
-
+	public int updateUserProfileDao(UpdateUserProfileDTO updateUserProfileDTO);
+	
 }

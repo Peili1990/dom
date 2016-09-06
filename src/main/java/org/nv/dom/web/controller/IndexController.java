@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCurRole;
+import org.nv.dom.web.service.AssembleService;
 import org.nv.dom.web.service.PlayerService;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class IndexController extends BaseController {
 	@Autowired
 	PlayerService playerService;
 	
+	@Autowired
+	AssembleService assembleService;
+	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
@@ -34,7 +38,8 @@ public class IndexController extends BaseController {
 			session.setAttribute(PageParamType.game_id_in_session, userInfo.getGameId());
 			session.setAttribute(PageParamType.player_id_in_session, userInfo.getPlayerId());
 			mav.addObject("playerInfo", playerService.getPlayerInfoByUserId(user.getId()));
-		}
+			mav.addAllObjects(assembleService.getLatestNewspaperInfo(userInfo.getGameId()));
+		}	
 		return mav;
 	}
 	

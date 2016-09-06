@@ -48,7 +48,7 @@
 			 nickname,
 			 motto,
 			 avatar,
-			 createTime
+			 create_time
 		)
 		VALUES (
 			#{account},

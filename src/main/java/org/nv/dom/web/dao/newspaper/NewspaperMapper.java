@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NewspaperMapper {
 	
-	List<Newspaper> getNewspaperListDao(long userId);
+	public List<Newspaper> getNewspaperListDao(long userId);
 	
 	public Newspaper getNewspaperDetailDao(long newspaperId);
+
+	public Newspaper getLatestNewspaperDao(long gameId);
 
 }

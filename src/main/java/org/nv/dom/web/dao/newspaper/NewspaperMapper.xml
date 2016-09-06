@@ -36,6 +36,26 @@
 			dn.id = #{newspaperId}
 	
 	</select>
+	
+	<select id="getLatestNewspaperDao" parameterType="long" resultType="Newspaper">
+	
+		SELECT
+			dn.id AS newspaperId,
+			dn.header AS header,
+			dn.headline AS headline,
+			IFNULL(dn.headline_body,dn.important_notice) AS headlineBody,
+			dn.type AS type
+		FROM
+			d_newspaper dn
+		WHERE
+			dn.game_id = #{gameId} AND dn.status > 0
+		ORDER BY
+			dn.id
+		DESC
+		LIMIT 1
+	
+	
+	</select>
 
 
 </mapper>

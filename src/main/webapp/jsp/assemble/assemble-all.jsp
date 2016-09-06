@@ -16,6 +16,15 @@
 
 $(function(){
 	setRedspotOnpaper();
+	var newspaperId = GetQueryString("newspaperId");
+	if(newspaperId){
+		$.each($("#newspaper-list .card"),function(index,newspaper){
+			if($(newspaper).find("input[name='newspaper-id']").val()==newspaperId){
+				$(newspaper).click();
+				return false;
+			}
+		})
+	}
 });
 
 function setRedspotOnpaper(){

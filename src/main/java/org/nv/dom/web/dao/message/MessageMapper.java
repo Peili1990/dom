@@ -11,4 +11,6 @@ public interface MessageMapper {
 	
 	public List<Speech> getSpeechListDao(GetSpeechListDTO getSpeechListDTO);
 
+	public Speech getLatestSpeechDao(long gameId);
+
 }

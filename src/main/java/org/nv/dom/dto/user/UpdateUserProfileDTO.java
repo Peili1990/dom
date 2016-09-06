@@ -1,45 +1,44 @@
 package org.nv.dom.dto.user;
 
-public class AvatarUploadDTO {
+public class UpdateUserProfileDTO {
 	
-	private long userId;
-	
+	private long userId;	
+	// 密码
+	private String password;
+	// 头像BASE64
 	private String avatarFile;
-	
+	// 头像
 	private String avatar;
-	
-	private String path;
-
+	// 格言
+	private String motto;
 	public long getUserId() {
 		return userId;
 	}
-
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getAvatarFile() {
 		return avatarFile;
 	}
-
 	public void setAvatarFile(String avatarFile) {
 		this.avatarFile = avatarFile;
 	}
-
 	public String getAvatar() {
 		return avatar;
 	}
-
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-
-	public String getPath() {
-		return path;
+	public String getMotto() {
+		return motto;
 	}
-
-	public void setPath(String path) {
-		this.path = path;
+	public void setMotto(String motto) {
+		this.motto = motto;
 	}
-
 }

@@ -26,6 +26,28 @@
 		</if>			
 	
 	</select>
+	
+	<select id="getLatestSpeechDao" parameterType="long" resultType="Speech">
+	
+		SELECT
+			ds.id AS id, 
+			ds.player_id AS playerId,
+			ds.newspaper_id AS newspaperId,
+			ds.character_name AS characterName,
+			ds.character_avatar AS avatar,
+			ds.type AS type,
+			ds.content AS content,
+			ds.create_time AS createTime
+		FROM
+			d_speech ds,d_newspaper dn
+		WHERE
+			ds.newspaper_id = dn.id AND dn.game_id = #{gameId}
+		ORDER BY
+			ds.create_time
+		DESC
+		LIMIT 1
+	
+	</select>
 
 
 </mapper>
