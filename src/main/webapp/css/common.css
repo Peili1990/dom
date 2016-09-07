@@ -327,3 +327,7 @@ time{
 .am-icon-chevron-right {
 	color: hsla(0,0%,53%,.45);
 }
+
+#seat-table p{
+	margin:0;
+}

@@ -11,6 +11,7 @@ import org.nv.dom.domain.message.speech.Speech;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.message.GetSpeechListDTO;
+import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.message.MessageMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
@@ -80,6 +81,12 @@ public class AssembleServiceImpl implements AssembleService {
 		try{
 			Newspaper newspaper = newspaperMapper.getLatestNewspaperDao(gameId);
 			newspaper.setHeader(newspaper.getHeader().replace("（开版公告）", ""));
+			if(StringUtil.isNullOrEmpty(newspaper.getHeadline())){
+				newspaper.setHeadline("重要公告");
+			}
+			if(StringUtil.isNullOrEmpty(newspaper.getHeadlineBody())){
+				newspaper.setHeadlineBody(newspaper.getImportantNotice());
+			}
 			Speech speech = messageMapper.getLatestSpeechDao(gameId);
 			result.put("newspaper", newspaper);
 			result.put("speech", speech);

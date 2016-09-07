@@ -43,7 +43,8 @@
 			dn.id AS newspaperId,
 			dn.header AS header,
 			dn.headline AS headline,
-			IFNULL(dn.headline_body,dn.important_notice) AS headlineBody,
+			dn.headline_body AS headlineBody,
+			dn.important_notice AS importantNotice,
 			dn.type AS type
 		FROM
 			d_newspaper dn

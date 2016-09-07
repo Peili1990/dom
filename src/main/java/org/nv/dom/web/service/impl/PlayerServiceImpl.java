@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOpreation;
@@ -27,6 +28,11 @@ public class PlayerServiceImpl implements PlayerService {
 			PlayerInfo playerInfo = playerMapper.getPlayerInfo(userId);
 			if(playerInfo == null){
 				return null;
+			}else if(testChandler(playerInfo)){
+				playerInfo.setSign(NVTermConstant.UNKNOWN_SIGN);
+				playerInfo.setSignAvatar(NVTermConstant.UNKNOWN_SIGN_AVATAR);
+				playerInfo.setCamp(NVTermConstant.GOOD_CAMP);
+				playerInfo.setIdentityDesc(NVTermConstant.UNKNOWN_IDENTITY);
 			}
 			return playerInfo;
 		}catch(Exception e){
@@ -78,6 +84,13 @@ public class PlayerServiceImpl implements PlayerService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}
 		return result;
+	}
+	
+	private boolean testChandler(PlayerInfo playerInfo){
+		Integer sign = playerInfo.getSign();
+		return playerInfo.getCharacterId() == 42 
+					&& NVTermConstant.IS_SP.equals(playerInfo.getIsSp())
+					&& !(sign == 11 || sign == 12 || sign == 23);
 	}
 	
 }

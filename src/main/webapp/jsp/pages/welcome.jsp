@@ -68,7 +68,7 @@
 				</c:choose>
 			</div>	
 		</div>
-		<c:if test="${ userInfo.gameStatus >= 3 }">
+		<c:if test="${ userInfo.gameStatus >= 3 && userInfo.gameStatus <= 4 }">
 			<div class="group">
 				<div class="group-body">
 					<input type="button" class="am-btn am-btn-primary" value="提交操作"
@@ -78,6 +78,7 @@
 		</c:if>
 	</c:if>
 	
+	<c:if test="${newspaper!=null }">
 	<div class="card">
 		<div class="card-header">
 			<h2 class="card-title">《新芝加哥日报》${newspaper.header}</h2>
@@ -88,6 +89,7 @@
 			</div>
 		<div class="card-footer" ><a href="${baseUrl}assemble?newspaperId=${newspaper.newspaperId}">查看详情  <span class="am-icon-chevron-right"></span></a></div>
 	</div>
+	</c:if>
 	
 	<c:if test="${speech!=null }">
 	<div class="card">
