@@ -81,7 +81,7 @@
 	<c:if test="${newspaper!=null }">
 	<div class="card">
 		<div class="card-header">
-			<h2 class="card-title">《新芝加哥日报》${newspaper.header}</h2>
+			<h2 class="card-title">${newspaper.header}</h2>
 		</div>
 		<div class="card-body">
 			<h2 class="card-title">${newspaper.headline}</h2>

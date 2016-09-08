@@ -10,6 +10,13 @@
 			</div>
 		</div>
 	</c:forEach>
+	<c:if test="${ replayEssay!=null }">
+		<div class="card" onclick="pageSwitch('#pageA','#pageC')">
+			<div class="card-header">
+				<h2 class="card-title">${replayEssay.header }</h2>
+			</div>
+		</div>
+	</c:if>
 </div>
 
 <script type="text/javascript">
@@ -30,12 +37,14 @@ $(function(){
 function setRedspotOnpaper(){
 	$.each($("#newspaper-list .card"),function(index,newspaper){
 		newspaperId = $(newspaper).find("input[type='hidden']").val();
-		newspaperSpeech = getCache("nv_newspaper"+newspaperId);
-		redspot = $(newspaper).find(".badge");
-		if(newspaperSpeech>0){		
-			redspot.text(newspaperSpeech).removeClass("invisible");
-		}else{
-			redspot.addClass("invisible");
+		if(newspaperId){
+			newspaperSpeech = getCache("nv_newspaper"+newspaperId);
+			redspot = $(newspaper).find(".badge");
+			if(newspaperSpeech>0){		
+				redspot.text(newspaperSpeech).removeClass("invisible");
+			}else{
+				redspot.addClass("invisible");
+			}
 		}
 	})
 }

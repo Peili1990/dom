@@ -9,6 +9,7 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.message.GetSpeechListDTO;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.service.AssembleService;
+import org.nv.dom.web.service.EssayService;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,9 @@ public class AssembleController extends BaseController {
 	
 	@Autowired
 	PlayerService playerService;
+	
+	@Autowired
+	EssayService essayService;
 		
 	@RequestMapping(value = "/assemble", method = RequestMethod.GET)
 	public ModelAndView loginView(HttpSession session) throws Exception {
@@ -33,6 +37,7 @@ public class AssembleController extends BaseController {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		mav.addObject("playerInfoStr",JacksonJSONUtils.beanToJSON(playerService.getPlayerInfoByUserId(user.getId())));
 		mav.addAllObjects(assembleService.getNewspaperList(user.getId()));
+		mav.addObject("replayEssay",essayService.getReplayEssay(user.getId()));
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

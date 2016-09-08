@@ -80,7 +80,6 @@ public class AssembleServiceImpl implements AssembleService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
 			Newspaper newspaper = newspaperMapper.getLatestNewspaperDao(gameId);
-			newspaper.setHeader(newspaper.getHeader().replace("（开版公告）", ""));
 			if(StringUtil.isNullOrEmpty(newspaper.getHeadline())){
 				newspaper.setHeadline("重要公告");
 			}
