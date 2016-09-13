@@ -340,7 +340,7 @@ time{
 }
 
 .essay-box time,
-.comment-list time{
+#comment-list time{
 	margin-top:0px;
 	color:#aaaaaa;
 	overflow: hidden;
@@ -354,23 +354,33 @@ time{
 	margin-top:10px;
 }
 
+.essay-box p{
+	margin-top:0;	
+}
+
+.essay-box h2{
+	margin-bottom:20px;
+}
+
 .essay-box .am-comment-avatar,
-.comment-list .am-comment-avatar{
+#comment-list .am-comment-avatar{
 	width: 15%;
     height: 15%;
     margin-right: 5%;
 }
 
-.comment-list li{
+#comment-list li{
 	list-style-type:none;
 	padding:0.5em;
 	
 }
 
-.comment-list .commnet-content{
+#comment-list .commnet-content{
 	padding-top:10px;
 	padding-left:20%;
 	padding-bottom:10px;
 	border-bottom:1px solid #cccccc;
 }
+
+
 

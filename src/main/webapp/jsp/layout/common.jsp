@@ -59,6 +59,7 @@
 </div>
 
 <script type="text/javascript">
+	var picServer="${picServer}";
 
 	$(function(){
 		//FastClick.attach(document.body);

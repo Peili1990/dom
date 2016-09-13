@@ -301,6 +301,11 @@ function GetQueryString(name)
      if(r!=null)return  unescape(r[2]); return null;
 }
 
+function removeQueryString(){
+	var url = window.location.href;
+	return url.substr(0,url.indexOf("?"));
+}
+
 function changeURL(url){
 	 window.history.pushState({},0,url);      
 }
@@ -337,6 +342,7 @@ function adjustContainerHeight(page){
 function setGoback(pageA,pageB){
 	$("#icon-home").css({"display":"none"});
 	$("#icon-arrow").css({"display":"block"}).click(function(){
+		changeURL(removeQueryString());
 		window.scroll(0,0);
 		$('#pages').css({'-webkit-transform' : 'translate3d(0px, 0px, 0px)' , '-webkit-transition' : '300ms'});
 		$(pageA).css({'display' : 'none'});

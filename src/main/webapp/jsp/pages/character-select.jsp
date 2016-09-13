@@ -64,8 +64,6 @@
 <input type="hidden" id="selected-character"/>
 
 <script type="text/javascript">
-	
-	var picServer = "${picServer}";
 
 	function getCharacterList(characterSelect){
 		if($("#select-character-three").hasClass("invisible")&&

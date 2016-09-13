@@ -46,7 +46,6 @@
 
 <script type="text/javascript">
 var replaceList;
-var picServer = "${picServer}";
 var playerInfo = ${playerInfoStr}
 
 function getNewspaperDetail(newspaperId,newspaperNo){

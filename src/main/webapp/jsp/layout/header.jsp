@@ -5,7 +5,7 @@
 		<a href="${ baseUrl }" id="icon-home">
 			<i class="am-header-icon am-icon-home"></i>
 		</a>
-		<a href="#left-link" id="icon-arrow" style="display:none">
+		<a href="" id="icon-arrow" style="display:none">
 		<i class="am-header-icon am-icon-chevron-left"></i>
 		</a>
 	</div>

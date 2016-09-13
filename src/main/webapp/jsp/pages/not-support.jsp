@@ -13,7 +13,6 @@
 	</div>		
 	
   <script>
-  	var picServer = "${picServer}";
   
 	$(function(){
 		$.get('${baseUrl}file/character-list.json',function(data){

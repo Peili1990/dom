@@ -46,5 +46,53 @@
 			dp.user_id = #{userId} AND dp.status != 9 AND dp.game_id = dg.id AND dg.replay_essay_id = de.id
 	
 	</select>
+	
+	<select id="getEssayDetailDao" parameterType="long" resultType="Essay">
+	
+		SELECT
+			du.nickname AS nickname,
+			du.avatar AS avatar,
+			de.header AS header,
+			de.content AS content,
+			de.create_time AS createTime
+		FROM
+			d_essay de, d_user du
+		WHERE
+			de.id=#{essayId} AND de.user_id = du.id 			
+	
+	</select>
+	
+	<select id="getEssayCommentDao" parameterType="long" resultType="Comment">
+		
+		SELECT
+			du.nickname AS nickname,
+			du.avatar AS avatar,
+			dc.content AS content,
+			dc.create_time AS createTime
+		FROM
+			d_essay de, d_comment dc, d_user du
+		WHERE
+			dc.essay_id=#{essayId} AND de.id = dc.essay_id AND du.id = dc.user_id
+		
+	
+	</select>
+	
+	<insert id="insertCommentDao" parameterType="SubmitCommentDTO">
+	
+		INSERT INTO d_comment(
+			user_id,
+			essay_id,
+			content,
+			create_time
+		) 
+		VALUES (
+			#{userId},
+			#{essayId},
+			#{content},
+			NOW()
+		)
+		
+	
+	</insert>
 
 </mapper>

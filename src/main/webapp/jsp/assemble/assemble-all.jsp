@@ -11,7 +11,7 @@
 		</div>
 	</c:forEach>
 	<c:if test="${ replayEssay!=null }">
-		<div class="card" onclick="pageSwitch('#pageA','#pageC')">
+		<div class="card" onclick="pageSwitch('#pageA','#pageC','getEssayDetail(${replayEssay.essayId})')">
 			<div class="card-header">
 				<h2 class="card-title">${replayEssay.header }</h2>
 			</div>
@@ -31,6 +31,10 @@ $(function(){
 				return false;
 			}
 		})
+	}
+	var essayId = GetQueryString("essayId");
+	if(essayId){
+		$("#newspaper-list .card:last-child").click();
 	}
 });
 

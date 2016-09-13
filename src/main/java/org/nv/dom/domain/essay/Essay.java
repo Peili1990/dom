@@ -4,6 +4,8 @@ public class Essay {
 	
 	private long essayId;
 	private long userId;
+	private String nickname;
+	private String avatar;
 	private String header;
 	private String content;
 	private Integer type;
@@ -21,6 +23,18 @@ public class Essay {
 	}
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	public String getHeader() {
 		return header;

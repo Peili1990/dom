@@ -18,7 +18,6 @@
 </div>
 
 <script type="text/javascript">
-	var picServer="${picServer}";
 
 	$(function(){
 		createChatList();

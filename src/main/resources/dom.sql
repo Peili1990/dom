@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-09-08 18:40:56
+Date: 2016-09-13 18:19:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -90,6 +90,29 @@ INSERT INTO `d_character` VALUES ('53', '德.圣地亚哥', '0', '72', 'characte
 INSERT INTO `d_character` VALUES ('54', '温切斯特', '2', '68', 'characterAvatar/0277.jpg', 'characterAvatar/0280.jpg', '0', null);
 
 -- ----------------------------
+-- Table structure for `d_comment`
+-- ----------------------------
+DROP TABLE IF EXISTS `d_comment`;
+CREATE TABLE `d_comment` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(11) DEFAULT NULL,
+  `essay_id` bigint(11) DEFAULT NULL,
+  `content` varchar(1024) DEFAULT NULL,
+  `create_time` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of d_comment
+-- ----------------------------
+INSERT INTO `d_comment` VALUES ('1', '1', '0', '支持', '2016-09-13');
+INSERT INTO `d_comment` VALUES ('2', '1', '1', '支持', '2016-09-13');
+INSERT INTO `d_comment` VALUES ('3', '1', '1', '原来第一天警察验了霍尔', '2016-09-13');
+INSERT INTO `d_comment` VALUES ('4', '1', '1', '支持', '2016-09-13');
+INSERT INTO `d_comment` VALUES ('5', '1', '1', '哈哈哈', '2016-09-13');
+INSERT INTO `d_comment` VALUES ('6', '1', '1', '什么', '2016-09-13');
+
+-- ----------------------------
 -- Table structure for `d_essay`
 -- ----------------------------
 DROP TABLE IF EXISTS `d_essay`;
@@ -99,14 +122,15 @@ CREATE TABLE `d_essay` (
   `type` int(1) DEFAULT NULL COMMENT '1 法官复盘 2 玩家复盘 3 版杀攻略 4 其他',
   `header` varchar(128) DEFAULT NULL,
   `content` text,
-  `create_time` datetime DEFAULT NULL,
+  `create_time` date DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_essay
 -- ----------------------------
+INSERT INTO `d_essay` VALUES ('1', '2', '1', '【16NV】复盘', '<p><span style=\"background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"><span id=\"_baidu_bookmark_start_0\" style=\"display: none; line-height: 0px;\">‍</span></span></span><span id=\"_baidu_bookmark_start_2\" style=\"display: none; line-height: 0px;\">‍</span>钱德勒 敛手屏足 抽取异性角色：查西<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>扬 直觉 尤里 托兰 德雷顿 昆西 叶妹<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>尤里 鼠之仰视 你被扬进行了操作<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>sp爱德华&nbsp;&nbsp;&nbsp;地底探险者&nbsp;&nbsp;&nbsp;字母记录到A&nbsp;&nbsp;&nbsp;夜间75%死亡<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>昆西&nbsp;&nbsp;&nbsp;契约 钱德勒 伊奥克 方向右&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;SP伊奥克：【叶妹 奈斯 钱德勒】&nbsp; SP钱德勒：【卡布莱 伊奥克 恩菲尔德】&quot;<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>sp钱德勒&nbsp;&nbsp;&nbsp;敛手屏足 猜测自己为刺客、医生&nbsp;&nbsp;&nbsp;猜测失败&nbsp;&nbsp;&nbsp;<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/><br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>间谍 查验 NE.叶什（妹）→反馈：NE.叶什（妹）是平民<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>暴徒 暗黑议会 红色知会信函→失效<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>杀手（毒药瓶） 暗黑议会 红色知会信函→反馈：提交失败<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>小偷 偷窃 霍尔→反馈：霍尔 的原行动目标是 霍尔（暂不反馈）<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>巫师 散疫 扬&nbsp;<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>杀手 预告信 伊卡<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>警察 查验 霍尔→反馈：霍尔是暴徒<br style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"/>牧师 祈祷 奈斯<span id=\"_baidu_bookmark_end_3\" style=\"display: none; line-height: 0px;\">‍</span><span style=\"background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(0, 0, 0); font-family: Verdana; font-size: 12px; white-space: normal;\"><span id=\"_baidu_bookmark_end_1\" style=\"display: none; line-height: 0px;\">‍</span></span></span></p>', '2016-09-10', '2016-09-13 13:57:49');
 
 -- ----------------------------
 -- Table structure for `d_form`
@@ -150,7 +174,7 @@ CREATE TABLE `d_game` (
 -- ----------------------------
 -- Records of d_game
 -- ----------------------------
-INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '22', '5', '2016-07-15', '2016-09-07', '2016-09-07', '1', null, null, null);
+INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '22', '9', '2016-07-15', '2016-09-07', '2016-09-13', '1', '1', null, null);
 INSERT INTO `d_game` VALUES ('5', '20NV', 'A', '19', '1', '2016-07-26', null, null, null, null, '132697360', '');
 
 -- ----------------------------
@@ -210,14 +234,16 @@ CREATE TABLE `d_newspaper` (
   `type` int(1) unsigned zerofill DEFAULT '0' COMMENT '1 夜刊 2 日刊',
   `status` int(1) DEFAULT NULL COMMENT '2 已结束发言 1 已发布 0 未发布',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_newspaper
 -- ----------------------------
 INSERT INTO `d_newspaper` VALUES ('1', '5', '【20NV】7月5日日刊（开版公告）', '小镇受西部铁路公司200万美元投资垂青', '本市西部仅两站<br>维多利亚讯 据可靠消息，今日下午，西部铁路公司董事会发言人特理·亨德曼表明，其第二大股东亨利.刘易斯（左图）即将对本市行政区域内的维多利亚镇进行大规模投资，由铁路运输业带动铁矿、石油的初期计划已经草拟成案。经济学家称该举措即将带来临近地区就业的重整，治安专家则担心大额外来人员对本地区的影响。中部铁运则表明，在铁路运重创的6月后进行这种冒险之举不具长期眼光。<br>维多利亚镇普通镇民，书记官温彻斯特太太表示，“这预示一种时代的变化。当蒸汽机车最终被内燃机车取代的时候，我们知道有些东西不同了。”', '2版政治：在野党质疑政府监管<br>2版经济：周边带动理论 <br>2版金融：华尔街芝加哥工业指数上升24% <br>7版：维多利亚镇的介绍 <br><br>4版<br>西部铁路公司收到匿名警告信 犯罪专家称或非无稽之谈 <br>芝加哥讯 西部铁路公司芝加哥分所近日收到恐吓信，据平克顿侦探所透露，此信来向可推为维多利亚镇。目前警方没有明确透露信的具体内容，但据称为某一组织的某些人员向西部铁路公司某些高层追索“欠款”，并扬言“你们，都得死”。 <br>有证券交易所表明，6月后的会计工作使证券持有人对西部铁路公司表示乐观，然而始终有声音质疑为何西部铁路公司能在6月的N.劳兄弟公司铁路重大事故后保持账面未有亏损。', '哈代死亡。<br><br>哈代遗言：', '<table>\r\n				<tbody>\r\n					<tr>\r\n						<td>恩菲尔德</td>\r\n						<td align=\"center\">霍尔</td>\r\n						<td align=\"right\">欧内斯特</td>\r\n					</tr>\r\n					<tr>\r\n						<td></td>\r\n						<td></td>\r\n						<td align=\"right\">叶妹</td>\r\n					</tr>\r\n					<tr>\r\n						<td>叶兄</td>\r\n						<td></td>\r\n						<td align=\"right\">安德安纳</td>\r\n					</tr>\r\n					<tr>\r\n						<td>哈代【死亡】</td>\r\n						<td></td>\r\n						<td align=\"right\">马克唐</td>\r\n					</tr>\r\n					<tr>\r\n						<td>白瑞摩</td>\r\n						<td></td>\r\n						<td align=\"right\">圣地亚哥</td>\r\n					</tr>\r\n					<tr>\r\n						<td>赫本</td>\r\n						<td></td>\r\n						<td align=\"right\">科尔比</td>\r\n					</tr>\r\n					<tr>\r\n						<td>莫利</td>\r\n						<td></td>\r\n						<td align=\"right\">（布莱克）</td>\r\n					</tr>\r\n					<tr>\r\n						<td>普拉马逊斯</td>\r\n						<td></td>\r\n						<td align=\"right\">昆西</td>\r\n					</tr>\r\n					<tr>\r\n						<td>艾尔威</td>\r\n						<td align=\"center\">劳伦</td>\r\n						<td align=\"right\">伊卡</td>\r\n					</tr>\r\n				</tbody>\r\n			</table>', '2016-07-25 18:03:37', null, '2', '1');
-INSERT INTO `d_newspaper` VALUES ('2', '1', '【16NV】7月5日夜刊（开版公告）', '小镇受西部铁路公司200万美元投资垂青', '本市西部仅两站<br>维多利亚讯 据可靠消息，今日下午，西部铁路公司董事会发言人特理·亨德曼表明，其第二大股东亨利.刘易斯（左图）即将对本市行政区域内的维多利亚镇进行大规模投资，由铁路运输业带动铁矿、石油的初期计划已经草拟成案。经济学家称该举措即将带来临近地区就业的重整，治安专家则担心大额外来人员对本地区的影响。中部铁运则表明，在铁路运重创的6月后进行这种冒险之举不具长期眼光。<br>维多利亚镇普通镇民，书记官温彻斯特太太表示，“这预示一种时代的变化。当蒸汽机车最终被内燃机车取代的时候，我们知道有些东西不同了。”', '2版政治：在野党质疑政府监管<br>2版经济：周边带动理论 <br>2版金融：华尔街芝加哥工业指数上升24%  <br>5版 柏林会议进展不顺 <br>6版 清帝国使者离开纽约 <br>7版：维多利亚镇的介绍<br>8版 独立日烟火不慎造成男童落水 <br><br>4版<br>西部铁路公司收到匿名警告信 犯罪专家称或非无稽之谈 <br>芝加哥讯 西部铁路公司芝加哥分所近日收到恐吓信，据平克顿侦探所透露，此信来向可推为维多利亚镇。目前警方没有明确透露信的具体内容，但据称为某一组织的某些人员向西部铁路公司某些高层追索“欠款”，并扬言“你们，都得死”。 <br>有证券交易所表明，6月后的会计工作使证券持有人对西部铁路公司表示乐观，然而始终有声音质疑为何西部铁路公司能在6月的N.劳兄弟公司铁路重大事故后保持账面未有亏损。', '哈代死亡。<br><br>哈代遗言：', '<table><tbody><tr><td>珀利</td><td align=\"center\">伊卡</td><td align=\"right\">山纳</td></tr><tr><td></td><td></td><td align=\"right\">哈代</td></tr><tr><td>马丁</td><td></td><td align=\"right\">爱德华</td></tr><tr><td>昆西</td><td></td><td align=\"right\">叶什（妹）</td></tr><tr><td>温切斯特</td><td></td><td align=\"right\">卓尔</td></tr><tr><td>叶什（兄）</td><td></td><td align=\"right\">白瑞摩</td></tr><tr><td>厄金特</td><td></td><td align=\"right\">赫本</td></tr><tr><td>奎勒</td><td></td><td align=\"right\">安德安纳</td></tr><tr><td>伊奥克</td><td align=\"center\">斯达福斯</td><td align=\"right\">科尔比</td></tr></tbody></table>', '2016-07-27 17:07:07', '2016-08-05 10:43:07', '2', '1');
-INSERT INTO `d_newspaper` VALUES ('3', '1', '【16NV】7月6日日刊', '', '', '', '哈代死亡。<br><br>哈代遗言：', null, '2016-08-10 18:34:03', '2016-09-07 11:48:58', '1', '1');
+INSERT INTO `d_newspaper` VALUES ('2', '1', '【16NV】7月5日夜刊（开版公告）', '小镇受西部铁路公司200万美元投资垂青', '本市西部仅两站<br>维多利亚讯 据可靠消息，今日下午，西部铁路公司董事会发言人特理·亨德曼表明，其第二大股东亨利.刘易斯（左图）即将对本市行政区域内的维多利亚镇进行大规模投资，由铁路运输业带动铁矿、石油的初期计划已经草拟成案。经济学家称该举措即将带来临近地区就业的重整，治安专家则担心大额外来人员对本地区的影响。中部铁运则表明，在铁路运重创的6月后进行这种冒险之举不具长期眼光。<br>维多利亚镇普通镇民，书记官温彻斯特太太表示，“这预示一种时代的变化。当蒸汽机车最终被内燃机车取代的时候，我们知道有些东西不同了。”', '2版政治：在野党质疑政府监管<br>2版经济：周边带动理论 <br>2版金融：华尔街芝加哥工业指数上升24%  <br>5版 柏林会议进展不顺 <br>6版 清帝国使者离开纽约 <br>7版：维多利亚镇的介绍<br>8版 独立日烟火不慎造成男童落水 <br><br>4版<br>西部铁路公司收到匿名警告信 犯罪专家称或非无稽之谈 <br>芝加哥讯 西部铁路公司芝加哥分所近日收到恐吓信，据平克顿侦探所透露，此信来向可推为维多利亚镇。目前警方没有明确透露信的具体内容，但据称为某一组织的某些人员向西部铁路公司某些高层追索“欠款”，并扬言“你们，都得死”。 <br>有证券交易所表明，6月后的会计工作使证券持有人对西部铁路公司表示乐观，然而始终有声音质疑为何西部铁路公司能在6月的N.劳兄弟公司铁路重大事故后保持账面未有亏损。', '哈代死亡。<br><br>哈代遗言：', '<table><tbody><tr><td>珀利</td><td align=\"center\">伊卡</td><td align=\"right\">山纳</td></tr><tr><td></td><td></td><td align=\"right\">哈代</td></tr><tr><td>马丁</td><td></td><td align=\"right\">爱德华</td></tr><tr><td>昆西</td><td></td><td align=\"right\">叶什（妹）</td></tr><tr><td>温切斯特</td><td></td><td align=\"right\">卓尔</td></tr><tr><td>叶什（兄）</td><td></td><td align=\"right\">白瑞摩</td></tr><tr><td>厄金特</td><td></td><td align=\"right\">赫本</td></tr><tr><td>奎勒</td><td></td><td align=\"right\">安德安纳</td></tr><tr><td>伊奥克</td><td align=\"center\">斯达福斯</td><td align=\"right\">科尔比</td></tr></tbody></table>', '2016-07-27 17:07:07', '2016-08-05 10:43:07', '1', '2');
+INSERT INTO `d_newspaper` VALUES ('3', '1', '【16NV】7月6日日刊', '', '', '', '哈代死亡。<br><br>哈代遗言：', null, '2016-08-10 18:34:03', '2016-09-07 11:48:58', '2', '2');
+INSERT INTO `d_newspaper` VALUES ('6', '1', '【16NV】7月7日日刊', null, null, null, null, null, '2016-09-13 16:49:35', null, '0', '2');
+INSERT INTO `d_newspaper` VALUES ('7', '1', '【16NV】7月7日夜刊', '夭寿啦，半藏变近战了', '宝宝怕死了！', '', '', '', '2016-09-13 16:57:47', '2016-09-13 16:58:31', '1', '1');
 
 -- ----------------------------
 -- Table structure for `d_offline_message`
@@ -338,35 +364,35 @@ CREATE TABLE `d_player` (
 -- ----------------------------
 -- Records of d_player
 -- ----------------------------
-INSERT INTO `d_player` VALUES ('1', '2', 'judger', '1', '8', '0000-00-00 00:00:00');
-INSERT INTO `d_player` VALUES ('2', '3', 'judger', '1', '8', '0000-00-00 00:00:00');
-INSERT INTO `d_player` VALUES ('5', '4', 'player', '1', '3', '2016-07-11 14:38:24');
-INSERT INTO `d_player` VALUES ('8', '6', 'player', '1', '3', '2016-07-15 11:45:32');
-INSERT INTO `d_player` VALUES ('10', '1', 'player', '1', '3', '2016-07-18 10:02:41');
-INSERT INTO `d_player` VALUES ('11', '5', 'player', '1', '3', '2016-07-18 11:01:23');
-INSERT INTO `d_player` VALUES ('12', '7', 'player', '1', '3', '2016-07-18 11:01:39');
-INSERT INTO `d_player` VALUES ('13', '8', 'player', '1', '3', '2016-07-18 11:01:52');
-INSERT INTO `d_player` VALUES ('14', '9', 'player', '1', '3', '2016-07-18 11:02:01');
-INSERT INTO `d_player` VALUES ('15', '10', 'player', '1', '3', '2016-07-18 11:02:22');
-INSERT INTO `d_player` VALUES ('16', '11', 'player', '1', '3', '2016-07-18 11:02:31');
-INSERT INTO `d_player` VALUES ('17', '12', 'player', '1', '3', '2016-07-18 11:02:40');
-INSERT INTO `d_player` VALUES ('18', '13', 'player', '1', '3', '2016-07-18 11:02:48');
-INSERT INTO `d_player` VALUES ('19', '14', 'player', '1', '3', '2016-07-18 11:03:31');
-INSERT INTO `d_player` VALUES ('20', '15', 'player', '1', '3', '2016-07-18 11:03:36');
-INSERT INTO `d_player` VALUES ('21', '16', 'player', '1', '3', '2016-07-18 11:03:42');
-INSERT INTO `d_player` VALUES ('22', '17', 'player', '1', '3', '2016-07-18 11:04:10');
-INSERT INTO `d_player` VALUES ('23', '18', 'player', '1', '3', '2016-07-18 11:04:15');
-INSERT INTO `d_player` VALUES ('24', '19', 'player', '1', '3', '2016-07-18 11:04:21');
-INSERT INTO `d_player` VALUES ('25', '20', 'player', '1', '3', '2016-07-18 11:04:26');
-INSERT INTO `d_player` VALUES ('26', '21', 'player', '1', '3', '2016-07-18 11:04:31');
+INSERT INTO `d_player` VALUES ('1', '2', 'judger', '1', '9', '0000-00-00 00:00:00');
+INSERT INTO `d_player` VALUES ('2', '3', 'judger', '1', '9', '0000-00-00 00:00:00');
+INSERT INTO `d_player` VALUES ('5', '4', 'player', '1', '9', '2016-07-11 14:38:24');
+INSERT INTO `d_player` VALUES ('8', '6', 'player', '1', '9', '2016-07-15 11:45:32');
+INSERT INTO `d_player` VALUES ('10', '1', 'player', '1', '9', '2016-07-18 10:02:41');
+INSERT INTO `d_player` VALUES ('11', '5', 'player', '1', '9', '2016-07-18 11:01:23');
+INSERT INTO `d_player` VALUES ('12', '7', 'player', '1', '9', '2016-07-18 11:01:39');
+INSERT INTO `d_player` VALUES ('13', '8', 'player', '1', '9', '2016-07-18 11:01:52');
+INSERT INTO `d_player` VALUES ('14', '9', 'player', '1', '9', '2016-07-18 11:02:01');
+INSERT INTO `d_player` VALUES ('15', '10', 'player', '1', '9', '2016-07-18 11:02:22');
+INSERT INTO `d_player` VALUES ('16', '11', 'player', '1', '9', '2016-07-18 11:02:31');
+INSERT INTO `d_player` VALUES ('17', '12', 'player', '1', '9', '2016-07-18 11:02:40');
+INSERT INTO `d_player` VALUES ('18', '13', 'player', '1', '9', '2016-07-18 11:02:48');
+INSERT INTO `d_player` VALUES ('19', '14', 'player', '1', '9', '2016-07-18 11:03:31');
+INSERT INTO `d_player` VALUES ('20', '15', 'player', '1', '9', '2016-07-18 11:03:36');
+INSERT INTO `d_player` VALUES ('21', '16', 'player', '1', '9', '2016-07-18 11:03:42');
+INSERT INTO `d_player` VALUES ('22', '17', 'player', '1', '9', '2016-07-18 11:04:10');
+INSERT INTO `d_player` VALUES ('23', '18', 'player', '1', '9', '2016-07-18 11:04:15');
+INSERT INTO `d_player` VALUES ('24', '19', 'player', '1', '9', '2016-07-18 11:04:21');
+INSERT INTO `d_player` VALUES ('25', '20', 'player', '1', '9', '2016-07-18 11:04:26');
+INSERT INTO `d_player` VALUES ('26', '21', 'player', '1', '9', '2016-07-18 11:04:31');
 INSERT INTO `d_player` VALUES ('30', '22', 'judger', '5', '8', '2016-07-25 18:03:28');
 INSERT INTO `d_player` VALUES ('33', '24', 'player', '5', '3', '2016-07-29 15:55:44');
 INSERT INTO `d_player` VALUES ('36', '23', 'player', '5', '1', '2016-07-29 18:09:50');
 INSERT INTO `d_player` VALUES ('37', '25', 'player', '5', '1', '2016-08-11 10:37:56');
 INSERT INTO `d_player` VALUES ('38', '26', 'player', '5', '1', '2016-08-17 15:26:48');
-INSERT INTO `d_player` VALUES ('39', '27', 'player', '1', '3', '2016-08-18 14:42:04');
-INSERT INTO `d_player` VALUES ('40', '28', 'player', '1', '3', '2016-08-18 14:43:57');
-INSERT INTO `d_player` VALUES ('41', '29', 'player', '1', '1', '2016-08-18 14:44:10');
+INSERT INTO `d_player` VALUES ('39', '27', 'player', '1', '9', '2016-08-18 14:42:04');
+INSERT INTO `d_player` VALUES ('40', '28', 'player', '1', '9', '2016-08-18 14:43:57');
+INSERT INTO `d_player` VALUES ('41', '29', 'player', '1', '9', '2016-08-18 14:44:10');
 INSERT INTO `d_player` VALUES ('42', '33', 'player', '5', '1', '2016-09-02 17:39:49');
 
 -- ----------------------------
