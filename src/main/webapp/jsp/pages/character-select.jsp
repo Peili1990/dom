@@ -113,7 +113,7 @@
 					$.each(characters,function(index,character){
 						var builder = new StringBuilder();
 						builder.append('<li class="character-box">');
-						builder.append('<img src="{0}">',picServer+character.avatar);
+						builder.appendFormat('<img src="{0}">',picServer+character.avatar);
 						builder.append('<div class="radio-box">');
 						builder.appendFormat('<input type="hidden" value="{0}">',character.id);
 						builder.appendFormat('<i class="am-icon-circle-thin am-icon-md">{0}</i>',character.name);

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class RedisTest {
 	
-	RedisClient redisClient = new RedisClient("localhost", 6379, "slave");
+	RedisClient redisClient = new RedisClient("123.206.78.71", 6379, "slave");
 	
 
 	@Test
