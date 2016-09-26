@@ -22,6 +22,9 @@
 <script type="text/javascript">
 
 $(function(){
+	if($("#newspaper-list .card").length == 0){
+		myInfo("你未参加任何版杀");
+	}
 	setRedspotOnpaper();
 	var newspaperId = GetQueryString("newspaperId");
 	if(newspaperId){

@@ -38,7 +38,7 @@
 						})
 					} else {
 						myInfo("暂无版杀信息",function(){
-							$(".am-header-left").find("i").click();
+							$(".am-header-left").find("a").click();
 						});
 					}
 					return;
