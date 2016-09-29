@@ -93,7 +93,8 @@
 			$("#target_select").change(function(){
 				var index = $("#target_select option:selected").val()-1;
 				$("#select-character-all").find("img").attr("src",picServer+data.characters[index].avatar);
-				$("#is-sp-all").removeAttr("checked").attr("disabled",data.characters[index].hasSp==1?false:true);
+				$("#is-sp-all")[0].checked = false;
+				$("#is-sp-all").attr("disabled",data.characters[index].hasSp==1?false:true);
 				$("#selected-character").val(data.characters[index].characterId);
 			})
 		})
@@ -125,7 +126,8 @@
 							$(this).click(function(){
 							$("#select-character-three i").removeClass("selected").removeClass("am-icon-check-circle");
 							$(this).addClass("selected").addClass("am-icon-check-circle");
-							$("#is-sp").removeAttr("checked").attr("disabled",$(this).next().val()=="1"?false:true);
+							$("#is-sp")[0].checked = false;
+							$("#is-sp").attr("disabled",$(this).next().val()=="1"?false:true);
 							$("#selected-character").val($(this).prev().val());
 						})
 					})
