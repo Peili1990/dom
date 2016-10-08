@@ -95,7 +95,7 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 				$.each(data.speechList,function(index,speech){
 					appendSpeech(speech);
 				});
-				if(newspaperDetail.status == 1){
+				if(newspaperDetail.status == 1 && playerInfo){
 					$("#nv-footer").addClass("invisible");
 					$("#nv-chatbar").removeClass("invisible");
 					$("#show-emotion").addClass("invisible");
@@ -189,7 +189,7 @@ function appendSpeech(speech){
 		builder.appendFormat('<div class="am-panel-hd">游戏公告<time>{0}</time></div>',speech.createTime);
 		builder.appendFormat('<div class="am-panel-bd">{0}</div></li>',speech.content);	
 	} else {
-		builder.append(speech.playerId == playerInfo.playerId ? '<li class="am-comment-flip">':'<li class="am-comment">');
+		builder.append(playerInfo && speech.playerId == playerInfo.playerId ? '<li class="am-comment-flip">':'<li class="am-comment">');
 		builder.appendFormat('<input type="hidden" value="{0}">',speech.id);
 		builder.appendFormat('<a ><img src="{0}{1}" class="am-comment-avatar"></a>',picServer,speech.avatar);
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');

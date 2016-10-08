@@ -109,6 +109,23 @@
 		<div class="card-footer"><a href="${baseUrl}assemble?newspaperId=${speech.newspaperId}&scroll=true">查看更多  <span class="am-icon-chevron-right"></span></a></div>
 	</div>
 	</c:if>
+	
+	<c:forEach items="${ essayList }" var="essay">
+	<div class="card">
+		<div class="card-header">
+			<h2 class="card-title">${essay.header}</h2>
+		</div>
+		<div class="card-body essay-style">
+			${essay.content }
+		</div>
+		<div class="card-footer"><a><span onclick="pageSwitch('#pageA','#pageC','getEssayDetail(${essay.essayId})')">查看更多  <span class="am-icon-chevron-right"></span></span></a></div>
+	</div>
+	
+	</c:forEach>
+	
+	<div style="text-align:center;margin:10px auto">
+		下拉加载更多
+	</div>
 
 	
 </div>

@@ -94,5 +94,26 @@
 		
 	
 	</insert>
+	
+	<select id="getEssayList" resultType="Essay">
+	
+		SELECT
+			de.id AS essayId,
+			du.id AS userId,
+			du.nickname AS nickname,
+			du.avatar AS avatar,
+			de.header AS header,
+			de.content AS content,
+			de.create_time AS createTime	
+		FROM
+			d_essay de, d_user du
+		WHERE
+			du.id = de.user_id
+		ORDER BY
+			de.create_time DESC
+		LIMIT 10
+			
+	
+	</select>
 
 </mapper>

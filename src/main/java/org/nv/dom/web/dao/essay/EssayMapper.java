@@ -20,4 +20,6 @@ public interface EssayMapper {
 	
 	public int insertCommentDao(SubmitCommentDTO submitCommentDTO);
 	
+	public List<Essay> getEssayList();
+	
 }

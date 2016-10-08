@@ -14,5 +14,7 @@ public interface EssayService {
 	public Map<String, Object> getEssayDetail(long essayId);
 
 	public Map<String, Object> submitComment(SubmitCommentDTO submitCommentDTO);
+	
+	public Map<String, Object> getEssayList();
 
 }

@@ -382,5 +382,14 @@ time{
 	border-bottom:1px solid #cccccc;
 }
 
+.essay-style{
+	overflow: hidden;
+	-webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: clip;
+    display: -webkit-box;
+    padding-bottom:0;
+    margin-bottom:15px;
+}
 
 

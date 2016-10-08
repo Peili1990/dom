@@ -19,6 +19,9 @@
       <li id="pageB" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="pages/submit.jsp" ></jsp:include> 
       </li>
+      <li id="pageC" class="page-container" style="left:100%;display:none"> 
+      	<jsp:include page="pages/essay-detail.jsp" ></jsp:include> 
+      </li>
       <li id="pageF" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="pages/apply.jsp" ></jsp:include> 
       </li>

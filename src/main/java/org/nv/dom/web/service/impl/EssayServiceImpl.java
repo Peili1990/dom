@@ -88,6 +88,19 @@ public class EssayServiceImpl implements EssayService {
 		}
 		return result;
 	}
+
+	@Override
+	public Map<String, Object> getEssayList() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			List<Essay> essayList = essayMapper.getEssayList();
+			result.put("essayList", essayList);
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+		}
+		return result;
+
+	}
 	
 	
 
