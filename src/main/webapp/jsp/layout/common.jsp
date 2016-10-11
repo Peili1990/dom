@@ -69,11 +69,6 @@
 				window.location = getRootPath() + "/pcIndex";
 			}
 		}
-		if(typeof(openDatabase) == "undefined") {
-			if(window.location.href.indexOf("notSupport")<0){
-				window.location = getRootPath() + "/notSupport";
-			}
-		}
 	})
 
 	$("#nv-chatbar .messages").keyup(function(){ 

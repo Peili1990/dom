@@ -53,6 +53,21 @@ var Common = function() {
 
 };
 
+Array.prototype.indexOf = function(val) {  
+    for (var i = 0; i < this.length; i++) {  
+        if (this[i] == val) return i;  
+    }  
+    return -1;  
+};  
+
+Array.prototype.remove = function(val) {  
+    var index = this.indexOf(val);  
+    while(index>-1){  
+        this.splice(index, 1);  
+        index = this.indexOf(val);  
+    }  
+};
+
 /** * 日期格式化 ** */
 Date.prototype.format = function(fmt) {
 	var o = {

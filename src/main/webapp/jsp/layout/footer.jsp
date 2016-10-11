@@ -42,7 +42,6 @@
   
   <script type="text/javascript">
   	var userId = ${user.id};
-  	var db = getCurrentDb(userId);
   	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
   	webSocket.onerror = function(event) {
@@ -96,17 +95,10 @@
 				if(window.location.href.indexOf("assemble")>0){
 					setRedspotOnpaper();
 				}
-				totalChat = getCache("nv_offline_chat"+userId);
-				setCache("nv_offline_chat"+userId,totalChat > 0 ? parseInt(totalChat)+parseInt(data.offlineChat.length) : parseInt(data.offlineChat.length));
-				$.each(data.offlineChat,function(index,chat){
-					chatMessage = getCache("nv_chat"+chat.chatId);
-					setCache("nv_chat"+chat.chatId, chatMessage > 0 ? ++chatMessage : 1);
-					db.transaction(function (trans) {
-			            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chat.chatId, chat.fromUserId, chat.content, chat.createTime], function (ts, data1) {
-			            }, function (ts, message) {
-			                myAlert(message);
-			            });
-			        });
+				totalChat = 0;				
+				$.each(data.offlineChat,function(index,chat){		
+					setCache("nv_chat"+chat.chatId, parseInt(chat.num));
+					totalChat+=parseInt(chat.num);
 				})
 				if(window.location.href.indexOf("chat")>0){
 					createChatList();
@@ -175,12 +167,6 @@
 	}
 	
 	function dealChat(content){
-		db.transaction(function (trans) {
-            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [content.chatId, content.fromUserId, content.content, content.createTime], function (ts, data1) {
-            }, function (ts, message) {
-                myAlert(message);
-            });
-        });
 		if(window.location.href.indexOf("chat")>0 && activeToUserId==content.fromUserId){
 			appendChatDetail(content,false);
 			scrollTobottom();
@@ -192,7 +178,44 @@
 			setCache("nv_offline_chat"+userId,unreadChat ? ++unreadChat : 1); 
 			setRedspot();
 			if(window.location.href.indexOf("chat")>0){
-				createChatList();
+				chatPosition = chatList.indexOf(chatId);
+				if(chatPosition<0){
+					chatList.unshift(chatId);
+					var url = getRootPath() + "/getChatInfo";
+		        	var common = new Common();
+		       		var options = {
+		        		chatId : chatId
+		        	}
+		        	common.callAction(options, url, function(data) {
+		            if(!data){
+		           	    return;
+		            }
+		            switch (data.status){
+		           	   case 1:
+		           		    chatInfo = data.chatInfo;
+		           		    chatInfo.latestContent = content.content;
+		           		    chatInfo.latestTime = content.createTime;
+		           		    chatInfo.chatId = chatId;
+		           	   		setChatPosition(chatInfo,true);	
+		           	   		setRedspotOnChat();
+		           			return;
+		           		case 0:
+		           			timeoutHandle();
+		           			return;
+		           		default:
+		           			myAlert(data.message);
+		           			return;
+		           		}
+		          	})
+				} else {
+					$("#chat-list .card:eq("+chatPosition+") .chat-content").find("p").text(content.content);
+					var node = $("#chat-list .card:eq("+chatPosition+")").remove();
+					$("#chat-list").prepend(node);
+					chatList.remove(chatId);
+					chatList.unshift(chatId); 
+					setRedspotOnChat();
+				}
+				
 			}
 		}	
 	}

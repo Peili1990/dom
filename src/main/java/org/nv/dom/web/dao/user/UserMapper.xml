@@ -52,7 +52,36 @@
 	
 	</insert>
 	
-	<select id="getChatInfoDao" resultType="ChatInfo">
+	<select id="getChatInfoDao" parameterType="long" resultType="ChatInfo">
+	
+		SELECT 
+			du.id AS toUserId,
+			du.nickname AS toUserNickname,
+			du.avatar AS toUserAvatar,
+			du.motto AS toUserMotto,
+			dom.chat_id AS chatId,
+			dom.content AS latestContent,
+			dom.create_time AS latestTime
+		FROM
+			d_user du,d_offline_message dom
+		WHERE
+			((du.id = dom.from_user_id AND dom.to_user_id=#{userId}) OR (du.id = dom.to_user_id AND dom.from_user_id=#{userId})) 
+		AND dom.create_time IN (
+			SELECT 
+					MAX(create_time) 
+			FROM
+					d_offline_message dom
+			WHERE	
+					dom.to_user_id= #{userId} OR  dom.from_user_id = #{userId}
+			GROUP BY
+					dom.chat_id)
+   		ORDER BY
+			dom.create_time
+		DESC
+	
+	</select>
+	
+	<select id="getChatInfoByUserIdDao" parameterType="long" resultType="ChatInfo">
 	
 		SELECT 
 			du.id AS toUserId,
@@ -62,10 +91,7 @@
 		FROM
 			d_user du
 		WHERE
-			du.id IN
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+			du.id = #{toUserId}		
 	
 	</select>
 	
@@ -73,18 +99,13 @@
 	
 		SELECT 
 			dom.chat_id AS chatId,
-			dom.from_user_id AS fromUserId,
-			dom.content AS content,
-			dom.create_time AS createTime		
+			count(chat_id) AS num		
 		FROM
 			d_offline_message dom
 		WHERE
-			dom.to_user_id = #{userId};
-			
-		DELETE FROM
-			d_offline_message
-		WHERE
-			to_user_id = #{userId};
+			dom.to_user_id = #{userId} AND dom.is_read = 0
+		GROUP BY
+			dom.chat_id;
 			
 	</select>
 	
@@ -102,6 +123,37 @@
 			</if>
 		WHERE
 			id = #{userId};
+	
+	</update>
+	
+	<select id="getChatRecordDao" parameterType="GetChatRecordDTO" resultType="ChatDetail">
+	
+		SELECT
+			dom.chat_Id AS chatId,
+			dom.from_user_id AS fromUserId,
+			dom.to_user_id AS toUserId,
+			dom.content AS content,
+			dom.create_time AS createTime
+		FROM
+			d_offline_message dom
+		WHERE
+			dom.chat_id = #{chatId}
+		ORDER BY
+			dom.create_time
+		DESC
+		LIMIT 
+			#{offset},10 	
+	
+	</select>
+	
+	<update id="updateChatRecordDao" parameterType="GetChatRecordDTO">
+	
+		UPDATE 
+			d_offline_message
+		SET
+			is_read = 1
+		WHERE
+			chat_id = #{chatId} AND to_user_id = #{userId}
 	
 	</update>
 	

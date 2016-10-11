@@ -9,6 +9,8 @@ public class ChatInfo {
 	private String toUserAvatar;
 	private String toUserMotto;
 	private long toPlayerId;
+	private String latestContent;
+	private String latestTime;
 	public String getChatId() {
 		return chatId;
 	}
@@ -51,7 +53,17 @@ public class ChatInfo {
 	public void setToPlayerId(long toPlayerId) {
 		this.toPlayerId = toPlayerId;
 	}
-	
-	
+	public String getLatestContent() {
+		return latestContent;
+	}
+	public void setLatestContent(String latestContent) {
+		this.latestContent = latestContent;
+	}
+	public String getLatestTime() {
+		return latestTime;
+	}
+	public void setLatestTime(String latestTime) {
+		this.latestTime = latestTime;
+	}
 
 }

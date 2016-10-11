@@ -19,15 +19,23 @@
 		var chatId = userId > toUserId ? toUserId+"-"+userId : userId+"-"+toUserId;
 		activeToUserId = toUserId;
 		pageNum = 0;
-		db.transaction(function (trans) {
-            trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit 10 ", [chatId], function (ts, webData) {
-            	if(webData){
-            		$("#chat-detail-list").empty();
-            		for(var i=0;i<webData.rows.length;i++){ 
-            			appendChatDetail(webData.rows.item(i),true);
-           			}
-            	}
-            	$(window).scrollTop($(window).height());
+		var url = getRootPath() + "/getChatRecord";
+		var options = {
+				chatId : chatId,
+				pageNum : pageNum
+		}
+		var common = new Common();
+		common.callAction(options,url,function(data){
+			if(!data){
+				return;
+			}
+			switch(data.status){
+			case 1:
+				$("#chat-detail-list").empty();
+				$.each(data.chatDetails,function(index,detail){
+					appendChatDetail(detail,true);
+				})
+				$(window).scrollTop($(window).height());
             	$("#nv-footer").addClass("invisible");
 				$("#nv-chatbar").removeClass("invisible");
 				$("#use-gesture").addClass("invisible");
@@ -41,25 +49,30 @@
 					delCache("nv_chat"+chatId);
 					redspot.addClass("invisible");
 					setRedspot();
-				}
-				
+				}	
 				$(window).scroll(throttle(function(){
 					if($(window).scrollTop()<=0){
-						loadMoreChat(chatId)
+						loadchatRecord(chatId)
 					}
 				},2000,false));
-            }, function (ts, message) {
-                myAlert(message);
-            });
-        });
+				return;
+			case 0:
+       			timeoutHandle();
+       			return;
+       		default:
+       			myAlert(data.message);
+       			return;
+       		}
+		})
+		
 	}
 	
 	function appendChatDetail(chatDetail,prepend){
 		var builder = new StringBuilder();
-		builder.append(chatDetail.userId == userId ? '<li class="am-comment-flip">':'<li class="am-comment">');
-		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',chatDetail.userId == userId ? picServer+$("#user-avatar").val() : $("#"+chatDetail.chatId+" img").attr("src"));
+		builder.append(chatDetail.fromUserId == userId ? '<li class="am-comment-flip">':'<li class="am-comment">');
+		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',chatDetail.fromUserId == userId ? picServer+$("#user-avatar").val() : $("#"+chatDetail.chatId+" img").attr("src"));
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
-		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',chatDetail.userId == userId ? $("#user-nickname").val() : $("#"+chatDetail.chatId+" h3").text(),chatDetail.createTime);
+		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',chatDetail.fromUserId == userId ? $("#user-nickname").val() : $("#"+chatDetail.chatId+" h3").text(),chatDetail.createTime);
 		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',chatDetail.content)
 		if(prepend){
 			$("#chat-detail-list").prepend(builder.toString());
@@ -91,13 +104,6 @@
 			}
 			switch (data.status) {
 			case 1:
-				db.transaction(function (trans) {
-	                trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatId, userId, recoverTag(content), data.chatDetail.createTime], function (ts, data1) {
-	                }, function (ts, message) {
-	                    myAlert(message);
-	                });
-	            });
-				data.chatDetail.userId = userId;
 				appendChatDetail(data.chatDetail,false);
 				return;
 			default:
@@ -107,19 +113,32 @@
 		})
 	}
 	
-	function loadMoreChat(chatId){
+	function loadchatRecord(chatId){
 		pageNum++;
-		db.transaction(function (trans) {
-            trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit "+10*pageNum+",10 ", [chatId], function (ts, webData) {
-            	if(webData){
-            		for(var i=0;i<webData.rows.length;i++){ 
-            			appendChatDetail(webData.rows.item(i),true);
-           			}
-            	}
-            }, function (ts, message) {
-                myAlert(message);
-            });
-        });
+		var url = getRootPath() + "/getChatRecord";
+		var options = {
+				chatId : chatId,
+				pageNum : pageNum
+		}
+		var common = new Common();
+		common.callAction(options,url,function(data){
+			if(!data){
+				return;
+			}
+			switch(data.status){
+			case 1:
+				$.each(data.chatDetails,function(index,detail){
+					appendChatDetail(detail,true);
+				})
+				return;
+			case 0:
+       			timeoutHandle();
+       			return;
+       		default:
+       			myAlert(data.message);
+       			return;
+       		}
+		})
 	}
 
 </script>

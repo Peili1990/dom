@@ -18,50 +18,50 @@
 </div>
 
 <script type="text/javascript">
+	var chatList = [];
 
 	$(function(){
 		createChatList();
 	})
 	
 	function createChatList(){
-		db.transaction(function (trans) {
-            trans.executeSql("select chatId, content, max(createTime), count(distinct chatId) from chat_record_"+userId+" group by chatId", [], function (ts, webData) {
-           		if(webData){
-           			var chatIdList = [];
-           			for(var i=0;i<webData.rows.length;i++){ 
-           				chatIdList.push(webData.rows.item(i).chatId)
-           			}
-           			var url = getRootPath() + "/getChatInfo";
-           			var common = new Common();
-           			common.callAction(JSON.stringify(chatIdList), url, function(data) {
-           				if(!data){
-           					return;
-           				}
-           				switch (data.status){
-           				case 1:
-           					$("#chat-list").empty();
-           					$.each(data.chatList,function(index,chatInfo){
-           						var builder = new StringBuilder();
-           						builder.appendFormat('<div class="card" id="{0}" onclick="pageSwitch({1},{2},{3})"><div class="card-body">',webData.rows.item(index).chatId,"'#pageA'","'#pageB'","'getChatDetail("+chatInfo.toUserId+")'");
-           						builder.appendFormat('<img src="{0}{1}" class="am-comment-avatar avatar">',picServer,chatInfo.toUserAvatar);
-           						builder.appendFormat('<div class="chat-content"><h3>{0}</h3><p>{1}</p></div>',chatInfo.toUserNickname,webData.rows.item(index).content);
-           						builder.append('<span class="badge badge-alert badge-rounded invisible"></span>');
-           						builder.appendFormat('<input type="hidden" name="chat-id" value="{0}"></div></div>',webData.rows.item(index).chatId);
-           						$("#chat-list").append(builder.toString());
-           					})
-           					setRedspotOnChat();
-           					return;
-           				case 0:
-           					timeoutHandle();
-           					return;
-           				default:
-           					myAlert(data.message);
-           					return;
-           				}
-           			},"application/json;charset=utf-8")
+        var url = getRootPath() + "/getChatInfo";
+        var common = new Common();
+        common.callAction(null, url, function(data) {
+           if(!data){
+           	   return;
+           }
+           switch (data.status){
+           	   case 1:
+           	   		$("#chat-list").empty();
+           	   		$.each(data.chatList,function(index,chatInfo){
+           	   			chatList.push(chatInfo.chatId);
+           	   			setChatPosition(chatInfo,false);
+           			})
+           			setRedspotOnChat();
+           			return;
+           		case 0:
+           			timeoutHandle();
+           			return;
+           		default:
+           			myAlert(data.message);
+           			return;
            		}
-            }, function (ts, message) {myAlert(message)});
-        });
+          })
+	}
+	
+	function setChatPosition(chatInfo,preAppend){
+		var builder = new StringBuilder();
+		builder.appendFormat('<div class="card" id="{0}" onclick="pageSwitch({1},{2},{3})"><div class="card-body">',chatInfo.chatId,"'#pageA'","'#pageB'","'getChatDetail("+chatInfo.toUserId+")'");
+		builder.appendFormat('<img src="{0}{1}" class="am-comment-avatar avatar">',picServer,chatInfo.toUserAvatar);
+		builder.appendFormat('<div class="chat-content"><h3>{0}</h3><p>{1}</p></div>',chatInfo.toUserNickname,chatInfo.latestContent);
+		builder.append('<span class="badge badge-alert badge-rounded invisible"></span>');
+		builder.appendFormat('<input type="hidden" name="chat-id" value="{0}"></div></div>',chatInfo.chatId);
+		if(preAppend){
+			$("#chat-list").prepend(builder.toString());
+		} else {
+			$("#chat-list").append(builder.toString());
+		}
 	}
 	
 	function setRedspotOnChat(){
