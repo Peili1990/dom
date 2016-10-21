@@ -5,7 +5,7 @@
       <ul class="am-navbar-nav am-cf am-avg-sm-4">
           <li >
             <a href="${ baseUrl }index" class="">
-                  <span class="am-icon-table"></span>
+                  <span class="am-icon-table" ></span>
                 <span class="am-navbar-label">主页</span>
             </a>
           </li>
@@ -102,7 +102,7 @@
 				})
 				if(window.location.href.indexOf("chat")>0){
 					createChatList();
-					adjustContainerHeight("#pageA");
+					adjustContainerHeight(getCurActPage());
 					if(!$("#nv-chatbar").hasClass("invisible")){
 						getChatDetail(activeToUserId);	
 					}

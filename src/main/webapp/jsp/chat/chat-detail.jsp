@@ -76,10 +76,10 @@
 		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',chatDetail.content)
 		if(prepend){
 			$("#chat-detail-list").prepend(builder.toString());
-			adjustContainerHeight("#pageB");
+			adjustContainerHeight(getCurActPage());
 		}else{
 			$("#chat-detail-list").append(builder.toString());
-			adjustContainerHeight("#pageB");
+			adjustContainerHeight(getCurActPage());
 			scrollTobottom();
 		}
 	}

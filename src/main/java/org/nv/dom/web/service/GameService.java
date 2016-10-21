@@ -11,6 +11,8 @@ public interface GameService {
 	
 	public Map<String, Object> getApplyingGames();
 	
+	public Map<String, Object> getAllGames();
+	
 	public Map<String, Object> applyForGame(ApplyDTO applyDTO);
 	
 	public Map<String, Object> getCharacterListThree(GetCharacterListDTO getCharacterListDTO);

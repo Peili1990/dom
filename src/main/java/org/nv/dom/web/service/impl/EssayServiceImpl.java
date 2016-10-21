@@ -55,6 +55,17 @@ public class EssayServiceImpl implements EssayService {
 		}
 		return replayEssay;
 	}
+	
+	@Override
+	public Essay getReplayEssayByGameId(long gameId) {
+		Essay replayEssay = null;
+		try{
+			replayEssay = essayMapper.getReplayEssayByGameId(gameId);
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+		}
+		return replayEssay;
+	}
 
 	@Override
 	public Map<String, Object> getEssayDetail(long essayId) {
@@ -90,18 +101,20 @@ public class EssayServiceImpl implements EssayService {
 	}
 
 	@Override
-	public Map<String, Object> getEssayList() {
+	public Map<String, Object> getEssayList(long userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			List<Essay> essayList = essayMapper.getEssayList();
+			List<Essay> essayList = essayMapper.getEssayList(userId);
 			result.put("essayList", essayList);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取成功");
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}
 		return result;
-
 	}
-	
 	
 
 }

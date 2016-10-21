@@ -36,7 +36,8 @@
 
 	$(function(){
 		setCookie("nv_screen_width",$(window).width(),"7d");
-		adjustContainerHeight("#pageA");
+		adjustContainerHeight(getCurActPage());
+		$("#nv-footer li:eq(0)").addClass("visiting");
 	}) 
         
   </script>

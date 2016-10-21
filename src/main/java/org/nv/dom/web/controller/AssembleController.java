@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.message.GetSpeechListDTO;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,12 +34,12 @@ public class AssembleController extends BaseController {
 	EssayService essayService;
 		
 	@RequestMapping(value = "/assemble", method = RequestMethod.GET)
-	public ModelAndView loginView(HttpSession session) throws Exception {
+	public ModelAndView assembleView(@Param(value = "gameId")Long gameId,HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("assemble/assemble");
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		mav.addObject("playerInfoStr",JacksonJSONUtils.beanToJSON(playerService.getPlayerInfoByUserId(user.getId())));
-		mav.addAllObjects(assembleService.getNewspaperList(user.getId()));
-		mav.addObject("replayEssay",essayService.getReplayEssay(user.getId()));
+		mav.addAllObjects(assembleService.getNewspaperList(user.getId(),gameId));
+		mav.addObject("replayEssay",essayService.getReplayEssay(user.getId()));		
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}
@@ -46,9 +48,17 @@ public class AssembleController extends BaseController {
 	@RequestMapping(value = "/getAssembleDetail", method = RequestMethod.POST)
 	public Map<String, Object> getNewspaperDetail(@ModelAttribute("getSpeechListDTO") GetSpeechListDTO getSpeechListDTO, HttpSession session) {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
-		getSpeechListDTO.setUserId(user.getId());
-		getSpeechListDTO.setPlayerId((long) session.getAttribute(PageParamType.player_id_in_session));
+		getSpeechListDTO.setUserId(user.getId());		
+		if(session.getAttribute(PageParamType.player_id_in_session)!=null){
+			getSpeechListDTO.setPlayerId((long) session.getAttribute(PageParamType.player_id_in_session));
+		}
 		return assembleService.getNewspaperDetail(getSpeechListDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/wordCount", method = RequestMethod.POST)
+	public Map<String, Object> wordCount(@RequestParam("content") String content, HttpSession session) {
+		return assembleService.wordCount(content);
 	}
 
 }

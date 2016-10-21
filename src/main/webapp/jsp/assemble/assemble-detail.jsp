@@ -89,9 +89,9 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 			if(newspaperDetail.seatTable){
 				$("#seat-table").append(newspaperDetail.seatTable);
 			}
-			adjustContainerHeight("#pageB");
-			if(newspaperDetail.type == 2){
-				$("#speech-list").empty();
+			adjustContainerHeight(getCurActPage());
+			$("#speech-list").empty();
+			if(newspaperDetail.type == 2){	
 				$.each(data.speechList,function(index,speech){
 					appendSpeech(speech);
 				});
@@ -99,7 +99,7 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 					$("#nv-footer").addClass("invisible");
 					$("#nv-chatbar").removeClass("invisible");
 					$("#show-emotion").addClass("invisible");
-					if(data.replaceList == null && playerInfo.isMute == 1){
+					if(data.replaceList == null && playerInfo.isMute == 1 && playerInfo.isLife == 1){
 						$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
 						$("#send-message").attr("disabled","disabled");
 						$("#use-gesture").on("click",function(){
@@ -112,6 +112,10 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 							}
 						})
 					}
+					if(playerInfo.isLife == 0 && !(playerInfo.characterId==5 && playerInfo.isSp == "1")){
+						$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
+						$("#send-message").attr("disabled","disabled");
+					}
 					$("#send-message").on("click",function(){
 						if(data.replaceList != null){
 							replaceList = data.replaceList;
@@ -123,18 +127,18 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 						} else {
 							sumbitSpeech(newspaperId);
 						}
-					})
-					redspot = $("#newspaper-list .card:eq("+ newspaperNo +") .badge");
-					if(!redspot.hasClass("invisible")){
-						newspaperSpeech = getCache("nv_newspaper"+newspaperId);
-						setCache("nv_offline_speech",getCache("nv_offline_speech")-parseInt(newspaperSpeech));
-						delCache("nv_newspaper"+newspaperId);
-						redspot.addClass("invisible");
-						setRedspot();
-					}
+					})				
 				} else {
 					$("#nv-chatbar").addClass("invisible");
 					$("#nv-footer").removeClass("invisible");
+				}
+				redspot = $("#newspaper-list .card:eq("+ newspaperNo +") .badge");
+				if(!redspot.hasClass("invisible")){
+					newspaperSpeech = getCache("nv_newspaper"+newspaperId);
+					setCache("nv_offline_speech",getCache("nv_offline_speech")-parseInt(newspaperSpeech));
+					delCache("nv_newspaper"+newspaperId);
+					redspot.addClass("invisible");
+					setRedspot();
 				}
 			}		
 			$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });
@@ -201,7 +205,7 @@ function appendSpeech(speech){
 		}
 	}
 	$("#speech-list").append(builder.toString());
-	adjustContainerHeight("#pageB");
+	adjustContainerHeight(getCurActPage());
 }
 
 function deleteSpeech(content){
@@ -211,6 +215,32 @@ function deleteSpeech(content){
 			return false;
 		}
 	})
-	adjustContainerHeight("#pageB");
+	adjustContainerHeight(getCurActPage());
+}
+
+function wordCount(){
+	$("#icon-options").dropdown('close');
+	if($("#nv-chatbar").is(":hidden")){
+		myAlert("未检测到输入框");
+		return;
+	}
+	var url = getRootPath() + "/wordCount";
+	var options = {
+		content : $("#nv-chatbar .messages").val()
+	}
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			myInfo("该发言共计：" + data.wordCount + "字");
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
 }
 </script>

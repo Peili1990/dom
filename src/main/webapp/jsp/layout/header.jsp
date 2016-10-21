@@ -8,6 +8,9 @@
 		<a id="icon-arrow" style="display:none">
 		<i class="am-header-icon am-icon-chevron-left"></i>
 		</a>
+		<a id="icon-arrow-sec" style="display:none">
+		<i class="am-header-icon am-icon-chevron-left"></i>
+		</a>
 	</div>
 
 	<h1 class="am-header-title">
@@ -15,9 +18,13 @@
 	</h1>
 
 	<div class="am-header-right am-header-nav">
-		<a href="" class="" id="icon-options">
-			<i class="am-header-icon am-icon-bars"></i>
-		</a>
+		<div id="icon-options" class="am-dropdown" data-am-dropdown>
+			<i class="am-header-icon am-icon-bars am-dropdown-toggle" data-am-dropdown-toggle></i>	
+			<ul class="am-dropdown-content" id="options-list">
+       			<li><a>查看公告</a></li> 
+       		</ul>
+		</div>
+		
 		<a href="#right-link" id="icon-finish" style="display:none">
 			完成
 		</a>

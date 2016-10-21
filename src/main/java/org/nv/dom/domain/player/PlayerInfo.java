@@ -26,6 +26,8 @@ public class PlayerInfo {
 	private Integer camp;
 	/** 是否被禁言 */
 	private Integer isMute;
+	/** 是否存活 */
+	private Integer isLife;
 	
 	public long getGameId() {
 		return gameId;
@@ -99,6 +101,11 @@ public class PlayerInfo {
 	public void setIsMute(Integer isMute) {
 		this.isMute = isMute;
 	}
-	
+	public Integer getIsLife() {
+		return isLife;
+	}
+	public void setIsLife(Integer isLife) {
+		this.isLife = isLife;
+	}
 	
 }

@@ -47,6 +47,18 @@
 	
 	</select>
 	
+	<select id="getReplayEssayByGameId" parameterType="long" resultType="Essay">
+	
+		SELECT
+			de.id AS essayId,
+			de.header AS header
+		FROM
+			d_essay de, d_game dg
+		WHERE
+			dg.id= #{gameId} AND dg.replay_essay_id = de.id
+	
+	</select>
+	
 	<select id="getEssayDetailDao" parameterType="long" resultType="Essay">
 	
 		SELECT
@@ -95,7 +107,7 @@
 	
 	</insert>
 	
-	<select id="getEssayList" resultType="Essay">
+	<select id="getEssayList" parameterType="long" resultType="Essay">
 	
 		SELECT
 			de.id AS essayId,
@@ -109,6 +121,9 @@
 			d_essay de, d_user du
 		WHERE
 			du.id = de.user_id
+		<if test="_parameter>0">
+			AND de.user_id = #{userId}
+		</if>
 		ORDER BY
 			de.create_time DESC
 		LIMIT 10

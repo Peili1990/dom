@@ -11,10 +11,13 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.config.RedisConstant;
 import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.game.Game;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
+import org.nv.dom.enums.GameFinalResult;
+import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
@@ -42,6 +45,29 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		try{
 			applyingGames = gameMapper.getApplyingGamesDao();
 			result.put("applyingGames", applyingGames);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
+		} catch (Exception e){
+			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}	
+		return result;
+	}
+	
+	@Override
+	public Map<String, Object> getAllGames() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Game> games;
+		try{
+			games = gameMapper.getAllGamesDao();
+			for(Game game:games){
+				game.setGameStatusDesc(GameStatus.getMessageByCode(game.getGameStatus()));
+				if(game.getFinalResult()!=null){
+					game.setFinalResultDesc(GameFinalResult.getMessageByCode(game.getFinalResult()));
+				}
+			}
+			result.put("games", games);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
 		} catch (Exception e){

@@ -99,6 +99,13 @@ a{blr:expression(this.onFocus=this.blur())}/*去掉a标签的虚线框，避免�
 	-webkit-border-radius: 3px;
 }
 
+.talk_word .btn-box{
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 62%;
+}
+
 .talk_word .am-btn{
 	width: 17%;
     height: 34px;

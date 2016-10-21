@@ -26,7 +26,16 @@
   </section>
    <jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
+	
+	<script>
 
-	<script type="text/javascript" src="${baseUrl}js/assemble/assemble.js"></script>
+	$(function(){
+		adjustContainerHeight(getCurActPage());
+		$("#options-list").append("<li onclick='getAllGames()'><a>查看所有版杀</a></li>")
+		$("#options-list").append("<li onclick='wordCount()'><a>字数统计</a></li>")
+		$("#nv-footer li:eq(1)").addClass("visiting");
+	}) 
+        
+  </script>
 	
 </html>

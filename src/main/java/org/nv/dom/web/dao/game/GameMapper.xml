@@ -32,6 +32,22 @@
 				
 	</select>
 	
+	<select id="getAllGamesDao" resultType="Game">
+	
+		SELECT
+			dg.id,
+			dg.description AS gameDesc,
+			dg.status AS gameStatus,
+			dg.final_result AS finalResult,
+			dg.estimated_start_date AS startDate
+		FROM
+			d_game dg 
+		ORDER BY
+			dg.estimated_start_date
+		DESC
+			
+	</select>
+	
 	<select id="getPlayerNumDao" parameterType="long" resultType="Integer">
 	
 		SELECT

@@ -5,25 +5,25 @@
 		<img src="${picServer}${user.avatar}"
 			class="am-comment-avatar"> <span> ${ user.nickname } </span>
 		<p id="user-motto">${ user.motto }</p>
-		<span class="am-icon-chevron-right" onclick="pageSwitch('#pageA','#pageC')"></span>
+		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageC')"></span>
 	</div>
 	<h3>我的版杀</h3>
 	<div class="mine-box" style="border-bottom:1px solid #dddddd">
 		查看历史
-		<span class="am-icon-chevron-right"></span>
+		<span class="am-icon-chevron-right mine-arrow"></span>
 	</div>
 	<div class="mine-box">
 		查看统计
-		<span class="am-icon-chevron-right"></span>
+		<span class="am-icon-chevron-right mine-arrow"></span>
 	</div>
 	<h3>我的笔记</h3>
 	<div class="mine-box" style="border-bottom:1px solid #dddddd">
 		版杀笔记
-		<span class="am-icon-chevron-right"></span>
+		<span class="am-icon-chevron-right mine-arrow"></span>
 	</div>
 	<div class="mine-box">
 		复盘攻略
-		<span class="am-icon-chevron-right"></span>
+		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageD','getEssayList()')"></span>
 	</div>
 	<div class="group">
 		<div class="group-body">

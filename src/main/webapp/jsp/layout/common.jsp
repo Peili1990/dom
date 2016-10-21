@@ -4,8 +4,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="${baseUrl }css/jscrollpane1.css" />
-<link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <link rel="stylesheet" href="${baseUrl}assets/css/amazeui.min.css">
+<link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}mobiscroll/css/mobiscroll.custom-2.6.2.min.css">
 <link rel="apple-touch-icon" href="${baseUrl}img/nv-logo.png"/>
 <script src="${baseUrl}js/common/jquery-3.0.0.min.js" type="text/javascript"></script>
@@ -48,14 +48,27 @@
   </div>
 </div>
 
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">维多利亚的噩梦</div>
+    <div class="am-modal-bd"></div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+    </div>
+  </div>
+</div>
+
 <div class="dw-hidden" role="alert"></div>
 
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default invisible" id="nv-chatbar">
 	<div class="talk_word">
 		<textarea class="messages"></textarea>
-		<input type="button" class="am-btn am-btn-default" value="动作" id="use-gesture"/>
-		<input type="button" class="am-btn am-btn-default" value="表情" id="show-emotion"/>
-		<input type="button" class="am-btn am-btn-default" value="发送" id="send-message"/>
+		<div class="btn-box">
+			<input type="button" class="am-btn am-btn-default" value="动作" id="use-gesture"/>
+			<input type="button" class="am-btn am-btn-default" value="表情" id="show-emotion"/>
+			<input type="button" class="am-btn am-btn-default" value="发送" id="send-message"/>
+		</div>
 	</div>
 </div>
 

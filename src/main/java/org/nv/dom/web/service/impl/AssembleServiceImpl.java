@@ -12,6 +12,7 @@ import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.message.GetSpeechListDTO;
 import org.nv.dom.util.StringUtil;
+import org.nv.dom.util.TextUtil;
 import org.nv.dom.web.dao.message.MessageMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
@@ -34,10 +35,11 @@ public class AssembleServiceImpl implements AssembleService {
 	PlayerMapper playerMapper;
 
 	@Override
-	public Map<String, Object> getNewspaperList(long userId) {
+	public Map<String, Object> getNewspaperList(long userId,Long gameId) {
 		Map<String,Object> result = new HashMap<String,Object>();
 		try{
-			List<Newspaper> newspaperList = newspaperMapper.getNewspaperListDao(userId);
+			List<Newspaper> newspaperList = gameId == null ? 
+					newspaperMapper.getNewspaperListDao(userId) :newspaperMapper.getNewspaperListByGameIdDao(gameId);
 			result.put("newspaperList", newspaperList);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取报纸列表成功");
@@ -91,6 +93,22 @@ public class AssembleServiceImpl implements AssembleService {
 			result.put("speech", speech);
 		}catch(Exception e){
 			logger.error(e.getMessage(), e);
+		}
+		return result;
+	}
+	
+	@Override
+	public Map<String, Object> wordCount(String content) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			Integer wordCount = TextUtil.wordCount(content);
+			result.put("wordCount", wordCount);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "字数统计成功");
+		}catch(Exception e){  
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}
 		return result;
 	}

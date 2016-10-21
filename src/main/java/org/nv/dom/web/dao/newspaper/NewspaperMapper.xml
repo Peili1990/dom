@@ -18,6 +18,18 @@
 		
 	</select>
 	
+	<select id="getNewspaperListByGameIdDao" parameterType="long" resultType="Newspaper">
+	
+		SELECT 
+			dn.id AS newspaperId,
+			dn.header AS header
+		FROM
+			d_newspaper dn
+		WHERE
+			dn.game_id = #{gameId} AND dn.status > 0 
+	
+	</select>
+	
 	<select id="getNewspaperDetailDao" parameterType="long" resultType="Newspaper">
 	
 		SELECT 

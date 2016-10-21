@@ -34,7 +34,7 @@
 							builder.append('<input type="button" class="am-btn am-btn-secondary sumbit-btn"style="width: 100%" value="我要报名"');
 							builder.appendFormat('onclick=apply({0},"{1}",{2},this)></div>',game.id,game.characterSelect,game.playerNum);
 							panel.append(builder.toString());
-							adjustContainerHeight("#pageF");
+							adjustContainerHeight(getCurActPage());
 						})
 					} else {
 						myInfo("暂无版杀信息",function(){

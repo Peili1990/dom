@@ -8,19 +8,19 @@
 			<c:choose>
 				<c:when test="${ userInfo.userCurRole eq 'judger' }">
 					<div class="card-body">
-					目前你正在主持${ userInfo.gameDesc }
+					你正在主持${ userInfo.gameDesc }
 					<span style="float:right">去看看 》</span>
 					</div>
 				</c:when>
 				<c:when test="${ userInfo.userCurRole eq 'player' }">
 					<div class="card-body">
-					目前你正在参加${ userInfo.gameDesc }
+					你正在参加${ userInfo.gameDesc }
 					<a href="${ baseUrl}assemble"><span style="float:right">去看看 <span class="am-icon-chevron-right"></span></span></a>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="card-body">
-					目前你没有参加任何版杀
+					你没有参加任何版杀
 					<span style="float:right" onclick="pageSwitch('#pageA','#pageF','getApplyingGames()')">去报名 <span class="am-icon-chevron-right"></span></span>
 					</div>
 				</c:otherwise>
@@ -114,6 +114,7 @@
 	<div class="card">
 		<div class="card-header">
 			<h2 class="card-title">${essay.header}</h2>
+			<span>作者：${essay.nickname }</span>
 		</div>
 		<div class="card-body essay-style">
 			${essay.content }

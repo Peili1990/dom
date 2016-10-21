@@ -37,6 +37,12 @@ public class GameController extends BaseController{
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/getAllGames", method = RequestMethod.POST)
+	public Map<String,Object> getAllGames(){
+		return gameService.getAllGames();
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
 	public Map<String,Object> apply(@ModelAttribute("applyDTO") ApplyDTO applyDTO, HttpSession session){
 		User user = (User)session.getAttribute(PageParamType.user_in_session);

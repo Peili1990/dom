@@ -52,7 +52,7 @@
 				$("input[name='action']").val(data.opreation.action);
 				$("input[name='privilege']").val(data.opreation.privilege);
 				$("input[name='vote']").val(data.opreation.vote);
-				adjustContainerHeight("#pageB");
+				adjustContainerHeight(getCurActPage());
 				return;
 			case 0:
 				timeoutHandle();

@@ -57,7 +57,7 @@ public interface UserMapper {
 	
 	
 	/**
-	 * <p>更新用户聊天记录</p>
+	 * <p>获取用户聊天记录</p>
 	 */
 
 	public List<ChatDetail> getChatRecordDao(GetChatRecordDTO getChatRecordDTO);

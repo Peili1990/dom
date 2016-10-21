@@ -44,5 +44,12 @@ public class EssayController {
 		submitCommentDTO.setUserId(user.getId());
 		return essayService.submitComment(submitCommentDTO);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getEssayList", method = RequestMethod.POST)
+	public Map<String, Object> getEssayList(HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		return essayService.getEssayList(user.getId());
+	}
 
 }

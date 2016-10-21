@@ -27,7 +27,8 @@
 	<script type="text/javascript">
 	
 	$(function(){
-		adjustContainerHeight("#pageA");
+		adjustContainerHeight(getCurActPage());
+		$("#nv-footer li:eq(3)").addClass("visiting");
 	}) 
 		
 	</script>

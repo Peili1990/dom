@@ -22,11 +22,20 @@
       <li id="pageC" class="page-container" style="left:100%;display:none"> 
 		 <jsp:include page="mine-profile.jsp"></jsp:include>
       </li>
+      <li id="pageD" class="page-container" style="left:100%;display:none"> 
+		 <jsp:include page="mine-essay.jsp"></jsp:include>
+      </li>
+      <li id="pageE" class="page-container" style="left:200%;display:none"> 
+		 <jsp:include page="../pages/essay-detail.jsp"></jsp:include>
+      </li>
     </ul>   
 	</section>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 <script>
-    $("#container").css({"height":$("#pageA .default").height()+100>$("html").height()?$("#pageA .default").height()+100+"px":$("html").height() });
+$(function(){
+	adjustContainerHeight(getCurActPage());
+	$("#nv-footer li:eq(4)").addClass("visiting");
+}) 
 </script>
 </body>
 </html>

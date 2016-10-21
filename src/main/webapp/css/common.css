@@ -314,7 +314,7 @@ time{
 
 .nv-guide{
 	margin:0 auto;
-	margin-top:200px;
+	margin-top:160px;
 	overflow:hidden;
 	text-align:center;
 }
@@ -396,4 +396,7 @@ time{
 	margin:0;
 }
 
+.visiting {
+	background-color:deepskyblue;
+}
 

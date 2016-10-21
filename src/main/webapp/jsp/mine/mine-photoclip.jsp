@@ -40,7 +40,6 @@ $(function(){
 				$(".am-comment-avatar").attr("src",dataURL);
 				$("#icon-options").css({"display":"block"});
 				$("#icon-finish").css({"display":"none"});
-				$(".am-header-title").text("维多利亚的噩梦");
 			});
 		}
 	});

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.game.Game;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,10 @@ public interface GameMapper {
 	 * <p>获取报名中的版杀信息</p>
 	 */
 	public List<ApplyingGame> getApplyingGamesDao();
+	/**
+	 * <p>获取所有的版杀信息</p>
+	 */
+	public List<Game> getAllGamesDao();
 	/**
 	 * <p>获取报名中的版杀玩家人数</p>
 	 */
@@ -47,5 +52,6 @@ public interface GameMapper {
 	 * <p>选择角色</p>
 	 */
 	public int selectCharacterDAO(SelectCharacterDTO selectCharacterDTO);
+
 	
 }

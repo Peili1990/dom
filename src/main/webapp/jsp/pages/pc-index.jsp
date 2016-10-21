@@ -15,10 +15,7 @@
   <script>
   
   	$(function(){
-  		$.get('${baseUrl}file/character-list.json',function(data){
-  			var rand = parseInt(Math.random()*(data.characters.length-1));
-  			$(".nv-guide img").attr("src",picServer+data.characters[rand].avatar);
-  		})
+  		showNVguide();
   	})
   
   	$(".nv-link").click(function(){

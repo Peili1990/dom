@@ -17,13 +17,21 @@
 			</div>
 		</div>
 	</c:if>
+	<div class="nv-guide invisible">
+		<img src="">
+		<p>暂未参加任何版杀，你可以<br><a class="nv-link" onclick="getAllGames()">查看其他版杀</a></p>
+	</div>
+</div>
+
+<div class="default invisible" id="game-list">
+	
 </div>
 
 <script type="text/javascript">
 
 $(function(){
 	if($("#newspaper-list .card").length == 0){
-		myInfo("你未参加任何版杀");
+		showNVguide();
 	}
 	setRedspotOnpaper();
 	var newspaperId = GetQueryString("newspaperId");
@@ -52,6 +60,39 @@ function setRedspotOnpaper(){
 			}else{
 				redspot.addClass("invisible");
 			}
+		}
+	})
+}
+
+function getAllGames(){
+	$("#icon-options").dropdown('close');
+	$("#icon-arrow").click();
+	if($("#game-list").children().length > 0){
+		return;
+	}
+	var url = getRootPath() + "/game/getAllGames";
+	var common = new Common();
+	common.callAction(null,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			$(".nv-guide").addClass("invisible");			
+			$.each(data.games,function(index,game){
+				var builder = new StringBuilder();
+				builder.append('<div class="card"><div class="card-header"><h2 class="card-title">版杀信息</h2></div>');
+				builder.append('<div class="card-body">');
+				builder.appendFormat('{0}<br>开版时间：{1}<br>当前状态：{2}',game.gameDesc,game.startDate,game.gameStatusDesc);
+				if(game.finalResult){
+					builder.appendFormat('<br>最终结果：{0}',game.finalResultDesc);
+				}
+				builder.append('</div>');
+				builder.appendFormat('<div class="card-footer"><a href="'+getRootPath()+'/assemble?gameId={0}"><span>查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',game.id);
+				$("#game-list").append(builder.toString());
+			})
+			$("#newspaper-list").addClass("invisible");
+			$("#game-list").removeClass("invisible");
 		}
 	})
 }
