@@ -3,19 +3,24 @@
 <div class="default">
 	<div class="essay-box" id="essay-detail">
 		<div class="author-info">
-			<img src=""
-			class="am-comment-avatar"> <span></span>
+			<img src="" class="am-comment-avatar"> <span></span>
 			<time></time>
 		</div>
 		<div class="essay-content">
 			<h2></h2>
 			<p></p>
 		</div>
+		<div class="operation-box invisible">
+			<span>删帖</span>	
+			<span>编辑</span>		
+		</div>
 	</div>
 	<ul id="comment-list">
 		
 	</ul>
 </div>
+
+
 
 <script type="text/javascript">
 
@@ -40,14 +45,24 @@ function getEssayDetail(essayId){
 			$("#essay-detail .author-info").find("img").attr("src",picServer+data.detail.avatar);
 			$("#essay-detail .author-info").find("span").text(data.detail.nickname);
 			$("#essay-detail .author-info").find("time").html("楼主    "+data.detail.createTime);
-			$("#essay-detail .essay-content").html("<h2>"+data.detail.header+"</h2>"+data.detail.content);
+			$("#essay-detail .essay-content").html("<h2>"+data.detail.header+"</h2><p>"+data.detail.content+"</p>");
+			if(userId==data.detail.userId){
+				$(".operation-box").removeClass("invisible");
+				$(".operation-box span:eq(0)").click(function(){
+					myConfirm("一旦删除不可恢复，是否确认删帖？",'deleteEssay('+essayId+')')
+				})
+				$(".operation-box span:eq(1)").click(function(){
+					pageSwitch(getCurActPage(),"#pageD",getCurActLevel(),2,'adjustTextArea('+essayId+')')
+				})
+			}
 			$("#comment-list").empty();
 			$.each(data.comments,function(index,comment){
 				appendComment(parseInt(index)+2,comment);
 			})
 			adjustContainerHeight(getCurActPage());
 			if(window.location.href.indexOf("essayId")<0){
-				changeURL(window.location.href+"?essayId="+essayId);
+				changeURL(window.location.href.indexOf("?")<0 ? 
+						window.location.href+"?essayId="+essayId : window.location.href+"&essayId="+essayId);
 			}
 			return;
 		case 0:
@@ -100,8 +115,7 @@ function submitComment(essayId){
 		default:
 			myAlert(data.message);
 			return;
-		}
-		
+		}		
 	})
 }
 

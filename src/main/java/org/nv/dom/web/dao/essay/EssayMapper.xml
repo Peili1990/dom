@@ -8,13 +8,12 @@
 			UPDATE 
 				d_essay de
 			SET
-				de.user_id=#{userId},
 				de.type=#{type},
 				de.header=#{header},
 				de.content=#{content},
 				de.update_time=NOW()
 			WHERE
-				de.id=#{essayId}
+				de.id=#{essayId} AND de.user_id = #{userId}
 		</if>
 		<if test="essayId==0">
 			INSERT INTO d_essay (
@@ -43,7 +42,7 @@
 		FROM
 			d_essay de, d_game dg, d_player dp
 		WHERE
-			dp.user_id = #{userId} AND dp.status != 9 AND dp.game_id = dg.id AND dg.replay_essay_id = de.id
+			dp.user_id = #{userId} AND dp.status != 9 AND dp.game_id = dg.id AND dg.replay_essay_id = de.id AND de.status = 1
 	
 	</select>
 	
@@ -55,13 +54,14 @@
 		FROM
 			d_essay de, d_game dg
 		WHERE
-			dg.id= #{gameId} AND dg.replay_essay_id = de.id
+			dg.id= #{gameId} AND dg.replay_essay_id = de.id AND de.status = 1
 	
 	</select>
 	
 	<select id="getEssayDetailDao" parameterType="long" resultType="Essay">
 	
 		SELECT
+			du.id AS userId,
 			du.nickname AS nickname,
 			du.avatar AS avatar,
 			de.header AS header,
@@ -70,7 +70,7 @@
 		FROM
 			d_essay de, d_user du
 		WHERE
-			de.id=#{essayId} AND de.user_id = du.id 			
+			de.id=#{essayId} AND de.user_id = du.id AND de.status = 1 			
 	
 	</select>
 	
@@ -84,7 +84,7 @@
 		FROM
 			d_essay de, d_comment dc, d_user du
 		WHERE
-			dc.essay_id=#{essayId} AND de.id = dc.essay_id AND du.id = dc.user_id
+			dc.essay_id=#{essayId} AND de.id = dc.essay_id AND du.id = dc.user_id AND de.status = 1
 		
 	
 	</select>
@@ -120,7 +120,7 @@
 		FROM
 			d_essay de, d_user du
 		WHERE
-			du.id = de.user_id
+			du.id = de.user_id AND de.status = 1
 		<if test="_parameter>0">
 			AND de.user_id = #{userId}
 		</if>
@@ -129,6 +129,17 @@
 		LIMIT 10
 			
 	
-	</select>
+	</select> 
+	
+	<update id="updateEssayStatusDao" parameterType="UpdateEssayStatusDTO">
+	
+		UPDATE
+			d_essay de
+		SET
+			de.status = #{status}
+		WHERE
+			de.user_id = #{userId} AND de.id = #{essayId}
+	
+	</update>
 
 </mapper>

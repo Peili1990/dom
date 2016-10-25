@@ -5,7 +5,7 @@
 		<img src="${picServer}${user.avatar}"
 			class="am-comment-avatar"> <span> ${ user.nickname } </span>
 		<p id="user-motto">${ user.motto }</p>
-		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageC')"></span>
+		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageC',0,1)"></span>
 	</div>
 	<h3>我的版杀</h3>
 	<div class="mine-box" style="border-bottom:1px solid #dddddd">
@@ -23,7 +23,7 @@
 	</div>
 	<div class="mine-box">
 		复盘攻略
-		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageD','getEssayList()')"></span>
+		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageD',0,1,'getEssayList()')"></span>
 	</div>
 	<div class="group">
 		<div class="group-body">

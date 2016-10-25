@@ -5,7 +5,7 @@
 
 	<div class="nv-guide invisible">
 		<img src="">
-		<p>还没发表任何攻略或复盘哦，你可以<br><a class="nv-link" onclick="">写攻略或复盘</a></p>
+		<p>还没发表任何攻略或复盘哦</p>
 	</div>
 	
 </div>
@@ -30,7 +30,7 @@ function getEssayList(){
 					builder.append('<div class="card"><div class="card-header">');
 					builder.appendFormat('<h2 class="card-title">{0}</h2></div>',essay.header);
 					builder.appendFormat('<div class="card-body essay-style">{0}</div>',essay.content);
-					builder.appendFormat('<div class="card-footer"><a><span onclick="secPageSwitch({0},{1},{2})">查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',"'#pageD'","'#pageE'","'getEssayDetail("+essay.essayId+")'");
+					builder.appendFormat('<div class="card-footer"><a href="{0}/index?essayId={1}"><span>查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',getRootPath(),essay.essayId);
 					$("#my-essay-list").append(builder.toString());
 				})
 				adjustContainerHeight(getCurActPage());
@@ -45,6 +45,7 @@ function getEssayList(){
 		}
 	})
 }
+
 
 
 </script>

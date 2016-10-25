@@ -22,6 +22,9 @@
       <li id="pageC" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="pages/essay-detail.jsp" ></jsp:include> 
       </li>
+      <li id="pageD" class="page-container" style="left:200%;display:none"> 
+      	<jsp:include page="pages/essay-edit.jsp" ></jsp:include> 
+      </li>
       <li id="pageF" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="pages/apply.jsp" ></jsp:include> 
       </li>
@@ -38,7 +41,17 @@
 		setCookie("nv_screen_width",$(window).width(),"7d");
 		adjustContainerHeight(getCurActPage());
 		$("#nv-footer li:eq(0)").addClass("visiting");
+		$("#options-list").append("<li onclick='showEssayEdit()'><a>发表主题</a></li>");
+		var essayId = GetQueryString("essayId");
+		if(essayId){
+			pageSwitch("#pageA","#pageC",0,1,"getEssayDetail("+essayId+")");
+		}
 	}) 
+	
+	function showEssayEdit(){
+		$("#icon-options").dropdown('close');
+		pageSwitch(getCurActPage(),"#pageD",getCurActLevel(),2,'adjustTextArea()');		
+	}
         
   </script>
 </body>

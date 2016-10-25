@@ -52,7 +52,7 @@
 	
 	function setChatPosition(chatInfo,preAppend){
 		var builder = new StringBuilder();
-		builder.appendFormat('<div class="card" id="{0}" onclick="pageSwitch({1},{2},{3})"><div class="card-body">',chatInfo.chatId,"'#pageA'","'#pageB'","'getChatDetail("+chatInfo.toUserId+")'");
+		builder.appendFormat('<div class="card" id="{0}" onclick="pageSwitch({1},{2},0,1,{3})"><div class="card-body">',chatInfo.chatId,"'#pageA'","'#pageB'","'getChatDetail("+chatInfo.toUserId+")'");
 		builder.appendFormat('<img src="{0}{1}" class="am-comment-avatar avatar">',picServer,chatInfo.toUserAvatar);
 		builder.appendFormat('<div class="chat-content"><h3>{0}</h3><p>{1}</p></div>',chatInfo.toUserNickname,chatInfo.latestContent);
 		builder.append('<span class="badge badge-alert badge-rounded invisible"></span>');

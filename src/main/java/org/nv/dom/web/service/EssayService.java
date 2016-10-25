@@ -3,6 +3,7 @@ package org.nv.dom.web.service;
 import java.util.Map;
 
 import org.nv.dom.domain.essay.Essay;
+import org.nv.dom.dto.essay.UpdateEssayStatusDTO;
 import org.nv.dom.dto.essay.SubmitCommentDTO;
 
 public interface EssayService {
@@ -18,5 +19,7 @@ public interface EssayService {
 	public Essay getReplayEssayByGameId(long gameId);
 
 	public Map<String, Object> getEssayList(long userId);
+
+	public Map<String, Object> updateEssayStatus(UpdateEssayStatusDTO updateEssayStatusDTO);
 
 }

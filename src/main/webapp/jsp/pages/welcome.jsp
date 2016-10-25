@@ -9,7 +9,7 @@
 				<c:when test="${ userInfo.userCurRole eq 'judger' }">
 					<div class="card-body">
 					你正在主持${ userInfo.gameDesc }
-					<span style="float:right">去看看 》</span>
+					<a href="${ baseUrl}assemble"><span style="float:right">去看看 <span class="am-icon-chevron-right"></span></span></a>
 					</div>
 				</c:when>
 				<c:when test="${ userInfo.userCurRole eq 'player' }">
@@ -21,7 +21,7 @@
 				<c:otherwise>
 					<div class="card-body">
 					你没有参加任何版杀
-					<span style="float:right" onclick="pageSwitch('#pageA','#pageF','getApplyingGames()')">去报名 <span class="am-icon-chevron-right"></span></span>
+					<span style="float:right" onclick="pageSwitch('#pageA','#pageF',0,1,'getApplyingGames()')">去报名 <span class="am-icon-chevron-right"></span></span>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -53,7 +53,7 @@
 					</c:when>
 					<c:otherwise>	
 						还未选择
-						<span style="float:right" onclick="pageSwitch('#pageA','#pageG','getCharacterList(${userInfo.status})')">去选身份  <span class="am-icon-chevron-right"></span></span>
+						<span style="float:right" onclick="pageSwitch('#pageA','#pageG',0,1,'getCharacterList(${userInfo.status})')">去选身份  <span class="am-icon-chevron-right"></span></span>
 					</c:otherwise>
 				</c:choose>
 				<br>实际身份：
@@ -72,7 +72,7 @@
 			<div class="group">
 				<div class="group-body">
 					<input type="button" class="am-btn am-btn-primary" value="提交操作"
-						style="width: 100%" onclick="pageSwitch('#pageA','#pageB','getOpreation()')">
+						style="width: 100%" onclick="pageSwitch('#pageA','#pageB',0,1,'getOpreation()')">
 				</div>
 			</div>
 		</c:if>
@@ -119,7 +119,7 @@
 		<div class="card-body essay-style">
 			${essay.content }
 		</div>
-		<div class="card-footer"><a><span onclick="pageSwitch('#pageA','#pageC','getEssayDetail(${essay.essayId})')">查看更多  <span class="am-icon-chevron-right"></span></span></a></div>
+		<div class="card-footer"><a><span onclick="pageSwitch('#pageA','#pageC',0,1,'getEssayDetail(${essay.essayId})')">查看更多  <span class="am-icon-chevron-right"></span></span></a></div>
 	</div>
 	
 	</c:forEach>

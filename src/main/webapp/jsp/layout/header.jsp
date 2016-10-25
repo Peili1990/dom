@@ -2,13 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <header class="am-header am-header-default">
 	<div class="am-header-left am-header-nav">
-		<a href="${ baseUrl }" id="icon-home">
+		<a href="${ baseUrl }" id="icon-arrow-0">
 			<i class="am-header-icon am-icon-home"></i>
 		</a>
-		<a id="icon-arrow" style="display:none">
+		<a id="icon-arrow-1" style="display:none">
 		<i class="am-header-icon am-icon-chevron-left"></i>
 		</a>
-		<a id="icon-arrow-sec" style="display:none">
+		<a id="icon-arrow-2" style="display:none">
 		<i class="am-header-icon am-icon-chevron-left"></i>
 		</a>
 	</div>

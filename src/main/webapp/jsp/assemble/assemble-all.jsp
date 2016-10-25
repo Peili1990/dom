@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="default" id="newspaper-list">
 	<c:forEach items="${ newspaperList }" var="newspaper" varStatus="newspaperNo">
-	 	<div class="card" onclick="pageSwitch('#pageA','#pageB','getNewspaperDetail(${newspaper.newspaperId},${newspaperNo.index})')">
+	 	<div class="card" onclick="pageSwitch('#pageA','#pageB',0,1,'getNewspaperDetail(${newspaper.newspaperId},${newspaperNo.index})')">
 			<div class="card-header">
 				<h2 class="card-title">${newspaper.header }</h2>
 				<span class="badge badge-alert badge-rounded badge-card"></span>
@@ -11,7 +11,7 @@
 		</div>
 	</c:forEach>
 	<c:if test="${ replayEssay!=null }">
-		<div class="card" onclick="pageSwitch('#pageA','#pageC','getEssayDetail(${replayEssay.essayId})')">
+		<div class="card" onclick="pageSwitch('#pageA','#pageC',0,1,'getEssayDetail(${replayEssay.essayId})')">
 			<div class="card-header">
 				<h2 class="card-title">${replayEssay.header }</h2>
 			</div>
@@ -45,7 +45,7 @@ $(function(){
 	}
 	var essayId = GetQueryString("essayId");
 	if(essayId){
-		$("#newspaper-list .card:last-child").click();
+		pageSwitch("#pageA","#pageC",0,1,"getEssayDetail("+essayId+")");
 	}
 });
 
