@@ -83,6 +83,10 @@
 			}
 		}
 	})
+	
+	function showInfoMessage(){
+		myInfo(getCache("nv_info_message"));
+	}
 
 	$("#nv-chatbar .messages").keyup(function(){ 
 		if($("#nv-chatbar .messages")[0].scrollHeight>=50){

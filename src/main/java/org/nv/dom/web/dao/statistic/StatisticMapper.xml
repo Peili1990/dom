@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.statistic.StatisticMapper">
+
+	<resultMap type="PlayerData" id="playerData">
+		<id property="userId" column="id"/>
+		<association property="totalPlayTimes" column="user_id" javaType="Integer" select="getTotalPlayTimes"></association>
+		<association property="goodCampTimes" column="user_id" javaType="Integer" select="getGoodCampTimes"></association>
+		<association property="killerCampTimes" column="user_id" javaType="Integer" select="getKillerCampTimes"></association>
+		<association property="goodCampWinTimes" column="user_id" javaType="Integer" select="getGoodCampWinTimes"></association>
+		<association property="killerCampWinTimes" column="user_id" javaType="Integer" select="getKillerCampWinTimes"></association>
+		<association property="tiedTimes" column="user_id" javaType="Integer" select="getTiedTimes"></association>
+	</resultMap>
+
+	<select id="getPlayerDataDao" resultMap="playerData">
+	
+		SELECT
+			dp.user_id
+		FROM	
+		 	d_player dp
+		WHERE
+			dp.user_id = #{userId}	
+	
+	</select>
+	
+	<select id="getTotalPlayTimes" parameterType="Integer" resultType="Integer">
+	
+		SELECT
+			COUNT(1)	
+		FROM	
+			d_player dp, d_player_record dpr
+		WHERE
+			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player'
+			
+	</select>
+	
+	<select id="getGoodCampTimes" parameterType="Integer" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player dp, d_player_record dpr
+		WHERE
+			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player' AND dpr.camp = 1
+	
+	</select>
+	
+	<select id="getKillerCampTimes" parameterType="Integer" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player dp, d_player_record dpr
+		WHERE
+			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player' AND dpr.camp = 2
+	
+	</select>
+	
+	<select id="getGoodCampWinTimes" parameterType="Integer" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player dp, d_player_record dpr, d_game dg
+		WHERE
+			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player' AND dpr.camp = 2 AND dg.id = dp.game_id AND dg.final_result = 1
+	
+	</select>
+	
+	<select id="getKillerCampWinTimes" parameterType="Integer" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player dp, d_player_record dpr, d_game dg
+		WHERE
+			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player' AND dpr.camp = 2 AND dg.id = dp.game_id AND dg.final_result = 2
+	
+	</select>
+	
+	<select id="getTiedTimes" parameterType="Integer" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player dp, d_player_record dpr, d_game dg
+		WHERE
+			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player' AND dpr.camp = 2 AND dg.id = dp.game_id AND dg.final_result = 3
+	
+	</select>
+
+</mapper>

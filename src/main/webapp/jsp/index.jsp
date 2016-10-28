@@ -36,12 +36,17 @@
   </section>
    <jsp:include page="layout/footer.jsp"></jsp:include>
 	<script>
+	var infoMessage = '${infoMessage}';
 
 	$(function(){
 		setCookie("nv_screen_width",$(window).width(),"7d");
 		adjustContainerHeight(getCurActPage());
 		$("#nv-footer li:eq(0)").addClass("visiting");
 		$("#options-list").append("<li onclick='showEssayEdit()'><a>发表主题</a></li>");
+		if(!getCache("nv_info_message")||getCache("nv_info_message")!=infoMessage){
+			setCache("nv_info_message",infoMessage);
+			showInfoMessage();
+		}
 		var essayId = GetQueryString("essayId");
 		if(essayId){
 			pageSwitch("#pageA","#pageC",0,1,"getEssayDetail("+essayId+")");

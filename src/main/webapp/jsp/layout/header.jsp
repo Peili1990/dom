@@ -21,7 +21,7 @@
 		<div id="icon-options" class="am-dropdown" data-am-dropdown>
 			<i class="am-header-icon am-icon-bars am-dropdown-toggle" data-am-dropdown-toggle></i>	
 			<ul class="am-dropdown-content" id="options-list">
-       			<li><a>查看公告</a></li> 
+       			<li onclick="showInfoMessage()"><a>查看公告</a></li> 
        		</ul>
 		</div>
 		

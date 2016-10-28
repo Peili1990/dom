@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.system.SystemMapper">
+
+	<select id="getInfoMessageDao" resultType="String">
+	
+		SELECT
+			dim.content
+		FROM
+			d_info_message dim
+		ORDER BY
+			dim.create_time
+		DESC
+		LIMIT 1
+	
+	</select>
+
+
+
+</mapper>

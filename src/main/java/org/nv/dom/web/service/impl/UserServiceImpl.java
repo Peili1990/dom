@@ -2,6 +2,8 @@ package org.nv.dom.web.service.impl;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +16,14 @@ import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.message.chat.ChatInfo;
 import org.nv.dom.domain.message.chat.OfflineChat;
 import org.nv.dom.domain.message.speech.OfflineSpeech;
+import org.nv.dom.domain.player.PlayerData;
+import org.nv.dom.domain.player.PlayerDataDetail;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
 import org.nv.dom.dto.user.UpdateUserProfileDTO;
 import org.nv.dom.util.ConfigUtil;
+import org.nv.dom.web.dao.statistic.StatisticMapper;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +39,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserMapper userMapper;
+	
+	@Autowired
+	StatisticMapper statisticMapper;
 	
 	@Override
 	public UserCurRole getUserCurRole(User user) {
@@ -167,6 +175,36 @@ public class UserServiceImpl implements UserService {
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天记录成功");
 			}
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getPlayerData(long userId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		NumberFormat numberFormat = NumberFormat.getInstance();  
+        numberFormat.setMaximumFractionDigits(2);  
+		try {
+			PlayerData playerData = statisticMapper.getPlayerDataDao(userId);
+			List<PlayerDataDetail> details = new ArrayList<>();
+			details.add(new PlayerDataDetail("总登场次数",playerData.getTotalPlayTimes()+"次"));
+			details.add(new PlayerDataDetail("好人方次数",playerData.getGoodCampTimes()+"次"));
+			details.add(new PlayerDataDetail("好人方概率",playerData.getTotalPlayTimes()==0 ? "N/A":numberFormat.format((float)playerData.getGoodCampTimes()/(float)playerData.getTotalPlayTimes()*100)+"%"));
+			details.add(new PlayerDataDetail("杀手方次数",playerData.getKillerCampTimes()+"次"));
+			details.add(new PlayerDataDetail("杀手方概率",playerData.getTotalPlayTimes()==0 ? "N/A":numberFormat.format((float)playerData.getKillerCampTimes()/(float)playerData.getTotalPlayTimes()*100)+"%"));
+			details.add(new PlayerDataDetail("好人方胜利次数",playerData.getGoodCampWinTimes()+"次"));
+			details.add(new PlayerDataDetail("好人方胜率",playerData.getGoodCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getGoodCampWinTimes()/(float)playerData.getGoodCampTimes()*100)+"%"));
+			details.add(new PlayerDataDetail("杀手方胜利次数",playerData.getKillerCampWinTimes()+"次"));
+			details.add(new PlayerDataDetail("杀手方胜率",playerData.getKillerCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getKillerCampWinTimes()/(float)playerData.getKillerCampTimes()*100)+"%"));
+			details.add(new PlayerDataDetail("总胜利次数",(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes())+"次"));
+			details.add(new PlayerDataDetail("总胜率",playerData.getTotalPlayTimes()==0 ? "N/A":numberFormat.format((float)(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes())/(float)playerData.getTotalPlayTimes()*100)+"%"));
+			result.put("details", details);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家数据成功");
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);

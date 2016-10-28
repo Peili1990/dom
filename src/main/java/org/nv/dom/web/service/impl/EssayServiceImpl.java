@@ -48,21 +48,10 @@ public class EssayServiceImpl implements EssayService {
 	}
 
 	@Override
-	public Essay getReplayEssay(long userId) {
+	public Essay getReplayEssay(long userId,Long gameId) {
 		Essay replayEssay = null;
 		try{
-			replayEssay = essayMapper.getReplayEssay(userId);
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-		}
-		return replayEssay;
-	}
-	
-	@Override
-	public Essay getReplayEssayByGameId(long gameId) {
-		Essay replayEssay = null;
-		try{
-			replayEssay = essayMapper.getReplayEssayByGameId(gameId);
+			replayEssay = gameId==null ? essayMapper.getReplayEssay(userId) : essayMapper.getReplayEssayByGameId(gameId); 
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 		}

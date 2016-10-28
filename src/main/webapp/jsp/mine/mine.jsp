@@ -28,6 +28,9 @@
       <li id="pageE" class="page-container" style="left:200%;display:none"> 
 		 <jsp:include page="../pages/essay-detail.jsp"></jsp:include>
       </li>
+      <li id="pageF" class="page-container" style="left:100%;display:none"> 
+		 <jsp:include page="mine-data.jsp"></jsp:include>
+      </li>
     </ul>   
 	</section>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>

@@ -8,6 +8,7 @@ import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.web.service.AssembleService;
 import org.nv.dom.web.service.EssayService;
 import org.nv.dom.web.service.PlayerService;
+import org.nv.dom.web.service.SystemService;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,9 @@ public class IndexController extends BaseController {
 	@Autowired
 	EssayService essayService;
 	
+	@Autowired
+	SystemService systemService;
+	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
@@ -45,6 +49,7 @@ public class IndexController extends BaseController {
 			mav.addAllObjects(assembleService.getLatestNewspaperInfo(userInfo.getGameId()));
 		}	
 		mav.addAllObjects(essayService.getEssayList(0));
+		mav.addObject("infoMessage",systemService.getInfoMessage());
 		return mav;
 	}
 	

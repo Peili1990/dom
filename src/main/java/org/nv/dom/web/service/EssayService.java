@@ -10,13 +10,11 @@ public interface EssayService {
 
 	public Map<String, Object> publishEssay(Essay essay);
 
-	public Essay getReplayEssay(long userId);
+	public Essay getReplayEssay(long userId,Long gameId);
 
 	public Map<String, Object> getEssayDetail(long essayId);
 
 	public Map<String, Object> submitComment(SubmitCommentDTO submitCommentDTO);
-
-	public Essay getReplayEssayByGameId(long gameId);
 
 	public Map<String, Object> getEssayList(long userId);
 

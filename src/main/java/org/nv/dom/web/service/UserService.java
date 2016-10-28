@@ -26,4 +26,6 @@ public interface UserService {
 
 	public Map<String, Object> getChatRecord(GetChatRecordDTO getChatRecordDTO);
 
+	public Map<String, Object> getPlayerData(long userId);
+
 }

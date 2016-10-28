@@ -39,7 +39,7 @@ public class AssembleController extends BaseController {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		mav.addObject("playerInfoStr",JacksonJSONUtils.beanToJSON(playerService.getPlayerInfoByUserId(user.getId())));
 		mav.addAllObjects(assembleService.getNewspaperList(user.getId(),gameId));
-		mav.addObject("replayEssay",essayService.getReplayEssay(user.getId()));		
+		mav.addObject("replayEssay",essayService.getReplayEssay(user.getId(),gameId));		
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

@@ -14,7 +14,7 @@
 	</div>
 	<div class="mine-box">
 		查看统计
-		<span class="am-icon-chevron-right mine-arrow"></span>
+		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageF',0,1,'getPlayerData()')"></span>
 	</div>
 	<h3>我的笔记</h3>
 	<div class="mine-box" style="border-bottom:1px solid #dddddd">
