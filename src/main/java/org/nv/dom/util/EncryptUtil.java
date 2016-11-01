@@ -26,9 +26,10 @@ import sun.misc.BASE64Encoder;
  * 2014年10月29日 上午11:27:59
  * @author: z```s
  */
+@SuppressWarnings("restriction")
 public class EncryptUtil {
 
-	public static final String KEY = "rightoocplan";
+	public static final String KEY = "nigvic2016";
 	
 	private static final String DES = "DES";
 	

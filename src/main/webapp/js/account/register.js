@@ -13,8 +13,18 @@ function register(btn){
 	var nickname = $("#nickName").val().trim();
 	var invitecode = $("#invCode").val().trim();
 	$("#userPwd").val("");
-	if(account==""||password==""){
-		myAlert("用户名或密码不能为空");
+	if(account==""){
+		myAlert("邮箱不能为空");
+		$(btn).removeAttr("disabled").blur();
+		return false;
+	}
+	if(password==""){
+		myAlert("密码不能为空");
+		$(btn).removeAttr("disabled").blur();
+		return false;
+	}
+	if(nickname==""){
+		myAlert("昵称不能为空");
 		$(btn).removeAttr("disabled").blur();
 		return false;
 	}

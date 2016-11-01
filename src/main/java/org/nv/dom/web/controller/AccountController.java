@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.account.EmailVerifyDTO;
 import org.nv.dom.dto.account.LoginDTO;
 import org.nv.dom.dto.account.RegisterDTO;
 import org.nv.dom.web.service.AccountService;
@@ -57,6 +58,15 @@ public class AccountController extends BaseController {
 	public Map<String, Object> registerAction(@ModelAttribute("registerDTO") RegisterDTO registerDTO, HttpServletRequest request) {
 		Map<String, Object> result = accountService.registerAction(registerDTO);
 		return result;
+	}
+	
+	@RequestMapping(value = "/emailverify", method = RequestMethod.GET)
+	public ModelAndView registEmailVerifyView(@ModelAttribute("emailVerifyDTO") EmailVerifyDTO emailVerifyDTO, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/login");
+		mav.addAllObjects(accountService.emailverify(emailVerifyDTO));
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
 	}
 	
 	@ResponseBody

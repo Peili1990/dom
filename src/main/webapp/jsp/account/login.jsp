@@ -17,12 +17,12 @@
 					<div class="am-input-group">
 						<span class="am-input-group-label"><i
 							class="am-icon-user am-icon-fw"></i></span> <input type="text"
-							class="am-form-field" id="userName" placeholder="Username">
+							class="am-form-field" id="userName" placeholder="邮箱/用户名">
 					</div>
 					<div class="am-input-group">
 						<span class="am-input-group-label"><i
 							class="am-icon-lock am-icon-fw"></i></span> <input type="password"
-							class="am-form-field" id="userPwd" placeholder="Password">
+							class="am-form-field" id="userPwd" placeholder="密码">
 					</div>
 					<input type="button" class="am-btn am-btn-primary" onclick="submitForm(this)" value="登录">
 					<input type="button" class="am-btn am-btn-danger" onclick="register()" value="注册">
