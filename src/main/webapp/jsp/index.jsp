@@ -39,7 +39,6 @@
 	var infoMessage = '${infoMessage}';
 
 	$(function(){
-		setCookie("nv_screen_width",$(window).width(),"7d");
 		adjustContainerHeight(getCurActPage());
 		$("#nv-footer li:eq(0)").addClass("visiting");
 		$("#options-list").append("<li onclick='showEssayEdit()'><a>发表主题</a></li>");

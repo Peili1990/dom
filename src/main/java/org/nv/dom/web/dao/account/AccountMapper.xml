@@ -10,7 +10,8 @@
 			t.password,
 			t.nickname,
 			t.avatar,
-			t.motto
+			t.motto,
+			t.status
 		FROM
 			d_user t
 		WHERE
@@ -94,6 +95,17 @@
 			du.id = #{id} AND du.status = 0
 		
 	</update>
+	
+	<select id="getUserIdByEmail" parameterType="String" resultType="long">
+	
+		SELECT
+			du.id
+		FROM
+			d_user du
+		WHERE
+			du.account = #{email} AND du.status = 0
+	
+	</select>
 	
 
 </mapper>

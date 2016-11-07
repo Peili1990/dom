@@ -19,7 +19,8 @@
 		FROM	
 		 	d_player dp
 		WHERE
-			dp.user_id = #{userId}	
+			dp.user_id = #{userId}
+		LIMIT 1	
 	
 	</select>
 	

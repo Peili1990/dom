@@ -35,7 +35,7 @@ $(function(){
 			}
 			var common = new Common();
 			common.callAction(options,url,function(data){
-				$("#icon-arrow").click();
+				$("#icon-arrow-1").click();
 				myAlert("头像更新成功！");
 				$(".am-comment-avatar").attr("src",dataURL);
 			});

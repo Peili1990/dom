@@ -23,6 +23,8 @@ public class User implements Serializable{
 	private String avatar;
 	// 格言
 	private String motto;
+	// 账号状态
+	private String status;
 	public long getId() {
 		return id;
 	}
@@ -65,5 +67,12 @@ public class User implements Serializable{
 	public void setMotto(String motto) {
 		this.motto = motto;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 }

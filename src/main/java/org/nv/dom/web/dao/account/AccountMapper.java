@@ -71,4 +71,13 @@ public interface AccountMapper {
 	 */
 	
 	public int verifyUserAndEmailStatus(long id);
+	
+	/**
+	 * <p>根据邮箱获取用户id</p>
+	 * @param email
+	 * @return
+	 * 
+	 */
+
+	public long getUserIdByEmail(String email);
 }

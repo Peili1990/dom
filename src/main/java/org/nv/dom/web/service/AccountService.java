@@ -41,5 +41,15 @@ public interface AccountService {
 	 */
 
 	public Map<String, Object> emailverify(EmailVerifyDTO emailVerifyDTO);
+	
+	/**
+	 * <p>重新发送邮箱验证</p>
+	 * @param email
+	 * @return
+	 * 2014年10月29日 下午3:43:33
+	 * @author: z```s
+	 */
+
+	public Map<String, Object> resendmail(String email);
 
 }

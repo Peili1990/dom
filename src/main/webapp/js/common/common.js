@@ -550,3 +550,9 @@ function showNVguide(){
 		})
 	$(".nv-guide").removeClass("invisible");
 }
+
+function gotoemail(mail){
+	var domain = mail.substr(mail.indexOf('@') + 1);
+	var url = 'http://mail.' + domain + '/';
+	window.open(url);
+}

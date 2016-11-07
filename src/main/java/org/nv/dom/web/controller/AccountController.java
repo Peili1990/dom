@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,10 +61,17 @@ public class AccountController extends BaseController {
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/resendmail", method = RequestMethod.POST)
+	public Map<String, Object> reSendmailAction(@RequestParam("email") String email, HttpServletRequest request) {
+		Map<String, Object>	result = accountService.resendmail(email);
+		return result;
+	}
+	
 	@RequestMapping(value = "/emailverify", method = RequestMethod.GET)
 	public ModelAndView registEmailVerifyView(@ModelAttribute("emailVerifyDTO") EmailVerifyDTO emailVerifyDTO, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("account/login");
+		mav.setViewName("pc".equals((String)session.getAttribute(PageParamType.user_agent))?"account/email-verify":"account/login");
 		mav.addAllObjects(accountService.emailverify(emailVerifyDTO));
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;

@@ -56,9 +56,15 @@ public class AccountServiceImpl implements AccountService {
 		}
 		User user = accountMapper.getUserByAccountDao(loginDTO);
 		if(user != null){
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "登录成功");
-			result.put("user", user);
+			if(StringUtil.isEmail(user.getAccount())&&"0".equals(user.getStatus())){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱还未验证");
+				result.put("email", user.getAccount());
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "登录成功");
+				result.put("user", user);
+			}
 		} else {
 			result.put(PageParamType.BUSINESS_STATUS, -2);
 			result.put(PageParamType.BUSINESS_MESSAGE, "用户名或密码错误");
@@ -124,22 +130,25 @@ public class AccountServiceImpl implements AccountService {
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常，请重试");
 			return result;
-		}		
+		}	
+		long id = Long.parseLong(EncryptUtil.decryptBase64(emailVerifyDTO.getUu()));
+		String email = EncryptUtil.decryptBase64(emailVerifyDTO.getEe());
 		if(isExpire(emailVerifyDTO)){
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "链接失效，请重新发送验证邮件");
+			result.put("email", email);
 			return result;
-		}
-		long id = Long.parseLong(EncryptUtil.decryptBase64(emailVerifyDTO.getUu()));
-		String email = EncryptUtil.decryptBase64(emailVerifyDTO.getEe());
+		}		
 		if(accountMapper.getUserCountByIdAndEmail(id, email)!=1){
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "注册用户与邮箱不匹配");
+			result.put("email", email);
 			return result;
 		}
 		if(accountMapper.verifyUserAndEmailStatus(id)!=1){
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证失败");
+			result.put("email", email);
 			return result;
 		}
 		result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -153,6 +162,36 @@ public class AccountServiceImpl implements AccountService {
 		long betweenMil = curMil - sendMil;
 		long oneDayMil = day * 24l * 60l * 60l * 1000l;
 		return betweenMil < oneDayMil;
+	}
+
+	@Override
+	public Map<String, Object> resendmail(String email) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (StringUtil.isNullOrEmpty(email)) {
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址为空");
+			return result;
+		}
+		if (!StringUtil.isEmail(email)) {
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址格式错误");
+			return result;
+		}
+		long userId = accountMapper.getUserIdByEmail(email);
+		if (userId < 1) {
+			result.put(PageParamType.BUSINESS_STATUS, -3);
+			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱未注册或已激活");
+			return result;
+		}
+		if(!sendVerifyMail(userId,email)){
+			result.put(PageParamType.BUSINESS_STATUS, -4);
+			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证发送失败，请重试");
+			return result;
+		}
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "验证邮件发送成功");
+		result.put("email", email);
+		return result;
 	}
 
 }

@@ -94,7 +94,7 @@
 			<mvc:exclude-mapping path="/register" />
 			<mvc:exclude-mapping path="/registerAction" />
 			<mvc:exclude-mapping path="/pcIndex" />
-			<mvc:exclude-mapping path="/notSupport" />
+			<mvc:exclude-mapping path="/emailverify" />
 			<bean class="org.nv.dom.web.interceptors.LoginInterceptor">
 				<property name="sessionTimeoutHandle" ref="sessionTimeoutHandle" />
 			</bean>
@@ -103,7 +103,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/pcIndex" />
-			<mvc:exclude-mapping path="/notSupport" />
+			<mvc:exclude-mapping path="/emailverify" />
 			<bean class="org.nv.dom.web.interceptors.DeviceInterceptor">
 				<property name="pcclientHandle" ref="pcclientHandle" />
 			</bean>
