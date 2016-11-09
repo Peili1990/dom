@@ -85,7 +85,7 @@
 	
 	</select>
 	
-	<update id="verifyUserAndEmailStatus" parameterType="Integer">
+	<update id="verifyUserAndEmailStatus" parameterType="long">
 	
 		UPDATE 
 			d_user du

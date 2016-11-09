@@ -3,8 +3,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<link rel="stylesheet" type="text/css" href="${baseUrl }css/jscrollpane1.css" />
-<link rel="stylesheet" href="${baseUrl}assets/css/amazeui.min.css">
+<link rel="stylesheet" type="text/css" href="${baseUrl}css/jquery.emojiarea.css" />
+<link rel="stylesheet" type="text/css" href="${baseUrl}css/jscrollpane1.css" />
+<link rel="stylesheet" type="text/css" href="${baseUrl}assets/css/amazeui.min.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}mobiscroll/css/mobiscroll.custom-2.6.2.min.css">
 <link rel="apple-touch-icon" href="${baseUrl}img/nv-logo.png"/>
@@ -13,6 +14,7 @@
 <script src="${baseUrl}assets/js/fastclick.min.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/amazeui.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/common.js" type="text/javascript"></script>
+<script src="${baseUrl}js/common/jquery.emojiarea.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/frame.min.js" type="text/javascript"></script>
 <script src="${baseUrl}mobiscroll/js/mobiscroll.custom-2.6.2.min.js" type="text/javascript"></script>
 
@@ -82,6 +84,13 @@
 				window.location = getRootPath() + "/pcIndex";
 			}
 		}
+	})
+	
+	$.get('${baseUrl}file/emoji-list.json',function(data){
+		$('.messages').emojiarea(getRootPath()+"/img/packs/basic",data,{
+			wysiwyg: false,
+			button: $("#show-emotion")
+		});
 	})
 	
 	function showInfoMessage(){

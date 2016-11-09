@@ -52,10 +52,7 @@
 		}
 	}) 
 	
-	function showEssayEdit(){
-		$("#icon-options").dropdown('close');
-		pageSwitch(getCurActPage(),"#pageD",getCurActLevel(),2,'adjustTextArea()');		
-	}
+	
         
   </script>
 </body>

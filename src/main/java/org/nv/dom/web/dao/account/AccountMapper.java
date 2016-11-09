@@ -79,5 +79,5 @@ public interface AccountMapper {
 	 * 
 	 */
 
-	public long getUserIdByEmail(String email);
+	public Long getUserIdByEmail(String email);
 }

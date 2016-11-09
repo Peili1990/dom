@@ -60,6 +60,7 @@ public class AccountServiceImpl implements AccountService {
 				result.put(PageParamType.BUSINESS_STATUS, -3);
 				result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱还未验证");
 				result.put("email", user.getAccount());
+				sendVerifyMail(user.getId(), user.getAccount());
 			} else {
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "登录成功");
@@ -161,7 +162,7 @@ public class AccountServiceImpl implements AccountService {
 		long curMil = new Date().getTime();
 		long betweenMil = curMil - sendMil;
 		long oneDayMil = day * 24l * 60l * 60l * 1000l;
-		return betweenMil < oneDayMil;
+		return betweenMil > oneDayMil;
 	}
 
 	@Override
@@ -177,8 +178,8 @@ public class AccountServiceImpl implements AccountService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址格式错误");
 			return result;
 		}
-		long userId = accountMapper.getUserIdByEmail(email);
-		if (userId < 1) {
+		Long userId = accountMapper.getUserIdByEmail(email);
+		if (userId == null) {
 			result.put(PageParamType.BUSINESS_STATUS, -3);
 			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱未注册或已激活");
 			return result;

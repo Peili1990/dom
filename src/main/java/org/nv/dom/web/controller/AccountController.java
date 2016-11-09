@@ -63,7 +63,7 @@ public class AccountController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/resendmail", method = RequestMethod.POST)
-	public Map<String, Object> reSendmailAction(@RequestParam("email") String email, HttpServletRequest request) {
+	public Map<String, Object> reSendmailAction(@RequestParam("email") String email, HttpSession session) {
 		Map<String, Object>	result = accountService.resendmail(email);
 		return result;
 	}
@@ -71,7 +71,7 @@ public class AccountController extends BaseController {
 	@RequestMapping(value = "/emailverify", method = RequestMethod.GET)
 	public ModelAndView registEmailVerifyView(@ModelAttribute("emailVerifyDTO") EmailVerifyDTO emailVerifyDTO, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("pc".equals((String)session.getAttribute(PageParamType.user_agent))?"account/email-verify":"account/login");
+		mav.setViewName("account/email-verify");
 		mav.addAllObjects(accountService.emailverify(emailVerifyDTO));
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;

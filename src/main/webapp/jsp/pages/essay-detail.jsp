@@ -48,10 +48,10 @@ function getEssayDetail(essayId){
 			$("#essay-detail .essay-content").html("<h2>"+data.detail.header+"</h2><p>"+data.detail.content+"</p>");
 			if(userId==data.detail.userId){
 				$(".operation-box").removeClass("invisible");
-				$(".operation-box span:eq(0)").click(function(){
+				$(".operation-box span:eq(0)").unbind("click").click(function(){
 					myConfirm("一旦删除不可恢复，是否确认删帖？",'deleteEssay('+essayId+')')
 				})
-				$(".operation-box span:eq(1)").click(function(){
+				$(".operation-box span:eq(1)").unbind("click").click(function(){
 					pageSwitch(getCurActPage(),"#pageD",getCurActLevel(),2,'adjustTextArea('+essayId+')')
 				})
 			}

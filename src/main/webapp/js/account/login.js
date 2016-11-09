@@ -49,29 +49,6 @@ function register(){
 	window.location = getRootPath() + "/register";
 }
 
-function resendEmail(email){
-	var url = getRootPath() + "/resendmail";
-	var options = {
-			email : email
-	}
-	var common = new Common();
-	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("邮件发送成功，点击确定立即验证",function(){
-				gotoemail(data.email);
-			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
-	})
-}
-
 $(function(){
 	$(".page-container").css({"padding-top":$("body").height()*0.6+"px"});
 })

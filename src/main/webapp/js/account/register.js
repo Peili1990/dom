@@ -45,8 +45,8 @@ function register(btn){
 		}
 		switch (data.status) {
 		case 1:
-			myInfo("恭喜，注册成功！",function(){
-				window.location = getRootPath() + "/login";
+			myInfo("注册成功，请验证邮箱",function(){
+				gotoemail(data.email);
 			});
 			return;
 		default:

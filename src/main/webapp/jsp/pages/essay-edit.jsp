@@ -30,7 +30,15 @@
 		if(essayId){
 			$(".essay-edit input").val($("#essay-detail .essay-content").find("h2").text());
 			$(".essay-edit textarea").val(replaceTag($("#essay-detail .essay-content").find("p").html()));
+		} else {
+			$(".essay-edit input").val("");
+			$(".essay-edit textarea").val("");
 		}	
+	}
+	
+	function showEssayEdit(){
+		$("#icon-options").dropdown('close');
+		pageSwitch(getCurActPage(),"#pageD",getCurActLevel(),2,'adjustTextArea()');		
 	}
 	
 	function submitEssay(essayId,type){
