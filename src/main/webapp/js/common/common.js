@@ -556,3 +556,16 @@ function gotoemail(mail){
 	var url = 'http://mail.' + domain + '/';
 	window.open(url);
 }
+
+
+function replaceEmoji(content,emoji){
+	var regex = new RegExp(/\[[^\[\]\n]*\]/g); 
+	return content.replace(regex,function(){
+		var key = arguments[0];
+		var url = getRootPath() + '/img/packs/basic';
+		var src = url + '/' + emoji[key];
+		return emoji[key]?'<img width="20" height="20" align="absmiddle" src="'
+				+ src + '" alt="' + key + '" title="' + key + '" />':key;
+	})
+}
+

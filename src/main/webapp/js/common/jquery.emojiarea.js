@@ -406,7 +406,6 @@
 
 	EmojiMenu.prototype.onItemSelected = function(emoji) {
 		this.emojiarea.insert(emoji);
-		this.hide();
 	};
 
 	EmojiMenu.prototype.load = function() {

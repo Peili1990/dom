@@ -73,7 +73,7 @@
 		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',chatDetail.fromUserId == userId ? picServer+$("#user-avatar").val() : $("#"+chatDetail.chatId+" img").attr("src"));
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',chatDetail.fromUserId == userId ? $("#user-nickname").val() : $("#"+chatDetail.chatId+" h3").text(),chatDetail.createTime);
-		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',chatDetail.content)
+		builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',replaceEmoji(chatDetail.content,emoji));
 		if(prepend){
 			$("#chat-detail-list").prepend(builder.toString());
 			adjustContainerHeight(getCurActPage());

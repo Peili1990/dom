@@ -76,6 +76,7 @@
 
 <script type="text/javascript">
 	var picServer="${picServer}";
+	var emoji;
 
 	$(function(){
 		//FastClick.attach(document.body);
@@ -87,7 +88,8 @@
 	})
 	
 	$.get('${baseUrl}file/emoji-list.json',function(data){
-		$('.messages').emojiarea(getRootPath()+"/img/packs/basic",data,{
+		emoji = data;
+		$('.messages').emojiarea(getRootPath()+"/img/packs/basic",emoji,{
 			wysiwyg: false,
 			button: $("#show-emotion")
 		});

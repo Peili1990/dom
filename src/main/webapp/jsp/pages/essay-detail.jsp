@@ -82,7 +82,7 @@ function appendComment(index,comment){
 	builder.append("<li>");
 	builder.appendFormat('<img src="{0}" class="am-comment-avatar"> <span> {1} </span>',picServer+comment.avatar,comment.nickname);
 	builder.appendFormat('<time>{0}&nbsp&nbsp{1}</time>',index+"楼",comment.createTime);
-	builder.appendFormat('<div class="commnet-content"><p>{0}</p></div>',comment.content);
+	builder.appendFormat('<div class="commnet-content"><p>{0}</p></div>',replaceEmoji(comment.content,emoji));
 	builder.append("</li>");
 	$("#comment-list").append(builder.toString());
 }
