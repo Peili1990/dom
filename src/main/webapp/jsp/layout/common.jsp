@@ -80,11 +80,6 @@
 
 	$(function(){
 		//FastClick.attach(document.body);
-		if(IsPC()&&!($(window).width() > 350 && $(window).width() < 450)){
-			if(window.location.href.indexOf("pcIndex")<0&&window.location.href.indexOf("emailverify")<0){
-				window.location = getRootPath() + "/pcIndex";
-			}
-		}
 	})
 	
 	$.get('${baseUrl}file/emoji-list.json',function(data){

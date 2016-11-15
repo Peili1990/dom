@@ -1,6 +1,7 @@
 package org.nv.dom.web.service.impl;
 
 import java.io.File;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.nv.dom.util.DateFormatUtil;
 import org.nv.dom.util.EncryptUtil;
 import org.nv.dom.util.MailUtil;
 import org.nv.dom.util.StringUtil;
+import org.nv.dom.util.ThreadUtils;
 import org.nv.dom.web.dao.account.AccountMapper;
 import org.nv.dom.web.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
 				result.put(PageParamType.BUSINESS_STATUS, -3);
 				result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱还未验证");
 				result.put("email", user.getAccount());
-				sendVerifyMail(user.getId(), user.getAccount());
+				sendVerifyMail(user.getId(), user.getAccount(),user.getNickname());
 			} else {
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "登录成功");
@@ -101,27 +103,31 @@ public class AccountServiceImpl implements AccountService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统或网络异常");
 			return result;
 		}
-		if(!sendVerifyMail(registerDTO.getId(),registerDTO.getAccount())){
-			result.put(PageParamType.BUSINESS_STATUS, -3);
-			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证发送失败，请重试");
-			result.put("email", registerDTO.getAccount());
-			return result;
-		}
+		sendVerifyMail(registerDTO.getId(),registerDTO.getAccount(),registerDTO.getNickname());
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "注册成功，请验证邮箱");
 		result.put("email", registerDTO.getAccount());
 		return result;
 	}
 	
-	private boolean sendVerifyMail(long userId, String email){
+	private void sendVerifyMail(long userId, String email, String nickname){
 		String path = CacheData.getBasePath().concat(mailContentPath);
 		String params = "uu=" + EncryptUtil.encryptBase64(String.valueOf(userId)) + "&" 
 				+ "ee=" + EncryptUtil.encryptBase64(email) + "&" 
 		        + "tt=" + EncryptUtil.encryptBase64(String.valueOf(new Date().getTime())) ;
 		String url = CacheData.getBaseUrl() + "/emailverify?" + params;
-		String content = MailUtil.getMailContent(path, email, url, DateFormatUtil.getCurrentDateString("yyyy-MM-dd HH:mm"));
-		Mail mail = new Mail(from, password, host, email, veritify_subject, content, "smtp");
-		return MailUtil.mailSend(mail);
+		String content = MailUtil.getMailContent(path, nickname, url, DateFormatUtil.getCurrentDateString("yyyy-MM-dd HH:mm"));
+		final Mail mail = new Mail(from, password, host, email, veritify_subject, content);
+		ThreadUtils.fixedPool.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					MailUtil.mailSend(mail);
+				} catch (GeneralSecurityException e) {
+					e.printStackTrace();
+				}
+			}
+		});	
 	}
 
 	@Override
@@ -178,17 +184,13 @@ public class AccountServiceImpl implements AccountService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址格式错误");
 			return result;
 		}
-		Long userId = accountMapper.getUserIdByEmail(email);
-		if (userId == null) {
+		User user = accountMapper.getUserByEmail(email);
+		if (user == null) {
 			result.put(PageParamType.BUSINESS_STATUS, -3);
 			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱未注册或已激活");
 			return result;
 		}
-		if(!sendVerifyMail(userId,email)){
-			result.put(PageParamType.BUSINESS_STATUS, -4);
-			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证发送失败，请重试");
-			return result;
-		}
+		sendVerifyMail(user.getId(),email,user.getNickname());
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "验证邮件发送成功");
 		result.put("email", email);

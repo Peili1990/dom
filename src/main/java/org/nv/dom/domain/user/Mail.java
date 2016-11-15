@@ -51,7 +51,7 @@ public class Mail {
 	 * @author: z```s
 	 */
 	public Mail(String fromUser, String password, String host, String toUser,
-			String subject, String content, String protocol) {
+			String subject, String content) {
 		super();
 		this.fromUser = fromUser;
 		this.password = password;
@@ -59,7 +59,6 @@ public class Mail {
 		this.toUser = toUser;
 		this.subject = subject;
 		this.content = content;
-		this.protocol = protocol;
 	}
 
 	/**

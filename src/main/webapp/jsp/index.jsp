@@ -42,6 +42,9 @@
 		adjustContainerHeight(getCurActPage());
 		$("#nv-footer li:eq(0)").addClass("visiting");
 		$("#options-list").append("<li onclick='showEssayEdit()'><a>发表主题</a></li>");
+		if(IsPC()){
+			$("#options-list").append("<li onclick='openNewWindow()'><a>打开新窗口</a></li>");
+		}
 		if(!getCache("nv_info_message")||getCache("nv_info_message")!=infoMessage){
 			setCache("nv_info_message",infoMessage);
 			showInfoMessage();
@@ -51,6 +54,11 @@
 			pageSwitch("#pageA","#pageC",0,1,"getEssayDetail("+essayId+")");
 		}
 	}) 
+	
+	function openNewWindow(){
+		window.open(getRootPath()+"/index", '', 'top=0,left=0,width=400,height=650,location=yes,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');
+  		window.close();
+	}
 	
 	
         

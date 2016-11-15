@@ -19,7 +19,8 @@
   	})
   
   	$(".nv-link").click(function(){
-  		window.open(getRootPath()+"/index?type=mobile", '', 'top=0,left=0,width=400,height=650,location=yes,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');	
+  		window.open(getRootPath()+"/index?type=mobile", '', 'top=0,left=0,width=400,height=650,location=yes,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');
+  		window.close();
   	})
         
   </script>

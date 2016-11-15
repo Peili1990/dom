@@ -73,11 +73,12 @@ public interface AccountMapper {
 	public int verifyUserAndEmailStatus(long id);
 	
 	/**
-	 * <p>根据邮箱获取用户id</p>
+	 * <p>根据邮箱获取用户</p>
 	 * @param email
 	 * @return
 	 * 
 	 */
 
-	public Long getUserIdByEmail(String email);
+	public User getUserByEmail(String email);
+
 }

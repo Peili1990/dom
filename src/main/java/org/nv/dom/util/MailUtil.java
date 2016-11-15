@@ -2,6 +2,7 @@ package org.nv.dom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -16,7 +17,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.nv.dom.domain.user.Mail;
+import org.nv.dom.web.service.impl.EssayServiceImpl;
+
+import com.sun.mail.util.MailSSLSocketFactory;
 
 /**
  * <p></p>
@@ -24,6 +29,8 @@ import org.nv.dom.domain.user.Mail;
  * @author: z```s
  */
 public class MailUtil {
+	
+	private static Logger logger = Logger.getLogger(MailUtil.class);
 
 	/**
 	 * <p></p>
@@ -31,20 +38,24 @@ public class MailUtil {
 	 * @return
 	 * 2014年12月24日 下午2:11:08
 	 * @author: z```s
+	 * @throws GeneralSecurityException 
 	 */
-	public static boolean mailSend(Mail mail) {
+	public static boolean mailSend(Mail mail) throws GeneralSecurityException {
 		boolean result = false;
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", mail.getHost());
 		properties.put("mail.smtp.auth", "true");
-		/** ssl发送邮件 */
-		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-		properties.put("mail.transport.protocol", mail.getProtocol());
-		properties.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+		properties.put("mail.transport.protocol", "smtp");
+		properties.put("mail.debug", "true");
 		properties.put("mail.smtp.port", "465");
+		MailSSLSocketFactory sf = new MailSSLSocketFactory();
+		sf.setTrustAllHosts(true);
+		properties.put("mail.smtp.ssl.enable", "true");
+		properties.put("mail.smtp.ssl.socketFactory", sf);
+		properties.put("mail.smtp.starttls.enable", true);
 		final String fromUser = mail.getFromUser();
 		final String password = mail.getPassword();
-		Session mailSession = Session.getDefaultInstance(properties, new Authenticator() {
+		Session mailSession = Session.getInstance(properties, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(fromUser, password);
@@ -57,13 +68,14 @@ public class MailUtil {
 			message.setSubject(mail.getSubject());
 			message.setContent(mail.getContent(), "text/html;charset=utf-8");
 			message.saveChanges();
-			Transport transport = mailSession.getTransport(mail.getProtocol());
+			Transport transport = mailSession.getTransport();
 			transport.connect(mail.getHost(), fromUser, password);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
 			result = true;
 		} catch (MessagingException e) {
 			result = false;
+			logger.error(e.getMessage(),e);
 		}
 		return result;
 	}

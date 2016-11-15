@@ -99,7 +99,8 @@
 	<select id="getUserIdByEmail" parameterType="String" resultType="long">
 	
 		SELECT
-			du.id
+			du.id,
+			du.nickname
 		FROM
 			d_user du
 		WHERE

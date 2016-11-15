@@ -13,6 +13,8 @@ public class EncryptUtilTest {
 		
 		System.out.println(EncryptUtil.encryptBase64("32"));
 		
+		System.out.println(EncryptUtil.encryptDES("noreply@nigvic.com", "nigvic2016"));
+		
 	}
 
 }

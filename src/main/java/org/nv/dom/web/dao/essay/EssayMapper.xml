@@ -21,13 +21,15 @@
 				type,
 				header,
 				content,
-				create_time
+				create_time,
+				update_time
 			)
 			VALUES(
 				#{userId},
 				#{type},
 				#{header},
 				#{content},
+				NOW(),
 				NOW()
 			)
 		</if>
@@ -102,9 +104,14 @@
 			#{essayId},
 			#{content},
 			NOW()
-		)
+		);
+		UPDATE
+			d_essay de
+		SET
+			de.update_time = NOW()
+		WHERE
+			de.id = #{essayId} 
 		
-	
 	</insert>
 	
 	<select id="getEssayList" parameterType="long" resultType="Essay">
@@ -125,7 +132,7 @@
 			AND de.user_id = #{userId}
 		</if>
 		ORDER BY
-			de.create_time DESC
+			de.update_time DESC
 		LIMIT 10
 			
 	

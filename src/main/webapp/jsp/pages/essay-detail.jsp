@@ -39,6 +39,7 @@ function getEssayDetail(essayId){
 			$("#nv-footer").addClass("invisible");
 			$("#nv-chatbar").removeClass("invisible");
 			$("#use-gesture").addClass("invisible");
+			$("#show-emotion").removeClass("invisible");
 			$("#send-message").on("click",function(){
 				submitComment(essayId);
 			})

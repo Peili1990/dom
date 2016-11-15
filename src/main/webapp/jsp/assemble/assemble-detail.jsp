@@ -99,6 +99,7 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 					$("#nv-footer").addClass("invisible");
 					$("#nv-chatbar").removeClass("invisible");
 					$("#show-emotion").addClass("invisible");
+					$("#use-gesture").removeClass("invisible");
 					if(data.replaceList == null && playerInfo.isMute == 1 && playerInfo.isLife == 1){
 						$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
 						$("#send-message").attr("disabled","disabled");

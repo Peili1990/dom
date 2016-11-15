@@ -7,6 +7,11 @@
 
 html {
 	height: 100%;
+	max-width:480px;
+	margin:auto;
+	-webkit-box-shadow:0 0 1px #ccc2c2;  
+  	-moz-box-shadow:0 0 1px #ccc2c2;  
+ 	box-shadow:0 0 1px #ccc2c2;
 }
 
 body {
@@ -17,6 +22,7 @@ header {
 	position: relative;
 	z-index: 2;
 	width: 100%;
+	max-width:480px;
 	height: 44px;
 	line-height: 44px;
 	background-color: #0e90d2;	
@@ -415,6 +421,11 @@ time{
 
 .visiting {
 	background-color:deepskyblue;
+}
+
+.am-navbar{
+	max-width:480px;
+	left:auto;
 }
 
 
