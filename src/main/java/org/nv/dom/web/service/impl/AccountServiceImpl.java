@@ -1,6 +1,7 @@
 package org.nv.dom.web.service.impl;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.HashMap;
@@ -115,7 +116,7 @@ public class AccountServiceImpl implements AccountService {
 		String params = "uu=" + EncryptUtil.encryptBase64(String.valueOf(userId)) + "&" 
 				+ "ee=" + EncryptUtil.encryptBase64(email) + "&" 
 		        + "tt=" + EncryptUtil.encryptBase64(String.valueOf(new Date().getTime())) ;
-		String url = CacheData.getBaseUrl() + "/emailverify?" + params;
+		String url = CacheData.getBaseUrl() + "emailverify?" + params;
 		String content = MailUtil.getMailContent(path, nickname, url, DateFormatUtil.getCurrentDateString("yyyy-MM-dd HH:mm"));
 		final Mail mail = new Mail(from, password, host, email, veritify_subject, content);
 		ThreadUtils.fixedPool.execute(new Runnable() {
@@ -124,6 +125,9 @@ public class AccountServiceImpl implements AccountService {
 				try {
 					MailUtil.mailSend(mail);
 				} catch (GeneralSecurityException e) {
+					e.printStackTrace();
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

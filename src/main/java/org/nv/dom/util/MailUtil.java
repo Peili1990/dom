@@ -2,6 +2,7 @@ package org.nv.dom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
 
@@ -15,6 +16,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -39,14 +41,14 @@ public class MailUtil {
 	 * 2014年12月24日 下午2:11:08
 	 * @author: z```s
 	 * @throws GeneralSecurityException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static boolean mailSend(Mail mail) throws GeneralSecurityException {
+	public static boolean mailSend(Mail mail) throws GeneralSecurityException, UnsupportedEncodingException {
 		boolean result = false;
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", mail.getHost());
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.transport.protocol", "smtp");
-		properties.put("mail.debug", "true");
 		properties.put("mail.smtp.port", "465");
 		MailSSLSocketFactory sf = new MailSSLSocketFactory();
 		sf.setTrustAllHosts(true);
@@ -65,7 +67,7 @@ public class MailUtil {
 		try {
 			message.setFrom(new InternetAddress(mail.getFromUser()));
 			message.addRecipient(RecipientType.TO, new InternetAddress(mail.getToUser()));
-			message.setSubject(mail.getSubject());
+			message.setSubject(MimeUtility.encodeText(mail.getSubject(), "UTF-8", "B"));
 			message.setContent(mail.getContent(), "text/html;charset=utf-8");
 			message.saveChanges();
 			Transport transport = mailSession.getTransport();

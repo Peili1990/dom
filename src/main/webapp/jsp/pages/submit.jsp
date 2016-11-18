@@ -31,7 +31,7 @@
 	</div>
 	<div class="group">
 		<div class="group-body">
-			<input type="button" class="am-btn am-btn-secondary sumbit-btn" onclick="submit(this)"
+			<input type="button" class="am-btn am-btn-secondary sumbit-btn" onclick="submit(this,${playerInfo.gameId},${playerInfo.playerId})"
 				style="width: 100%" value="提交">
 		</div>
 	</div>
@@ -64,7 +64,7 @@
 		})
 	}
 
-	function submit(btn){
+	function submit(btn,gameId,playerId){
 		$(btn).attr("disabled","disabled");
 		var action=$("input[name='action']").val().trim();
 		var privilege=$("input[name='privilege']").val().trim();
@@ -74,8 +74,10 @@
 			return;
 		}
 		var common = new Common();
-		var url=getRootPath() + "/game/submitOpreation";
+		var url = "http://" + "${chatServer}" + "/submitOpreation";
 		var options = {
+				gameId : gameId,
+				playerId : playerId,
 				action : action,
 				privilege : privilege,
 				vote : vote

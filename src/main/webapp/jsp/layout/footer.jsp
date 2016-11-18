@@ -107,6 +107,7 @@
 						getChatDetail(activeToUserId);	
 					}
 				}
+				setCache("nv_offline_chat"+userId,parseInt(totalChat));
 				setRedspot();
 				return;
 			case 0:
@@ -167,7 +168,7 @@
 	}
 	
 	function dealChat(content){
-		if(window.location.href.indexOf("chat")>0 && activeToUserId==content.fromUserId){
+		if(!$("#nv-chatbar").hasClass("invisible") && window.location.href.indexOf("chat")>0 && activeToUserId==content.fromUserId){
 			appendChatDetail(content,false);
 			scrollTobottom();
 		} else {

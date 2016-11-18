@@ -55,6 +55,8 @@ function getEssayDetail(essayId){
 				$(".operation-box span:eq(1)").unbind("click").click(function(){
 					pageSwitch(getCurActPage(),"#pageD",getCurActLevel(),2,'adjustTextArea('+essayId+')')
 				})
+			} else {
+				$(".operation-box").addClass("invisible");
 			}
 			$("#comment-list").empty();
 			$.each(data.comments,function(index,comment){
