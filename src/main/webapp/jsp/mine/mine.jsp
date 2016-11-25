@@ -31,6 +31,9 @@
       <li id="pageF" class="page-container" style="left:100%;display:none"> 
 		 <jsp:include page="mine-data.jsp"></jsp:include>
       </li>
+      <li id="pageG" class="page-container" style="left:100%;display:none"> 
+		 <jsp:include page="mine-pwdchange.jsp"></jsp:include>
+      </li>
     </ul>   
 	</section>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
@@ -38,6 +41,7 @@
 $(function(){
 	adjustContainerHeight(getCurActPage());
 	$("#nv-footer li:eq(4)").addClass("visiting");
+	$("#options-list").append("<li onclick='showPwdChange()'><a>修改密码</a></li>")
 }) 
 </script>
 </body>

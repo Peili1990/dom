@@ -20,7 +20,7 @@ public interface UserService {
 
 	public Map<String, Object> avatarUpload(UpdateUserProfileDTO updateUserProfileDTO);
 
-	public Map<String, Object> updateMotto(UpdateUserProfileDTO updateUserProfileDTO);
+	public Map<String, Object> updateProfile(UpdateUserProfileDTO updateUserProfileDTO);
 
 	public Map<String, Object> getChatInfo(String chatId, String userId);
 

@@ -28,7 +28,7 @@
 	<div class="group">
 		<div class="group-body">
 			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
-				value="退出登录" onclick="logout(this)">
+				value="退出登录" onclick="logout()">
 		</div>
 	</div>
 	

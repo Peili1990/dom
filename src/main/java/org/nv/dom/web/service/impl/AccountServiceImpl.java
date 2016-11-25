@@ -9,10 +9,12 @@ import java.util.Map;
 
 import org.nv.dom.cache.CacheData;
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.config.RedisConstant;
 import org.nv.dom.domain.user.Mail;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.account.EmailVerifyDTO;
 import org.nv.dom.dto.account.LoginDTO;
+import org.nv.dom.dto.account.PwdChangeDTO;
 import org.nv.dom.dto.account.RegisterDTO;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.DateFormatUtil;
@@ -26,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("accountServiceImpl")
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl extends BasicServiceImpl implements AccountService {
 	
 	private int day = 1;
 	
@@ -34,7 +36,9 @@ public class AccountServiceImpl implements AccountService {
 	
 	private String defaultAvatar = ConfigUtil.getBasicProperty("default.avatar");
 	
-	private String mailContentPath = "jsp" + File.separator + "account" + File.separator + "email-content.jsp";
+	private String mailVerifyPath = "jsp" + File.separator + "account" + File.separator + "email-content.jsp";
+	
+	private String mailResetPath = "jsp" + File.separator + "account" + File.separator + "email-reset.jsp";
 	
 	private String host = EncryptUtil.decryptDES(ConfigUtil.getMailProperty("mail.host"), EncryptUtil.KEY);
 	
@@ -43,6 +47,8 @@ public class AccountServiceImpl implements AccountService {
 	private String password = EncryptUtil.decryptDES(ConfigUtil.getMailProperty("mail.password"), EncryptUtil.KEY);
 	
 	private String veritify_subject = "维多利亚的噩梦-邮箱账号验证信息";
+	
+	private String reset_subject = "维多利亚的噩梦-忘记密码邮箱账号验证";
 	
 	@Autowired
 	private AccountMapper accountMapper;
@@ -112,7 +118,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	private void sendVerifyMail(long userId, String email, String nickname){
-		String path = CacheData.getBasePath().concat(mailContentPath);
+		String path = CacheData.getBasePath().concat(mailVerifyPath);
 		String params = "uu=" + EncryptUtil.encryptBase64(String.valueOf(userId)) + "&" 
 				+ "ee=" + EncryptUtil.encryptBase64(email) + "&" 
 		        + "tt=" + EncryptUtil.encryptBase64(String.valueOf(new Date().getTime())) ;
@@ -127,7 +133,6 @@ public class AccountServiceImpl implements AccountService {
 				} catch (GeneralSecurityException e) {
 					e.printStackTrace();
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -162,8 +167,10 @@ public class AccountServiceImpl implements AccountService {
 			result.put("email", email);
 			return result;
 		}
+		redisClient.set(email, 3600, RedisConstant.WAITING_TO_BE_VERIFY);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证成功");
+		result.put("email", email);
 		return result;
 	}
 	
@@ -188,7 +195,7 @@ public class AccountServiceImpl implements AccountService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址格式错误");
 			return result;
 		}
-		User user = accountMapper.getUserByEmail(email);
+		User user = accountMapper.getUserByEmail(email,true);
 		if (user == null) {
 			result.put(PageParamType.BUSINESS_STATUS, -3);
 			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱未注册或已激活");
@@ -199,6 +206,82 @@ public class AccountServiceImpl implements AccountService {
 		result.put(PageParamType.BUSINESS_MESSAGE, "验证邮件发送成功");
 		result.put("email", email);
 		return result;
+	}
+
+	@Override
+	public Map<String, Object> changePassword(PwdChangeDTO pwdChangeDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if(!StringUtil.isNullOrEmpty(pwdChangeDTO.getAccount())&&pwdChangeDTO.getUserId()>0){
+			
+			if(accountMapper.changePasswordDao(pwdChangeDTO)==1){
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "密码修改成功");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "旧密码错误");
+			}
+		} else if(StringUtil.isEmail(pwdChangeDTO.getAccount())){
+			if(redisClient.get(pwdChangeDTO.getAccount(), "").equals(RedisConstant.WAITING_TO_BE_VERIFY)){
+				accountMapper.changePasswordDao(pwdChangeDTO);
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "密码重置成功");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -2);
+				result.put(PageParamType.BUSINESS_MESSAGE, "不可重置密码");
+			}
+		} else {
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "不可重置密码");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> forgetpassword(String email) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (StringUtil.isNullOrEmpty(email)) {
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址为空");
+			return result;
+		}
+		if (!StringUtil.isEmail(email)) {
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址格式错误");
+			return result;
+		}
+		User user = accountMapper.getUserByEmail(email,false);
+		if (user == null) {
+			result.put(PageParamType.BUSINESS_STATUS, -3);
+			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱未注册");
+			return result;
+		}
+		sendResetMail(user.getId(),email,user.getNickname());
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "验证邮件发送成功");
+		result.put("email", email);
+		return result;
+	}
+	
+	private void sendResetMail(long userId, String email, String nickname){
+		String path = CacheData.getBasePath().concat(mailResetPath);
+		String params = "uu=" + EncryptUtil.encryptBase64(String.valueOf(userId)) + "&" 
+				+ "ee=" + EncryptUtil.encryptBase64(email) + "&" 
+		        + "tt=" + EncryptUtil.encryptBase64(String.valueOf(new Date().getTime())) ;
+		String url = CacheData.getBaseUrl() + "resetPassword?" + params;
+		String content = MailUtil.getMailContent(path, nickname, url, DateFormatUtil.getCurrentDateString("yyyy-MM-dd HH:mm"));
+		final Mail mail = new Mail(from, password, host, email, reset_subject, content);
+		ThreadUtils.fixedPool.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					MailUtil.mailSend(mail);
+				} catch (GeneralSecurityException e) {
+					e.printStackTrace();
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+		});	
 	}
 
 }

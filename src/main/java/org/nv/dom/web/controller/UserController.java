@@ -62,13 +62,14 @@ public class UserController extends BaseController{
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/updateMotto", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
 	public Map<String, Object> updateMotto(@ModelAttribute("updateUserProfileDTO") UpdateUserProfileDTO updateUserProfileDTO , HttpSession session) {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		updateUserProfileDTO.setUserId(user.getId());
-		Map<String, Object> result = userService.updateMotto(updateUserProfileDTO);
+		Map<String, Object> result = userService.updateProfile(updateUserProfileDTO);
 		if((int)result.get("status")==1){
 			user.setMotto((String) result.get("motto"));
+			user.setQq((String) result.get("qq"));
 			session.setAttribute(PageParamType.user_in_session, user);
 		}
 		return result;

@@ -125,7 +125,7 @@
 	</c:forEach>
 	
 	<div style="text-align:center;margin:10px auto">
-		下拉加载更多
+		已无更多内容
 	</div>
 
 	

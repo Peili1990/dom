@@ -7,25 +7,31 @@
 			<label>修改个性签名</label>
 			<input type="text" value="${user.motto}" id="motto-edit">
 		</div>
+		<div class="group-body">
+			<label>修改QQ</label>
+			<input type="text" value="${user.qq}" id="qq-edit">
+		</div>
 	</div>
 	<div class="group">
 		<div class="group-body">
 			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
-				value="提交" onclick="updateMotto()">
+				value="提交" onclick="updateProfile()">
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
 
-function updateMotto(){
+function updateProfile(){
 	var motto = $("#motto-edit").val().trim();
 	if(motto == ""){
 		motto="这个人很懒，什么都没写";
 	}
-	var url = getRootPath() + "/updateMotto";
+	var qq = $("#qq-edit").val().trim();
+	var url = getRootPath() + "/updateProfile";
 	var options = {
-			motto : motto
+			motto : motto,
+			qq : qq
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
@@ -34,8 +40,10 @@ function updateMotto(){
 		}
 		switch (data.status){
 		case 1:
-			$("#user-motto").text(data.motto);
-			$("#icon-arrow").click();
+			myInfo("修改成功！",function(){
+				$("#user-motto").text(data.motto);
+				$("#icon-arrow-1").click();
+			})
 			return;
 		case 0:
 			timeoutHandle();

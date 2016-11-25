@@ -3,6 +3,7 @@ package org.nv.dom.web.dao.account;
 import org.apache.ibatis.annotations.Param;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.account.LoginDTO;
+import org.nv.dom.dto.account.PwdChangeDTO;
 import org.nv.dom.dto.account.RegisterDTO;
 import org.springframework.stereotype.Repository;
 
@@ -79,6 +80,15 @@ public interface AccountMapper {
 	 * 
 	 */
 
-	public User getUserByEmail(String email);
+	public User getUserByEmail(@Param("email")String email, @Param("checkStatus")boolean checkStatus);
+	
+	/**
+	 * <p>修改用户密码</p>
+	 * @param email
+	 * @return
+	 * 
+	 */
+	
+	public int changePasswordDao(PwdChangeDTO pwdChangeDTO);
 
 }

@@ -28,7 +28,7 @@
   	})
   	
 	function resendEmail(email) {
-		var url = "resendmail";
+		var url = "account/resendmail";
 		var options = {
 			email : email
 		}

@@ -21,7 +21,6 @@ import javax.mail.internet.MimeUtility;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.nv.dom.domain.user.Mail;
-import org.nv.dom.web.service.impl.EssayServiceImpl;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 

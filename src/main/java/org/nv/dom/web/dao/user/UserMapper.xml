@@ -121,6 +121,9 @@
 			<if test="motto != null">
 			,motto = #{motto}
 			</if>
+			<if test="qq != null">
+			,qq = #{qq}
+			</if>
 		WHERE
 			id = #{userId};
 	

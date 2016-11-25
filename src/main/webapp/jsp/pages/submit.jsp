@@ -31,7 +31,7 @@
 	</div>
 	<div class="group">
 		<div class="group-body">
-			<input type="button" class="am-btn am-btn-secondary sumbit-btn" onclick="submit(this,${playerInfo.gameId},${playerInfo.playerId})"
+			<input type="button" class="am-btn am-btn-secondary sumbit-btn" onclick="submit(${playerInfo.gameId},${playerInfo.playerId})"
 				style="width: 100%" value="提交">
 		</div>
 	</div>
@@ -64,8 +64,7 @@
 		})
 	}
 
-	function submit(btn,gameId,playerId){
-		$(btn).attr("disabled","disabled");
+	function submit(gameId,playerId){
 		var action=$("input[name='action']").val().trim();
 		var privilege=$("input[name='privilege']").val().trim();
 		var vote=$("input[name='vote']").val().trim();
@@ -97,7 +96,6 @@
 				return;
 			default:
 				myAlert(data.message);
-				$(btn).removeAttr("disabled");
 				return;
 			}
 		})

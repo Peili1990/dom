@@ -13,4 +13,4 @@
 <input type="button" class="am-btn am-btn-primary" onclick="gotoStepOne()"
 	value="上一步">
 <input type="button" class="am-btn am-btn-danger"
-	onclick="register(this)" value="注册">
+	onclick="register()" value="注册">

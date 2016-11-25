@@ -352,6 +352,18 @@ function myConfirm(text,callback){
 	});
 }
 
+function myPrompt(text,callback){
+	$("#my-prompt .am-modal-bd").html(text).append("<input type='text' class='am-modal-prompt-input' name='header'>")
+	$('#my-prompt').modal({
+	      relatedTarget: this,
+	      onConfirm: function(e){
+	    	  eval(callback);
+	      },
+	      onCancel: function(e) {
+	      }
+	});
+}
+
 function isChatBarVisible(){
 	return $("#nv-chatbar").is(":visible");
 }

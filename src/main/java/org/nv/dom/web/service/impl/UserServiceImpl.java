@@ -144,11 +144,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> updateMotto(UpdateUserProfileDTO updateUserProfileDTO) {
+	public Map<String, Object> updateProfile(UpdateUserProfileDTO updateUserProfileDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			userMapper.updateUserProfileDao(updateUserProfileDTO);
 			result.put("motto", updateUserProfileDTO.getMotto());
+			result.put("qq", updateUserProfileDTO.getQq());
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "个性签名修改成功");
 		}catch(Exception e){

@@ -1,11 +1,9 @@
 function logout(btn) {
-	$(btn).attr("disabled", "disabled");
-	var url = getRootPath() + "/logoutAction";
+	var url = getRootPath() + "/account/logoutAction";
 	var common = new Common();
 	common.callAction(null, url, function(data) {
 		if (!data) {
 			myAlert("系统或网络异常");
-			$(btn).removeAttr("disabled");
 			return;
 		}
 		switch (data.status) {
@@ -21,7 +19,6 @@ function logout(btn) {
 			return;
 		default:
 			myAlert(data.message);
-			$(btn).removeAttr("disabled");
 			return;
 		}
 	})

@@ -22,7 +22,7 @@
 	<div class="group">
 		<div class="group-body">
 			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
-				value="提交" onclick="selectCharacter(this)">
+				value="提交" onclick="selectCharacter()">
 		</div>
 	</div>
 </div>
@@ -55,7 +55,7 @@
 	<div class="group">
 		<div class="group-body">
 			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
-				value="提交" onclick="selectCharacter(this)">
+				value="提交" onclick="selectCharacter()">
 		</div>
 	</div>
 
@@ -148,12 +148,10 @@
 		})
 	}
 	
-	function selectCharacter(btn){
-		$(btn).attr("disabled","disabled");
+	function selectCharacter(){
 		var characterId = $("#selected-character").val();
 		if(characterId == ""){
 			myAlert("请选择角色");
-			$(btn).removeAttr("disabled");
 			return;
 		}
 		var isSp;
@@ -175,7 +173,6 @@
 		common.callAction(options, url, function(data) {
 			if (!data) {
 				myAlert("系统或网络异常");
-				$(btn).removeAttr("disabled");
 				return;
 			}
 			switch (data.status) {
@@ -189,7 +186,6 @@
 				return;
 			default:
 				myAlert(data.message);
-				$(btn).removeAttr("disabled");
 				return;
 			}
 		});

@@ -6,8 +6,7 @@ function login(){
 	window.location = getRootPath() + "/login";
 }
 
-function register(btn){
-	$(btn).attr("disabled","disabled");
+function register(){
 	var account = $("#userName").val().trim();
 	var password = $("#userPwd").val().trim();
 	var nickname = $("#nickName").val().trim();
@@ -15,21 +14,18 @@ function register(btn){
 	$("#userPwd").val("");
 	if(account==""){
 		myAlert("邮箱不能为空");
-		$(btn).removeAttr("disabled").blur();
 		return false;
 	}
 	if(password==""){
 		myAlert("密码不能为空");
-		$(btn).removeAttr("disabled").blur();
 		return false;
 	}
 	if(nickname==""){
 		myAlert("昵称不能为空");
-		$(btn).removeAttr("disabled").blur();
 		return false;
 	}
 	//注册
-	var url = "registerAction";
+	var url = "account/registerAction";
 	var options = {
 		account : account,
 		password : password,
@@ -40,7 +36,6 @@ function register(btn){
 	common.callAction(options, url, function(data) {
 		if (!data) {
 			myAlert("系统或网络异常");
-			$(btn).removeAttr("disabled").blur();
 			return;
 		}
 		switch (data.status) {
@@ -51,7 +46,6 @@ function register(btn){
 			return;
 		default:
 			myAlert(data.message);
-			$(btn).removeAttr("disabled").blur();
 			gotoStepOne();
 			return;
 		}

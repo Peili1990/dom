@@ -11,6 +11,8 @@ public class UpdateUserProfileDTO {
 	private String avatar;
 	// 格言
 	private String motto;
+	// QQ
+	private String qq;
 	public long getUserId() {
 		return userId;
 	}
@@ -41,4 +43,11 @@ public class UpdateUserProfileDTO {
 	public void setMotto(String motto) {
 		this.motto = motto;
 	}
+	public String getQq() {
+		return qq;
+	}
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+	
 }

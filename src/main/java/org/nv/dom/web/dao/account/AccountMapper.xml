@@ -11,6 +11,7 @@
 			t.nickname,
 			t.avatar,
 			t.motto,
+			t.qq,
 			t.status
 		FROM
 			d_user t
@@ -96,7 +97,7 @@
 		
 	</update>
 	
-	<select id="getUserIdByEmail" parameterType="String" resultType="long">
+	<select id="getUserByEmail" resultType="User">
 	
 		SELECT
 			du.id,
@@ -104,9 +105,26 @@
 		FROM
 			d_user du
 		WHERE
-			du.account = #{email} AND du.status = 0
+			du.account = #{email} 
+		<if test="checkStatus==true">
+			AND du.status = 0
+		</if>
 	
 	</select>
+	
+	<update id="changePasswordDao" parameterType="PwdChangeDTO">
+	
+		UPDATE
+			d_user du
+		SET
+			du.password = #{newPassword}
+		WHERE
+			du.account = #{account}
+		<if test="oldPassword != null">
+			AND du.password = #{oldPassword}
+		</if>
+	
+	</update>
 	
 
 </mapper>

@@ -43,3 +43,13 @@ body{
 .view-container{
 	padding-top:0;
 }
+
+.forget-pwd{
+	color:white;
+	margin-top:10px;
+	cursor:pointer;
+}
+
+.forget-pwd:hover{
+	color:#0c79b1;
+}
