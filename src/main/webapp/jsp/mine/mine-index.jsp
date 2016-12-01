@@ -16,10 +16,10 @@
 		查看统计
 		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageF',0,1,'getPlayerData()')"></span>
 	</div>
-	<h3>我的笔记</h3>
+	<h3>我的私货</h3>
 	<div class="mine-box" style="border-bottom:1px solid #dddddd">
-		版杀笔记
-		<span class="am-icon-chevron-right mine-arrow"></span>
+		版杀卡片
+		<span class="am-icon-chevron-right mine-arrow" onclick="pageSwitch('#pageA','#pageH',0,1,'getUserCardList()')"></span>
 	</div>
 	<div class="mine-box">
 		复盘攻略

@@ -19,6 +19,8 @@ public class EmailVerifyDTO {
 	private String ee;
 	//时间
 	private String tt;
+	//验证类型
+	private String verifyType;
 	/**
 	 * @return the uu
 	 */
@@ -54,6 +56,12 @@ public class EmailVerifyDTO {
 	 */
 	public final void setTt(String tt) {
 		this.tt = tt;
+	}
+	public String getVerifyType() {
+		return verifyType;
+	}
+	public void setVerifyType(String verifyType) {
+		this.verifyType = verifyType;
 	}
 	
 }

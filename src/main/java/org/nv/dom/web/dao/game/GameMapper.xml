@@ -153,14 +153,44 @@
 			player_id,
 			character_id,
 			is_sp,
-			apply_pioneer
+			apply_pioneer,
+			use_card,
+			camp,
+			sign,
+			identity_desc
 		) 
 		VALUES (
 			#{playerId},
 			#{characterId},
 			#{isSp},
-			#{applyPioneer}
+			#{applyPioneer},
+			#{useCard},
+			#{camp},
+			#{sign},
+			#{identityDesc}
 		)
 	</insert>
+	
+	<select id="queryCanUseCardDao" parameterType="SelectCharacterDTO" resultType="Integer">
+	
+		SELECT
+		 	count(1) 
+		FROM
+			d_player_record dpr, d_player dp
+		WHERE
+			dpr.camp = #{camp} AND dpr.player_id = dp.id AND dp.game_id = #{gameId}
+	
+	</select>
+	
+	<select id="queryGamePlayerNumDao" parameterType="long" resultType="Integer">
+	
+		SELECT
+			dg.player_num
+		FROM
+			d_game dg
+		WHERE
+			dg.id = #{gameId}
+	
+	</select>
 
 </mapper>

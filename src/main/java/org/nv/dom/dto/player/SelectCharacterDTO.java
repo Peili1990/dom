@@ -12,6 +12,14 @@ public class SelectCharacterDTO {
 	private String isSp;
 	/** 是否申请先驱 */
 	private String applyPioneer;
+	/** 是否使用卡片 */
+	private Integer useCard;
+	/** 阵营 */
+	private Integer camp;
+	/** 签 */
+	private Integer sign;
+	/** 实际身份描述 */
+	private String identityDesc; 
 	
 	public long getPlayerId() {
 		return playerId;
@@ -43,5 +51,29 @@ public class SelectCharacterDTO {
 	public void setApplyPioneer(String applyPioneer) {
 		this.applyPioneer = applyPioneer;
 	}
-	
+	public Integer getUseCard() {
+		return useCard;
+	}
+	public void setUseCard(Integer useCard) {
+		this.useCard = useCard;
+	}
+	public Integer getCamp() {
+		return camp;
+	}
+	public void setCamp(Integer camp) {
+		this.camp = camp;
+	}
+	public Integer getSign() {
+		return sign;
+	}
+	public void setSign(Integer sign) {
+		this.sign = sign;
+	}
+	public String getIdentityDesc() {
+		return identityDesc;
+	}
+	public void setIdentityDesc(String identityDesc) {
+		this.identityDesc = identityDesc;
+	}
+		
 }

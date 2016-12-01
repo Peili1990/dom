@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.config.RedisConstant;
 import org.nv.dom.domain.character.NVCharacter;
@@ -18,6 +19,7 @@ import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
 import org.nv.dom.enums.GameFinalResult;
 import org.nv.dom.enums.GameStatus;
+import org.nv.dom.enums.IdentityCode;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
@@ -152,6 +154,22 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			return result;
 		}
 		try{
+			if(NVTermConstant.USE_IDENTITY_CARD.equals(selectCharacterDTO.getUseCard())){
+				selectCharacterDTO.setCamp(selectCharacterDTO.getSign() <= IdentityCode.CIVILIAN.getCode()?
+						NVTermConstant.GOOD_CAMP : NVTermConstant.KILLER_CAMP);
+				selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
+			}
+			if(gameMapper.queryCanUseCardDao(selectCharacterDTO)>0 || 
+					playerMapper.consumeUserCardDao(selectCharacterDTO)!=1){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "使用卡片失败");
+				return result;
+			}
+			if(NVTermConstant.USE_CAMP_CARD.equals(selectCharacterDTO.getUseCard())){
+				selectCharacterDTO.setSign(IdentityCode.randomIdentitiyCode(selectCharacterDTO.getCamp(), 
+						gameMapper.queryGamePlayerNumDao(selectCharacterDTO.getGameId())));
+				selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
+			}
 			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 					String.valueOf(selectCharacterDTO.getPlayerId()));
 			if(StringUtil.isNullOrEmpty(characterStr)){
@@ -194,6 +212,22 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			characterList.add(character.getId());
 		}
 		return characterList;
+	}
+
+	@Override
+	public Map<String, Object> queryCharacter(SelectCharacterDTO selectCharacterDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			Integer count = gameMapper.queryCharacterAvailable(selectCharacterDTO);
+			result.put("isChosen", count);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "查询成功");
+		}catch(Exception e){
+			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS,-1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
 	}
 
 }

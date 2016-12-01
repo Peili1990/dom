@@ -29,6 +29,10 @@ public interface GameMapper {
 	 */
 	public List<String> queryGameJudgerDao(long gameId);
 	/**
+	 * <p>获取版杀总人数信息</p>
+	 */
+	public Integer queryGamePlayerNumDao(long gameId);
+	/**
 	 * <p>查询用户是否报名或参与其他版杀</p>
 	 */
 	public int queryHasAttendGameDao(ApplyDTO applyDTO);
@@ -52,6 +56,9 @@ public interface GameMapper {
 	 * <p>选择角色</p>
 	 */
 	public int selectCharacterDAO(SelectCharacterDTO selectCharacterDTO);
-
+	/**
+	 * <p>查询是否允许使用卡片</p>
+	 */
+	public int queryCanUseCardDao(SelectCharacterDTO selectCharacterDTO);
 	
 }

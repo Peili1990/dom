@@ -44,6 +44,10 @@ function register(){
 	window.location = getRootPath() + "/register";
 }
 
+function login(){
+	window.location = getRootPath() + "/login";
+}
+
 $(function(){
 	$(".page-container").css({"padding-top":$("body").height()*0.6+"px"});
 })
@@ -90,7 +94,7 @@ function resetPassword(){
 		return false;
 	}
 	//登陆验证
-	var url = "account/loginAction";
+	var url = "account/pwdResetAction";
 	var options = {
 		account : account,
 		newPassword : password

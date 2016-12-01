@@ -60,7 +60,9 @@
 				<c:choose>
 					<c:when test="${ playerInfo != null && playerInfo.sign != 0 }">
 						${ playerInfo.identityDesc }
-						<img src="${picServer}${ playerInfo.signAvatar }" class="am-comment-avatar sign-avatar">
+						<c:if test="${ signAvatar != null }">
+							<img src="${picServer}${ playerInfo.signAvatar }" class="am-comment-avatar sign-avatar">
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						还未发放

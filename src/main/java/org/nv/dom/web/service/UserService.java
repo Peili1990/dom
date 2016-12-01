@@ -28,4 +28,8 @@ public interface UserService {
 
 	public Map<String, Object> getPlayerData(long userId);
 
+	public Map<String, Object> getUserCardList(long userId);
+
+	public Map<String, Object> getUserCardStatus(long userId);
+
 }

@@ -16,4 +16,10 @@ public class NVTermConstant {
 	
 	public static final Integer GOOD_CAMP = 1;
 	
+	public static final Integer KILLER_CAMP = 2;
+	
+	public static final Integer USE_IDENTITY_CARD = 1;
+	
+	public static final Integer USE_CAMP_CARD = 2;
+	
 }

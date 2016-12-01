@@ -34,6 +34,9 @@
       <li id="pageG" class="page-container" style="left:100%;display:none"> 
 		 <jsp:include page="mine-pwdchange.jsp"></jsp:include>
       </li>
+      <li id="pageH" class="page-container" style="left:100%;display:none"> 
+		 <jsp:include page="mine-card.jsp"></jsp:include>
+      </li>
     </ul>   
 	</section>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>

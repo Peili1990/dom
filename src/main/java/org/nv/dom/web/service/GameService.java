@@ -18,5 +18,7 @@ public interface GameService {
 	public Map<String, Object> getCharacterListThree(GetCharacterListDTO getCharacterListDTO);
 
 	public Map<String, Object> selectCharacter(SelectCharacterDTO selectCharacterDTO);
+
+	public Map<String, Object> queryCharacter(SelectCharacterDTO selectCharacterDTO);
 	
 }

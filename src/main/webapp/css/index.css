@@ -15,7 +15,7 @@
 	width:50%;
 }
 
-.radio-box .selected{
+.selected{
 	color:#0e90d2;
 }
 
@@ -37,6 +37,14 @@
 #select-character-all #target_select_dummy{
 	border:1px solid #cccccc;
 	width:120px;
+}
+
+#camp_select_dummy{
+	border:1px solid #cccccc;
+}
+
+#identity_select_dummy{
+	border:1px solid #cccccc;
 }
 
 #select-character-all img{

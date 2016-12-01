@@ -161,7 +161,7 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 			result.put("email", email);
 			return result;
 		}
-		if(accountMapper.verifyUserAndEmailStatus(id)!=1){
+		if("register".equals(emailVerifyDTO.getVerifyType()) && accountMapper.verifyUserAndEmailStatus(id)!=1){
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证失败");
 			result.put("email", email);
@@ -222,6 +222,7 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 			}
 		} else if(StringUtil.isEmail(pwdChangeDTO.getAccount())){
 			if(redisClient.get(pwdChangeDTO.getAccount(), "").equals(RedisConstant.WAITING_TO_BE_VERIFY)){
+				redisClient.del(pwdChangeDTO.getAccount());
 				accountMapper.changePasswordDao(pwdChangeDTO);
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "密码重置成功");

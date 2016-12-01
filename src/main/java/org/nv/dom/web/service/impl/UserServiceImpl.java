@@ -19,6 +19,7 @@ import org.nv.dom.domain.message.speech.OfflineSpeech;
 import org.nv.dom.domain.player.PlayerData;
 import org.nv.dom.domain.player.PlayerDataDetail;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
 import org.nv.dom.dto.user.UpdateUserProfileDTO;
@@ -214,6 +215,37 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-	
+	@Override
+	public Map<String, Object> getUserCardList(long userId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			List<UserCard> cardList = userMapper.getUserCardList(userId);
+			result.put("cardList", cardList);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getUserCardStatus(long userId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			Integer availableCardCount = userMapper.getAvailableCardCount(userId);
+			availableCardCount = availableCardCount == null ? 0 : availableCardCount;
+			result.put("cardNum", availableCardCount);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
 
 }

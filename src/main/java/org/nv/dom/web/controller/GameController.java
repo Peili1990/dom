@@ -67,6 +67,13 @@ public class GameController extends BaseController{
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/queryCharacter", method = RequestMethod.POST)
+	public Map<String,Object> queryCharacter(@ModelAttribute("selectCharacterDTO") SelectCharacterDTO selectCharacterDTO, HttpSession session){
+		selectCharacterDTO.setGameId((long) session.getAttribute(PageParamType.game_id_in_session));
+		return gameService.queryCharacter(selectCharacterDTO);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/submitOpreation", method = RequestMethod.POST)
 	public Map<String, Object> submitOpreation(@ModelAttribute("submitOpreationDTO") SubmitOpreationDTO submitOpreationDTO, HttpSession session){
 		submitOpreationDTO.setPlayerId((long) session.getAttribute(PageParamType.player_id_in_session));

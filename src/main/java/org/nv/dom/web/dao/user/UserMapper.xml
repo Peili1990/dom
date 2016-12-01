@@ -160,6 +160,38 @@
 	
 	</update>
 	
-
+	<select id="getUserCardList" parameterType="long" resultType="UserCard">
+	
+		<![CDATA[
+		
+		SELECT
+			dc.type AS cardType,
+			IF(dc.status=1 AND dc.expire_date<NOW(),3,dc.status) AS status,
+			dc.expire_date AS expireDate
+		FROM
+			d_card dc
+		WHERE
+			dc.user_id = #{userId}
+		ORDER BY
+			status,expireDate
+			
+		]]>
+		
+	</select>
+	
+	<select id="getAvailableCardCount" parameterType="long" resultType="Integer">
+		
+		<![CDATA[
+	
+		SELECT
+			SUM(DISTINCT dc.type)
+		FROM
+			d_card dc
+		WHERE
+			dc.user_id = #{userId} AND dc.status = 1 AND dc.expire_date >= NOW() AND dc.type < 3
+	
+		]]>
+		
+	</select>
 
 </mapper>

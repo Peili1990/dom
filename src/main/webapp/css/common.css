@@ -159,6 +159,7 @@ time{
 .group-body {
     display: block;
     padding: .9375rem;
+    position: relative;
 }
 
 .group-body .am-btn{
@@ -266,6 +267,16 @@ time{
 
 .mui-switch.mui-switch-anim:checked:before {
 	transition: left 0.3s;
+}
+
+.chosen{
+	position:absolute;
+	right:0;
+	top:15px;
+	background: url("../img/character-chosen.png") 0px 0px no-repeat;
+	background-size:100%;
+	width:70px;
+	height:30px;
 }
 
 .float-right{

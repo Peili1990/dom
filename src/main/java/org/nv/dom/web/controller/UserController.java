@@ -81,5 +81,19 @@ public class UserController extends BaseController{
 		User user = (User) session.getAttribute(PageParamType.user_in_session);		
 		return userService.getPlayerData(user.getId());
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getUserCardList", method = RequestMethod.POST)
+	public Map<String, Object> getUserCardList(HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);		
+		return userService.getUserCardList(user.getId());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getUserCardStatus", method = RequestMethod.POST)
+	public Map<String, Object> getUserCardStatus(HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);		
+		return userService.getUserCardStatus(user.getId());
+	}
 
 }

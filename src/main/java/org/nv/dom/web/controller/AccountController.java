@@ -72,6 +72,7 @@ public class AccountController extends BaseController {
 	@RequestMapping(value = "/emailverify", method = RequestMethod.GET)
 	public ModelAndView registEmailVerifyView(@ModelAttribute("emailVerifyDTO") EmailVerifyDTO emailVerifyDTO, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		emailVerifyDTO.setVerifyType("register");
 		mav.setViewName("account/email-verify");
 		mav.addAllObjects(accountService.emailverify(emailVerifyDTO));
 		mav.addAllObjects(basicService.getSessionUserService(session));
@@ -108,6 +109,7 @@ public class AccountController extends BaseController {
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
 	public ModelAndView resetPasswordAction(@ModelAttribute("emailVerifyDTO") EmailVerifyDTO emailVerifyDTO, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		emailVerifyDTO.setVerifyType("pwdChange");
 		mav.setViewName("account/password-reset");
 		mav.addAllObjects(accountService.emailverify(emailVerifyDTO));
 		mav.addAllObjects(basicService.getSessionUserService(session));

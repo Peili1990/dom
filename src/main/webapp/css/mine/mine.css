@@ -34,3 +34,54 @@ h3{
     text-overflow: clip;
     display: -webkit-box;
 }
+
+.camp-card, .identity-card {	
+	display:inline-block;
+	width:40%;
+	margin:4%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box;
+	position:relative;
+}
+
+.camp-card {
+	background: url("../../img/mine/camp-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.identity-card {
+	background: url("../../img/mine/identity-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.camp-card time,
+.identity-card time{
+	font-size: 0.8em;
+    font-family: cursive;
+    position: absolute;
+    bottom: 28%;
+    right: 20%;
+    transform: rotate(20deg);
+    -ms-transform: rotate(20deg);
+    -moz-transform: rotate(20deg);
+    -webkit-transform: rotate(20deg);
+    -o-transform: rotate(20deg);
+}
+
+.used, .expired{
+	position:absolute;
+	width:50%;
+	min-height:50px;
+	right:0;
+}
+
+.used{
+	background: url("../../img/mine/card-used.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.expired{
+	background: url("../../img/mine/card-expired.png") 0px 0px no-repeat;
+	background-size:100%;
+}

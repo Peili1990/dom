@@ -80,5 +80,35 @@
 	
 	
 	</select>
+	
+	<update id="consumeUserCardDao" parameterType="SelectCharacterDTO">
+	
+		UPDATE
+			d_card dc
+		SET
+			dc.status = 2
+		WHERE
+			dc.id IN (
+			
+			SELECT 
+				m.id 
+			FROM (
+			
+				SELECT 
+					dc.id
+				FROM	
+					d_card dc, d_player dp
+				WHERE	
+					dc.user_id = dp.user_id AND dp.id = #{playerId} AND dc.type = #{useCard} AND dc.status = 1 AND dc.expire_date>NOW() 	
+				ORDER BY 
+					dc.expire_date
+				LIMIT 1
+			
+				) AS m
+			
+			)
+		
+	
+	</update>
 
 </mapper>

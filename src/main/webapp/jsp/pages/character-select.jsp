@@ -1,69 +1,136 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="default invisible" id="select-character-three">
-	<div class="card">
-		<div class="card-header">
-			<h2 class="card-title">请选择你的外在身份：</h2>
-		</div>
-		<div class="card-body">
-			<ul class="am-avg-sm-3">
-  			
- 			</ul>
-		</div>
-		<hr style="margin:0" class="am-divider am-divider-default" />
-		<div class="card-body">
-			是否选sp<input id="is-sp" class="mui-switch mui-switch-animbg" type="checkbox">
-		</div>
-		<hr style="margin:0" class="am-divider am-divider-default" />
-		<div class="card-body">
-			是否申请先驱<input id="apply-pioneer" class="mui-switch mui-switch-animbg" type="checkbox">
-		</div>
-	</div>
-	<div class="group">
-		<div class="group-body">
-			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
-				value="提交" onclick="selectCharacter()">
-		</div>
-	</div>
-</div>
 
-<div class="default invisible" id="select-character-all">
-	<div class="card">
-		<div class="card-header">
-			<h2 class="card-title">请选择你的外在身份：</h2>
-		</div>
-		<div class="card-body">
-			<div class="group-body">
-				<div class="am-input-group am-input-group-primary">
-					<span class="am-input-group-label">角色</span>
-					<input type="text" id="target_select_dummy" class="am-form-field">
-  					<select id="target_select">	
-					</select>				
+<div class="default">
+	<div class="invisible" id="select-character-all">
+		<div class="card">
+			<div class="card-header">
+				<h2 class="card-title">请选择你的外在身份：</h2>
+			</div>
+			<div class="card-body">
+				<div class="group-body">
+					<div class="am-input-group am-input-group-primary">
+						<span class="am-input-group-label">角色</span>
+						<input type="text" id="target_select_dummy" class="am-form-field">
+  						<select id="target_select">	
+						</select>				
+					</div>
+					<img src="" class="am-comment-avatar">
+					<div class="chosen invisible"></div>				
 				</div>
-				<img src="" class="am-comment-avatar">				
+				<hr style="margin:0" class="am-divider am-divider-default" />
+				<div class="card-body">
+					是否选sp<input id="is-sp-all" class="mui-switch mui-switch-animbg" type="checkbox">
+				</div>
+				<hr style="margin:0" class="am-divider am-divider-default" />
+				<div class="card-body">
+					是否申请先驱<input id="apply-pioneer-all" class="mui-switch mui-switch-animbg" type="checkbox">
+				</div>
+				<hr style="margin:0" class="am-divider am-divider-default" />
+				<div class="card-body">
+					是否使用卡片<input id="use-card-all" class="mui-switch mui-switch-animbg" type="checkbox">
+				</div>
+				<div class="invisible" id="use-card">
+					<div class="card-body invisible" id="card-not-available">
+						你没有可以使用的卡片
+					</div>
+					<div class="card-body invisible" id="card-available">
+						使用    <i class="am-icon-circle-thin am-icon-md invisible" id="identity-card-available">身份卡</i>
+						<i class="am-icon-circle-thin am-icon-md invisible" id="camp-card-available">阵营卡</i>			
+					</div>
+					<div class="card-body invisible" id="use-camp-card">
+						<div class="am-input-group am-input-group-primary">
+							<span class="am-input-group-label">选择阵营</span>
+							<input type="text" id="camp_select_dummy" class="am-form-field">
+  							<select id="camp_select">
+  								<option value ="1">好人方</option>
+  								<option value ="2">杀手方</option>
+							</select>				
+						</div>
+					</div>
+					<div class="card-body invisible" id="use-identity-card">
+						<div class="am-input-group am-input-group-primary">
+							<span class="am-input-group-label">选择身份</span>
+							<input type="text" id="identity_select_dummy" class="am-form-field">
+  							<select id="identity_select">
+  								<option value ="-1">警察</option>
+  								<option value ="10">官员</option>
+  								<option value ="8">刺客</option>
+  								<option value ="9">医生</option>
+  								<option value ="7">牧师</option>
+  								<option value ="11">平民</option>
+  								<option value ="99">杀手</option>
+  								<option value ="22">暴徒</option>
+  								<option value ="20">间谍</option>
+  								<option value ="19">小偷</option>
+  								<option value ="21">巫师</option>
+  								<option value ="23">帮众</option>
+							</select>				
+						</div>
+					</div>
+					
+				</div>
 			</div>
-			<hr style="margin:0" class="am-divider am-divider-default" />
-			<div class="card-body">
-				是否选sp<input id="is-sp-all" class="mui-switch mui-switch-animbg" type="checkbox">
-			</div>
-			<hr style="margin:0" class="am-divider am-divider-default" />
-			<div class="card-body">
-				是否申请先驱<input id="apply-pioneer-all" class="mui-switch mui-switch-animbg" type="checkbox">
+		</div>
+		<div class="group">
+			<div class="group-body">
+				<input type="button" class="am-btn am-btn-secondary sumbit-btn"
+					value="提交" onclick="selectCharacter()">
 			</div>
 		</div>
 	</div>
-	<div class="group">
-		<div class="group-body">
-			<input type="button" class="am-btn am-btn-secondary sumbit-btn"
-				value="提交" onclick="selectCharacter()">
+	
+	<div class="invisible" id="select-character-three">
+		<div class="card">
+			<div class="card-header">
+				<h2 class="card-title">请选择你的外在身份：</h2>
+			</div>
+			<div class="card-body">
+				<ul class="am-avg-sm-3">
+  			
+ 				</ul>
+			</div>
+			<hr style="margin:0" class="am-divider am-divider-default" />
+			<div class="card-body">
+				是否选sp<input id="is-sp" class="mui-switch mui-switch-animbg" type="checkbox">
+			</div>
+			<hr style="margin:0" class="am-divider am-divider-default" />
+			<div class="card-body">
+				是否申请先驱<input id="apply-pioneer" class="mui-switch mui-switch-animbg" type="checkbox">
+			</div>
+		</div>
+		<div class="group">
+			<div class="group-body">
+				<input type="button" class="am-btn am-btn-secondary sumbit-btn"
+					value="提交" onclick="selectCharacter()">
+			</div>
 		</div>
 	</div>
-
+	
+	<input type="hidden" id="selected-character"/>
+	
 </div>
-
-<input type="hidden" id="selected-character"/>
 
 <script type="text/javascript">
+
+	$(function(){
+		$('#camp_select').val('').scroller('destroy').scroller(
+		        $.extend({preset : 'select'}, { 
+		             theme:'android-ics light', 
+		              mode:'scroller', 
+		           display:'bottom', 
+		              lang:'zh'
+		        })
+		);
+		$('#identity_select').val('').scroller('destroy').scroller(
+		        $.extend({preset : 'select'}, { 
+		             theme:'android-ics light', 
+		              mode:'scroller', 
+		           display:'bottom', 
+		              lang:'zh'
+		        })
+		);
+	})
 
 	function getCharacterList(characterSelect){
 		if($("#select-character-three").hasClass("invisible")&&
@@ -73,9 +140,10 @@
 			}
 			else{
 				getCharacterListThree();
-			}
+			}			
 		}
 	}
+	
 	function getCharacterListAll(){
 		$.get('${baseUrl}file/character-list.json',function(data){
 			$.each(data.characters,function(index,character){
@@ -90,13 +158,82 @@
 		        })
 			);
 			$("#select-character-all").removeClass("invisible");
+			adjustContainerHeight(getCurActPage());
 			$("#target_select").change(function(){
+				queryCharacter();
 				var index = $("#target_select option:selected").val()-1;
 				$("#select-character-all").find("img").attr("src",picServer+data.characters[index].avatar);
 				$("#is-sp-all")[0].checked = false;
 				$("#is-sp-all").attr("disabled",data.characters[index].hasSp==1?false:true);
 				$("#selected-character").val(data.characters[index].characterId);
 			})
+		})
+		queryUserCard();
+	}
+	
+	function queryUserCard(){
+		var url = getRootPath() + "/getUserCardStatus";
+		var common = new Common();
+		common.callAction(null,url,function(data){
+			if(!data){
+				return;
+			}
+			switch(data.status){
+			case 1:
+				switch(parseInt(data.cardNum)){
+				case 0:
+					$("#card-not-available").removeClass("invisible");
+					break;
+				case 1:
+					$("#card-available").removeClass("invisible");
+					$("#identity-card-available").removeClass("invisible").click();
+					break;
+				case 2:
+					$("#card-available").removeClass("invisible");
+					$("#camp-card-available").removeClass("invisible").click();
+					break;
+				case 3:
+					$("#card-available").removeClass("invisible");
+					$("#identity-card-available").removeClass("invisible").click();
+					$("#camp-card-available").removeClass("invisible");
+					break;
+				}
+				return;
+			case 0:
+				timeoutHandle();
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}		
+		})
+	}
+	
+	function queryCharacter(){
+		var url = getRootPath() + "/game/queryCharacter";
+		var options = {
+				characterId : $("#target_select option:selected").val()
+		}
+		var common = new Common();
+		common.callAction(options,url,function(data){
+			if(!data){
+				return;
+			}
+			switch(data.status){
+			case 1:
+				if(data.isChosen=="1"){
+					$(".chosen").removeClass("invisible");
+				}else {
+					$(".chosen").addClass("invisible");
+				}
+				return;
+			case 0:
+				timeoutHandle();
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}
 		})
 	}
 
@@ -132,6 +269,7 @@
 						})
 					})
 					$("#select-character-three").removeClass("invisible");
+					adjustContainerHeight(getCurActPage());
 				} else {
 					myInfo("其他玩家正在选择角色，请耐心等待",function(){
 						$(".am-header-left").find("i").click();
@@ -156,18 +294,42 @@
 		}
 		var isSp;
 		var applyPioneer;
+		var useCard = 0;
+		var sign;
+		var camp;
 		if($("#select-character-all").hasClass("invisible")){
 			isSp = $("#is-sp").is(":checked") ? "1":"0";
-			applyPioneer = $("#apply-pioneer").is(":checked") ? "1":"0";
+			applyPioneer = $("#apply-pioneer").is(":checked") ? "1":"0";			
 		} else {
 			isSp = $("#is-sp-all").is(":checked") ? "1":"0";
 			applyPioneer = $("#apply-pioneer-all").is(":checked") ? "1":"0";
+			if($("#use-card-all").is(":checked")){
+				if($("#identity-card-available").hasClass("selected")){
+					useCard = 1;
+					sign = $("#identity_select option:selected").val();
+					if(!sign){
+						myAlert("请选择身份");
+						return;
+					}
+				}
+				if($("#camp-card-available").hasClass("selected")){
+					useCard = 2;
+					camp = $("#camp_select option:selected").val();
+					if(!camp){
+						myAlert("请选择阵营");
+						return;
+					}					
+				}
+			}
 		}
 		var url = getRootPath()+"/game/selectCharacter";
 		var options = {
 			characterId : characterId,
 			isSp : isSp,
-			applyPioneer : applyPioneer
+			applyPioneer : applyPioneer,
+			useCard : useCard,
+			sign : sign,
+			camp : camp
 		};
 		var common = new Common();
 		common.callAction(options, url, function(data) {
@@ -190,5 +352,29 @@
 			}
 		});
 	}
+	
+	$("#use-card-all").change(function(){
+		if($(this).is(":checked")){
+			$("#use-card").removeClass("invisible");
+		}else {
+			$("#use-card").addClass("invisible");
+		}
+		adjustContainerHeight(getCurActPage());
+	})
+	
+	$("#identity-card-available").click(function(){
+		$("#camp-card-available").removeClass("selected").removeClass("am-icon-check-circle");
+		$(this).addClass("selected").addClass("am-icon-check-circle");
+		$("#use-camp-card").addClass("invisible");
+		$("#use-identity-card").removeClass("invisible");
+	})
+	
+	$("#camp-card-available").click(function(){
+		$("#identity-card-available").removeClass("selected").removeClass("am-icon-check-circle");
+		$(this).addClass("selected").addClass("am-icon-check-circle");
+		$("#use-camp-card").removeClass("invisible");
+		$("#use-identity-card").addClass("invisible");
+	})
+	
 
 </script>

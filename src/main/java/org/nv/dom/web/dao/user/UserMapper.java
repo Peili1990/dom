@@ -7,6 +7,7 @@ import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.message.chat.ChatInfo;
 import org.nv.dom.domain.message.chat.OfflineChat;
 import org.nv.dom.domain.message.speech.OfflineSpeech;
+import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
 import org.nv.dom.dto.user.UpdateUserProfileDTO;
@@ -67,7 +68,16 @@ public interface UserMapper {
 	 */
 
 	public int updateChatRecordDao(GetChatRecordDTO getChatRecordDTO);
+	
+	/**
+	 * <p>获取卡片</p>
+	 */
 
+	public List<UserCard> getUserCardList(long userId);
 	
+	/**
+	 * <p>获取用户报名能用卡片</p>
+	 */
 	
+	public Integer getAvailableCardCount(long userId);
 }
