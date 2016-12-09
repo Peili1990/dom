@@ -196,7 +196,7 @@ function appendSpeech(speech){
 	} else {
 		builder.append(playerInfo && speech.playerId == playerInfo.playerId ? '<li class="am-comment-flip">':'<li class="am-comment">');
 		builder.appendFormat('<input type="hidden" value="{0}">',speech.id);
-		builder.appendFormat('<a ><img src="{0}{1}" class="am-comment-avatar"></a>',picServer,speech.avatar);
+		builder.appendFormat('<a ><div class="hat"></div><img src="{0}{1}" class="am-comment-avatar"></a>',picServer,speech.avatar);
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 		builder.appendFormat('<a class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
 		if(speech.type == 1){

@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="${baseUrl}assets/css/amazeui.min.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}mobiscroll/css/mobiscroll.custom-2.6.2.min.css">
+<link rel="stylesheet" type="text/css" href="${baseUrl}css/festival/christmax.css">
 <link rel="apple-touch-icon" href="${baseUrl}img/nv-logo.png"/>
 <script src="${baseUrl}js/common/jquery-3.0.0.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>

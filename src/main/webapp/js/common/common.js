@@ -379,7 +379,7 @@ function pageSwitch(pageA,pageB,startNum,endNum,callback){
 }
 
 function adjustContainerHeight(page){
-	$("#container").css({"height":$(page+' .default').height()+100>$("html").height()?$(page+' .default').height()+100+"px":$("html").height() });
+	$("#container").css({"height":$(page+' .default').height()+150>$("html").height()?$(page+' .default').height()+150+"px":$("html").height() });
 }
 
 function setGoback(pageA,pageB,startNum,endNum,showChatBar,curUrl,text){

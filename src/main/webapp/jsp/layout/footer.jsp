@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
   <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
       id="nv-footer">
+      
       <ul class="am-navbar-nav am-cf am-avg-sm-4">
+      	  <div class="christmas-footer"></div>
           <li >
             <a href="${ baseUrl }index" class="">
                   <span class="am-icon-table" ></span>
@@ -76,6 +78,10 @@
 	$(window).bind('unload', function(e) {
 		setCookie("refresh",true,"5s");
 	});
+	
+	$(function(){
+		$(".christmas-footer").css({"height":$("body").width()*0.26+"px","top":-$("body").width()*0.26+28+"px"});
+	})
 	
 	function getOfflineMessage(){
 		var url = getRootPath() + "/getOfflineMessage";
