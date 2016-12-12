@@ -369,6 +369,7 @@ function isChatBarVisible(){
 }
 
 function pageSwitch(pageA,pageB,startNum,endNum,callback){
+	$(".christmas-footer").fadeIn();
 	window.scroll(0,0);
 	setGoback(pageB,pageA,startNum,endNum,isChatBarVisible(),window.location.href,$(".am-header-title").text());
 	eval(callback);
@@ -379,12 +380,13 @@ function pageSwitch(pageA,pageB,startNum,endNum,callback){
 }
 
 function adjustContainerHeight(page){
-	$("#container").css({"height":$(page+' .default').height()+150>$("html").height()?$(page+' .default').height()+150+"px":$("html").height() });
+	$("#container").css({"height":$(page+' .default').height()+100>$("html").height()?$(page+' .default').height()+100+"px":$("html").height() });
 }
 
 function setGoback(pageA,pageB,startNum,endNum,showChatBar,curUrl,text){
 	$("#icon-arrow-"+startNum).css({"display":"none"});
 	$("#icon-arrow-"+endNum).css({"display":"block"}).unbind("click").click(function(){
+		$(".christmas-footer").fadeIn();
 		changeURL(removeQueryString());
 		window.scroll(0,0);
 		$('#pages').css({'-webkit-transform' : 'translate3d(-'+startNum+'00%, 0px, 0px)' , '-webkit-transition' : '300ms'});

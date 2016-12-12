@@ -83,6 +83,17 @@
 		$(".christmas-footer").css({"height":$("body").width()*0.26+"px","top":-$("body").width()*0.26+28+"px"});
 	})
 	
+	$(window).scroll(function(){
+		console.clear();
+		console.log($(window).scrollTop() + $(window).height() + 30);
+		console.log($(document).height());
+		if(($(window).scrollTop() + $(window).height() + 100) >= $(document).height()){			
+			$(".christmas-footer").fadeOut();
+		} else {
+			$(".christmas-footer").fadeIn();
+		}
+	})
+	
 	function getOfflineMessage(){
 		var url = getRootPath() + "/getOfflineMessage";
 		var common = new Common();

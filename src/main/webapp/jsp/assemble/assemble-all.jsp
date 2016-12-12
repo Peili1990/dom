@@ -1,29 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="default" id="newspaper-list">
-	<c:forEach items="${ newspaperList }" var="newspaper" varStatus="newspaperNo">
-	 	<div class="card" onclick="pageSwitch('#pageA','#pageB',0,1,'getNewspaperDetail(${newspaper.newspaperId},${newspaperNo.index})')">
-			<div class="card-header">
-				<h2 class="card-title">${newspaper.header }</h2>
-				<span class="badge badge-alert badge-rounded badge-card"></span>
-				<input type="hidden" name="newspaper-id" value="${ newspaper.newspaperId }">
+<div class="default">
+	<div id="newspaper-list">
+		<c:forEach items="${ newspaperList }" var="newspaper" varStatus="newspaperNo">
+	 		<div class="card" onclick="pageSwitch('#pageA','#pageB',0,1,'getNewspaperDetail(${newspaper.newspaperId},${newspaperNo.index})')">
+				<div class="card-header">
+					<h2 class="card-title">${newspaper.header }</h2>
+					<span class="badge badge-alert badge-rounded badge-card"></span>
+					<input type="hidden" name="newspaper-id" value="${ newspaper.newspaperId }">
+				</div>
 			</div>
-		</div>
-	</c:forEach>
-	<c:if test="${ replayEssay!=null }">
-		<div class="card" onclick="pageSwitch('#pageA','#pageC',0,1,'getEssayDetail(${replayEssay.essayId})')">
-			<div class="card-header">
-				<h2 class="card-title">${replayEssay.header }</h2>
+		</c:forEach>
+		<c:if test="${ replayEssay!=null }">
+			<div class="card" onclick="pageSwitch('#pageA','#pageC',0,1,'getEssayDetail(${replayEssay.essayId})')">
+				<div class="card-header">
+					<h2 class="card-title">${replayEssay.header }</h2>
+				</div>
 			</div>
+		</c:if>
+		<div class="nv-guide invisible">
+			<img src="">
+			<p>暂未参加任何版杀，你可以<br><a class="nv-link" onclick="getAllGames()">查看其他版杀</a></p>
 		</div>
-	</c:if>
-	<div class="nv-guide invisible">
-		<img src="">
-		<p>暂未参加任何版杀，你可以<br><a class="nv-link" onclick="getAllGames()">查看其他版杀</a></p>
 	</div>
-</div>
-
-<div class="default invisible" id="game-list">
+	
+	<div class="invisible" id="game-list">
+	
+	</div>
 	
 </div>
 
@@ -66,7 +69,7 @@ function setRedspotOnpaper(){
 
 function getAllGames(){
 	$("#icon-options").dropdown('close');
-	$("#icon-arrow").click();
+	$("#icon-arrow-1").click();
 	if($("#game-list").children().length > 0){
 		return;
 	}
@@ -93,6 +96,7 @@ function getAllGames(){
 			})
 			$("#newspaper-list").addClass("invisible");
 			$("#game-list").removeClass("invisible");
+			adjustContainerHeight(getCurActPage());
 		}
 	})
 }
