@@ -116,14 +116,19 @@
 	
 	<select id="getEssayList" parameterType="long" resultType="Essay">
 	
+		<![CDATA[
+	
 		SELECT
 			de.id AS essayId,
 			du.id AS userId,
 			du.nickname AS nickname,
 			du.avatar AS avatar,
 			de.header AS header,
-			de.content AS content,
-			de.create_time AS createTime	
+			CONCAT(substring_index(de.content,'<br>',3),'...') AS content,
+			de.create_time AS createTime
+			
+		]]>	
+			
 		FROM
 			d_essay de, d_user du
 		WHERE
