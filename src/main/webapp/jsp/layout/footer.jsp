@@ -84,9 +84,6 @@
 	})
 	
 	$(window).scroll(function(){
-		console.clear();
-		console.log($(window).scrollTop() + $(window).height() + 30);
-		console.log($(document).height());
 		if(($(window).scrollTop() + $(window).height() + 100) >= $(document).height()){			
 			$(".christmas-footer").fadeOut();
 		} else {

@@ -37,6 +37,9 @@
 		$(".am-comment-avatar").click(function(){
 			$("#file").click();
 		})
+		$(".christmas-header").click(function(){
+			$("#file").click();
+		})
 	
 	</script>	
 </div>
