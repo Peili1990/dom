@@ -159,8 +159,8 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 						NVTermConstant.GOOD_CAMP : NVTermConstant.KILLER_CAMP);
 				selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
 			}
-			if(gameMapper.queryCanUseCardDao(selectCharacterDTO)>0 || 
-					playerMapper.consumeUserCardDao(selectCharacterDTO)!=1){
+			if(selectCharacterDTO.getUseCard()!=0 && (gameMapper.queryCanUseCardDao(selectCharacterDTO)>0 || 
+					 playerMapper.consumeUserCardDao(selectCharacterDTO)!=1)){
 				result.put(PageParamType.BUSINESS_STATUS, -3);
 				result.put(PageParamType.BUSINESS_MESSAGE, "使用卡片失败");
 				return result;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="default" id="newspaper-list">
+<div class="default" >
+	<div id="newspaper-list">
 	<c:forEach items="${ newspaperList }" var="newspaper" varStatus="newspaperNo">
 	 	<div class="card" onclick="pageSwitch('#pageA','#pageB',0,1,'getNewspaperDetail(${newspaper.newspaperId},${newspaperNo.index})')">
 			<div class="card-header">
@@ -21,11 +22,14 @@
 		<img src="">
 		<p>暂未参加任何版杀，你可以<br><a class="nv-link" onclick="getAllGames()">查看其他版杀</a></p>
 	</div>
+	</div>
+	
+	<div class="invisible" id="game-list">
+	
+	</div>
 </div>
 
-<div class="default invisible" id="game-list">
-	
-</div>
+
 
 <script type="text/javascript">
 
