@@ -62,6 +62,7 @@
 		} else {
 			$("#chat-list").append(builder.toString());
 		}
+		adjustContainerHeight(getCurActPage());
 	}
 	
 	function setRedspotOnChat(){

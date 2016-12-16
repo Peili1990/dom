@@ -58,9 +58,9 @@
 				</c:choose>
 				<br>实际身份：
 				<c:choose>
-					<c:when test="${ playerInfo != null && playerInfo.sign != 0 }">
+					<c:when test="${ playerInfo != null && playerInfo.sign != null }">
 						${ playerInfo.identityDesc }
-						<c:if test="${ signAvatar != null }">
+						<c:if test="${ playerInfo.signAvatar != null }">
 							<img src="${picServer}${ playerInfo.signAvatar }" class="am-comment-avatar sign-avatar">
 						</c:if>
 					</c:when>

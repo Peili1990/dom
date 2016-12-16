@@ -40,7 +40,7 @@
 				$("#nv-chatbar").removeClass("invisible");
 				$("#use-gesture").addClass("invisible");
 				$("#show-emotion").removeClass("invisible");
-				$("#send-message").on("click",function(){
+				$("#send-message").unbind("click").click(function(){
 					sendMessage(chatId,toUserId);
 				})
 				redspot = $("#"+chatId+" .badge")

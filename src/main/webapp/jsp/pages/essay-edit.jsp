@@ -16,7 +16,7 @@
 		$("#nv-footer").removeClass("invisible");
 		$(".essay-edit textarea").css({"height":$(window).height()-140+"px"});
 		$("#icon-options").css({"display":"none"});
-		$("#icon-finish").css({"display":"block"}).click(function(){
+		$("#icon-finish").css({"display":"block"}).unbind("click").click(function(){
 			if(essayId){
 				submitEssay(essayId);
 			} else {
