@@ -14,8 +14,11 @@
 
 function getEssayList(){
 	var url = getRootPath() + "/getEssayList";
+	var options = {
+			userId : userId
+	}
 	var common = new Common();
-	common.callAction(null,url,function(data){
+	common.callAction(options,url,function(data){
 		if(!data){
 			return;
 		}

@@ -140,10 +140,10 @@ time{
     display: -ms-flexbox;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: flex-start;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center;
+    align-items: baseline;
     min-height: 2.75rem;
     padding: .625rem .9375rem;
 }
@@ -438,6 +438,20 @@ time{
 	max-width:480px;
 	left:auto;
 }
+
+.loading-box{
+	text-align: center;
+	height:0px;
+	overflow:hidden;
+	padding-top:10px;
+}
+
+.loadmore,.nomore{
+	text-align:center;
+	margin:10px auto;
+}
+
+
 
 
 

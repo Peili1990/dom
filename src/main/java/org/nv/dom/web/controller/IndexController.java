@@ -48,7 +48,7 @@ public class IndexController extends BaseController {
 			mav.addObject("playerInfo", playerService.getPlayerInfoByUserId(user.getId()));
 			mav.addAllObjects(assembleService.getLatestNewspaperInfo(userInfo.getGameId()));
 		}	
-		mav.addAllObjects(essayService.getEssayList(0));
+		mav.addAllObjects(essayService.getEssayList(null));
 		mav.addObject("infoMessage",systemService.getInfoMessage());
 		return mav;
 	}

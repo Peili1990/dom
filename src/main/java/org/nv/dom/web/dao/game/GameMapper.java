@@ -41,6 +41,11 @@ public interface GameMapper {
 	 */
 	public int applyForGameDao(ApplyDTO applyDTO);
 	/**
+	 * <p>报名版杀第二步</p>
+	 */
+	public int applyForGameDaoSecStep(long playerId);
+	
+	/**
 	 * <p>查询玩家当前的状态</p>
 	 */
 	public Integer queryCurStatusDao(long playerId);

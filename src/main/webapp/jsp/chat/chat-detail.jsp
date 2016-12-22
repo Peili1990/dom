@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="default">
 
+
+    <div class="loading-box">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
 	<ul class="am-comments-list am-comments-list-flip" id="chat-detail-list">
 
 	</ul>
@@ -16,6 +20,7 @@
 		if(toUserId == 0 ){
 			return;
 		}
+		$("#chat-detail-list").empty();
 		var chatId = userId > toUserId ? toUserId+"-"+userId : userId+"-"+toUserId;
 		activeToUserId = toUserId;
 		pageNum = 0;
@@ -31,7 +36,6 @@
 			}
 			switch(data.status){
 			case 1:
-				$("#chat-detail-list").empty();
 				$.each(data.chatDetails,function(index,detail){
 					appendChatDetail(detail,true);
 				})
@@ -51,11 +55,11 @@
 					redspot.addClass("invisible");
 					setRedspot();
 				}	
-				$(window).scroll(throttle(function(){
-					if($(window).scrollTop()<=0){
-						loadchatRecord(chatId)
+				$(window).scroll(function(){
+					if($(window).scrollTop()==0){
+						loadchatRecord(chatId);
 					}
-				},2000,false));
+				});
 				return;
 			case 0:
        			timeoutHandle();
@@ -122,21 +126,23 @@
 				pageNum : pageNum
 		}
 		var common = new Common();
+		myLoading();
 		common.callAction(options,url,function(data){
 			if(!data){
 				return;
 			}
 			switch(data.status){
-			case 1:
+			case 1:			
 				$.each(data.chatDetails,function(index,detail){
 					appendChatDetail(detail,true);
-				})
+				})				
+				myLoadingClose();
 				return;
 			case 0:
        			timeoutHandle();
        			return;
        		default:
-       			myAlert(data.message);
+       			myLoadingClose();
        			return;
        		}
 		})

@@ -76,8 +76,6 @@
 				redspot.addClass("invisible");
 			}
 		})
-	}
-
-	
+	}	
 
 </script>

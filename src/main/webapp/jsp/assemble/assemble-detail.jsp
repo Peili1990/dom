@@ -49,6 +49,8 @@ var replaceList;
 var playerInfo = ${playerInfoStr}
 
 function getNewspaperDetail(newspaperId,newspaperNo){
+	$("#newspaper-content").empty();
+	$("#speech-list").empty();
 	var url = getRootPath() + "/getAssembleDetail";
 	var options = {
 			newspaperId : newspaperId
@@ -62,7 +64,6 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 		case 1:
 			newspaperDetail = data.newspaperDetail;
 			var builder = new StringBuilder();
-			$("#newspaper-content").empty();
 			builder.appendFormat("<div class='card-header'><h2 class='card-title'>{0}</h2></div>",newspaperDetail.header);
 			if(newspaperDetail.headline){
 				builder.appendFormat("<div class='card-body'><h2 class='card-title'>{0}</h2>",newspaperDetail.headline);
@@ -90,7 +91,6 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 				$("#seat-table").append(newspaperDetail.seatTable);
 			}
 			adjustContainerHeight(getCurActPage());
-			$("#speech-list").empty();
 			if(newspaperDetail.type == 2){	
 				$.each(data.speechList,function(index,speech){
 					appendSpeech(speech);

@@ -1,11 +1,12 @@
 package org.nv.dom.dto.message;
 
-public class GetChatRecordDTO {
+import org.nv.dom.dto.BaseDTO;
+
+public class GetChatRecordDTO extends BaseDTO{
 	
 	private String chatId;
 	private long userId;
-	private Integer pageNum;
-	private Integer offset;
+	
 	public String getChatId() {
 		return chatId;
 	}
@@ -18,18 +19,7 @@ public class GetChatRecordDTO {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	public Integer getPageNum() {
-		return pageNum;
-	}
-	public void setPageNum(Integer pageNum) {
-		this.pageNum = pageNum;
-	}
-	public Integer getOffset() {
-		return offset;
-	}
-	public void setOffset(Integer offset) {
-		this.offset = offset;
-	}
+	
 	
 	
 	

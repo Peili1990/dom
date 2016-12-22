@@ -6,6 +6,8 @@ public class ApplyDTO {
 	
 	private long gameId;
 	
+	private long playerId;	
+	
 	private Integer playerNum;
 	
 	private String characterSelect;
@@ -21,6 +23,12 @@ public class ApplyDTO {
 	}
 	public void setGameId(long gameId) {
 		this.gameId = gameId;
+	}
+	public long getPlayerId() {
+		return playerId;
+	}
+	public void setPlayerId(long playerId) {
+		this.playerId = playerId;
 	}
 	public Integer getPlayerNum() {
 		return playerNum;

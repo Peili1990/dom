@@ -8,6 +8,7 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.essay.Essay;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.essay.UpdateEssayStatusDTO;
+import org.nv.dom.dto.essay.GetEssayListDTO;
 import org.nv.dom.dto.essay.SubmitCommentDTO;
 import org.nv.dom.web.service.EssayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +49,8 @@ public class EssayController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getEssayList", method = RequestMethod.POST)
-	public Map<String, Object> getEssayList(HttpSession session) {
-		User user = (User) session.getAttribute(PageParamType.user_in_session);	
-		return essayService.getEssayList(user.getId());
+	public Map<String, Object> getEssayList(@ModelAttribute("getEssayListDTO") GetEssayListDTO getEssayListDTO,HttpSession session) {
+		return essayService.getEssayList(getEssayListDTO);
 	}
 	
 	@ResponseBody

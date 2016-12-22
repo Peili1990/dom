@@ -9,6 +9,7 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.essay.Comment;
 import org.nv.dom.domain.essay.Essay;
 import org.nv.dom.dto.essay.UpdateEssayStatusDTO;
+import org.nv.dom.dto.essay.GetEssayListDTO;
 import org.nv.dom.dto.essay.SubmitCommentDTO;
 import org.nv.dom.web.dao.essay.EssayMapper;
 import org.nv.dom.web.dao.game.GameMapper;
@@ -92,16 +93,26 @@ public class EssayServiceImpl implements EssayService {
 	}
 
 	@Override
-	public Map<String, Object> getEssayList(long userId) {
+	public Map<String, Object> getEssayList(GetEssayListDTO getEssayListDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			List<Essay> essayList = essayMapper.getEssayList(userId);
-			result.put("essayList", essayList);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取成功");
+			if(getEssayListDTO == null){
+				getEssayListDTO = new GetEssayListDTO();
+				getEssayListDTO.setPageNum(0);
+				getEssayListDTO.setOffset(getEssayListDTO.getPageNum()*10);
+			}		
+			List<Essay> essayList = essayMapper.getEssayList(getEssayListDTO);
+			if(essayList.size()==0){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "没有更多内容");
+			} else {
+				result.put("essayList", essayList);
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "获取成功");
+			}
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}
 		return result;

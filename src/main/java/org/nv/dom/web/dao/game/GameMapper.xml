@@ -83,7 +83,7 @@
 	
 	</select>
 	
-	<insert id="applyForGameDao" parameterType="ApplyDTO">
+	<insert id="applyForGameDao" parameterType="ApplyDTO" useGeneratedKeys="true" keyProperty="playerId">
 	
 		INSERT INTO d_player (
 			user_id,
@@ -104,6 +104,18 @@
 			2
 			</if>
 		)
+	
+	</insert>
+	
+	<insert id="applyForGameDaoSecStep" parameterType="long">
+	
+		INSERT INTO d_player_record (
+			player_id
+		) 
+		VALUES (
+			#{playerId}
+		)
+	
 	
 	</insert>
 	
@@ -147,29 +159,30 @@
 	</select>
 	
 	
-	<insert id="selectCharacterDAO" parameterType="SelectCharacterDTO">
+	<update id="selectCharacterDAO" parameterType="SelectCharacterDTO">
 	
-		INSERT INTO d_player_record (
-			player_id,
-			character_id,
-			is_sp,
-			apply_pioneer,
-			use_card,
-			camp,
-			sign,
-			identity_desc
-		) 
-		VALUES (
-			#{playerId},
-			#{characterId},
-			#{isSp},
-			#{applyPioneer},
-			#{useCard},
-			#{camp},
-			#{sign},
-			#{identityDesc}
-		)
-	</insert>
+		UPDATE 
+			d_player_record dpr
+		SET
+			dpr.character_id = #{characterId},
+			dpr.is_sp = #{isSp},
+			dpr.apply_pioneer = #{applyPioneer}
+			<if test="useCard!=0">
+			,dpr.use_card = #{useCard}
+			</if>
+			<if test="camp!=null">
+			,dpr.camp = #{camp}
+			</if>
+			<if test="sign!=null">
+			,dpr.sign = #{sign}
+			</if>
+			<if test="identityDesc!=null">
+			,dpr.identity_desc = #{identityDesc}
+			</if>
+		WHERE
+			dpr.player_id = #{playerId}
+			
+	</update>
 	
 	<select id="queryCanUseCardDao" parameterType="SelectCharacterDTO" resultType="Integer">
 	

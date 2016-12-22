@@ -4,8 +4,8 @@ public enum GameFinalResult {
 	
 	GOOD_CAMP_WIN(1,"好人方胜"),
 	KILL_CAMP_WIN(2,"杀手方胜"),
-	TIED(3,"平局"),
-	CONTRACT_CAMP_WIN(4,"契约方胜"),
+	CONTRACT_CAMP_WIN(3,"契约方胜"),
+	TIED(4,"平局"),
 	CANCELED(9,"流局");
 	
 	private final Integer code;

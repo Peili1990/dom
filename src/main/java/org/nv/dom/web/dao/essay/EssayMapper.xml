@@ -114,7 +114,7 @@
 		
 	</insert>
 	
-	<select id="getEssayList" parameterType="long" resultType="Essay">
+	<select id="getEssayList" parameterType="GetEssayListDTO" resultType="Essay">
 	
 		<![CDATA[
 	
@@ -133,12 +133,15 @@
 			d_essay de, d_user du
 		WHERE
 			du.id = de.user_id AND de.status = 1
-		<if test="_parameter>0">
+		<if test="userId>0">
 			AND de.user_id = #{userId}
 		</if>
 		ORDER BY
 			de.update_time DESC
-		LIMIT 10
+		<if test="userId==0">
+		LIMIT 
+			#{offset},10
+		</if>
 			
 	
 	</select> 

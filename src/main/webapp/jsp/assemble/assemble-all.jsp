@@ -97,6 +97,7 @@ function getAllGames(){
 			})
 			$("#newspaper-list").addClass("invisible");
 			$("#game-list").removeClass("invisible");
+			adjustContainerHeight(getCurActPage());
 		}
 	})
 }

@@ -135,12 +135,17 @@
 	function getCharacterList(characterSelect){
 		if($("#select-character-three").hasClass("invisible")&&
 				$("#select-character-all").hasClass("invisible")){
-			if(characterSelect == 1){
+			if(characterSelect == 1){			
 				getCharacterListAll();
+				queryUserCard();
 			}
-			else{
+			else if(characterSelect == 3){
+				myInfo("修改外在身份时，不可撤销已使用卡片或使用额外的卡片！");
+				getCharacterListAll();
+			}	
+			else {
 				getCharacterListThree();
-			}			
+			}
 		}
 	}
 	
@@ -168,7 +173,6 @@
 				$("#selected-character").val(data.characters[index].characterId);
 			})
 		})
-		queryUserCard();
 	}
 	
 	function queryUserCard(){

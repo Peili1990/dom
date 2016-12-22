@@ -73,6 +73,15 @@
   </div>
 </div>
 
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-loading">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">正在加载...</div>
+    <div class="am-modal-bd">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
+  </div>
+</div>
+
 <div class="dw-hidden" role="alert"></div>
 
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default invisible" id="nv-chatbar">

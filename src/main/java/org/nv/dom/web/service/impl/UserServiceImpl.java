@@ -170,12 +170,17 @@ public class UserServiceImpl implements UserService {
 			} else {
 				getChatRecordDTO.setOffset(10*getChatRecordDTO.getPageNum());
 				List<ChatDetail> chatDetails = userMapper.getChatRecordDao(getChatRecordDTO);
-				if(getChatRecordDTO.getPageNum() == 0){
-					userMapper.updateChatRecordDao(getChatRecordDTO);
+				if(chatDetails.size()==0){
+					result.put(PageParamType.BUSINESS_STATUS, -4);
+					result.put(PageParamType.BUSINESS_MESSAGE, "没有更多聊天记录");
+				} else {
+					if(getChatRecordDTO.getPageNum() == 0){
+						userMapper.updateChatRecordDao(getChatRecordDTO);
+					}
+					result.put("chatDetails", chatDetails);
+					result.put(PageParamType.BUSINESS_STATUS, 1);
+					result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天记录成功");
 				}
-				result.put("chatDetails", chatDetails);
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天记录成功");
 			}
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);

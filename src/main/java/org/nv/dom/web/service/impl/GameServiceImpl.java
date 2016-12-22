@@ -90,7 +90,8 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			} else if(gameMapper.getPlayerNumDao(applyDTO.getGameId()) == applyDTO.getPlayerNum()){
 				result.put(PageParamType.BUSINESS_STATUS, -5);
 				result.put(PageParamType.BUSINESS_MESSAGE, "人数已报满");
-			} else if(gameMapper.applyForGameDao(applyDTO) == 1){
+			} else if(gameMapper.applyForGameDao(applyDTO) == 1 && 
+					gameMapper.applyForGameDaoSecStep(applyDTO.getPlayerId()) == 1){				
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "报名成功");
 			} else {

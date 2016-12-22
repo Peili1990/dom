@@ -47,14 +47,13 @@
   	webSocket.onerror = function(event) {
 		myAlert("与报社取得联系中...");
 	};
+	
+	$(function(){
+		getOfflineMessage();
+	})
 
 	webSocket.onopen = function(event) {
-		refresh = getCookie("refresh");
-		if(!refresh){
-			getOfflineMessage();
-		} else {
-			setRedspot();
-		}
+
 	}
 
 	webSocket.onmessage = function(event) {
@@ -72,10 +71,6 @@
 			break;
 		}
 	};
-	
-	$(window).bind('unload', function(e) {
-		setCookie("refresh",true,"5s");
-	});
 	
 	function getOfflineMessage(){
 		var url = getRootPath() + "/getOfflineMessage";
