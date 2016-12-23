@@ -617,3 +617,13 @@ function replaceEmoji(content,emoji){
 	})
 }
 
+function showSpoiler(obj){
+	if (obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { 
+		obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; 
+		obj.innerHTML = '隐藏'; 
+	} else { 
+		obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none';  
+		obj.innerHTML = '显示'; 
+	}
+}
+

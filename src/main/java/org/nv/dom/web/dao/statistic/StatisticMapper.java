@@ -14,11 +14,17 @@ public interface StatisticMapper {
 	
 	public Integer getKillerCampTimes(long userId);
 	
+	public Integer getContractCampTimes(long userId);
+	
 	public Integer getGoodCampWinTimes(long userId);
 	
 	public Integer getKillerCampWinTimes(long userId);
 	
+	public Integer getContractCampWinTimes(long userId);	
+	
 	public Integer getTiedTimes(long userId);
+	
+	
 	
 	
 
