@@ -474,6 +474,15 @@ time{
 	border: 1px inset;
 }
 
+.no-border-side{
+	border-left:none;
+	border-right:none;
+}
+
+.index-style{
+	padding:0;
+	margin:-1.25rem;
+}
 
 
 

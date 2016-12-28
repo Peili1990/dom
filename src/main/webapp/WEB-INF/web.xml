@@ -70,7 +70,7 @@
 	
 	<filter>
 		<filter-name>initDataFilter</filter-name>
-		<filter-class>org.nv.dom.filter.InitDataFilter</filter-class>
+		<filter-class>org.nv.dom.web.filter.InitDataFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
