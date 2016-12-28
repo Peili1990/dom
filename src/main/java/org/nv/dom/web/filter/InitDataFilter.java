@@ -13,20 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nv.dom.cache.CacheData;
-import org.nv.dom.web.dao.rule.RuleMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class InitDataFilter extends HttpServlet implements Filter {
-	
-	
+public class InitDataFilter extends HttpServlet implements Filter {	
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Autowired
-	RuleMapper ruleMapper;
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
