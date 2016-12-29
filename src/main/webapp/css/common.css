@@ -124,6 +124,7 @@ time{
 .card-body {
     padding: 1.25rem .9375rem;
     line-height: 1.6;
+    overflow:hidden;
 }
 
 .card-header {
