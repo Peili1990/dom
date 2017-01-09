@@ -444,7 +444,6 @@ time{
 	text-align: center;
 	height:0px;
 	overflow:hidden;
-	padding-top:10px;
 }
 
 .loadmore,.nomore{
@@ -462,7 +461,7 @@ time{
 }
 
 .spoiler-button{
-	
+	display:inline-block;
 	width:60px;
 	font-size:13px;
 	margin-left:5px;

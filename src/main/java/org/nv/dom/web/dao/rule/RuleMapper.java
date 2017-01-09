@@ -17,5 +17,7 @@ public interface RuleMapper {
 	public RuleIndex selectRuleIndex(Integer chapterId);
 	
 	public String getRuleIndexContent(GetRuleContentDTO getRuleContentDTO);
+	
+	
 
 }

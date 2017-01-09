@@ -1,5 +1,6 @@
 package org.nv.dom.enums;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +57,7 @@ public enum IdentityCode {
 	
 	public static Integer randomIdentitiyCode(Integer camp,Integer playNum){
 		if(NVTermConstant.GOOD_CAMP.equals(camp)){
-			List<Integer> temp = Arrays.asList(goodCamp);
+			List<Integer> temp = new ArrayList<>(Arrays.asList(goodCamp));
 			if(playNum == 22){
 				temp.add(-1);
 				temp.add(11);
@@ -65,7 +66,7 @@ public enum IdentityCode {
 			return temp.get(0);
 		}
 		if(NVTermConstant.KILLER_CAMP.equals(camp)){
-			List<Integer> temp = Arrays.asList(killerCamp);
+			List<Integer> temp = new ArrayList<>(Arrays.asList(killerCamp));
 			if(playNum == 22){
 				temp.add(99);				
 			}

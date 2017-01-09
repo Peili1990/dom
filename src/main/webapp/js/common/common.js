@@ -326,11 +326,14 @@ function changeURL(url){
 }
 
 function myLoading(){
-	$('.loading-box').animate({height:"30px"});
+	$('.loading-box').css("display","block").animate({height:"30px"});
 }
 
 function myLoadingClose(){
-	$('.loading-box').animate({height:"0px"});
+	$('.loading-box').animate({height:"0px"},function(){
+		$(this).css("display","none");
+		adjustContainerHeight(getCurActPage());
+	})
 }
 
 

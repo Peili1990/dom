@@ -10,4 +10,5 @@ public interface RuleService {
 
 	Map<String, Object> getRuleContent(GetRuleContentDTO getRuleContentDTO);
 
+
 }
