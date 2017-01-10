@@ -26,7 +26,7 @@
 		 <jsp:include page="mine-essay.jsp"></jsp:include>
       </li>
       <li id="pageE" class="page-container" style="left:200%;display:none"> 
-		 <jsp:include page="../pages/essay-detail.jsp"></jsp:include>
+		 <jsp:include page="mine-card-detail.jsp"></jsp:include>
       </li>
       <li id="pageF" class="page-container" style="left:100%;display:none"> 
 		 <jsp:include page="mine-data.jsp"></jsp:include>

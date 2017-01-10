@@ -17,6 +17,7 @@ import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
+import org.nv.dom.enums.CardType;
 import org.nv.dom.enums.GameFinalResult;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.IdentityCode;
@@ -154,23 +155,23 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
 			return result;
 		}
-		try{
-			if(NVTermConstant.USE_IDENTITY_CARD.equals(selectCharacterDTO.getUseCard())){
-				selectCharacterDTO.setCamp(selectCharacterDTO.getSign() <= IdentityCode.CIVILIAN.getCode()?
-						NVTermConstant.GOOD_CAMP : NVTermConstant.KILLER_CAMP);
-				selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
-			}
-			if(selectCharacterDTO.getUseCard()!=0 && (gameMapper.queryCanUseCardDao(selectCharacterDTO)>0 || 
+		try{			
+			if(selectCharacterDTO.getUseCard()!=CardType.NONE.getCode() && (gameMapper.queryCanUseCardDao(selectCharacterDTO)>0 ||
+					(CardType.PRIVILEGE.getCode().equals(selectCharacterDTO.getUseCard()) && gameMapper.deleteSelectedCharacterDao(selectCharacterDTO)!=1) ||
 					 playerMapper.consumeUserCardDao(selectCharacterDTO)!=1)){
 				result.put(PageParamType.BUSINESS_STATUS, -3);
 				result.put(PageParamType.BUSINESS_MESSAGE, "使用卡片失败");
 				return result;
 			}
-			if(NVTermConstant.USE_CAMP_CARD.equals(selectCharacterDTO.getUseCard())){
-				selectCharacterDTO.setSign(IdentityCode.randomIdentitiyCode(selectCharacterDTO.getCamp(), 
-						gameMapper.queryGamePlayerNumDao(selectCharacterDTO.getGameId())));
-				selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
+			if(CardType.IDENTITY.getCode().equals(selectCharacterDTO.getUseCard())){
+				selectCharacterDTO.setCamp(selectCharacterDTO.getSign() <= IdentityCode.CIVILIAN.getCode()?
+						NVTermConstant.GOOD_CAMP : NVTermConstant.KILLER_CAMP);			
 			}
+			if(CardType.CAMP.getCode().equals(selectCharacterDTO.getUseCard())){
+				selectCharacterDTO.setSign(IdentityCode.randomIdentitiyCode(selectCharacterDTO.getCamp(), 
+						gameMapper.queryGamePlayerNumDao(selectCharacterDTO.getGameId())));				
+			}
+			selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
 			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 					String.valueOf(selectCharacterDTO.getPlayerId()));
 			if(StringUtil.isNullOrEmpty(characterStr)){

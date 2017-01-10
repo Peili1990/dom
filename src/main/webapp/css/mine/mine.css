@@ -35,7 +35,7 @@ h3{
     display: -webkit-box;
 }
 
-.camp-card, .identity-card {	
+.card-1, .card-2, .card-3, .card-4 {	
 	display:inline-block;
 	width:40%;
 	margin:4%;
@@ -45,18 +45,30 @@ h3{
 	position:relative;
 }
 
-.camp-card {
-	background: url("../../img/mine/camp-card.png") 0px 0px no-repeat;
-	background-size:100%;
-}
-
-.identity-card {
+.card-1 {
 	background: url("../../img/mine/identity-card.png") 0px 0px no-repeat;
 	background-size:100%;
 }
 
-.camp-card time,
-.identity-card time{
+.card-2 {
+	background: url("../../img/mine/camp-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.card-3 {
+	background: url("../../img/mine/privilege-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.card-4 {
+	background: url("../../img/mine/pioneer-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.card-1 time,
+.card-2 time,
+.card-3 time,
+.card-4 time{
 	font-size: 0.8em;
     font-family: cursive;
     position: absolute;

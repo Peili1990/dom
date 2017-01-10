@@ -3,15 +3,20 @@
 
 <div class="default">
 
-	<div class="card">
+	<div class="card invisible" id="player-data">
 		<div class="card-header">
 			<h2>我的维多利亚</h2>
 		</div>	
 		<div class="card-body" >
-		<table id="player-data">
+		<table>
 			
 		</table>
 		</div>
+	</div>
+	
+	<div class="nv-guide invisible">
+		<img src="">
+		<p>还没参加过版杀哦</p>
 	</div>
 
 </div>
@@ -27,10 +32,14 @@ function getPlayerData(){
 		}
 		switch(data.status){
 		case 1:
-			$("#player-data").empty();
-			$.each(data.details,function(index,detail){
-				$("#player-data").append("<tr><td>"+detail.description+"</td><td>"+detail.value+"</td></tr>");
-			})
+			if(data.details == null){
+				showNVguide();
+			} else {
+				$("#player-data").removeClass("invisible").find("table").empty();
+				$.each(data.details,function(index,detail){
+					$("#player-data").find("table").append("<tr><td>"+detail.description+"</td><td>"+detail.value+"</td></tr>");
+				})
+			}
 			return;
 		case 0:
 			timeoutHandle();

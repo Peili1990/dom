@@ -79,5 +79,5 @@ public interface UserMapper {
 	 * <p>获取用户报名能用卡片</p>
 	 */
 	
-	public Integer getAvailableCardCount(long userId);
+	public List<Integer> getAvailableCardCount(long userId);
 }

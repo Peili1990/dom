@@ -28,36 +28,18 @@ function getUserCardList(){
 			$("#mine-card-list").empty();
 			$.each(data.cardList,function(index,card){
 				var builder = new StringBuilder();
-				switch(card.cardType){
-				case 1:
-					builder.appendFormat('<div class="identity-card" style="height:{0}">',$("body").width()*0.268+"px");
-					builder.appendFormat('<time>{0}</time>',card.expireDate);
-					switch(card.status){
-					case 2:
-						builder.append('<div class="used"></div>');
-						break;
-					case 3:
-						builder.append('<div class="expired"></div>');
-						break;
-					}
-					builder.append('</div>');
-					$("#mine-card-list").append(builder.toString());
-					break;
+				builder.appendFormat('<div class="card-{0}" style="height:{1}" onclick="pageSwitch({2},{3},1,2,{4})">',card.cardType,$("body").width()*0.268+"px","'#pageH'","'#pageE'","'getCardDetail("+card.cardType+")'");
+				builder.appendFormat('<time>{0}</time>',card.expireDate);
+				switch(card.status){
 				case 2:
-					builder.appendFormat('<div class="camp-card" style="height:{0}">',$("body").width()*0.268+"px");
-					builder.appendFormat('<time>{0}</time>',card.expireDate);
-					switch(card.status){
-					case 2:
-						builder.append('<div class="used"></div>');
-						break;
-					case 3:
-						builder.append('<div class="expired"></div>');
-						break;
-					}
-					builder.append('</div>');
-					$("#mine-card-list").append(builder.toString());
+					builder.append('<div class="used"></div>');
 					break;
-				}			
+				case 3:
+					builder.append('<div class="expired"></div>');
+					break;
+				}
+				builder.append('</div>');
+				$("#mine-card-list").append(builder.toString());			
 			})
 			return;
 		case 0:
@@ -69,5 +51,7 @@ function getUserCardList(){
 		}	
 	})
 }
+
+
 
 </script>

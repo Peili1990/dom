@@ -205,5 +205,17 @@
 			dg.id = #{gameId}
 	
 	</select>
+	
+	<delete id="deleteSelectedCharacterDao" parameterType="SelectCharacterDTO">
+	
+		DELETE 
+			dpr
+		FROM
+			d_player_record dpr, d_player dp
+		WHERE	
+			dpr.character_id = #{characterId} AND dpr.player_id = dp.id AND dp.game_id = #{gameId} AND dpr.use_card = 0;
+			
+	
+	</delete>
 
 </mapper>

@@ -36,7 +36,9 @@
 					</div>
 					<div class="card-body invisible" id="card-available">
 						使用    <i class="am-icon-circle-thin am-icon-md invisible" id="identity-card-available">身份卡</i>
-						<i class="am-icon-circle-thin am-icon-md invisible" id="camp-card-available">阵营卡</i>			
+						<i class="am-icon-circle-thin am-icon-md invisible" id="camp-card-available">阵营卡</i>
+						<i class="am-icon-circle-thin am-icon-md invisible" id="privilege-card-available">特权卡</i>			
+						<i class="am-icon-circle-thin am-icon-md invisible" id="pioneer-card-available">先驱卡</i>
 					</div>
 					<div class="card-body invisible" id="use-camp-card">
 						<div class="am-input-group am-input-group-primary">
@@ -141,6 +143,7 @@
 			}
 			else if(characterSelect == 3){
 				myInfo("修改外在身份时，不可撤销已使用卡片或使用额外的卡片！");
+				$("#use-card-all").parent().addClass("invisible").prev().addClass("invisible");
 				getCharacterListAll();
 			}	
 			else {
@@ -184,24 +187,27 @@
 			}
 			switch(data.status){
 			case 1:
-				switch(parseInt(data.cardNum)){
-				case 0:
+				if(data.cardNum.length == 0){
 					$("#card-not-available").removeClass("invisible");
-					break;
-				case 1:
+				} else {
 					$("#card-available").removeClass("invisible");
-					$("#identity-card-available").removeClass("invisible").click();
-					break;
-				case 2:
-					$("#card-available").removeClass("invisible");
-					$("#camp-card-available").removeClass("invisible").click();
-					break;
-				case 3:
-					$("#card-available").removeClass("invisible");
-					$("#identity-card-available").removeClass("invisible").click();
-					$("#camp-card-available").removeClass("invisible");
-					break;
-				}
+					$.each(data.cardNum,function(index,cardType){
+						switch(cardType){
+						case 1:
+							$("#identity-card-available").removeClass("invisible");
+							break;
+						case 2:
+							$("#camp-card-available").removeClass("invisible");
+							break;
+						case 3:
+							$("#privilege-card-available").removeClass("invisible");
+							break;
+						case 4:
+							$("#pioneer-card-available").removeClass("invisible");
+							break;
+						}
+					})
+				}							
 				return;
 			case 0:
 				timeoutHandle();
@@ -214,6 +220,10 @@
 	}
 	
 	function queryCharacter(){
+		if((!$("#use-card").hasClass("invisible")) && $("#privilege-card-available").hasClass("selected")){
+			$(".chosen").addClass("invisible");
+			return;
+		}
 		var url = getRootPath() + "/game/queryCharacter";
 		var options = {
 				characterId : $("#target_select option:selected").val()
@@ -324,6 +334,15 @@
 						return;
 					}					
 				}
+				if($("#privilege-card-available").hasClass("selected")){
+					useCard = 3;
+				}
+				if($("#pioneer-card-available").hasClass("selected")){
+					useCard = 4;
+					camp = 1;
+					sign = 12;
+					applyPioneer = "1";
+				}
 			}
 		}
 		var url = getRootPath()+"/game/selectCharacter";
@@ -363,21 +382,41 @@
 		}else {
 			$("#use-card").addClass("invisible");
 		}
+		queryCharacter();
 		adjustContainerHeight(getCurActPage());
 	})
 	
 	$("#identity-card-available").click(function(){
-		$("#camp-card-available").removeClass("selected").removeClass("am-icon-check-circle");
+		$("#card-available i").removeClass("selected").removeClass("am-icon-check-circle");
 		$(this).addClass("selected").addClass("am-icon-check-circle");
 		$("#use-camp-card").addClass("invisible");
 		$("#use-identity-card").removeClass("invisible");
+		queryCharacter();
 	})
 	
 	$("#camp-card-available").click(function(){
-		$("#identity-card-available").removeClass("selected").removeClass("am-icon-check-circle");
+		$("#card-available i").removeClass("selected").removeClass("am-icon-check-circle");
 		$(this).addClass("selected").addClass("am-icon-check-circle");
 		$("#use-camp-card").removeClass("invisible");
 		$("#use-identity-card").addClass("invisible");
+		queryCharacter();
+	})
+	
+	$("#privilege-card-available").click(function(){
+		$("#card-available i").removeClass("selected").removeClass("am-icon-check-circle");
+		$(this).addClass("selected").addClass("am-icon-check-circle");
+		$("#use-camp-card").addClass("invisible");
+		$("#use-identity-card").addClass("invisible");		
+		queryCharacter();
+	})
+	
+	$("#pioneer-card-available").click(function(){
+		$("#card-available i").removeClass("selected").removeClass("am-icon-check-circle");
+		$(this).addClass("selected").addClass("am-icon-check-circle");
+		$("#use-camp-card").addClass("invisible");
+		$("#use-identity-card").addClass("invisible");
+		$("#apply-pioneer-all")[0].checked = true;
+		queryCharacter();
 	})
 	
 
