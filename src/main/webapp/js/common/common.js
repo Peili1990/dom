@@ -621,11 +621,11 @@ function replaceEmoji(content,emoji){
 }
 
 function showSpoiler(obj){
-	if (obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { 
-		obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; 
+	if ($(obj).parent().next().children().hasClass('invisible')) { 
+		$(obj).parent().next().children().removeClass('invisible')
 		obj.innerHTML = '隐藏'; 
-	} else { 
-		obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none';  
+	} else {
+		$(obj).parent().next().children().addClass('invisible')
 		obj.innerHTML = '显示'; 
 	}
 }

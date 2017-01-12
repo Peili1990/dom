@@ -179,10 +179,10 @@ ins,mark {
 abbr[title],dfn[title] {
 	cursor:help
 }
-address,blockquote,dl,fieldset,figure,hr,ol,pre,ul {
+address,dl,fieldset,figure,hr,ol,pre,ul {
 	margin:0 0 1.6rem
 }
-*+address,*+blockquote,*+dl,*+fieldset,*+figure,*+hr,*+ol,*+p,*+pre,*+ul {
+*+address,*+dl,*+fieldset,*+figure,*+hr,*+ol,*+p,*+pre,*+ul {
 	margin-top:1.6rem
 }
 h1,h2,h3,h4,h5,h6 {
@@ -228,12 +228,12 @@ hr {
 	box-sizing:content-box
 }
 blockquote {
-	padding-top:5px;
-	padding-bottom:5px;
-	padding-left:15px;
-	border-left:4px solid #ddd;
-	font-family:Georgia,"Times New Roman",Times,Kai,"Kaiti SC",KaiTi,BiauKai,FontAwesome,serif
+	padding:5px;
+	border:1px solid #ddd;
+	background-color: aliceblue;
+	font-family:Georgia,"Times New Roman",Times,Kai,"Kaiti SC",KaiTi,BiauKai,FontAwesome,serif	
 }
+
 blockquote small {
 	display:block;
 	color:#999;
