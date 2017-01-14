@@ -137,6 +137,7 @@ time{
 }
 
 .card-footer, .card-header {
+	position:relative;
     display: -ms-flexbox;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
@@ -315,9 +316,10 @@ time{
 }
 
 .badge-card{
-	top:0;
-	left:-10px;
-	color:white;
+	top: 15px;
+    left: calc(100% - 30px);
+    color: white;
+    position: absolute;
 }
 
 .invisible{
