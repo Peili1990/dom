@@ -65,5 +65,8 @@ public interface GameMapper {
 	 * <p>查询是否允许使用卡片</p>
 	 */
 	public int queryCanUseCardDao(SelectCharacterDTO selectCharacterDTO);
-	
+	/**
+	 * <p>角色被抢处理</p>
+	 */
+	public int deleteSelectedCharacterDao(SelectCharacterDTO selectCharacterDTO);
 }

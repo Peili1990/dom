@@ -184,11 +184,11 @@
 		<![CDATA[
 	
 		SELECT
-			SUM(DISTINCT dc.type)
+			DISTINCT dc.type
 		FROM
 			d_card dc
 		WHERE
-			dc.user_id = #{userId} AND dc.status = 1 AND dc.expire_date >= NOW() AND dc.type < 3
+			dc.user_id = #{userId} AND dc.status = 1 AND dc.expire_date >= NOW()
 	
 		]]>
 		

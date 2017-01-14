@@ -16,6 +16,10 @@ function register(){
 		myAlert("邮箱不能为空");
 		return false;
 	}
+	if(!account.isEmail){
+		myAlert("请填入正确的邮箱格式");
+		return false;
+	}
 	if(password==""){
 		myAlert("密码不能为空");
 		return false;

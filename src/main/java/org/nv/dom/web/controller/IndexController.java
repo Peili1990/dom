@@ -53,13 +53,6 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/rule", method = RequestMethod.GET)
-	public ModelAndView ruleView(HttpSession session) {
-		ModelAndView mav = new ModelAndView("rule/rule");
-		mav.addAllObjects(basicService.getSessionUserService(session));
-		return mav;
-	} 
-	
 	@RequestMapping(value = "/pcIndex", method = RequestMethod.GET)
 	public ModelAndView pcIndexView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("pages/pc-index");

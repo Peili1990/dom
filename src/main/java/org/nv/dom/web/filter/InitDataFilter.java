@@ -1,4 +1,4 @@
-package org.nv.dom.filter;
+package org.nv.dom.web.filter;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.nv.dom.cache.CacheData;
 
-public class InitDataFilter extends HttpServlet implements Filter {
+public class InitDataFilter extends HttpServlet implements Filter {	
 
 	/**
 	 * 
@@ -46,7 +46,7 @@ public class InitDataFilter extends HttpServlet implements Filter {
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
+		
 
 	}
 

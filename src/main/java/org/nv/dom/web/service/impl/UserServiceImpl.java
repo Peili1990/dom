@@ -198,18 +198,20 @@ public class UserServiceImpl implements UserService {
 		try {
 			PlayerData playerData = statisticMapper.getPlayerDataDao(userId);
 			List<PlayerDataDetail> details = new ArrayList<>();
-			details.add(new PlayerDataDetail("总登场次数",playerData.getTotalPlayTimes()+"次"));
-			details.add(new PlayerDataDetail("好人方次数",playerData.getGoodCampTimes()+"次"));
-			details.add(new PlayerDataDetail("杀手方次数",playerData.getKillerCampTimes()+"次"));
-			details.add(new PlayerDataDetail("契约方次数", playerData.getContractCampTimes()+"次"));
-			details.add(new PlayerDataDetail("好人方胜利次数",playerData.getGoodCampWinTimes()+"次"));
-			details.add(new PlayerDataDetail("好人方胜率",playerData.getGoodCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getGoodCampWinTimes()/(float)playerData.getGoodCampTimes()*100)+"%"));
-			details.add(new PlayerDataDetail("杀手方胜利次数",playerData.getKillerCampWinTimes()+"次"));
-			details.add(new PlayerDataDetail("杀手方胜率",playerData.getKillerCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getKillerCampWinTimes()/(float)playerData.getKillerCampTimes()*100)+"%"));
-			details.add(new PlayerDataDetail("契约方胜利次数",playerData.getContractCampWinTimes()+"次"));
-			details.add(new PlayerDataDetail("契约方胜率",playerData.getContractCampTimes()==0 ? "N/A":numberFormat.format((float)playerData.getContractCampWinTimes()/(float)playerData.getContractCampTimes()*100)+"%"));
-			details.add(new PlayerDataDetail("总胜利次数",(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())+"次"));
-			details.add(new PlayerDataDetail("总胜率",playerData.getTotalPlayTimes()==0 ? "N/A":numberFormat.format((float)(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())/(float)playerData.getTotalPlayTimes()*100)+"%"));
+			if(playerData!=null){
+				details.add(new PlayerDataDetail("总登场次数",playerData.getTotalPlayTimes()+"次"));
+				details.add(new PlayerDataDetail("好人方次数",playerData.getGoodCampTimes()+"次"));
+				details.add(new PlayerDataDetail("杀手方次数",playerData.getKillerCampTimes()+"次"));
+				details.add(new PlayerDataDetail("契约方次数", playerData.getContractCampTimes()+"次"));
+				details.add(new PlayerDataDetail("好人方胜利次数",playerData.getGoodCampWinTimes()+"次"));
+				details.add(new PlayerDataDetail("好人方胜率",playerData.getGoodCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getGoodCampWinTimes()/(float)playerData.getGoodCampTimes()*100)+"%"));
+				details.add(new PlayerDataDetail("杀手方胜利次数",playerData.getKillerCampWinTimes()+"次"));
+				details.add(new PlayerDataDetail("杀手方胜率",playerData.getKillerCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getKillerCampWinTimes()/(float)playerData.getKillerCampTimes()*100)+"%"));
+				details.add(new PlayerDataDetail("契约方胜利次数",playerData.getContractCampWinTimes()+"次"));
+				details.add(new PlayerDataDetail("契约方胜率",playerData.getContractCampTimes()==0 ? "N/A":numberFormat.format((float)playerData.getContractCampWinTimes()/(float)playerData.getContractCampTimes()*100)+"%"));
+				details.add(new PlayerDataDetail("总胜利次数",(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())+"次"));
+				details.add(new PlayerDataDetail("总胜率",playerData.getTotalPlayTimes()==0 ? "N/A":numberFormat.format((float)(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())/(float)playerData.getTotalPlayTimes()*100)+"%"));
+			}
 			result.put("details", details);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家数据成功");
@@ -241,8 +243,7 @@ public class UserServiceImpl implements UserService {
 	public Map<String, Object> getUserCardStatus(long userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			Integer availableCardCount = userMapper.getAvailableCardCount(userId);
-			availableCardCount = availableCardCount == null ? 0 : availableCardCount;
+			List<Integer> availableCardCount = userMapper.getAvailableCardCount(userId);
 			result.put("cardNum", availableCardCount);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
