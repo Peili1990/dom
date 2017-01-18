@@ -385,6 +385,7 @@ time{
 	float:right;
 	margin-right:10px;
 	color:#cccccc;
+	cursor:pointer;
 }
 
 .essay-box p{
@@ -405,7 +406,12 @@ time{
 #comment-list li{
 	list-style-type:none;
 	padding:0.5em;
-	
+}
+
+#comment-list .comment-reply{
+	color:steelblue;
+	cursor:pointer;
+	margin-left:10px;
 }
 
 #comment-list .commnet-content{
@@ -486,5 +492,23 @@ time{
 	margin:-1.25rem;
 }
 
+.scroll-nav{
+	position:absolute;
+	display:none;
+	right:20px;
+	bottom:60px;
+}
+
+.scroll-nav .scroll-button{
+	display:block;
+	color:darkgrey;
+	padding:0;
+}
+
+.scroll-nav .scroll-button:hover{
+	color:steelblue;
+	transition: color 0.5s; 
+	-webkit-transition: color 0.5s;
+}
 
 

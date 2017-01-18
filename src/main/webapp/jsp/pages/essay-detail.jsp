@@ -38,6 +38,7 @@ function getEssayDetail(essayId){
 		case 1:
 			$("#nv-footer").addClass("invisible");
 			$("#nv-chatbar").removeClass("invisible");
+			$("#nv-chatbar .messages").val("");
 			$("#use-gesture").addClass("invisible");
 			$("#show-emotion").removeClass("invisible");
 			$("#send-message").unbind("click").click(function(){
@@ -83,7 +84,7 @@ function getEssayDetail(essayId){
 function appendComment(index,comment){
 	var builder = new StringBuilder();
 	builder.append("<li>");
-	builder.appendFormat('<img src="{0}" class="am-comment-avatar"> <span> {1} </span>',picServer+comment.avatar,comment.nickname);
+	builder.appendFormat('<img src="{0}" class="am-comment-avatar"> <span> {1} </span><span onclick="replyTo({2},{3})" class="comment-reply">回复</span>',picServer+comment.avatar,comment.nickname,index,"'"+comment.nickname+"'");
 	builder.appendFormat('<time>{0}&nbsp&nbsp{1}</time>',index+"楼",comment.createTime);
 	builder.appendFormat('<div class="commnet-content"><p>{0}</p></div>',replaceEmoji(comment.content,emoji));
 	builder.append("</li>");
@@ -122,5 +123,8 @@ function submitComment(essayId){
 	})
 }
 
+function replyTo(index,name){
+	$("#nv-chatbar .messages").val("回复"+index+"楼("+name+")：").focus();
+}
 
 </script>

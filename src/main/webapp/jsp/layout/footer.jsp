@@ -38,6 +38,11 @@
             </a>
           </li>
       </ul>
+      
+      <div class="scroll-nav">
+      	  <span class="scroll-button am-btn am-icon-arrow-up am-icon-lg"></span>
+      	  <span class="scroll-button am-btn am-icon-arrow-down am-icon-lg"/></span>
+	  </div>
   </div>
   
   <script type="text/javascript">

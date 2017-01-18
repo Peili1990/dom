@@ -630,3 +630,19 @@ function showSpoiler(obj){
 	}
 }
 
+function activeScrollNav(){
+	var timer;
+	$(window).scroll(function(){
+		clearInterval(timer);
+		$(".scroll-nav").fadeIn();
+		timer=setTimeout('$(".scroll-nav").fadeOut();',2000);
+	})
+	$(".scroll-nav .am-icon-arrow-up").unbind("click").click(function(){
+		$(window).smoothScroll({position:0});
+	})
+	$(".scroll-nav .am-icon-arrow-down").unbind("click").click(function(){
+		$(window).smoothScroll({position: $(document).height() - $(window).height()});
+	})
+	
+}
+

@@ -14,13 +14,15 @@ import org.apdplat.word.util.WordConfTools;
  */
 public class TextUtil {
 	
+	private static String filePath = ConfigUtil.getVersionConfigProperty("img.filepath");
+	
 	/**
 	 * <p>统计字数</p>
 	 * 
 	 */
 	
 	public static Integer wordCount(String content){
-		WordConfTools.set("dic.path", "classpath:nv_dict.txt");
+		WordConfTools.set("dic.path", filePath+"nv_dict.txt");
         DictionaryFactory.reload();
         List<Word> words = WordSegmenter.segWithStopWords(content);
         return words.size();

@@ -41,7 +41,8 @@
 <!-- 			<div class="am-comment-bd gesture-style">*莫利在集会上欢快的跳了起来</div> -->
 <!-- 		</div> -->
 <!-- 		</li> -->
-	</ul>	
+	</ul>
+		
 </div>
 
 <script type="text/javascript">
@@ -142,6 +143,7 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 					setRedspot();
 				}
 			}		
+			activeScrollNav();
 			$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });
 			if(GetQueryString("scroll")){
 				scrollTobottom();	
