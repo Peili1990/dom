@@ -10,6 +10,7 @@ import org.nv.dom.domain.message.speech.OfflineSpeech;
 import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
+import org.nv.dom.dto.user.EquipBadgeDTO;
 import org.nv.dom.dto.user.UpdateUserProfileDTO;
 import org.springframework.stereotype.Repository;
 
@@ -80,4 +81,17 @@ public interface UserMapper {
 	 */
 	
 	public List<Integer> getAvailableCardCount(long userId);
+	
+	
+	/**
+	 * <p>获取用户拥有的徽章</p>
+	 */
+
+	public List<String> getUserBadge(long userId);
+	
+	/**
+	 * <p>佩戴或取下徽章</p>
+	 */
+	
+	public int equipBadge(EquipBadgeDTO equipBadgeDTO);
 }

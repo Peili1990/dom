@@ -97,3 +97,41 @@ h3{
 	background: url("../../img/mine/card-expired.png") 0px 0px no-repeat;
 	background-size:100%;
 }
+
+.equipped{
+	position:absolute;
+	top: 20px;
+    right: 0;
+     transform: rotate(20deg);
+    -ms-transform: rotate(20deg);
+    -moz-transform: rotate(20deg);
+    -webkit-transform: rotate(20deg);
+    -o-transform: rotate(20deg);
+    height: 40px;
+    width: 100px;
+	background: url("../../img/mine/badge-equipped.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.normal-badge{
+	width:20%;
+	margin-left:2.5%;
+	margin-right:2.5%;
+}
+
+#badge-list li{
+	position:relative;
+}
+
+#badge-list p{
+	margin:0;
+	text-align:center;
+}
+
+#equiped-badges {
+	display:inline;
+}
+
+.badge-detail-img{
+	width:80%;
+}

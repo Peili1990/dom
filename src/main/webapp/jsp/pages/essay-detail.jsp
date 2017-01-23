@@ -3,7 +3,9 @@
 <div class="default">
 	<div class="essay-box" id="essay-detail">
 		<div class="author-info">
-			<img src="" class="am-comment-avatar"> <span></span>
+			<img src="" class="am-comment-avatar"> 			
+			<span></span>
+			<div id="badge-list"></div>
 			<time></time>
 		</div>
 		<div class="essay-content">
@@ -44,8 +46,14 @@ function getEssayDetail(essayId){
 			$("#send-message").unbind("click").click(function(){
 				submitComment(essayId);
 			})
-			$("#essay-detail .author-info").find("img").attr("src",picServer+data.detail.avatar);
+			$("#essay-detail .author-info").find(".am-comment-avatar").attr("src",picServer+data.detail.avatar);
 			$("#essay-detail .author-info").find("span").text(data.detail.nickname);
+			$("#badge-list").empty();
+			if(data.detail.badge){
+				$.each(data.detail.badge.split(","),function(index,badge){
+					$("#badge-list").append('<img src="'+picServer+"badgeAvatar/"+badge+".png"+'" class="user-badge">');
+				})		
+			}
 			$("#essay-detail .author-info").find("time").html("楼主    "+data.detail.createTime);
 			$("#essay-detail .essay-content").html("<h2>"+data.detail.header+"</h2><p>"+data.detail.content+"</p>");
 			if(userId==data.detail.userId){
@@ -84,7 +92,13 @@ function getEssayDetail(essayId){
 function appendComment(index,comment){
 	var builder = new StringBuilder();
 	builder.append("<li>");
-	builder.appendFormat('<img src="{0}" class="am-comment-avatar"> <span> {1} </span><span onclick="replyTo({2},{3})" class="comment-reply">回复</span>',picServer+comment.avatar,comment.nickname,index,"'"+comment.nickname+"'");
+	builder.appendFormat('<img src="{0}" class="am-comment-avatar"> <span> {1} </span>',picServer+comment.avatar,comment.nickname);
+	if(comment.badge){
+		$.each(comment.badge.split(","),function(index,badge){
+			builder.appendFormat('<img src="{0}" class="user-badge">',picServer+"badgeAvatar/"+badge+".png");
+		})
+	}
+	builder.appendFormat('<span onclick="replyTo({2},{3})" class="comment-reply">回复</span>',index,"'"+comment.nickname+"'");
 	builder.appendFormat('<time>{0}&nbsp&nbsp{1}</time>',index+"楼",comment.createTime);
 	builder.appendFormat('<div class="commnet-content"><p>{0}</p></div>',replaceEmoji(comment.content,emoji));
 	builder.append("</li>");

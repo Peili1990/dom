@@ -23,6 +23,8 @@ public class User implements Serializable{
 	private String avatar;
 	// 格言
 	private String motto;
+	// 徽章
+	private String badge;
 	// QQ号
 	private String qq;
 	// 账号状态
@@ -68,6 +70,12 @@ public class User implements Serializable{
 	}
 	public void setMotto(String motto) {
 		this.motto = motto;
+	}
+	public String getBadge() {
+		return badge;
+	}
+	public void setBadge(String badge) {
+		this.badge = badge;
 	}
 	public String getQq() {
 		return qq;

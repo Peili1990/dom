@@ -32,4 +32,8 @@ public interface UserService {
 
 	public Map<String, Object> getUserCardStatus(long userId);
 
+	public Map<String, Object> getUserBadge(long userId);
+
+	public Map<String, Object> equipBadge(User user, String badge);
+
 }

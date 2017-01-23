@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
-
 @Controller
 public class UserController extends BaseController{
 	
@@ -96,5 +93,26 @@ public class UserController extends BaseController{
 		User user = (User) session.getAttribute(PageParamType.user_in_session);		
 		return userService.getUserCardStatus(user.getId());
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getUserBadge", method = RequestMethod.POST)
+	public Map<String, Object> getUserBadge(HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);		
+		return userService.getUserBadge(user.getId());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/equipBadge", method = RequestMethod.POST)
+	public Map<String, Object> equipBadge(@RequestParam("badge")String badge,HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		Map<String, Object> result = userService.equipBadge(user,badge);
+		if((int)result.get("status")==1){
+			user.setBadge((String) result.get("badge"));			
+			session.setAttribute(PageParamType.user_in_session, user);
+		}		
+		return result;
+	}
+	
+	
 
 }

@@ -66,7 +66,7 @@
 		FROM
 			d_player dp, d_player_record dpr, d_game dg
 		WHERE
-			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player' AND dpr.camp = 2 AND dg.id = dp.game_id AND dg.final_result = 1 AND dp.status = 9
+			dp.id = dpr.player_id AND dp.user_id = #{userId} AND dp.role='player' AND dpr.camp = 1 AND dg.id = dp.game_id AND dg.final_result = 1 AND dp.status = 9
 	
 	</select>
 	

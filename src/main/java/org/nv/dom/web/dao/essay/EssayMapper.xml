@@ -66,6 +66,7 @@
 			du.id AS userId,
 			du.nickname AS nickname,
 			du.avatar AS avatar,
+			du.badge AS badge,
 			de.header AS header,
 			de.content AS content,
 			de.create_time AS createTime
@@ -82,7 +83,8 @@
 			du.nickname AS nickname,
 			du.avatar AS avatar,
 			dc.content AS content,
-			dc.create_time AS createTime
+			dc.create_time AS createTime,
+			du.badge AS badge
 		FROM
 			d_essay de, d_comment dc, d_user du
 		WHERE
@@ -123,6 +125,7 @@
 			du.id AS userId,
 			du.nickname AS nickname,
 			du.avatar AS avatar,
+			du.badge AS badge,
 			de.header AS header,
 			CONCAT(substring_index(de.content,'<br>',3),'...') AS content,
 			de.create_time AS createTime

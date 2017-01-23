@@ -32,7 +32,7 @@ function getPlayerData(){
 		}
 		switch(data.status){
 		case 1:
-			if(data.details == null){
+			if(data.details.length == 0){
 				showNVguide();
 			} else {
 				$("#player-data").removeClass("invisible").find("table").empty();

@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +24,10 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
+import org.nv.dom.dto.user.EquipBadgeDTO;
 import org.nv.dom.dto.user.UpdateUserProfileDTO;
 import org.nv.dom.util.ConfigUtil;
+import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.statistic.StatisticMapper;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
@@ -247,6 +251,59 @@ public class UserServiceImpl implements UserService {
 			result.put("cardNum", availableCardCount);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getUserBadge(long userId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			List<String> userBadge = userMapper.getUserBadge(userId);
+			result.put("userBadge", userBadge);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家徽章成功");
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> equipBadge(User user, String badge) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			List<String> badges =StringUtil.isNullOrEmpty(user.getBadge())? new ArrayList<String>() : 
+				new ArrayList<>(Arrays.asList(user.getBadge().split(",")));
+			EquipBadgeDTO equipBadgeDTO = new EquipBadgeDTO();
+			if(badges.size()>=3){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "已佩戴最大上限徽章数量");
+			} else {
+				if(badges.contains(badge)){
+					badges.remove(badge);
+				} else {
+					badges.add(badge);
+					Collections.sort(badges);
+					equipBadgeDTO.setBadge(badge);
+				}
+				equipBadgeDTO.setUserId(user.getId());
+				equipBadgeDTO.setBadges(StringUtil.listToString(badges, ','));
+				if(userMapper.equipBadge(equipBadgeDTO)==1){
+					result.put("badge", equipBadgeDTO.getBadges());
+					result.put(PageParamType.BUSINESS_STATUS, 1);
+					result.put(PageParamType.BUSINESS_MESSAGE, "操作成功");
+				} else {
+					result.put(PageParamType.BUSINESS_STATUS, -3);
+					result.put(PageParamType.BUSINESS_MESSAGE, "操作失败");
+				}
+			}		
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);

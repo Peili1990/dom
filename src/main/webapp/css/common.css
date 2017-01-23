@@ -324,7 +324,7 @@ time{
 }
 
 .invisible{
-	display:none;
+	display:none!important;
 }
 
 .gesture-style{
@@ -337,7 +337,7 @@ time{
 
 .nv-guide{
 	margin:0 auto;
-	margin-top:160px;
+	margin-top:calc(50% - 50px);
 	overflow:hidden;
 	text-align:center;
 }
@@ -509,6 +509,22 @@ time{
 	color:steelblue;
 	transition: color 0.5s; 
 	-webkit-transition: color 0.5s;
+}
+
+#badge-list{
+	display:inline-block;
+}
+
+.user-badge{
+	width:30px;
+}
+
+.unavailable {
+	-webkit-filter: grayscale(100%);    /* webkit内核支持程度较好 */  
+    -moz-filter: grayscale(100%);    /* 其他内核现在并不支持，为了将来兼容性书写 */  
+     -ms-filter: grayscale(100%);  
+      -o-filter: grayscale(100%);  
+         filter: grayscale(100%);    /* 标准写法 */  
 }
 
 

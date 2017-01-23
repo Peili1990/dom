@@ -6,8 +6,9 @@ public class Essay {
 	private long userId;
 	private String nickname;
 	private String avatar;
+	private String badge;
 	private String header;
-	private String content;
+	private String content;	
 	private Integer type;
 	private String createTime;
 	private String updateTime;
@@ -35,6 +36,12 @@ public class Essay {
 	}
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
+	}
+	public String getBadge() {
+		return badge;
+	}
+	public void setBadge(String badge) {
+		this.badge = badge;
 	}
 	public String getHeader() {
 		return header;

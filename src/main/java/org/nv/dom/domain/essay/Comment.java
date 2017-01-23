@@ -6,6 +6,7 @@ public class Comment {
 	private String avatar;
 	private String nickname;
 	private String createTime;
+	private String badge;
 	public String getContent() {
 		return content;
 	}
@@ -30,7 +31,12 @@ public class Comment {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	
+	public String getBadge() {
+		return badge;
+	}
+	public void setBadge(String badge) {
+		this.badge = badge;
+	}	
 	
 
 }

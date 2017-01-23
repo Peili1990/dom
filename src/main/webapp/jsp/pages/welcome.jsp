@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="default">
 	<div class="card">
 		<div class="card-header">
@@ -121,7 +122,15 @@
 		
 		<div class="card">
 			<div class="card-header">
-				<span><h2>${essay.header}</h2>作者：${essay.nickname}</span>
+				<span><h2>${essay.header}</h2>作者：${essay.nickname}
+				<c:if test="${essay.badge != null && not empty essay.badge}">
+					<c:set value="${ fn:split(essay.badge, ',') }" var="badges" />
+					<c:forEach items="${ badges }" var="badge">
+						<img src="${picServer}badgeAvatar/${badge }.png" class="user-badge">
+					</c:forEach>
+				</c:if>
+				</span>
+				
 			</div>
 			<div class="card-body essay-style">
 				${essay.content }
@@ -178,7 +187,13 @@
 				$.each(data.essayList,function(index,essay){
 					var builder = new StringBuilder();
 					builder.append('<div class="card"><div class="card-header">');
-					builder.appendFormat('<span><h2>{0}</h2>作者：{1}</span>',essay.header,essay.nickname);
+					builder.appendFormat('<span><h2>{0}</h2>作者：{1}',essay.header,essay.nickname);
+					if(essay.badge){
+						$.each(essay.badge.split(","),function(index,badge){
+							builder.appendFormat('<img src="{0}" class="user-badge">',picServer+"badgeAvatar/"+badge+".png");
+						})	
+					}
+					builder.append('</span>');
 					builder.appendFormat('</div><div class="card-body essay-style">{0}</div>',essay.content);
 					builder.appendFormat('<div class="card-footer"><a><span onclick="pageSwitch({0},{1},0,1,{2})">查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',"'#pageA'","'#pageC'","'getEssayDetail("+essay.essayId+")'")
 					$("#essay-list").append(builder.toString());

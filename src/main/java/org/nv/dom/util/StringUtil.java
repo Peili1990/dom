@@ -6,8 +6,11 @@
  */
 package org.nv.dom.util;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * <p>字符串工具类</p>
@@ -77,6 +80,19 @@ public class StringUtil {
 		}
 		Pattern pattern = Pattern.compile("[0-9]*");
 		return pattern.matcher(number).matches();
+	}
+	
+	/**
+	 * <p>list转字符串</p>
+	 * @param number
+	 * @return
+	 * 2014年10月29日 下午3:33:26
+	 * @author: z```s
+	 * @param <T
+	 */
+	
+	public static <T> String listToString(List<T> list, char separator) {
+		return StringUtils.join(list.toArray(),separator);    
 	}
 	
 }
