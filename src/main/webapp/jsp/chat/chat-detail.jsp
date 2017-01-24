@@ -31,45 +31,31 @@
 		}
 		var common = new Common();
 		common.callAction(options,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:
-				$.each(data.chatDetails,function(index,detail){
-					appendChatDetail(detail,true);
-				})
-				$(window).scrollTop($(window).height());
-            	$("#nv-footer").addClass("invisible");
-				$("#nv-chatbar").removeClass("invisible");
-				$("#use-gesture").addClass("invisible");
-				$("#show-emotion").removeClass("invisible");
-				$("#send-message").unbind("click").click(function(){
-					sendMessage(chatId,toUserId);
-				})
-				redspot = $("#"+chatId+" .badge")
-				if(!redspot.hasClass("invisible")){
-					chatMessage = getCache("nv_chat"+chatId);
-					setCache("nv_offline_chat"+userId,getCache("nv_offline_chat"+userId)-parseInt(chatMessage));
-					delCache("nv_chat"+chatId);
-					redspot.addClass("invisible");
-					setRedspot();
-				}	
-				$(window).scroll(function(){
-					if($(window).scrollTop()==0){
-						loadchatRecord(chatId);
-					}
-				});
-				return;
-			case 0:
-       			timeoutHandle();
-       			return;
-       		default:
-       			myAlert(data.message);
-       			return;
-       		}
-		})
-		
+			$.each(data.chatDetails,function(index,detail){
+				appendChatDetail(detail,true);
+			})
+			$(window).scrollTop($(window).height());
+            $("#nv-footer").addClass("invisible");
+			$("#nv-chatbar").removeClass("invisible");
+			$("#use-gesture").addClass("invisible");
+			$("#show-emotion").removeClass("invisible");
+			$("#send-message").unbind("click").click(function(){
+				sendMessage(chatId,toUserId);
+			})
+			redspot = $("#"+chatId+" .badge")
+			if(!redspot.hasClass("invisible")){
+				chatMessage = getCache("nv_chat"+chatId);
+				setCache("nv_offline_chat"+userId,getCache("nv_offline_chat"+userId)-parseInt(chatMessage));
+				delCache("nv_chat"+chatId);
+				redspot.addClass("invisible");
+				setRedspot();
+			}	
+			$(window).scroll(function(){
+				if($(window).scrollTop()==0){
+					loadchatRecord(chatId);
+				}
+			});				
+		})		
 	}
 	
 	function appendChatDetail(chatDetail,prepend){
@@ -104,17 +90,7 @@
 		$("#nv-chatbar .messages").val("").keyup();
 		var common = new Common();
 		common.callAction(options, url, function(data) {
-			if (!data) {
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				appendChatDetail(data.chatDetail,false);
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			appendChatDetail(data.chatDetail,false);				
 		})
 	}
 	
@@ -127,24 +103,11 @@
 		}
 		var common = new Common();
 		myLoading();
-		common.callAction(options,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:			
-				$.each(data.chatDetails,function(index,detail){
-					appendChatDetail(detail,true);
-				})				
-				myLoadingClose();
-				return;
-			case 0:
-       			timeoutHandle();
-       			return;
-       		default:
-       			myLoadingClose();
-       			return;
-       		}
+		common.callAction(options,url,function(data){		
+			$.each(data.chatDetails,function(index,detail){
+				appendChatDetail(detail,true);
+			})				
+			myLoadingClose();			
 		})
 	}
 

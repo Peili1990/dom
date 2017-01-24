@@ -64,20 +64,7 @@ function getRuleContent(row,index){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			$("#rule-row-"+row+"-"+index+" .am-panel-bd").html(data.rule);
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		$("#rule-row-"+row+"-"+index+" .am-panel-bd").html(data.rule);			
 	})
 }
 

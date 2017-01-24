@@ -19,33 +19,20 @@ function getEssayList(){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			if(data.essayList.length == 0){
-				showNVguide();				
-			} else {
-				$("#my-essay-list").empty();			
-				$.each(data.essayList,function(index,essay){
-					var builder = new StringBuilder();
-					builder.append('<div class="card"><div class="card-header">');
-					builder.appendFormat('<h2 class="card-title">{0}</h2></div>',essay.header);
-					builder.appendFormat('<div class="card-body essay-style">{0}</div>',essay.content);
-					builder.appendFormat('<div class="card-footer"><a href="{0}/index?essayId={1}"><span>查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',getRootPath(),essay.essayId);
-					$("#my-essay-list").append(builder.toString());
-				})
-				adjustContainerHeight(getCurActPage());
-			}
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;	
-		}
+		if(data.essayList.length == 0){
+			showNVguide();				
+		} else {
+			$("#my-essay-list").empty();			
+			$.each(data.essayList,function(index,essay){
+				var builder = new StringBuilder();
+				builder.append('<div class="card"><div class="card-header">');
+				builder.appendFormat('<h2 class="card-title">{0}</h2></div>',essay.header);
+				builder.appendFormat('<div class="card-body essay-style">{0}</div>',essay.content);
+				builder.appendFormat('<div class="card-footer"><a href="{0}/index?essayId={1}"><span>查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',getRootPath(),essay.essayId);
+				$("#my-essay-list").append(builder.toString());
+			})
+			adjustContainerHeight(getCurActPage());
+		}			
 	})
 }
 

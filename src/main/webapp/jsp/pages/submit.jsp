@@ -43,24 +43,11 @@
 		var common = new Common();
 		var url=getRootPath() + "/game/getPlayerOpreation";
 		common.callAction(null, url, function(data){
-			if(!data){
-				return;
-			}
-			switch (data.status){
-			case 1:
-				$("#cur-stage").text("当前"+data.opreation.curStage+"，请提交你的操作：");
-				$("input[name='action']").val(data.opreation.action);
-				$("input[name='privilege']").val(data.opreation.privilege);
-				$("input[name='vote']").val(data.opreation.vote);
-				adjustContainerHeight(getCurActPage());
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			$("#cur-stage").text("当前"+data.opreation.curStage+"，请提交你的操作：");
+			$("input[name='action']").val(data.opreation.action);
+			$("input[name='privilege']").val(data.opreation.privilege);
+			$("input[name='vote']").val(data.opreation.vote);
+			adjustContainerHeight(getCurActPage());				
 		})
 	}
 
@@ -82,22 +69,9 @@
 				vote : vote
 		}
 		common.callAction(options, url, function(data){
-			if(!data){
-				return;
-			}
-			switch (data.status){
-			case 1:
-				myInfo("提交操作成功！",function(){
-					window.location = getRootPath() + "/index";
-				});
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			myInfo("提交操作成功！",function(){
+				window.location = getRootPath() + "/index";
+			});				
 		})
 	}
 

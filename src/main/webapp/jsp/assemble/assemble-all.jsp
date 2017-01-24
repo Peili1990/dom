@@ -77,28 +77,22 @@ function getAllGames(){
 	var url = getRootPath() + "/game/getAllGames";
 	var common = new Common();
 	common.callAction(null,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			$(".nv-guide").addClass("invisible");			
-			$.each(data.games,function(index,game){
-				var builder = new StringBuilder();
-				builder.append('<div class="card"><div class="card-header"><h2 class="card-title">版杀信息</h2></div>');
-				builder.append('<div class="card-body">');
-				builder.appendFormat('{0}<br>开版时间：{1}<br>当前状态：{2}',game.gameDesc,game.startDate,game.gameStatusDesc);
-				if(game.finalResult){
-					builder.appendFormat('<br>最终结果：{0}',game.finalResultDesc);
-				}
-				builder.append('</div>');
-				builder.appendFormat('<div class="card-footer"><a href="'+getRootPath()+'/assemble?gameId={0}"><span>查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',game.id);
-				$("#game-list").append(builder.toString());
-			})
-			$("#newspaper-list").addClass("invisible");
-			$("#game-list").removeClass("invisible");
-			adjustContainerHeight(getCurActPage());
-		}
+		$(".nv-guide").addClass("invisible");			
+		$.each(data.games,function(index,game){
+			var builder = new StringBuilder();
+			builder.append('<div class="card"><div class="card-header"><h2 class="card-title">版杀信息</h2></div>');
+			builder.append('<div class="card-body">');
+			builder.appendFormat('{0}<br>开版时间：{1}<br>当前状态：{2}',game.gameDesc,game.startDate,game.gameStatusDesc);
+			if(game.finalResult){
+				builder.appendFormat('<br>最终结果：{0}',game.finalResultDesc);
+			}
+			builder.append('</div>');
+			builder.appendFormat('<div class="card-footer"><a href="'+getRootPath()+'/assemble?gameId={0}"><span>查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',game.id);
+			$("#game-list").append(builder.toString());
+		})
+		$("#newspaper-list").addClass("invisible");
+		$("#game-list").removeClass("invisible");
+		adjustContainerHeight(getCurActPage());
 	})
 }
 

@@ -37,24 +37,11 @@ function getUserBadge(){
 	var url = getRootPath() + "/getUserBadge";
 	var common = new Common();
 	common.callAction(null,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			$.each($("#badge-list li"),function(index,badge){
-				if(data.userBadge.indexOf($(badge).attr("id"))>-1){
-					$(badge).find("img").removeClass("unavailable");
-				}
-			})
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;			
-		}
+		$.each($("#badge-list li"),function(index,badge){
+			if(data.userBadge.indexOf($(badge).attr("id"))>-1){
+				$(badge).find("img").removeClass("unavailable");
+			}
+		})			
 	})
 }
 
@@ -80,31 +67,16 @@ function equipBadge(badge,badgeImg){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			$("#equiped-badges").empty();
-			if(data.badge && data.badge != ""){
-				$.each(data.badge.split(","),function(index,badge){
-					$("#equiped-badges").append('<img src="'+picServer+"badgeAvatar/"+badge+'.png" class="user-badge">');
-				})
-			}
-			$(badgeImg).find("div").toggleClass("equipped");
-			$(badgeImg).unbind("click").click(function(){
-				showBadgeDetail(badge,badgeImg,$(badgeImg).find("div").hasClass("equipped"),$(badgeImg).find("img").hasClass("unavailable"));
+		$("#equiped-badges").empty();
+		if(data.badge && data.badge != ""){
+			$.each(data.badge.split(","),function(index,badge){
+				$("#equiped-badges").append('<img src="'+picServer+"badgeAvatar/"+badge+'.png" class="user-badge">');
 			})
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;	
-			
 		}
-		
+		$(badgeImg).find("div").toggleClass("equipped");
+		$(badgeImg).unbind("click").click(function(){
+			showBadgeDetail(badge,badgeImg,$(badgeImg).find("div").hasClass("equipped"),$(badgeImg).find("img").hasClass("unavailable"));
+		})
 	})
 }
 

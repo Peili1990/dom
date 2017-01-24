@@ -178,12 +178,12 @@
 				offset : pageNum*10
 		}
 		var common = new Common();
-		common.callAction(options,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:
+		common.callAction(options,url,function(data){	
+			myLoadingClose();
+			if(data.essayList.length==0){
+				$(".nomore").removeClass("invisible");
+				adjustContainerHeight(getCurActPage());
+			} else {
 				$.each(data.essayList,function(index,essay){
 					var builder = new StringBuilder();
 					builder.append('<div class="card"><div class="card-header">');
@@ -198,27 +198,12 @@
 					builder.appendFormat('<div class="card-footer"><a><span onclick="pageSwitch({0},{1},0,1,{2})">查看更多  <span class="am-icon-chevron-right"></span></span></a></div></div>',"'#pageA'","'#pageC'","'getEssayDetail("+essay.essayId+")'")
 					$("#essay-list").append(builder.toString());
 				})				
-				myLoadingClose();
 				if(data.essayList.length<10){
 					$(".nomore").removeClass("invisible");
 				} else{
 					$(".loadmore").removeClass("invisible");
 				}				
 				adjustContainerHeight(getCurActPage());
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			case -3:
-				myLoadingClose();
-				$(".nomore").removeClass("invisible");
-				adjustContainerHeight(getCurActPage());
-				return;
-			default:
-				myAlert(data.message);
-				myLoadingClose();
-				$(".loadmore").removeClass("invisible");
-				return;
 			}
 		})
 	}

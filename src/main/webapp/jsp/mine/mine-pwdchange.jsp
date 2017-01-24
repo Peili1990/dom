@@ -46,25 +46,10 @@ function changePassword(){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("密码修改成功！请牢记新密码",function(){
-				$("#icon-arrow-1").click();
-			})
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
-	})
-	
-	
+		myInfo("密码修改成功！请牢记新密码",function(){
+			$("#icon-arrow-1").click();
+		})			
+	})	
 }
 
 

@@ -34,19 +34,9 @@
 		}
 		var common = new Common();
 		common.callAction(options, url, function(data) {
-			if (!data) {
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				myInfo("邮件发送成功，点击确定立即验证", function() {
-					gotoemail(data.email);
-				})
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			myInfo("邮件发送成功，点击确定立即验证", function() {
+				gotoemail(data.email);
+			})
 		})
 	}
   </script>

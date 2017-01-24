@@ -38,21 +38,9 @@ function register(){
 	};
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			myAlert("系统或网络异常");
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("注册成功，请验证邮箱",function(){
-				gotoemail(data.email);
-			});
-			return;
-		default:
-			myAlert(data.message);
-			gotoStepOne();
-			return;
-		}
+		myInfo("注册成功，请验证邮箱",function(){
+			gotoemail(data.email);
+		});			
 	});
 }
 $(function(){

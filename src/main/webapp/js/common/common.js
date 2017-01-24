@@ -15,7 +15,21 @@ var Common = function() {
 			data : data,
 			contentType : contentType,
 			dataType : "json",
-			success : callback,
+			success : function(data) {
+				if(!data){
+					return;
+				}
+				switch(data.status){
+				case 1:callback(data);
+					return;
+				case 0:
+					timeoutHandle();
+					return;
+				default:
+					myAlert(data.message);
+					return;
+				}
+			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				var resText = XMLHttpRequest.responseText;
 				if (resText != null && resText != "") {

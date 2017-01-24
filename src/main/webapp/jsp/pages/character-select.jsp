@@ -182,40 +182,27 @@
 		var url = getRootPath() + "/getUserCardStatus";
 		var common = new Common();
 		common.callAction(null,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:
-				if(data.cardNum.length == 0){
-					$("#card-not-available").removeClass("invisible");
-				} else {
-					$("#card-available").removeClass("invisible");
-					$.each(data.cardNum,function(index,cardType){
-						switch(cardType){
-						case 1:
-							$("#identity-card-available").removeClass("invisible");
-							break;
-						case 2:
-							$("#camp-card-available").removeClass("invisible");
-							break;
-						case 3:
-							$("#privilege-card-available").removeClass("invisible");
-							break;
-						case 4:
-							$("#pioneer-card-available").removeClass("invisible");
-							break;
-						}
-					})
-				}							
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}		
+			if(data.cardNum.length == 0){
+				$("#card-not-available").removeClass("invisible");
+			} else {
+				$("#card-available").removeClass("invisible");
+				$.each(data.cardNum,function(index,cardType){
+					switch(cardType){
+					case 1:
+						$("#identity-card-available").removeClass("invisible");
+						break;
+					case 2:
+						$("#camp-card-available").removeClass("invisible");
+						break;
+					case 3:
+						$("#privilege-card-available").removeClass("invisible");
+						break;
+					case 4:
+						$("#pioneer-card-available").removeClass("invisible");
+						break;
+					}
+				})
+			}											
 		})
 	}
 	
@@ -230,24 +217,11 @@
 		}
 		var common = new Common();
 		common.callAction(options,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:
-				if(data.isChosen=="1"){
-					$(".chosen").removeClass("invisible");
-				}else {
-					$(".chosen").addClass("invisible");
-				}
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			if(data.isChosen=="1"){
+				$(".chosen").removeClass("invisible");
+			}else {
+				$(".chosen").addClass("invisible");
+			}			
 		})
 	}
 
@@ -255,48 +229,35 @@
 		var common = new Common();
 		var url = getRootPath() + "/game/getCharacterListThree";
 		common.callAction(null, url, function(data) {
-			if(!data){
-				return;
-			}
-			switch (data.status){
-			case 1:
-				var characters = data.characters;
-				if(characters.length>0){
-					$.each(characters,function(index,character){
-						var builder = new StringBuilder();
-						builder.append('<li class="character-box">');
-						builder.appendFormat('<img src="{0}">',picServer+character.avatar);
-						builder.append('<div class="radio-box">');
-						builder.appendFormat('<input type="hidden" value="{0}">',character.id);
-						builder.appendFormat('<i class="am-icon-circle-thin am-icon-md">{0}</i>',character.name);
-						builder.appendFormat('<input type="hidden" value="{0}">',character.hasSp);
-						builder.append('</div></li>');
-						$("#select-character-three").find("ul").append(builder.toString());
+			var characters = data.characters;
+			if(characters.length>0){
+				$.each(characters,function(index,character){
+					var builder = new StringBuilder();
+					builder.append('<li class="character-box">');
+					builder.appendFormat('<img src="{0}">',picServer+character.avatar);
+					builder.append('<div class="radio-box">');
+					builder.appendFormat('<input type="hidden" value="{0}">',character.id);
+					builder.appendFormat('<i class="am-icon-circle-thin am-icon-md">{0}</i>',character.name);
+					builder.appendFormat('<input type="hidden" value="{0}">',character.hasSp);
+					builder.append('</div></li>');
+					$("#select-character-three").find("ul").append(builder.toString());
+				})
+				$.each($("#select-character-three i"),function(){
+						$(this).click(function(){
+						$("#select-character-three i").removeClass("selected").removeClass("am-icon-check-circle");
+						$(this).addClass("selected").addClass("am-icon-check-circle");
+						$("#is-sp")[0].checked = false;
+						$("#is-sp").attr("disabled",$(this).next().val()=="1"?false:true);
+						$("#selected-character").val($(this).prev().val());
 					})
-					$.each($("#select-character-three i"),function(){
-							$(this).click(function(){
-							$("#select-character-three i").removeClass("selected").removeClass("am-icon-check-circle");
-							$(this).addClass("selected").addClass("am-icon-check-circle");
-							$("#is-sp")[0].checked = false;
-							$("#is-sp").attr("disabled",$(this).next().val()=="1"?false:true);
-							$("#selected-character").val($(this).prev().val());
-						})
-					})
-					$("#select-character-three").removeClass("invisible");
-					adjustContainerHeight(getCurActPage());
-				} else {
-					myInfo("其他玩家正在选择角色，请耐心等待",function(){
-						$(".am-header-left").find("i").click();
-					});
-				}
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+				})
+				$("#select-character-three").removeClass("invisible");
+				adjustContainerHeight(getCurActPage());
+			} else {
+				myInfo("其他玩家正在选择角色，请耐心等待",function(){
+					$(".am-header-left").find("i").click();
+				});
+			}				
 		})
 	}
 	
@@ -356,23 +317,9 @@
 		};
 		var common = new Common();
 		common.callAction(options, url, function(data) {
-			if (!data) {
-				myAlert("系统或网络异常");
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				myInfo("角色选择成功！",function(){
-					window.location = getRootPath() + "/index";
-				});
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			myInfo("角色选择成功！",function(){
+				window.location = getRootPath() + "/index";
+			});				
 		});
 	}
 	

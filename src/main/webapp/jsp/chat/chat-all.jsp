@@ -28,25 +28,12 @@
         var url = getRootPath() + "/getChatInfo";
         var common = new Common();
         common.callAction(null, url, function(data) {
-           if(!data){
-           	   return;
-           }
-           switch (data.status){
-           	   case 1:
-           	   		$("#chat-list").empty();
-           	   		$.each(data.chatList,function(index,chatInfo){
-           	   			chatList.push(chatInfo.chatId);
-           	   			setChatPosition(chatInfo,false);
-           			})
-           			setRedspotOnChat();
-           			return;
-           		case 0:
-           			timeoutHandle();
-           			return;
-           		default:
-           			myAlert(data.message);
-           			return;
-           		}
+        	$("#chat-list").empty();
+           	$.each(data.chatList,function(index,chatInfo){
+           	   	chatList.push(chatInfo.chatId);
+           	   	setChatPosition(chatInfo,false);
+           	})
+           	setRedspotOnChat();     			
           })
 	}
 	

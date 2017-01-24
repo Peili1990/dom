@@ -35,23 +35,10 @@ function updateProfile(){
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if(!data){
-			return;
-		}
-		switch (data.status){
-		case 1:
-			myInfo("修改成功！",function(){
-				$("#user-motto").text(data.motto);
-				$("#icon-arrow-1").click();
-			})
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("修改成功！",function(){
+			$("#user-motto").text(data.motto);
+			$("#icon-arrow-1").click();
+		})		
 	})
 	
 }

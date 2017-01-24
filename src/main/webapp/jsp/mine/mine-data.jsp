@@ -27,27 +27,14 @@ function getPlayerData(){
 	var url = getRootPath() + "/getPlayerData";
 	var common = new Common();
 	common.callAction(null,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			if(data.details.length == 0){
-				showNVguide();
-			} else {
-				$("#player-data").removeClass("invisible").find("table").empty();
-				$.each(data.details,function(index,detail){
-					$("#player-data").find("table").append("<tr><td>"+detail.description+"</td><td>"+detail.value+"</td></tr>");
-				})
-			}
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;	
-		}
+		if(data.details.length == 0){
+			showNVguide();
+		} else {
+			$("#player-data").removeClass("invisible").find("table").empty();
+			$.each(data.details,function(index,detail){
+				$("#player-data").find("table").append("<tr><td>"+detail.description+"</td><td>"+detail.value+"</td></tr>");
+			})
+		}			
 	})
 }
 

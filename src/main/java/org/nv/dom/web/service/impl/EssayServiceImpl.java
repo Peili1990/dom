@@ -102,14 +102,9 @@ public class EssayServiceImpl implements EssayService {
 				getEssayListDTO.setOffset(getEssayListDTO.getPageNum()*10);
 			}		
 			List<Essay> essayList = essayMapper.getEssayList(getEssayListDTO);
-			if(essayList.size()==0){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "没有更多内容");
-			} else {
-				result.put("essayList", essayList);
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "获取成功");
-			}
+			result.put("essayList", essayList);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取成功");
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);

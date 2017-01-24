@@ -58,105 +58,92 @@ function getNewspaperDetail(newspaperId,newspaperNo){
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if(!data){
-			return;
+		newspaperDetail = data.newspaperDetail;
+		var builder = new StringBuilder();
+		builder.appendFormat("<div class='card-header'><h2 class='card-title'>{0}</h2></div>",newspaperDetail.header);
+		if(newspaperDetail.headline){
+			builder.appendFormat("<div class='card-body'><h2 class='card-title'>{0}</h2>",newspaperDetail.headline);
 		}
-		switch (data.status){
-		case 1:
-			newspaperDetail = data.newspaperDetail;
-			var builder = new StringBuilder();
-			builder.appendFormat("<div class='card-header'><h2 class='card-title'>{0}</h2></div>",newspaperDetail.header);
-			if(newspaperDetail.headline){
-				builder.appendFormat("<div class='card-body'><h2 class='card-title'>{0}</h2>",newspaperDetail.headline);
+		if(newspaperDetail.headlineBody){
+			builder.appendFormat("{0}</div>",newspaperDetail.headlineBody);
+		}
+		if(newspaperDetail.subedition){
+			builder.appendFormat("<div class='card-body'>{0}</div>",newspaperDetail.subedition);
+		}			
+		if(newspaperDetail.importantNotice){
+			if(newspaperDetail.headline||newspaperDetail.headlineBody||newspaperDetail.subedition){
+				builder.append("<hr data-am-widget='divider' class='am-divider am-divider-default' />");
 			}
-			if(newspaperDetail.headlineBody){
-				builder.appendFormat("{0}</div>",newspaperDetail.headlineBody);
+			builder.appendFormat("<div class='card-body'><h2 class='card-title'>重要公告</h2>{0}</div>",newspaperDetail.importantNotice);
+		}
+		if(newspaperDetail.seatTable){
+			if(newspaperDetail.headline||newspaperDetail.headlineBody||newspaperDetail.subedition||newspaperDetail.importantNotice){
+				builder.append("<hr data-am-widget='divider' class='am-divider am-divider-default' />");
 			}
-			if(newspaperDetail.subedition){
-				builder.appendFormat("<div class='card-body'>{0}</div>",newspaperDetail.subedition);
-			}			
-			if(newspaperDetail.importantNotice){
-				if(newspaperDetail.headline||newspaperDetail.headlineBody||newspaperDetail.subedition){
-					builder.append("<hr data-am-widget='divider' class='am-divider am-divider-default' />");
-				}
-				builder.appendFormat("<div class='card-body'><h2 class='card-title'>重要公告</h2>{0}</div>",newspaperDetail.importantNotice);
-			}
-			if(newspaperDetail.seatTable){
-				if(newspaperDetail.headline||newspaperDetail.headlineBody||newspaperDetail.subedition||newspaperDetail.importantNotice){
-					builder.append("<hr data-am-widget='divider' class='am-divider am-divider-default' />");
-				}
-				builder.append("<div class='card-body' id='seat-table'><h2 class='card-title'>座位表</h2></div>");	
-			}
-			$("#newspaper-content").append(builder.toString());
-			if(newspaperDetail.seatTable){
-				$("#seat-table").append(newspaperDetail.seatTable);
-			}
-			adjustContainerHeight(getCurActPage());
-			if(newspaperDetail.type == 2){	
-				$.each(data.speechList,function(index,speech){
-					appendSpeech(speech);
-				});
-				if(newspaperDetail.status == 1 && playerInfo){
-					$("#nv-footer").addClass("invisible");
-					$("#nv-chatbar").removeClass("invisible");
-					$("#show-emotion").addClass("invisible");
-					$("#use-gesture").removeClass("invisible");
-					if(data.replaceList == null && playerInfo.isMute == 1 && playerInfo.isLife == 1){
-						$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
-						$("#send-message").attr("disabled","disabled");
-						$("#use-gesture").on("click",function(){
-							if($(this).hasClass("am-btn-danger")){
-								$("#nv-chatbar .messages").removeAttr("disabled").text("");
-								$("#send-message").removeAttr("disabled");	
-							}else{
-								$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
-								$("#send-message").attr("disabled","disabled");
-							}
-						})
-					}
-					if(playerInfo.isLife == 0 && !(playerInfo.characterId==5 && playerInfo.isSp == "1")){
-						$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
-						$("#send-message").attr("disabled","disabled");
-					}
-					$("#send-message").on("click",function(){
-						if(data.replaceList != null){
-							replaceList = data.replaceList;
-							$('#my-actions .am-list').empty().append("<li class='am-modal-actions-header'>请选择发言角色</li>");
-							$.each(replaceList,function(index,ele){
-								$('#my-actions .am-list').append("<li onclick='sumbitSpeech("+newspaperId+","+index+")'>"+ele.characterName+"</li>");
-							})
-							$('#my-actions').modal('open');
-						} else {
-							sumbitSpeech(newspaperId);
+			builder.append("<div class='card-body' id='seat-table'><h2 class='card-title'>座位表</h2></div>");	
+		}
+		$("#newspaper-content").append(builder.toString());
+		if(newspaperDetail.seatTable){
+			$("#seat-table").append(newspaperDetail.seatTable);
+		}
+		adjustContainerHeight(getCurActPage());
+		if(newspaperDetail.type == 2){	
+			$.each(data.speechList,function(index,speech){
+				appendSpeech(speech);
+			});
+			if(newspaperDetail.status == 1 && playerInfo){
+				$("#nv-footer").addClass("invisible");
+				$("#nv-chatbar").removeClass("invisible");
+				$("#show-emotion").addClass("invisible");
+				$("#use-gesture").removeClass("invisible");
+				if(data.replaceList == null && playerInfo.isMute == 1 && playerInfo.isLife == 1){
+					$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
+					$("#send-message").attr("disabled","disabled");
+					$("#use-gesture").on("click",function(){
+						if($(this).hasClass("am-btn-danger")){
+							$("#nv-chatbar .messages").removeAttr("disabled").text("");
+							$("#send-message").removeAttr("disabled");	
+						}else{
+							$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
+							$("#send-message").attr("disabled","disabled");
 						}
-					})				
-				} else {
-					$("#nv-chatbar").addClass("invisible");
-					$("#nv-footer").removeClass("invisible");
+					})
 				}
-				redspot = $("#newspaper-list .card:eq("+ newspaperNo +") .badge");
-				if(!redspot.hasClass("invisible")){
-					newspaperSpeech = getCache("nv_newspaper"+newspaperId);
-					setCache("nv_offline_speech",getCache("nv_offline_speech")-parseInt(newspaperSpeech));
-					delCache("nv_newspaper"+newspaperId);
-					redspot.addClass("invisible");
-					setRedspot();
+				if(playerInfo.isLife == 0 && !(playerInfo.characterId==5 && playerInfo.isSp == "1")){
+					$("#nv-chatbar .messages").attr("disabled","disabled").text("禁言中");
+					$("#send-message").attr("disabled","disabled");
 				}
-			}		
-			activeScrollNav();
-			$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });
-			if(GetQueryString("scroll")){
-				scrollTobottom();	
+				$("#send-message").on("click",function(){
+					if(data.replaceList != null){
+						replaceList = data.replaceList;
+						$('#my-actions .am-list').empty().append("<li class='am-modal-actions-header'>请选择发言角色</li>");
+						$.each(replaceList,function(index,ele){
+							$('#my-actions .am-list').append("<li onclick='sumbitSpeech("+newspaperId+","+index+")'>"+ele.characterName+"</li>");
+						})
+						$('#my-actions').modal('open');
+					} else {
+						sumbitSpeech(newspaperId);
+					}
+				})				
+			} else {
+				$("#nv-chatbar").addClass("invisible");
+				$("#nv-footer").removeClass("invisible");
 			}
-			changeURL(getRootPath()+"/assemble");
-			return;
-		case 0:
-			timeoutHandle();
-			return;
-		default:
-			myAlert(data.message);
-			return;
+			redspot = $("#newspaper-list .card:eq("+ newspaperNo +") .badge");
+			if(!redspot.hasClass("invisible")){
+				newspaperSpeech = getCache("nv_newspaper"+newspaperId);
+				setCache("nv_offline_speech",getCache("nv_offline_speech")-parseInt(newspaperSpeech));
+				delCache("nv_newspaper"+newspaperId);
+				redspot.addClass("invisible");
+				setRedspot();
+			}
 		}		
+		activeScrollNav();
+		$("#container").css({"height":$("#pageB .default").height()+100>$("html").height()?$("#pageB .default").height()+100+"px":$("html").height() });
+		if(GetQueryString("scroll")){
+			scrollTobottom();	
+		}
+		changeURL(getRootPath()+"/assemble");			
 	});
 }
 
@@ -233,17 +220,7 @@ function wordCount(){
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("该发言共计：" + data.wordCount + "字");
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("该发言共计：" + data.wordCount + "字");		
 	})
 }
 </script>

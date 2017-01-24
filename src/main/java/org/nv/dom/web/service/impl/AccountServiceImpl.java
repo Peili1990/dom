@@ -66,7 +66,7 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 		User user = accountMapper.getUserByAccountDao(loginDTO);
 		if(user != null){
 			if(StringUtil.isEmail(user.getAccount())&&"0".equals(user.getStatus())){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱还未验证");
 				result.put("email", user.getAccount());
 				sendVerifyMail(user.getId(), user.getAccount(),user.getNickname());

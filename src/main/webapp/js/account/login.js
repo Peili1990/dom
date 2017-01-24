@@ -18,24 +18,14 @@ function submitForm(){
 	};
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			myAlert("系统或网络异常");
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			setCookie("nv_account",account,"30d");
-			setCookie("nv_password",password,"30d");
-			window.location = getRootPath() + "/index";
-			return;
-		case -3:
+		if(data.email && data.email!=""){
 			myInfo("该邮箱还未验证，点击确定立即验证",function(){
 				gotoemail(data.email);
 			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
+		} else {
+			setCookie("nv_account",account,"30d");
+			setCookie("nv_password",password,"30d");
+			window.location = getRootPath() + "/index";
 		}
 	});
 }
@@ -70,18 +60,9 @@ function forgetpassword(){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("重置密码邮件已发送，点击前往验证",function(){
-				gotoemail(data.email);
-			});
-			return;
-		default:
-			myAlert(data.message);
-		}
+		myInfo("重置密码邮件已发送，点击前往验证",function(){
+			gotoemail(data.email);
+		});		
 	})
 }
 
@@ -101,20 +82,9 @@ function resetPassword(){
 	};
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			myAlert("系统或网络异常");
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("密码重置成功，请登录！",function(){
-				window.location = getRootPath() + "/index";
-			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("密码重置成功，请登录！",function(){
+			window.location = getRootPath() + "/index";
+		})	
 	});
 }
 

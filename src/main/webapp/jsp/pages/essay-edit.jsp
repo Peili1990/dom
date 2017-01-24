@@ -58,22 +58,9 @@
 		}
 		var common = new Common();
 		common.callAction(options,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:
-				myInfo("发表成功！",function(){
-					window.location = getRootPath() + "/index?essayId=" + data.essayId;
-				})
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			myInfo("发表成功！",function(){
+				window.location = getRootPath() + "/index?essayId=" + data.essayId;
+			})			
 		})
 	}
 	
@@ -84,22 +71,9 @@
 		}
 		var common = new Common();
 		common.callAction(options,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:
-				myInfo("删除成功！",function(){
-					window.location = getRootPath() + "/index";
-				})
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			myInfo("删除成功！",function(){
+				window.location = getRootPath() + "/index";
+			})				
 		})
 	}
 

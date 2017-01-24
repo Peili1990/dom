@@ -81,42 +81,29 @@
 		var url = getRootPath() + "/getOfflineMessage";
 		var common = new Common();
 		common.callAction(null, url, function(data) {
-			if(!data){
-				return;
+			totalSpeech = 0;
+			$.each(data.offlineSpeech,function(index,offline){
+				setCache("nv_newspaper"+offline.newspaperId,parseInt(offline.num));
+				totalSpeech+=parseInt(offline.num);
+			})
+			setCache("nv_offline_speech",parseInt(totalSpeech));
+			if(window.location.href.indexOf("assemble")>0){
+				setRedspotOnpaper();
 			}
-			switch (data.status){
-			case 1:
-				totalSpeech = 0;
-				$.each(data.offlineSpeech,function(index,offline){
-					setCache("nv_newspaper"+offline.newspaperId,parseInt(offline.num));
-					totalSpeech+=parseInt(offline.num);
-				})
-				setCache("nv_offline_speech",parseInt(totalSpeech));
-				if(window.location.href.indexOf("assemble")>0){
-					setRedspotOnpaper();
+			totalChat = 0;				
+			$.each(data.offlineChat,function(index,chat){		
+				setCache("nv_chat"+chat.chatId, parseInt(chat.num));
+				totalChat+=parseInt(chat.num);
+			})
+			if(window.location.href.indexOf("chat")>0){
+				createChatList();
+				adjustContainerHeight(getCurActPage());
+				if(!$("#nv-chatbar").hasClass("invisible")){
+					getChatDetail(activeToUserId);	
 				}
-				totalChat = 0;				
-				$.each(data.offlineChat,function(index,chat){		
-					setCache("nv_chat"+chat.chatId, parseInt(chat.num));
-					totalChat+=parseInt(chat.num);
-				})
-				if(window.location.href.indexOf("chat")>0){
-					createChatList();
-					adjustContainerHeight(getCurActPage());
-					if(!$("#nv-chatbar").hasClass("invisible")){
-						getChatDetail(activeToUserId);	
-					}
-				}
-				setCache("nv_offline_chat"+userId,parseInt(totalChat));
-				setRedspot();
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-			myAlert(data.message);
-				return;
-			}	
+			}
+			setCache("nv_offline_chat"+userId,parseInt(totalChat));
+			setRedspot();				
 		});
 	}
 	
@@ -187,26 +174,13 @@
 		       		var options = {
 		        		chatId : chatId
 		        	}
-		        	common.callAction(options, url, function(data) {
-		            if(!data){
-		           	    return;
-		            }
-		            switch (data.status){
-		           	   case 1:
-		           		    chatInfo = data.chatInfo;
-		           		    chatInfo.latestContent = content.content;
-		           		    chatInfo.latestTime = content.createTime;
-		           		    chatInfo.chatId = chatId;
-		           	   		setChatPosition(chatInfo,true);	
-		           	   		setRedspotOnChat();
-		           			return;
-		           		case 0:
-		           			timeoutHandle();
-		           			return;
-		           		default:
-		           			myAlert(data.message);
-		           			return;
-		           		}
+		        	common.callAction(options, url, function(data) {		            
+		           		chatInfo = data.chatInfo;
+		           		chatInfo.latestContent = content.content;
+		           		chatInfo.latestTime = content.createTime;
+		           		chatInfo.chatId = chatId;
+		           	    setChatPosition(chatInfo,true);	
+		           	    setRedspotOnChat();		           			
 		          	})
 				} else {
 					$("#chat-list .card:eq("+chatPosition+") .chat-content").find("p").text(content.content);
