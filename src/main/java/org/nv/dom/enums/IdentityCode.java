@@ -47,6 +47,7 @@ public enum IdentityCode {
 	 * @author 玄玉<http://blog.csdn.net/jadyer>
 	 */
 	public static String getMessageByCode(Integer code) {
+		if(code == null) return null;
 		for (IdentityCode _enum : values()) {
 			if (code.equals(_enum.getCode())) {
 				return _enum.getMessage();
