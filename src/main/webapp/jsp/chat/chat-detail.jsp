@@ -14,9 +14,11 @@
 
 <script type="text/javascript">
 	var activeToUserId = 0;
+	var nomoreflag = false;
 	var pageNum = 0;
 
 	function getChatDetail(toUserId){
+		nomoreflag = false;
 		if(toUserId == 0 ){
 			return;
 		}
@@ -95,6 +97,10 @@
 	}
 	
 	function loadchatRecord(chatId){
+		if(nomoreflag){
+			myAlert("没有更多聊天记录");
+			return;
+		}
 		pageNum++;
 		var url = getRootPath() + "/getChatRecord";
 		var options = {
@@ -103,10 +109,16 @@
 		}
 		var common = new Common();
 		myLoading();
-		common.callAction(options,url,function(data){		
+		common.callAction(options,url,function(data){			
 			$.each(data.chatDetails,function(index,detail){
 				appendChatDetail(detail,true);
-			})				
+			})
+			if(data.chatDetails.length<10){
+				if(data.chatDetails.length==0){
+					myAlert("没有更多聊天记录");
+				}
+				nomoreflag=true;
+			}
 			myLoadingClose();			
 		})
 	}
