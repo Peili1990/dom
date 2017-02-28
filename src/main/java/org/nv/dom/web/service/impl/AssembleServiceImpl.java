@@ -10,6 +10,7 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.message.speech.Speech;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.message.GetCurDaySpeechListDTO;
 import org.nv.dom.dto.message.GetSpeechListDTO;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.TextUtil;
@@ -98,10 +99,16 @@ public class AssembleServiceImpl implements AssembleService {
 	}
 	
 	@Override
-	public Map<String, Object> wordCount(String content) {
+	public Map<String, Object> wordCount(GetCurDaySpeechListDTO getCurDaySpeechListDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			Integer wordCount = TextUtil.wordCount(content);
+			List<String> speechList = messageMapper.getCurDaySpeechListDao(getCurDaySpeechListDTO);
+			Integer usedWordCount = 0;
+			for(String speech : speechList){
+				usedWordCount += TextUtil.wordCount(speech);
+			}
+			Integer wordCount = TextUtil.wordCount(getCurDaySpeechListDTO.getContent());
+			result.put("used", usedWordCount);
 			result.put("wordCount", wordCount);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "字数统计成功");

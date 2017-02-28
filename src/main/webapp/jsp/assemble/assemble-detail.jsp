@@ -52,6 +52,7 @@ var playerInfo = ${playerInfoStr}
 function getNewspaperDetail(newspaperId,newspaperNo){
 	$("#newspaper-content").empty();
 	$("#speech-list").empty();
+	setCache("cur_newspaper_id",newspaperId);
 	var url = getRootPath() + "/getAssembleDetail";
 	var options = {
 			newspaperId : newspaperId
@@ -216,11 +217,12 @@ function wordCount(){
 	}
 	var url = getRootPath() + "/wordCount";
 	var options = {
+		newspaperId : getCache("cur_newspaper_id"),
 		content : $("#nv-chatbar .messages").val()
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		myInfo("该发言共计：" + data.wordCount + "字");		
+		myInfo("今日已用："+data.used+"字<br>"+"该发言共计：" + data.wordCount + "字");		
 	})
 }
 </script>

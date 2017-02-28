@@ -48,6 +48,17 @@
 		LIMIT 1
 	
 	</select>
+	
+	<select id="getCurDaySpeechListDao" parameterType="GetCurDaySpeechListDTO" resultType="String">
+	
+		SELECT
+			ds.content
+		FROM	
+			d_speech ds, d_newspaper dn
+		WHERE	
+			ds.newspaper_id = dn.id AND ds.player_id = #{playerId} AND dn.id = #{newspaperId} AND ds.type = 1;		
+	
+	</select>
 
 
 </mapper>

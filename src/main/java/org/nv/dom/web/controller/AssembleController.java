@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Param;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.message.GetCurDaySpeechListDTO;
 import org.nv.dom.dto.message.GetSpeechListDTO;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.service.AssembleService;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,8 +57,9 @@ public class AssembleController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/wordCount", method = RequestMethod.POST)
-	public Map<String, Object> wordCount(@RequestParam("content") String content, HttpSession session) {
-		return assembleService.wordCount(content);
+	public Map<String, Object> wordCount(@ModelAttribute("getCurDayListDTO") GetCurDaySpeechListDTO getCurDaySpeechListDTO, HttpSession session) {
+		getCurDaySpeechListDTO.setPlayerId((long) session.getAttribute(PageParamType.player_id_in_session));
+		return assembleService.wordCount(getCurDaySpeechListDTO);
 	}
 
 }
