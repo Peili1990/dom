@@ -24,10 +24,13 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
+import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.user.EquipBadgeDTO;
 import org.nv.dom.dto.user.UpdateUserProfileDTO;
+import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.StringUtil;
+import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.dao.statistic.StatisticMapper;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
@@ -48,10 +51,20 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	StatisticMapper statisticMapper;
 	
+	@Autowired
+	PlayerMapper playerMapper;
+	
 	@Override
 	public UserCurRole getUserCurRole(User user) {
 		try{
-			return userMapper.getUserCurRoleDao(user.getId());
+			UserCurRole userCurRole = userMapper.getUserCurRoleDao(user.getId());
+			if(PlayerStatus.INDENTITY_OBTAINED.getCode() == userCurRole.getStatus()){
+				ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
+				changeStatusDTO.setPlayerId(userCurRole.getPlayerId());
+				changeStatusDTO.setStatus(PlayerStatus.INDENTITY_KNOWN.getCode());
+				playerMapper.changePlayerStatus(changeStatusDTO);
+			}
+			return userCurRole;
 		} catch (Exception e){
 			logger.error(e.getMessage(), e);
 			return null;
