@@ -187,7 +187,7 @@
 				$.each(data.essayList,function(index,essay){
 					var builder = new StringBuilder();
 					builder.append('<div class="card"><div class="card-header">');
-					builder.appendFormat('<span><h2>{0}</h2>作者：{1}',essay.header,essay.nickname);
+					builder.appendFormat('<span><h2>{0}</h2>作者：{1}  ',essay.header,essay.nickname);
 					if(essay.badge){
 						$.each(essay.badge.split(","),function(index,badge){
 							builder.appendFormat('<img src="{0}" class="user-badge">',picServer+"badgeAvatar/"+badge+".png");

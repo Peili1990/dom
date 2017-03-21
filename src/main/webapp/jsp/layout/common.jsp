@@ -12,7 +12,7 @@
 <link rel="bookmark" href="${baseUrl}img/nv-logo.png"/>
 <link rel="apple-touch-icon" href="${baseUrl}img/nv-logo.png"/>
 <script src="${baseUrl}js/common/jquery-3.0.0.min.js" type="text/javascript"></script>
-<script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>
+<script src="${baseUrl}js/common/reconnecting-websocket.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/fastclick.min.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/amazeui.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/common.js" type="text/javascript"></script>
