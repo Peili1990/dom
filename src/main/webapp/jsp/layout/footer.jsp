@@ -52,13 +52,9 @@
   	webSocket.onerror = function(event) {
 		myAlert("与报社取得联系中...");
 	};
-	
-	$(function(){
-		getOfflineMessage();
-	})
 
 	webSocket.onopen = function(event) {
-
+		getOfflineMessage();
 	}
 
 	webSocket.onmessage = function(event) {
