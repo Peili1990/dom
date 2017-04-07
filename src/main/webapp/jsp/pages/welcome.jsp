@@ -10,13 +10,27 @@
 				<c:when test="${ userInfo.userCurRole eq 'judger' }">
 					<div class="card-body">
 					你正在主持${ userInfo.gameDesc }
-					<a href="${ baseUrl}assemble"><span style="float:right">去看看 <span class="am-icon-chevron-right"></span></span></a>
+					<c:choose>
+						<c:when test="${ userInfo.gameStatus == 1 }">
+							<span style="float:right" onclick="pageSwitch('#pageA','#pageF',0,1,'getApplyingGames()')">报名进展 <span class="am-icon-chevron-right"></span></span>
+						</c:when>
+						<c:otherwise>
+							<a href="${ baseUrl}assemble"><span style="float:right">去看看 <span class="am-icon-chevron-right"></span></span></a>
+						</c:otherwise>				
+					</c:choose>
 					</div>
 				</c:when>
 				<c:when test="${ userInfo.userCurRole eq 'player' }">
 					<div class="card-body">
 					你正在参加${ userInfo.gameDesc }
-					<a href="${ baseUrl}assemble"><span style="float:right">去看看 <span class="am-icon-chevron-right"></span></span></a>
+					<c:choose>
+						<c:when test="${ userInfo.gameStatus == 1 }">
+							<span style="float:right" onclick="pageSwitch('#pageA','#pageF',0,1,'getApplyingGames()')">报名进展 <span class="am-icon-chevron-right"></span></span>
+						</c:when>
+						<c:otherwise>
+							<a href="${ baseUrl}assemble"><span style="float:right">去看看 <span class="am-icon-chevron-right"></span></span></a>
+						</c:otherwise>				
+					</c:choose>
 					</div>
 				</c:when>
 				<c:otherwise>
