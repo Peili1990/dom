@@ -4,6 +4,7 @@ public class Comment {
 	
 	private String content;
 	private String avatar;
+	private String motto;
 	private String nickname;
 	private String createTime;
 	private String badge;
@@ -18,6 +19,12 @@ public class Comment {
 	}
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
+	}
+	public String getMotto() {
+		return motto;
+	}
+	public void setMotto(String motto) {
+		this.motto = motto;
 	}
 	public String getNickname() {
 		return nickname;

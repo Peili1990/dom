@@ -41,7 +41,9 @@ function getEssayDetail(essayId){
 		$("#send-message").unbind("click").click(function(){
 			submitComment(essayId);
 		})
-		$("#essay-detail .author-info").find(".am-comment-avatar").attr("src",picServer+data.detail.avatar);
+		$("#essay-detail .author-info").find(".am-comment-avatar").attr("src",picServer+data.detail.avatar).click(function(){
+			showAvatarDetail(data.detail);
+		});
 		$("#essay-detail .author-info").find("span").text(data.detail.nickname);
 		$("#badge-list").empty();
 		if(data.detail.badge){
@@ -89,6 +91,9 @@ function appendComment(index,comment){
 	builder.appendFormat('<div class="commnet-content"><p>{0}</p></div>',replaceEmoji(comment.content,emoji));
 	builder.append("</li>");
 	$("#comment-list").append(builder.toString());
+	$("#comment-list li:last-child").find(".am-comment-avatar").click(function(){
+		showAvatarDetail(comment);
+	})
 }
 
 function submitComment(essayId){

@@ -84,6 +84,16 @@
   </div>
 </div>
 
+<div class="am-modal am-modal-confirm" tabindex="-1" id="avatar-detail">
+	<div class="am-modal-dialog">
+		<div class="am-modal-hd">维多利亚的噩梦</div>
+		<div class="am-modal-bd"></div>
+		<div class="am-modal-footer">
+  			<span class="am-modal-btn" data-am-modal-cancel>关闭</span>
+		</div>
+	</div>
+</div>
+
 <div class="dw-hidden" role="alert"></div>
 
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default invisible" id="nv-chatbar">
@@ -145,5 +155,11 @@
 			$(this).removeClass("am-btn-default").addClass("am-btn-danger");
 		}
 	})
+	
+	function showAvatarDetail(avatar){
+		$("#avatar-detail .am-modal-hd").text(avatar.nickname);
+		$("#avatar-detail .am-modal-bd").html('<img class="avatar-detail-img" src="'+picServer+avatar.avatar+'"><p>'+avatar.motto+'</p>');
+		$("#avatar-detail").modal('open');
+	}
 
 </script>

@@ -66,6 +66,7 @@
 			du.id AS userId,
 			du.nickname AS nickname,
 			du.avatar AS avatar,
+			du.motto AS motto,
 			du.badge AS badge,
 			de.header AS header,
 			de.content AS content,
@@ -82,6 +83,7 @@
 		SELECT
 			du.nickname AS nickname,
 			du.avatar AS avatar,
+			du.motto AS motto,
 			dc.content AS content,
 			dc.create_time AS createTime,
 			du.badge AS badge

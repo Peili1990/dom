@@ -527,4 +527,8 @@ time{
          filter: grayscale(100%);    /* 标准写法 */  
 }
 
+.avatar-detail-img {
+	width:80%;
+}
+
 

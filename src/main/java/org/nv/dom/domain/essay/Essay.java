@@ -6,6 +6,7 @@ public class Essay {
 	private long userId;
 	private String nickname;
 	private String avatar;
+	private String motto;
 	private String badge;
 	private String header;
 	private String content;	
@@ -36,6 +37,12 @@ public class Essay {
 	}
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
+	}
+	public String getMotto() {
+		return motto;
+	}
+	public void setMotto(String motto) {
+		this.motto = motto;
 	}
 	public String getBadge() {
 		return badge;
