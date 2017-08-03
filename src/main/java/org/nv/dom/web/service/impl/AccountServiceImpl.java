@@ -93,6 +93,11 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 			result.put(PageParamType.BUSINESS_MESSAGE, "信息请填写完整");
 			return result;
 		}
+		if (!StringUtil.isEmail(registerDTO.getAccount())){
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "请用邮箱注册");
+			return result;
+		}
 		if (accountMapper.getCountByAccountDao(registerDTO)>0){
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱或昵称已被注册");
