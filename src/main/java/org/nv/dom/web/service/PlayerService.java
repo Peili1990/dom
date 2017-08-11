@@ -12,5 +12,7 @@ public interface PlayerService {
 	public Map<String, Object> getPlayerOpreation(long playerId);
 	
 	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO);
+	
+	public Map<String, Object> getPlayerReplaceSkin(long playerId);
 
 }

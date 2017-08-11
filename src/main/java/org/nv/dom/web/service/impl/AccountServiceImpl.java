@@ -26,6 +26,7 @@ import org.nv.dom.web.dao.account.AccountMapper;
 import org.nv.dom.web.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service("accountServiceImpl")
 public class AccountServiceImpl extends BasicServiceImpl implements AccountService {
@@ -56,65 +57,36 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 	@Override
 	public Map<String, Object> loginAction(LoginDTO loginDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (loginDTO == null 
-				|| StringUtil.isNullOrEmpty(loginDTO.getAccount())
-				|| StringUtil.isNullOrEmpty(loginDTO.getPassword())) {
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
-			return result;
-		}
+		Assert.isTrue(loginDTO != null && 
+				!StringUtil.isNullOrEmpty(loginDTO.getAccount()) && 
+				!StringUtil.isNullOrEmpty(loginDTO.getPassword()), "参数异常");
 		User user = accountMapper.getUserByAccountDao(loginDTO);
-		if(user != null){
-			if(StringUtil.isEmail(user.getAccount())&&"0".equals(user.getStatus())){
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱还未验证");
-				result.put("email", user.getAccount());
-				sendVerifyMail(user.getId(), user.getAccount(),user.getNickname());
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "登录成功");
-				result.put("user", user);
-			}
+		Assert.notNull(user, "用户名或密码错误");
+		if(StringUtil.isEmail(user.getAccount())&&"0".equals(user.getStatus())){
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱还未验证");
+			result.put("email", user.getAccount());
+			sendVerifyMail(user.getId(), user.getAccount(),user.getNickname());
 		} else {
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "用户名或密码错误");
-		}	
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "登录成功");
+			result.put("user", user);
+		}
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> registerAction(RegisterDTO registerDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (registerDTO == null 
-				|| StringUtil.isNullOrEmpty(registerDTO.getAccount())
-				|| StringUtil.isNullOrEmpty(registerDTO.getPassword())
-				|| StringUtil.isNullOrEmpty(registerDTO.getNickname())) {
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "信息请填写完整");
-			return result;
-		}
-		if (!StringUtil.isEmail(registerDTO.getAccount())){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "请用邮箱注册");
-			return result;
-		}
-		if (accountMapper.getCountByAccountDao(registerDTO)>0){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱或昵称已被注册");
-			return result;
-		}
-//		if (accountMapper.getInvCodeDao(registerDTO.getInvitecode()) != 1){
-//			result.put(PageParamType.BUSINESS_STATUS, -1);
-//			result.put(PageParamType.BUSINESS_MESSAGE, "邀请码无效或已被使用");
-//			return result;
-//		}	
+		Assert.isTrue(registerDTO != null && 
+				!StringUtil.isNullOrEmpty(registerDTO.getAccount()) && 
+				!StringUtil.isNullOrEmpty(registerDTO.getPassword()) &&
+				!StringUtil.isNullOrEmpty(registerDTO.getNickname()), "参数异常");
+		Assert.isTrue(StringUtil.isEmail(registerDTO.getAccount()), "请用邮箱注册");
+		Assert.isTrue(accountMapper.getCountByAccountDao(registerDTO) == 0, "该邮箱或昵称已被注册");	
 		registerDTO.setMotto(defaultMotto);
 		registerDTO.setAvatar(defaultAvatar);
-		if (accountMapper.insertUserDao(registerDTO) != 1){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统或网络异常");
-			return result;
-		}
+		Assert.isTrue(accountMapper.insertUserDao(registerDTO) == 1, "系统或网络异常");
 		sendVerifyMail(registerDTO.getId(),registerDTO.getAccount(),registerDTO.getNickname());
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "注册成功，请验证邮箱");
@@ -147,25 +119,11 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 	@Override
 	public Map<String, Object> emailverify(EmailVerifyDTO emailVerifyDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (emailVerifyDTO == null) {
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常，请重试");
-			return result;
-		}	
+		Assert.notNull(emailVerifyDTO, "参数异常，请重试");	
 		long id = Long.parseLong(EncryptUtil.decryptBase64(emailVerifyDTO.getUu()));
 		String email = EncryptUtil.decryptBase64(emailVerifyDTO.getEe());
-		if(isExpire(emailVerifyDTO)){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "链接失效，请重新发送验证邮件");
-			result.put("email", email);
-			return result;
-		}		
-		if(accountMapper.getUserCountByIdAndEmail(id, email)!=1){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "注册用户与邮箱不匹配");
-			result.put("email", email);
-			return result;
-		}
+		Assert.isTrue(!isExpire(emailVerifyDTO), "链接失效，请重新发送验证邮件");	
+		Assert.isTrue(accountMapper.getUserCountByIdAndEmail(id, email) == 1, "注册用户与邮箱不匹配");		
 		if("register".equals(emailVerifyDTO.getVerifyType()) && accountMapper.verifyUserAndEmailStatus(id)!=1){
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证失败");
@@ -190,22 +148,10 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 	@Override
 	public Map<String, Object> resendmail(String email) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (StringUtil.isNullOrEmpty(email)) {
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址为空");
-			return result;
-		}
-		if (!StringUtil.isEmail(email)) {
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址格式错误");
-			return result;
-		}
+		Assert.isTrue(!StringUtil.isNullOrEmpty(email), "邮箱地址为空");
+		Assert.isTrue(StringUtil.isEmail(email), "邮箱地址格式错误");
 		User user = accountMapper.getUserByEmail(email,true);
-		if (user == null) {
-			result.put(PageParamType.BUSINESS_STATUS, -3);
-			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱未注册或已激活");
-			return result;
-		}
+		Assert.notNull(user, "该邮箱未注册或已激活");
 		sendVerifyMail(user.getId(),email,user.getNickname());
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "验证邮件发送成功");
@@ -217,50 +163,27 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 	public Map<String, Object> changePassword(PwdChangeDTO pwdChangeDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if(!StringUtil.isNullOrEmpty(pwdChangeDTO.getAccount())&&pwdChangeDTO.getUserId()>0){
-			
-			if(accountMapper.changePasswordDao(pwdChangeDTO)==1){
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "密码修改成功");
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, -1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "旧密码错误");
-			}
-		} else if(StringUtil.isEmail(pwdChangeDTO.getAccount())){
-			if(redisClient.get(pwdChangeDTO.getAccount(), "").equals(RedisConstant.WAITING_TO_BE_VERIFY)){
-				redisClient.del(pwdChangeDTO.getAccount());
-				accountMapper.changePasswordDao(pwdChangeDTO);
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "密码重置成功");
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, -2);
-				result.put(PageParamType.BUSINESS_MESSAGE, "不可重置密码");
-			}
+			Assert.isTrue(accountMapper.changePasswordDao(pwdChangeDTO) == 1, "旧密码错误");
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "密码修改成功");
 		} else {
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "不可重置密码");
-		}
+			Assert.isTrue(StringUtil.isEmail(pwdChangeDTO.getAccount()), "不可重置密码");
+			Assert.isTrue(redisClient.get(pwdChangeDTO.getAccount(), "").equals(RedisConstant.WAITING_TO_BE_VERIFY), "不可重置密码");
+			redisClient.del(pwdChangeDTO.getAccount());
+			accountMapper.changePasswordDao(pwdChangeDTO);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "密码重置成功");
+		} 
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> forgetpassword(String email) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (StringUtil.isNullOrEmpty(email)) {
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址为空");
-			return result;
-		}
-		if (!StringUtil.isEmail(email)) {
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "邮箱地址格式错误");
-			return result;
-		}
+		Assert.isTrue(!StringUtil.isNullOrEmpty(email), "邮箱地址为空");
+		Assert.isTrue(StringUtil.isEmail(email), "邮箱地址格式错误");
 		User user = accountMapper.getUserByEmail(email,false);
-		if (user == null) {
-			result.put(PageParamType.BUSINESS_STATUS, -3);
-			result.put(PageParamType.BUSINESS_MESSAGE, "该邮箱未注册");
-			return result;
-		}
+		Assert.notNull(user, "该邮箱未注册");
 		sendResetMail(user.getId(),email,user.getNickname());
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "验证邮件发送成功");

@@ -48,11 +48,12 @@ public class AssembleController extends BaseController {
 	@RequestMapping(value = "/getAssembleDetail", method = RequestMethod.POST)
 	public Map<String, Object> getNewspaperDetail(@ModelAttribute("getSpeechListDTO") GetSpeechListDTO getSpeechListDTO, HttpSession session) {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
-		getSpeechListDTO.setUserId(user.getId());		
+		getSpeechListDTO.setUserId(user.getId());	
+		Map<String, Object> result = assembleService.getNewspaperDetail(getSpeechListDTO);
 		if(session.getAttribute(PageParamType.player_id_in_session)!=null){
-			getSpeechListDTO.setPlayerId((long) session.getAttribute(PageParamType.player_id_in_session));
+			result.putAll(playerService.getPlayerReplaceSkin((long) session.getAttribute(PageParamType.player_id_in_session)));
 		}
-		return assembleService.getNewspaperDetail(getSpeechListDTO);
+		return result;	
 	}
 	
 	@ResponseBody

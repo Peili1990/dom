@@ -36,6 +36,8 @@ import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
 
 
 @Service("userServiceImpl")
@@ -74,66 +76,44 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Map<String, Object> getOfflineMessage(long userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			List<OfflineSpeech> offlinespeech = userMapper.getOfflineSpeechDao(userId);
-			List<OfflineChat> offlineChat = userMapper.getOfflineChatDao(userId);
-			result.put("offlineSpeech",offlinespeech);
-			result.put("offlineChat", offlineChat);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取离线消息数量成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常"); 
-		}
+		List<OfflineSpeech> offlinespeech = userMapper.getOfflineSpeechDao(userId);
+		List<OfflineChat> offlineChat = userMapper.getOfflineChatDao(userId);
+		result.put("offlineSpeech",offlinespeech);
+		result.put("offlineChat", offlineChat);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取离线消息数量成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> saveOfflineSpeech(OfflineMessage offlineMessage) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			
-			userMapper.saveOfflineMessageDao(offlineMessage);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "保存离线发言成功！");
-		}catch(Exception e){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		Map<String, Object> result = new HashMap<String, Object>();		
+		userMapper.saveOfflineMessageDao(offlineMessage);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "保存离线发言成功！");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getChatList(long userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			List<ChatInfo> chatList = null;
-			chatList = userMapper.getChatInfoDao(userId); 
-			result.put("chatList", chatList);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天信息成功！");
-		}catch(Exception e){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		List<ChatInfo> chatList = null;
+		chatList = userMapper.getChatInfoDao(userId); 
+		result.put("chatList", chatList);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天信息成功！");
 		return result;
 	}
 	
 	@Override
 	public Map<String, Object> getChatInfo(String chatId,String userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			String[] temp = chatId.split("-");
-			long toUserId = Long.parseLong(temp[0].equals(userId) ? temp[1] : temp[0]);
-			ChatInfo chatInfo = userMapper.getChatInfoByUserIdDao(toUserId); 
-			result.put("chatInfo", chatInfo);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天信息成功！");
-		}catch(Exception e){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		String[] temp = chatId.split("-");
+		long toUserId = Long.parseLong(temp[0].equals(userId) ? temp[1] : temp[0]);
+		ChatInfo chatInfo = userMapper.getChatInfoByUserIdDao(toUserId); 
+		result.put("chatInfo", chatInfo);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天信息成功！");
 		return result;
 	}
 
@@ -164,41 +144,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Map<String, Object> updateProfile(UpdateUserProfileDTO updateUserProfileDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try {
-			userMapper.updateUserProfileDao(updateUserProfileDTO);
-			result.put("motto", updateUserProfileDTO.getMotto());
-			result.put("qq", updateUserProfileDTO.getQq());
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "个性签名修改成功");
-		}catch(Exception e){
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		userMapper.updateUserProfileDao(updateUserProfileDTO);
+		result.put("motto", updateUserProfileDTO.getMotto());
+		result.put("qq", updateUserProfileDTO.getQq());
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "个性签名修改成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getChatRecord(GetChatRecordDTO getChatRecordDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			if(getChatRecordDTO.getChatId().indexOf(String.valueOf(getChatRecordDTO.getUserId()))<0){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "无法获取非本人聊天记录");
-			} else {
-				getChatRecordDTO.setOffset(10*getChatRecordDTO.getPageNum());
-				List<ChatDetail> chatDetails = userMapper.getChatRecordDao(getChatRecordDTO);
-				if(getChatRecordDTO.getPageNum() == 0){
-					userMapper.updateChatRecordDao(getChatRecordDTO);
-				}
-				result.put("chatDetails", chatDetails);
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天记录成功");
-			}
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		Assert.isTrue(getChatRecordDTO.getChatId().indexOf(String.valueOf(getChatRecordDTO.getUserId())) >= 0, "无法获取非本人聊天记录");		
+		getChatRecordDTO.setOffset(10*getChatRecordDTO.getPageNum());
+		List<ChatDetail> chatDetails = userMapper.getChatRecordDao(getChatRecordDTO);
+		if(getChatRecordDTO.getPageNum() == 0){
+			userMapper.updateChatRecordDao(getChatRecordDTO);
 		}
+		result.put("chatDetails", chatDetails);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天记录成功");	
 		return result;
 	}
 
@@ -207,31 +172,25 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		NumberFormat numberFormat = NumberFormat.getInstance();  
         numberFormat.setMaximumFractionDigits(2);  
-		try {
-			PlayerData playerData = statisticMapper.getPlayerDataDao(userId);
-			List<PlayerDataDetail> details = new ArrayList<>();
-			if(playerData!=null){
-				details.add(new PlayerDataDetail("总登场次数",playerData.getTotalPlayTimes()+"次"));
-				details.add(new PlayerDataDetail("好人方次数",playerData.getGoodCampTimes()+"次"));
-				details.add(new PlayerDataDetail("杀手方次数",playerData.getKillerCampTimes()+"次"));
-				details.add(new PlayerDataDetail("契约方次数", playerData.getContractCampTimes()+"次"));
-				details.add(new PlayerDataDetail("好人方胜利次数",playerData.getGoodCampWinTimes()+"次"));
-				details.add(new PlayerDataDetail("好人方胜率",playerData.getGoodCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getGoodCampWinTimes()/(float)playerData.getGoodCampTimes()*100)+"%"));
-				details.add(new PlayerDataDetail("杀手方胜利次数",playerData.getKillerCampWinTimes()+"次"));
-				details.add(new PlayerDataDetail("杀手方胜率",playerData.getKillerCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getKillerCampWinTimes()/(float)playerData.getKillerCampTimes()*100)+"%"));
-				details.add(new PlayerDataDetail("契约方胜利次数",playerData.getContractCampWinTimes()+"次"));
-				details.add(new PlayerDataDetail("契约方胜率",playerData.getContractCampTimes()==0 ? "N/A":numberFormat.format((float)playerData.getContractCampWinTimes()/(float)playerData.getContractCampTimes()*100)+"%"));
-				details.add(new PlayerDataDetail("总胜利次数",(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())+"次"));
-				details.add(new PlayerDataDetail("总胜率",playerData.getTotalPlayTimes()==0 ? "N/A":numberFormat.format((float)(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())/(float)playerData.getTotalPlayTimes()*100)+"%"));
-			}
-			result.put("details", details);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家数据成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		PlayerData playerData = statisticMapper.getPlayerDataDao(userId);
+		List<PlayerDataDetail> details = new ArrayList<>();
+		if(playerData!=null){
+			details.add(new PlayerDataDetail("总登场次数",playerData.getTotalPlayTimes()+"次"));
+			details.add(new PlayerDataDetail("好人方次数",playerData.getGoodCampTimes()+"次"));
+			details.add(new PlayerDataDetail("杀手方次数",playerData.getKillerCampTimes()+"次"));
+			details.add(new PlayerDataDetail("契约方次数", playerData.getContractCampTimes()+"次"));
+			details.add(new PlayerDataDetail("好人方胜利次数",playerData.getGoodCampWinTimes()+"次"));
+			details.add(new PlayerDataDetail("好人方胜率",playerData.getGoodCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getGoodCampWinTimes()/(float)playerData.getGoodCampTimes()*100)+"%"));
+			details.add(new PlayerDataDetail("杀手方胜利次数",playerData.getKillerCampWinTimes()+"次"));
+			details.add(new PlayerDataDetail("杀手方胜率",playerData.getKillerCampTimes()==0 ? "N/A": numberFormat.format((float)playerData.getKillerCampWinTimes()/(float)playerData.getKillerCampTimes()*100)+"%"));
+			details.add(new PlayerDataDetail("契约方胜利次数",playerData.getContractCampWinTimes()+"次"));
+			details.add(new PlayerDataDetail("契约方胜率",playerData.getContractCampTimes()==0 ? "N/A":numberFormat.format((float)playerData.getContractCampWinTimes()/(float)playerData.getContractCampTimes()*100)+"%"));
+			details.add(new PlayerDataDetail("总胜利次数",(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())+"次"));
+			details.add(new PlayerDataDetail("总胜率",playerData.getTotalPlayTimes()==0 ? "N/A":numberFormat.format((float)(playerData.getGoodCampWinTimes()+playerData.getKillerCampWinTimes()+playerData.getContractCampWinTimes())/(float)playerData.getTotalPlayTimes()*100)+"%"));
 		}
+		result.put("details", details);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家数据成功");
 		return result;
 	}
 

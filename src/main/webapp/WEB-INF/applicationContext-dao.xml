@@ -95,6 +95,19 @@
 		<property name="basePackage" value="org.nv.dom.web.dao.*"></property>
 	</bean>
 	
+	<!-- 异常拦截 -->
+	<bean id="exceptionAspect" class="org.nv.dom.web.aop.ExceptionHandler" />
+	
+	<aop:aspectj-autoproxy />
+	
+	<aop:config>
+        <aop:pointcut id="service" expression="execution(* org.nv.dom.web..*.*(..))"/>
+        <!--todo 这里需要修改确认是否是正确的切面-->
+        <aop:aspect ref="exceptionAspect" order="0">
+            <aop:around pointcut-ref="service" method="handle"/>
+        </aop:aspect>
+    </aop:config>
+	
 	<!-- end -->
 
 </beans>

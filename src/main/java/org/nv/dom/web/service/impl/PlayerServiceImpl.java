@@ -1,6 +1,7 @@
 package org.nv.dom.web.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -8,11 +9,13 @@ import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOpreation;
+import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.player.SubmitOpreationDTO;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service("playerServiceImpl")
 public class PlayerServiceImpl implements PlayerService {
@@ -44,45 +47,21 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> getPlayerOpreation(long playerId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if(playerId < 1L){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
-			return result;
-		}
-		try{
-			PlayerOpreation opreation = playerMapper.getPlayerOpreation(playerId);
-			result.put("opreation", opreation);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		Assert.isTrue(playerId > 0 , "参数异常");
+		PlayerOpreation opreation = playerMapper.getPlayerOpreation(playerId);
+		result.put("opreation", opreation);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");
 		return result;
 	}
 	
 	@Override
 	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if(submitOpreationDTO.getPlayerId() < 1L){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
-			return result;
-		}
-		try{
-			if(playerMapper.submitOpreationDao(submitOpreationDTO)==1){
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功！");
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "提交操作失败！");
-			}
-		} catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		Assert.isTrue(submitOpreationDTO.getPlayerId() > 0, "参数异常");
+		Assert.isTrue(playerMapper.submitOpreationDao(submitOpreationDTO) == 1, "提交操作失败！");
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功！");
 		return result;
 	}
 	
@@ -91,6 +70,18 @@ public class PlayerServiceImpl implements PlayerService {
 		return playerInfo.getCharacterId() == 42 
 					&& NVTermConstant.IS_SP.equals(playerInfo.getIsSp())
 					&& !(sign == 11 || sign == 12 || sign == 23);
+	}
+
+	@Override
+	public Map<String, Object> getPlayerReplaceSkin(long playerId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PlayerReplaceSkin> replaceList = playerMapper.getPlayerReplaceSkinDao(playerId);
+		if(replaceList!=null &&!replaceList.isEmpty()){
+			result.put("replaceList", replaceList);	
+		}
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取替代发言称呼成功");
+		return result;
 	}
 	
 }

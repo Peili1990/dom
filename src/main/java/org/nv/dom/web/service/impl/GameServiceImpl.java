@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.config.RedisConstant;
@@ -23,17 +22,18 @@ import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.IdentityCode;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.StringUtil;
-import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import com.alibaba.fastjson.JSON;
+
 
 @Service("gameServiceImpl")
 public class GameServiceImpl extends BasicServiceImpl implements GameService {
-	
-	private static Logger logger = Logger.getLogger(GameServiceImpl.class);
 	
 	@Autowired
 	GameMapper gameMapper;
@@ -44,17 +44,10 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	@Override
 	public Map<String, Object> getApplyingGames() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<ApplyingGame> applyingGames;
-		try{
-			applyingGames = gameMapper.getApplyingGamesDao();
-			result.put("applyingGames", applyingGames);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
-		} catch (Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}	
+		List<ApplyingGame> applyingGames = gameMapper.getApplyingGamesDao();
+		result.put("applyingGames", applyingGames);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
 		return result;
 	}
 	
@@ -62,146 +55,100 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	public Map<String, Object> getAllGames() {
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<Game> games;
-		try{
-			games = gameMapper.getAllGamesDao();
-			for(Game game:games){
-				game.setGameStatusDesc(GameStatus.getMessageByCode(game.getGameStatus()));
-				if(game.getFinalResult()!=null){
-					game.setFinalResultDesc(GameFinalResult.getMessageByCode(game.getFinalResult()));
-				}
+		games = gameMapper.getAllGamesDao();
+		for(Game game:games){
+			game.setGameStatusDesc(GameStatus.getMessageByCode(game.getGameStatus()));
+			if(game.getFinalResult()!=null){
+				game.setFinalResultDesc(GameFinalResult.getMessageByCode(game.getFinalResult()));
 			}
-			result.put("games", games);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
-		} catch (Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}	
+		}
+		result.put("games", games);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> applyForGame(ApplyDTO applyDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			if(gameMapper.queryHasAttendGameDao(applyDTO)>0){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "您已报名或参加其他版杀");
-			} else if(gameMapper.getPlayerNumDao(applyDTO.getGameId()) == applyDTO.getPlayerNum()){
-				result.put(PageParamType.BUSINESS_STATUS, -5);
-				result.put(PageParamType.BUSINESS_MESSAGE, "人数已报满");
-			} else if(gameMapper.applyForGameDao(applyDTO) == 1 && 
-					gameMapper.applyForGameDaoSecStep(applyDTO.getPlayerId()) == 1){				
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "报名成功");
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, -4);
-				result.put(PageParamType.BUSINESS_MESSAGE, "报名失败，请重试");
-			}
-		} catch (Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		Assert.isTrue(gameMapper.queryHasAttendGameDao(applyDTO) == 0, "您已报名或参加其他版杀");
+		Assert.isTrue(gameMapper.getPlayerNumDao(applyDTO.getGameId()) < applyDTO.getPlayerNum(), "人数已报满");	
+		Assert.isTrue(gameMapper.applyForGameDao(applyDTO) == 1 && 
+				gameMapper.applyForGameDaoSecStep(applyDTO.getPlayerId()) == 1, "报名失败，请重试");			
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "报名成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getCharacterListThree(GetCharacterListDTO getCharacterListDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if(getCharacterListDTO.getPlayerId() < 1L || getCharacterListDTO.getGameId() < 1L){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
-			return result;
-		}
-		try{
+		Assert.isTrue(getCharacterListDTO.getPlayerId() > 0 || getCharacterListDTO.getGameId() > 0, "参数异常");
 			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 					String.valueOf(getCharacterListDTO.getPlayerId()));
 			List<NVCharacter> characters = new ArrayList<NVCharacter>();
 			if(StringUtil.isNullOrEmpty(characterStr)){
-				List<Integer> availableList = JacksonJSONUtils.jsonToList(
-					redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
-						String.valueOf(getCharacterListDTO.getGameId())),Integer.class);
+				List<Integer> availableList = JSON.parseArray(redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
+						String.valueOf(getCharacterListDTO.getGameId())), Integer.class);
 				if(availableList != null && availableList.size() > 2){
 					Collections.shuffle(availableList);
 					List<Integer> availableListThree = availableList.subList(0, 3);
 					availableList = availableList.subList(3, availableList.size());
 					redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(getCharacterListDTO.getGameId()),
-							JacksonJSONUtils.beanToJSON(availableList).toString());
+							JSON.toJSONString(availableList));
 					characters = gameMapper.queryCharacterListThree(availableListThree);
 					redisClient.setHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(getCharacterListDTO.getPlayerId()), 
-							JacksonJSONUtils.beanToJSON(characters).toString());
+							JSON.toJSONString(characters));
 				}
 			} else {
-				characters = JacksonJSONUtils.jsonToList(characterStr, NVCharacter.class);
+				characters = JSON.parseArray(characterStr, NVCharacter.class);
 			}
 			result.put("characters",characters);
 			result.put(PageParamType.BUSINESS_STATUS,1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取角色名单成功");	
-		} catch(Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS,-1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");	
-		}
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> selectCharacter(SelectCharacterDTO selectCharacterDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if(selectCharacterDTO.getPlayerId() < 1L || selectCharacterDTO.getGameId() < 1L){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+		Assert.isTrue(selectCharacterDTO.getPlayerId() > 0 || selectCharacterDTO.getGameId() > 0, "参数异常");			
+		if(selectCharacterDTO.getUseCard()!=CardType.NONE.getCode() && (gameMapper.queryCanUseCardDao(selectCharacterDTO)>0 ||
+				(CardType.PRIVILEGE.getCode().equals(selectCharacterDTO.getUseCard()) && gameMapper.deleteSelectedCharacterDao(selectCharacterDTO)!=1) ||
+				 playerMapper.consumeUserCardDao(selectCharacterDTO)!=1)){
+			result.put(PageParamType.BUSINESS_STATUS, -3);
+			result.put(PageParamType.BUSINESS_MESSAGE, "使用卡片失败");
 			return result;
 		}
-		try{			
-			if(selectCharacterDTO.getUseCard()!=CardType.NONE.getCode() && (gameMapper.queryCanUseCardDao(selectCharacterDTO)>0 ||
-					(CardType.PRIVILEGE.getCode().equals(selectCharacterDTO.getUseCard()) && gameMapper.deleteSelectedCharacterDao(selectCharacterDTO)!=1) ||
-					 playerMapper.consumeUserCardDao(selectCharacterDTO)!=1)){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "使用卡片失败");
-				return result;
-			}
-			if(CardType.IDENTITY.getCode().equals(selectCharacterDTO.getUseCard())){
-				selectCharacterDTO.setCamp(selectCharacterDTO.getSign() <= IdentityCode.CIVILIAN.getCode()?
-						NVTermConstant.GOOD_CAMP : NVTermConstant.KILLER_CAMP);			
-			}
-			if(CardType.CAMP.getCode().equals(selectCharacterDTO.getUseCard())){
-				selectCharacterDTO.setSign(IdentityCode.randomIdentitiyCode(selectCharacterDTO.getCamp(), 
-						gameMapper.queryGamePlayerNumDao(selectCharacterDTO.getGameId())));				
-			}
-			selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
-			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
-					String.valueOf(selectCharacterDTO.getPlayerId()));
-			if(StringUtil.isNullOrEmpty(characterStr)){
-				if(gameMapper.queryCharacterAvailable(selectCharacterDTO)==1){
-					result.put(PageParamType.BUSINESS_STATUS, -3);
-					result.put(PageParamType.BUSINESS_MESSAGE, "该角色已被选择");
-					return result;
-				}
-			} else {
-				List<NVCharacter> characters = JacksonJSONUtils.jsonToList(characterStr, NVCharacter.class);
-				List<Integer> availableList = JacksonJSONUtils.jsonToList(
-						redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
-							String.valueOf(selectCharacterDTO.getGameId())),Integer.class);
-				availableList.addAll(getCharacterList(characters, selectCharacterDTO.getCharacterId()));
-				redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(selectCharacterDTO.getGameId()),
-						JacksonJSONUtils.beanToJSON(availableList).toString());
-				redisClient.delHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
-			}
-			gameMapper.selectCharacterDAO(selectCharacterDTO);
-			ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
-			changeStatusDTO.setPlayerId(selectCharacterDTO.getPlayerId());
-			changeStatusDTO.setStatus(PlayerStatus.CHARACTER_SELECTED.getCode());
-			playerMapper.changePlayerStatus(changeStatusDTO);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "角色选择成功");	
-		} catch(Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS,-1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		if(CardType.IDENTITY.getCode().equals(selectCharacterDTO.getUseCard())){
+			selectCharacterDTO.setCamp(selectCharacterDTO.getSign() <= IdentityCode.CIVILIAN.getCode()?
+					NVTermConstant.GOOD_CAMP : NVTermConstant.KILLER_CAMP);			
 		}
+		if(CardType.CAMP.getCode().equals(selectCharacterDTO.getUseCard())){
+			selectCharacterDTO.setSign(IdentityCode.randomIdentitiyCode(selectCharacterDTO.getCamp(), 
+					gameMapper.queryGamePlayerNumDao(selectCharacterDTO.getGameId())));				
+		}
+		selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
+		String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
+				String.valueOf(selectCharacterDTO.getPlayerId()));
+		if(StringUtil.isNullOrEmpty(characterStr)){
+			Assert.isTrue(gameMapper.queryCharacterAvailable(selectCharacterDTO) == 0, "该角色已被选择");
+		} else {
+			List<NVCharacter> characters = JSON.parseArray(characterStr, NVCharacter.class);
+			List<Integer> availableList = JSON.parseArray(redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
+						String.valueOf(selectCharacterDTO.getGameId())),Integer.class);
+			availableList.addAll(getCharacterList(characters, selectCharacterDTO.getCharacterId()));
+			redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(selectCharacterDTO.getGameId()),
+					JSON.toJSONString(availableList));
+			redisClient.delHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
+		}
+		gameMapper.selectCharacterDAO(selectCharacterDTO);
+		ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
+		changeStatusDTO.setPlayerId(selectCharacterDTO.getPlayerId());
+		changeStatusDTO.setStatus(PlayerStatus.CHARACTER_SELECTED.getCode());
+		playerMapper.changePlayerStatus(changeStatusDTO);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "角色选择成功");	
 		return result;
 	}
 	
@@ -219,16 +166,10 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	@Override
 	public Map<String, Object> queryCharacter(SelectCharacterDTO selectCharacterDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try {
-			Integer count = gameMapper.queryCharacterAvailable(selectCharacterDTO);
-			result.put("isChosen", count);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "查询成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS,-1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		Integer count = gameMapper.queryCharacterAvailable(selectCharacterDTO);
+		result.put("isChosen", count);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "查询成功");
 		return result;
 	}
 
