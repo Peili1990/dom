@@ -77,38 +77,6 @@
 	<!-- <mvc:resources mapping="/js/**" location="/js/"/>
 	<mvc:resources mapping="/img/**" location="/img/"/>
 	<mvc:resources mapping="/css/**" location="/css/"/> --> 
-	
-	<bean id="sessionTimeoutHandle" class="org.nv.dom.web.interceptors.SessionTimeoutHandle">
-		<property name="loginUrl" value="/login" />
-	</bean>
-	
-	<bean id="pcclientHandle" class="org.nv.dom.web.interceptors.PCclientHandle">
-		<property name="pcIndexUrl" value="/pcIndex" />
-	</bean>
-	
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-			<mvc:exclude-mapping path="/login" />
-			<mvc:exclude-mapping path="/register" />
-			<mvc:exclude-mapping path="/emailverify" />
-			<mvc:exclude-mapping path="/resetPassword" />
-			<mvc:exclude-mapping path="/account/**" />
-			<bean class="org.nv.dom.web.interceptors.LoginInterceptor">
-				<property name="sessionTimeoutHandle" ref="sessionTimeoutHandle" />
-			</bean>
-		</mvc:interceptor>
-		
-<!-- 		<mvc:interceptor> -->
-<!-- 			<mvc:mapping path="/**"/> -->
-<!-- 			<mvc:exclude-mapping path="/pcIndex" /> -->
-<!-- 			<mvc:exclude-mapping path="/emailverify" /> -->
-<!-- 			<mvc:exclude-mapping path="/resendmail" /> -->
-<!-- 			<bean class="org.nv.dom.web.interceptors.DeviceInterceptor"> -->
-<!-- 				<property name="pcclientHandle" ref="pcclientHandle" /> -->
-<!-- 			</bean> -->
-<!-- 		</mvc:interceptor> -->
-	</mvc:interceptors>
   
 </beans>
 

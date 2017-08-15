@@ -33,7 +33,7 @@
 
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>dom.root</param-value>
+		<param-value>dom-settlement.root</param-value>
 	</context-param>
 
 	<context-param>
