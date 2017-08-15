@@ -6,6 +6,8 @@ public class PlayerInfo {
 	private long gameId;
 	/** 玩家id */
 	private long playerId;
+	/** 玩家角色 */
+	private long status;
 	/** 角色id */
 	private Integer characterId;
 	/** 是否sp */
@@ -40,6 +42,12 @@ public class PlayerInfo {
 	}
 	public void setPlayerId(long playerId) {
 		this.playerId = playerId;
+	}
+	public long getStatus() {
+		return status;
+	}
+	public void setStatus(long status) {
+		this.status = status;
 	}
 	public Integer getCharacterId() {
 		return characterId;

@@ -24,13 +24,10 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
-import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.user.EquipBadgeDTO;
 import org.nv.dom.dto.user.UpdateUserProfileDTO;
-import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.StringUtil;
-import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.dao.statistic.StatisticMapper;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
@@ -53,19 +50,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	StatisticMapper statisticMapper;
 	
-	@Autowired
-	PlayerMapper playerMapper;
-	
 	@Override
 	public UserCurRole getUserCurRole(User user) {
 		try{
 			UserCurRole userCurRole = userMapper.getUserCurRoleDao(user.getId());
-			if(PlayerStatus.INDENTITY_OBTAINED.getCode() == userCurRole.getStatus()){
-				ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
-				changeStatusDTO.setPlayerId(userCurRole.getPlayerId());
-				changeStatusDTO.setStatus(PlayerStatus.INDENTITY_KNOWN.getCode());
-				playerMapper.changePlayerStatus(changeStatusDTO);
-			}
 			return userCurRole;
 		} catch (Exception e){
 			logger.error(e.getMessage(), e);
@@ -197,85 +185,53 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Map<String, Object> getUserCardList(long userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			List<UserCard> cardList = userMapper.getUserCardList(userId);
-			result.put("cardList", cardList);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		List<UserCard> cardList = userMapper.getUserCardList(userId);
+		result.put("cardList", cardList);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getUserCardStatus(long userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			List<Integer> availableCardCount = userMapper.getAvailableCardCount(userId);
-			result.put("cardNum", availableCardCount);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		List<Integer> availableCardCount = userMapper.getAvailableCardCount(userId);
+		result.put("cardNum", availableCardCount);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家卡片成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getUserBadge(long userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			List<String> userBadge = userMapper.getUserBadge(userId);
-			result.put("userBadge", userBadge);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家徽章成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		List<String> userBadge = userMapper.getUserBadge(userId);
+		result.put("userBadge", userBadge);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家徽章成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> equipBadge(User user, String badge) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			List<String> badges =StringUtil.isNullOrEmpty(user.getBadge())? new ArrayList<String>() : 
-				new ArrayList<>(Arrays.asList(user.getBadge().split(",")));
-			EquipBadgeDTO equipBadgeDTO = new EquipBadgeDTO();
-			if(badges.size()>=3){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "已佩戴最大上限徽章数量");
-			} else {
-				if(badges.contains(badge)){
-					badges.remove(badge);
-				} else {
-					badges.add(badge);
-					Collections.sort(badges);
-					equipBadgeDTO.setBadge(badge);
-				}
-				equipBadgeDTO.setUserId(user.getId());
-				equipBadgeDTO.setBadges(StringUtil.listToString(badges, ','));
-				if(userMapper.equipBadge(equipBadgeDTO)==1){
-					result.put("badge", equipBadgeDTO.getBadges());
-					result.put(PageParamType.BUSINESS_STATUS, 1);
-					result.put(PageParamType.BUSINESS_MESSAGE, "操作成功");
-				} else {
-					result.put(PageParamType.BUSINESS_STATUS, -3);
-					result.put(PageParamType.BUSINESS_MESSAGE, "操作失败");
-				}
-			}		
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		List<String> badges =StringUtil.isNullOrEmpty(user.getBadge())? new ArrayList<String>() : 
+			new ArrayList<>(Arrays.asList(user.getBadge().split(",")));
+		EquipBadgeDTO equipBadgeDTO = new EquipBadgeDTO();
+		Assert.isTrue(badges.size()<3, "已佩戴最大上限徽章数量");
+		if(badges.contains(badge)){
+			badges.remove(badge);
+		} else {
+			badges.add(badge);
+			Collections.sort(badges);
+			equipBadgeDTO.setBadge(badge);
 		}
+		equipBadgeDTO.setUserId(user.getId());
+		equipBadgeDTO.setBadges(StringUtil.listToString(badges, ','));
+		Assert.isTrue(userMapper.equipBadge(equipBadgeDTO) == 1, "操作失败");
+		result.put("badge", equipBadgeDTO.getBadges());
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "操作成功");		
 		return result;
 	}
 

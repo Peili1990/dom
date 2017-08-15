@@ -10,7 +10,9 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOpreation;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.SubmitOpreationDTO;
+import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,12 @@ public class PlayerServiceImpl implements PlayerService {
 				playerInfo.setSignAvatar(NVTermConstant.UNKNOWN_SIGN_AVATAR);
 				playerInfo.setCamp(NVTermConstant.GOOD_CAMP);
 				playerInfo.setIdentityDesc(NVTermConstant.UNKNOWN_IDENTITY);
+			}
+			if(PlayerStatus.INDENTITY_OBTAINED.getCode() == playerInfo.getStatus()){
+				ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
+				changeStatusDTO.setPlayerId(playerInfo.getPlayerId());
+				changeStatusDTO.setStatus(PlayerStatus.INDENTITY_KNOWN.getCode());
+				playerMapper.changePlayerStatus(changeStatusDTO);
 			}
 			return playerInfo;
 		}catch(Exception e){

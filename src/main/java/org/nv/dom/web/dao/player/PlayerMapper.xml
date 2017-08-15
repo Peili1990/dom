@@ -6,6 +6,7 @@
 	
 		SELECT 
 			dp.game_id AS gameId,
+			dp.status AS status,
 			dpr.player_id AS playerId,
 			dpr.character_id AS characterId,
 			dpr.is_sp AS isSp,
