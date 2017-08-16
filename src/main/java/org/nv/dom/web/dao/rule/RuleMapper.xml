@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.rule.RuleMapper">
+
+	<resultMap type="RuleRow" id="ruleRow">
+		<id property="chapterId" column="id"/>
+		<result property="chapter" column="chapter"/>
+		<result property="content" column="content"/>
+		<collection property="indexs" column="id" javaType="List" ofType="RuleIndex" select="selectRuleIndex"></collection>
+	</resultMap>
+	
+	<select id="getRuleRowContent" resultMap="ruleRow">
+	
+		SELECT
+			dr.id,
+			dr.chapter,
+			dr.content
+		FROM
+			d_rule dr
+	
+	</select>
+	
+	<select id="selectRuleIndex" parameterType="Integer" resultType="RuleIndex">
+	
+		SELECT
+			dri.index_id AS indexId,
+			dri.header AS header
+		FROM	
+			d_rule_index dri
+		WHERE
+			dri.chapter_id = #{chapterId}
+	
+	</select>
+
+	<select id="getRuleIndexContent" parameterType="GetRuleContentDTO" resultType="String">
+	
+		SELECT
+			dri.content 
+		FROM	
+			d_rule_index dri
+		WHERE
+			dri.chapter_id = #{row} AND dri.index_id = #{index}
+	
+	</select>
+	
+	<select id="getAllRuleIndexContent" resultType="RuleIndex">
+		
+		SELECT
+			dri.index_id AS indexId,
+			dri.chapter_id AS chapterId,
+			dri.content AS content
+		FROM	
+			d_rule_index dri
+	
+	</select>
+	
+</mapper>

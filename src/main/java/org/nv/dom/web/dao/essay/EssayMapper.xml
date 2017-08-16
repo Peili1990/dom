@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.essay.EssayMapper">
+
+	<insert id="saveOrUpdateEssayDao" parameterType="Essay" useGeneratedKeys="true" keyProperty="essayId">
+	
+		<if test="essayId>0">
+			UPDATE 
+				d_essay de
+			SET
+				de.type=#{type},
+				de.header=#{header},
+				de.content=#{content},
+				de.update_time=NOW()
+			WHERE
+				de.id=#{essayId} AND de.user_id = #{userId}
+		</if>
+		<if test="essayId==0">
+			INSERT INTO d_essay (
+				user_id,
+				type,
+				header,
+				content,
+				create_time,
+				update_time
+			)
+			VALUES(
+				#{userId},
+				#{type},
+				#{header},
+				#{content},
+				NOW(),
+				NOW()
+			)
+		</if>
+	
+	</insert>
+	
+	<select id="getReplayEssay" parameterType="long" resultType="Essay">
+	
+		SELECT
+			de.id AS essayId,
+			de.header AS header
+		FROM
+			d_essay de, d_game dg, d_player dp
+		WHERE
+			dp.user_id = #{userId} AND dp.status != 9 AND dp.game_id = dg.id AND dg.replay_essay_id = de.id AND de.status = 1
+	
+	</select>
+	
+	<select id="getReplayEssayByGameId" parameterType="long" resultType="Essay">
+	
+		SELECT
+			de.id AS essayId,
+			de.header AS header
+		FROM
+			d_essay de, d_game dg
+		WHERE
+			dg.id= #{gameId} AND dg.replay_essay_id = de.id AND de.status = 1
+	
+	</select>
+	
+	<select id="getEssayDetailDao" parameterType="long" resultType="Essay">
+	
+		SELECT
+			du.id AS userId,
+			du.nickname AS nickname,
+			du.avatar AS avatar,
+			du.motto AS motto,
+			du.badge AS badge,
+			de.header AS header,
+			de.content AS content,
+			de.create_time AS createTime
+		FROM
+			d_essay de, d_user du
+		WHERE
+			de.id=#{essayId} AND de.user_id = du.id AND de.status = 1 			
+	
+	</select>
+	
+	<select id="getEssayCommentDao" parameterType="long" resultType="Comment">
+		
+		SELECT
+			du.nickname AS nickname,
+			du.avatar AS avatar,
+			du.motto AS motto,
+			dc.content AS content,
+			dc.create_time AS createTime,
+			du.badge AS badge
+		FROM
+			d_essay de, d_comment dc, d_user du
+		WHERE
+			dc.essay_id=#{essayId} AND de.id = dc.essay_id AND du.id = dc.user_id AND de.status = 1
+		
+	
+	</select>
+	
+	<insert id="insertCommentDao" parameterType="SubmitCommentDTO">
+	
+		INSERT INTO d_comment(
+			user_id,
+			essay_id,
+			content,
+			create_time
+		) 
+		VALUES (
+			#{userId},
+			#{essayId},
+			#{content},
+			NOW()
+		);
+		UPDATE
+			d_essay de
+		SET
+			de.update_time = NOW()
+		WHERE
+			de.id = #{essayId} 
+		
+	</insert>
+	
+	<select id="getEssayList" parameterType="GetEssayListDTO" resultType="Essay">
+	
+		<![CDATA[
+	
+		SELECT
+			de.id AS essayId,
+			du.id AS userId,
+			du.nickname AS nickname,
+			du.avatar AS avatar,
+			du.badge AS badge,
+			de.header AS header,
+			CONCAT(substring_index(de.content,'<br>',3),'...') AS content,
+			de.create_time AS createTime
+			
+		]]>
+			
+		FROM
+			d_essay de, d_user du
+		WHERE
+			du.id = de.user_id AND de.status = 1
+		<if test="userId>0">
+			AND de.user_id = #{userId}
+		</if>
+		ORDER BY
+			de.update_time DESC
+		<if test="userId==0">
+		LIMIT 
+			#{offset},10
+		</if>
+			
+	
+	</select> 
+	
+	<update id="updateEssayStatusDao" parameterType="UpdateEssayStatusDTO">
+	
+		UPDATE
+			d_essay de
+		SET
+			de.status = #{status}
+		WHERE
+			de.user_id = #{userId} AND de.id = #{essayId}
+	
+	</update>
+
+</mapper>

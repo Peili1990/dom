@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.message.MessageMapper">
+
+	<select id="getSpeechListDao" parameterType="GetSpeechListDTO" resultType="Speech">
+	
+		SELECT
+			ds.id AS id, 
+			ds.player_id AS playerId,
+			ds.newspaper_id AS newspaperId,
+			ds.character_name AS characterName,
+			ds.character_avatar AS avatar,
+			ds.type AS type,
+			ds.content AS content,
+			ds.create_time AS createTime
+		FROM
+			d_speech ds
+		WHERE
+			ds.newspaper_id = #{newspaperId};
+			
+		<if test="playerId>0">
+		DELETE FROM
+			d_offline_speech
+		WHERE
+			user_id = #{userId} AND newspaper_id = #{newspaperId}	
+		</if>			
+	
+	</select>
+	
+	<select id="getLatestSpeechDao" parameterType="long" resultType="Speech">
+	
+		SELECT
+			ds.id AS id, 
+			ds.player_id AS playerId,
+			ds.newspaper_id AS newspaperId,
+			ds.character_name AS characterName,
+			ds.character_avatar AS avatar,
+			ds.type AS type,
+			ds.content AS content,
+			ds.create_time AS createTime
+		FROM
+			d_speech ds,d_newspaper dn
+		WHERE
+			ds.newspaper_id = dn.id AND dn.game_id = #{gameId}
+		ORDER BY
+			ds.create_time
+		DESC
+		LIMIT 1
+	
+	</select>
+	
+	<select id="getCurDaySpeechListDao" parameterType="GetCurDaySpeechListDTO" resultType="String">
+	
+		SELECT
+			ds.content
+		FROM	
+			d_speech ds, d_newspaper dn
+		WHERE	
+			ds.newspaper_id = dn.id AND ds.player_id = #{playerId} AND dn.id = #{newspaperId} AND ds.type = 1;		
+	
+	</select>
+
+
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.player.PlayerMapper">
+
+	<select id="getPlayerInfo" parameterType="long" resultType="PlayerInfo">
+	
+		SELECT 
+			dp.game_id AS gameId,
+			dp.status AS status,
+			dpr.player_id AS playerId,
+			dpr.character_id AS characterId,
+			dpr.is_sp AS isSp,
+			dc.name AS characterName,
+			dc.avatar AS characterAvatar,
+			dc.killer_avatar AS characterKillerAvatar,
+			dpr.camp AS camp,
+			dpr.sign AS sign,
+			dpr.identity_desc AS identityDesc,
+			ds.avatar AS signAvatar,
+			dpr.is_mute AS isMute,
+			dpr.is_life AS isLife		
+		FROM 
+			d_player dp, d_character dc, d_player_record dpr LEFT JOIN d_sign ds ON dpr.sign=ds.id
+		WHERE
+			dp.user_Id = #{userId} AND dpr.player_id = dp.id AND dp.status != 9 AND dc.id = dpr.character_id 
+	
+	</select>
+	
+	<update id="changePlayerStatus" parameterType="ChangeStatusDTO">
+	
+		UPDATE 
+			d_player dp
+		SET
+			dp.status=#{status}
+		WHERE
+			dp.id=#{playerId}
+		
+	</update>
+	
+	<select id="getPlayerOpreation" parameterType="long" resultType="PlayerOpreation">
+	
+		SELECT 
+			df.header AS curStage,
+			dpr.action AS action,
+			dpr.privilege AS privilege,
+			dpr.vote AS vote
+		FROM
+			d_player_record dpr, d_form df, d_player dp
+		WHERE
+			dpr.player_id = #{playerId} AND dpr.player_id = dp.id AND dp.game_id = df.game_id
+		ORDER BY
+			df.id
+		DESC
+		LIMIT 1
+			
+	</select>
+	
+	<update id="submitOpreationDao" parameterType="SubmitOpreationDTO">
+	
+		UPDATE d_player_record dpr
+		SET
+			dpr.action=#{action},
+			dpr.privilege=#{privilege},
+			dpr.vote=#{vote},
+			dpr.submit_time=NOW()
+		WHERE
+			dpr.player_id=#{playerId}
+	
+	</update>
+	
+	<select id="getPlayerReplaceSkinDao" parameterType="long" resultType="PlayerReplaceSkin">
+	
+		SELECT 
+			drs.character_name AS characterName,
+			drs.character_avatar AS characterAvatar,
+			drs.is_mute AS isMute
+		FROM
+			d_replace_skin drs
+		WHERE
+			drs.player_id = #{playerId}
+	
+	
+	</select>
+	
+	<update id="consumeUserCardDao" parameterType="SelectCharacterDTO">
+	
+		UPDATE
+			d_card dc
+		SET
+			dc.status = 2
+		WHERE
+			dc.id IN (
+			
+			SELECT 
+				m.id 
+			FROM (
+			
+				SELECT 
+					dc.id
+				FROM	
+					d_card dc, d_player dp
+				WHERE	
+					dc.user_id = dp.user_id AND dp.id = #{playerId} AND dc.type = #{useCard} AND dc.status = 1 AND dc.expire_date>NOW() 	
+				ORDER BY 
+					dc.expire_date
+				LIMIT 1
+			
+				) AS m
+			
+			)
+		
+	
+	</update>
+
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.account.AccountMapper">
+
+	<select id="getUserByAccountDao" parameterType="LoginDTO" resultType="User">
+	
+		SELECT
+			t.id,
+			t.account,
+			t.password,
+			t.nickname,
+			t.avatar,
+			t.motto,
+			t.badge,
+			t.qq,
+			t.status
+		FROM
+			d_user t
+		WHERE
+			t.account=#{account} AND t.password=#{password};	
+	
+	</select>
+	
+	<select id="getCountByAccountDao" parameterType="String" resultType="Integer">
+	
+		SELECT 
+			count(1)
+		FROM
+			d_user t
+		WHERE
+			t.account=#{account} OR t.nickname=#{nickname}
+	
+	</select>
+	
+	<select id="getInvCodeDao" parameterType="String" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_inv_code dic
+		WHERE
+			dic.inv_code = #{invitecode} AND dic.used = 0;
+	
+	</select>
+	
+	<insert id="insertUserDao" parameterType="RegisterDTO" useGeneratedKeys="true" keyProperty="id">
+	
+		INSERT INTO d_user (
+			 account,
+			 password,
+			 nickname,
+			 motto,
+			 avatar,
+			 create_time
+		)
+		VALUES (
+			#{account},
+			#{password},
+			#{nickname},
+			#{motto},
+			#{avatar},
+			NOW()	
+		)
+
+	</insert>
+	
+	<update id="updateInvCodeDao" parameterType="RegisterDTO">
+	
+		UPDATE
+			d_inv_code dic
+		SET
+			dic.used = 1,
+			dic.user_id = #{id}
+		WHERE
+			dic.inv_code = #{invitecode}
+	
+	</update>
+	
+	<select id="getUserCountByIdAndEmail" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_user du
+		WHERE
+			du.account = #{email} AND du.id = #{id}
+	
+	</select>
+	
+	<update id="verifyUserAndEmailStatus" parameterType="long">
+	
+		UPDATE 
+			d_user du
+		SET
+			du.status = 1
+		WHERE
+			du.id = #{id} AND du.status = 0
+		
+	</update>
+	
+	<select id="getUserByEmail" resultType="User">
+	
+		SELECT
+			du.id,
+			du.nickname
+		FROM
+			d_user du
+		WHERE
+			du.account = #{email} 
+		<if test="checkStatus==true">
+			AND du.status = 0
+		</if>
+	
+	</select>
+	
+	<update id="changePasswordDao" parameterType="PwdChangeDTO">
+	
+		UPDATE
+			d_user du
+		SET
+			du.password = #{newPassword}
+		WHERE
+			du.account = #{account}
+		<if test="oldPassword != null">
+			AND du.password = #{oldPassword}
+		</if>
+	
+	</update>
+	
+
+</mapper>

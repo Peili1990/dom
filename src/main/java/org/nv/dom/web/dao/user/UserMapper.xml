@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.user.UserMapper">
+
+	<select id="getUserCurRoleDao" parameterType="long" resultType="UserCurRole">
+	
+		SELECT 
+			du.id AS userId,
+			du.nickname AS userNickName,
+			dp.id AS playerId,
+			dp.status AS status,
+			dp.role AS userCurRole,
+			dg.id AS gameId,
+			dg.description AS gameDesc,
+			dg.status AS gameStatus
+		FROM 
+			d_user du LEFT JOIN (d_game dg JOIN d_player dp ON dp.game_id = dg.id AND dg.status != 9 AND dp.status != 9)
+		ON
+			du.id = dp.user_id
+		WHERE
+			du.id = #{userId} 
+			
+	
+	</select>
+	
+	<select id="getOfflineSpeechDao" parameterType="long" resultType="OfflineSpeech">
+	
+		SELECT 
+			dos.newspaper_id AS newspaperId,
+			count(1) AS num
+		FROM
+			d_offline_speech dos
+		WHERE
+			dos.user_id = #{userId}	
+		GROUP BY
+			dos.newspaper_id	
+	
+	</select>
+	
+	<insert id="saveOfflineMessageDao" parameterType="OfflineMessage">
+	
+		INSERT INTO d_offline_speech(
+			user_id,
+			speech_id,
+			newspaper_id
+		)
+		VALUE(
+			#{userId},
+			#{speechId},
+			#{newspaperId}
+		)
+	
+	</insert>
+	
+	<select id="getChatInfoDao" parameterType="long" resultType="ChatInfo">
+	
+		SELECT 
+			du.id AS toUserId,
+			du.nickname AS toUserNickname,
+			du.avatar AS toUserAvatar,
+			du.motto AS toUserMotto,
+			dom.chat_id AS chatId,
+			dom.content AS latestContent,
+			dom.create_time AS latestTime
+		FROM
+			d_user du,d_offline_message dom
+		WHERE
+			((du.id = dom.from_user_id AND dom.to_user_id=#{userId}) OR (du.id = dom.to_user_id AND dom.from_user_id=#{userId})) 
+		AND dom.create_time IN (
+			SELECT 
+					MAX(create_time) 
+			FROM
+					d_offline_message dom
+			WHERE	
+					dom.to_user_id= #{userId} OR  dom.from_user_id = #{userId}
+			GROUP BY
+					dom.chat_id)
+   		ORDER BY
+			dom.create_time
+		DESC
+	
+	</select>
+	
+	<select id="getChatInfoByUserIdDao" parameterType="long" resultType="ChatInfo">
+	
+		SELECT 
+			du.id AS toUserId,
+			du.nickname AS toUserNickname,
+			du.avatar AS toUserAvatar,
+			du.motto AS toUserMotto
+		FROM
+			d_user du
+		WHERE
+			du.id = #{toUserId}		
+	
+	</select>
+	
+	<select id="getOfflineChatDao" parameterType="long" resultType="OfflineChat">
+	
+		SELECT 
+			dom.chat_id AS chatId,
+			count(chat_id) AS num		
+		FROM
+			d_offline_message dom
+		WHERE
+			dom.to_user_id = #{userId} AND dom.is_read = 0
+		GROUP BY
+			dom.chat_id;
+			
+	</select>
+	
+	<update id="updateUserProfileDao" parameterType="UpdateUserProfileDTO">
+	
+		UPDATE
+			d_user
+		SET
+			update_time = NOW()
+			<if test="avatar != null">
+			,avatar = #{avatar}
+			</if>
+			<if test="motto != null">
+			,motto = #{motto}
+			</if>
+			<if test="qq != null">
+			,qq = #{qq}
+			</if>
+		WHERE
+			id = #{userId};
+	
+	</update>
+	
+	<select id="getChatRecordDao" parameterType="GetChatRecordDTO" resultType="ChatDetail">
+	
+		SELECT
+			dom.chat_Id AS chatId,
+			dom.from_user_id AS fromUserId,
+			dom.to_user_id AS toUserId,
+			dom.content AS content,
+			dom.create_time AS createTime
+		FROM
+			d_offline_message dom
+		WHERE
+			dom.chat_id = #{chatId}
+		ORDER BY
+			dom.create_time
+		DESC
+		LIMIT 
+			#{offset},10 	
+	
+	</select>
+	
+	<update id="updateChatRecordDao" parameterType="GetChatRecordDTO">
+	
+		UPDATE 
+			d_offline_message
+		SET
+			is_read = 1
+		WHERE
+			chat_id = #{chatId} AND to_user_id = #{userId} AND is_read = 0;
+	
+	</update>
+	
+	<select id="getUserCardList" parameterType="long" resultType="UserCard">
+	
+		<![CDATA[
+		
+		SELECT
+			dc.type AS cardType,
+			IF(dc.status=1 AND dc.expire_date<NOW(),3,dc.status) AS status,
+			dc.expire_date AS expireDate
+		FROM
+			d_card dc
+		WHERE
+			dc.user_id = #{userId}
+		ORDER BY
+			status,expireDate
+			
+		]]>
+		
+	</select>
+	
+	<select id="getAvailableCardCount" parameterType="long" resultType="Integer">
+		
+		<![CDATA[
+	
+		SELECT
+			DISTINCT dc.type
+		FROM
+			d_card dc
+		WHERE
+			dc.user_id = #{userId} AND dc.status = 1 AND dc.expire_date >= NOW()
+	
+		]]>
+		
+	</select>
+	
+	<select id="getUserBadge" parameterType="long" resultType="String">
+	
+		SELECT
+			dub.badge_id
+		FROM
+			d_user_badge dub
+		WHERE
+			dub.user_id = #{userId}
+	
+	</select>
+	
+	<update id="equipBadge" parameterType="EquipBadgeDTO">
+	
+		<if test="badge != null">
+			UPDATE
+				d_user du, d_user_badge dub
+			SET
+				du.badge = #{badges}
+			WHERE
+				du.id = dub.user_id AND dub.user_id = #{userId} AND dub.badge_id = #{badge}
+		</if>
+		<if test="badge == null">
+			UPDATE
+				d_user du
+			SET
+				du.badge = #{badges}
+			WHERE
+				du.id = #{userId}
+		</if>
+		
+			
+	
+	</update>
+
+</mapper>

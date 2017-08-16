@@ -1,0 +1,137 @@
+@CHARSET "UTF-8";
+
+h3{
+	padding:0.5em 1em;
+	margin-top:1em;
+}
+
+.am-comment-avatar {
+	width:15%;
+	height:15%;
+	margin-right:5%;
+}
+
+.mine-arrow{
+	color: hsla(0,0%,53%,.45);
+	position:absolute;
+	top:50%;
+	right:1em;
+	margin-top:-8px;
+}
+
+.mine-box{
+	position:relative;
+	padding:1em;
+	background-color:white;
+}
+
+.mine-box p{
+	margin-top:0px;
+	color:#aaaaaa;
+	overflow: hidden;
+	-webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: clip;
+    display: -webkit-box;
+}
+
+.card-1, .card-2, .card-3, .card-4 {	
+	display:inline-block;
+	width:40%;
+	margin:4%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box;
+	position:relative;
+}
+
+.card-1 {
+	background: url("../../img/mine/identity-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.card-2 {
+	background: url("../../img/mine/camp-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.card-3 {
+	background: url("../../img/mine/privilege-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.card-4 {
+	background: url("../../img/mine/pioneer-card.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.card-1 time,
+.card-2 time,
+.card-3 time,
+.card-4 time{
+	font-size: 0.8em;
+    font-family: cursive;
+    position: absolute;
+    bottom: 28%;
+    right: 20%;
+    transform: rotate(20deg);
+    -ms-transform: rotate(20deg);
+    -moz-transform: rotate(20deg);
+    -webkit-transform: rotate(20deg);
+    -o-transform: rotate(20deg);
+}
+
+.used, .expired{
+	position:absolute;
+	width:50%;
+	min-height:50px;
+	right:0;
+}
+
+.used{
+	background: url("../../img/mine/card-used.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.expired{
+	background: url("../../img/mine/card-expired.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.equipped{
+	position:absolute;
+	top: 20px;
+    right: 0;
+     transform: rotate(20deg);
+    -ms-transform: rotate(20deg);
+    -moz-transform: rotate(20deg);
+    -webkit-transform: rotate(20deg);
+    -o-transform: rotate(20deg);
+    height: 40px;
+    width: 100px;
+	background: url("../../img/mine/badge-equipped.png") 0px 0px no-repeat;
+	background-size:100%;
+}
+
+.normal-badge{
+	width:20%;
+	margin-left:2.5%;
+	margin-right:2.5%;
+}
+
+#badge-list li{
+	position:relative;
+}
+
+#badge-list p{
+	margin:0;
+	text-align:center;
+}
+
+#equiped-badges {
+	display:inline;
+}
+
+.badge-detail-img{
+	width:80%;
+}

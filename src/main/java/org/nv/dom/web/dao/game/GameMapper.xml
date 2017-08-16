@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.game.GameMapper">
+
+	<resultMap type="ApplyingGame" id="applyingGame">
+		<id property="id" column="id"/>
+		<result property="gameDesc" column="description"/>
+		<result property="playerNum" column="player_num"/>
+		<result property="playCurNum" column="COUNT(dp.role)"/>
+		<result property="startDate" column="estimated_start_date"/>
+		<result property="characterSelect" column="character_select"/>
+		<collection property="Judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
+	</resultMap>
+
+	<select id="getApplyingGamesDao" resultMap="applyingGame">
+	
+		SELECT
+			dg.id,
+			dg.description,
+			dg.player_num,
+			COUNT(dp.role),
+			dg.estimated_start_date,
+			dg.character_select
+		FROM
+			d_game dg LEFT JOIN d_player dp
+		ON
+			dp.game_id=dg.id AND dp.role='player'
+		WHERE	
+			dg.status = 1 
+		GROUP BY
+			dg.id
+				
+	</select>
+	
+	<select id="getAllGamesDao" resultType="Game">
+	
+		SELECT
+			dg.id,
+			dg.description AS gameDesc,
+			dg.status AS gameStatus,
+			dg.final_result AS finalResult,
+			dg.estimated_start_date AS startDate
+		FROM
+			d_game dg 
+		ORDER BY
+			dg.estimated_start_date
+		DESC
+			
+	</select>
+	
+	<select id="getPlayerNumDao" parameterType="long" resultType="Integer">
+	
+		SELECT
+			COUNT(dp.role)
+		FROM
+			d_player dp
+		WHERE
+			dp.game_id=#{gameId} AND dp.role="player"
+		GROUP BY
+			dp.game_id
+	
+	</select>
+	
+	<select id="queryGameJudgerDao" parameterType="long" resultType="String">
+	
+		SELECT 
+			du.nickname
+		FROM
+			d_user du, d_player dp
+		WHERE
+			dp.role = "judger" AND dp.user_id = du.id AND dp.game_id = #{gameId} 
+	
+	</select>
+	
+	<select id="queryHasAttendGameDao" parameterType="ApplyDTO" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player
+		WHERE
+			user_id = #{userId} AND status != 9
+	
+	</select>
+	
+	<insert id="applyForGameDao" parameterType="ApplyDTO" useGeneratedKeys="true" keyProperty="playerId">
+	
+		INSERT INTO d_player (
+			user_id,
+			role,
+			game_id,
+			apply_time,
+			status		
+		) 
+		VALUES (
+			#{userId},
+			"player",
+			#{gameId},
+			NOW(),
+			<if test='characterSelect=="A"'>
+			1
+			</if>
+			<if test='characterSelect=="B"'>
+			2
+			</if>
+		)
+	
+	</insert>
+	
+	<insert id="applyForGameDaoSecStep" parameterType="long">
+	
+		INSERT INTO d_player_record (
+			player_id
+		) 
+		VALUES (
+			#{playerId}
+		)
+	
+	
+	</insert>
+	
+	<select id="queryCurStatusDao" parameterType="long" resultType="Integer">
+	
+		SELECT 
+			dp.status
+		FROM
+			d_player dp
+		WHERE
+			dp.id=#{playerId}
+	
+	</select>
+	
+	<select id="queryCharacterListThree" resultType="NVCharacter">
+	
+		SELECT 
+			dc.id,
+			dc.name,
+			dc.avatar,
+			dc.has_sp AS hasSp
+		FROM
+			d_character dc
+		WHERE
+			dc.id IN
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+			
+	</select>
+	
+	<select id="queryCharacterAvailable" parameterType="SelectCharacterDTO" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_player dp,d_player_record dpr
+		WHERE
+			dp.game_id=#{gameId} AND dp.id=dpr.player_id AND dpr.character_id = #{characterId}
+	
+	</select>
+	
+	
+	<update id="selectCharacterDAO" parameterType="SelectCharacterDTO">
+	
+		UPDATE 
+			d_player_record dpr
+		SET
+			dpr.character_id = #{characterId},
+			dpr.is_sp = #{isSp},
+			dpr.apply_pioneer = #{applyPioneer}
+			<if test="useCard!=0">
+			,dpr.use_card = #{useCard}
+			</if>
+			<if test="camp!=null">
+			,dpr.camp = #{camp}
+			</if>
+			<if test="sign!=null">
+			,dpr.sign = #{sign}
+			</if>
+			<if test="identityDesc!=null">
+			,dpr.identity_desc = #{identityDesc}
+			</if>
+		WHERE
+			dpr.player_id = #{playerId}
+			
+	</update>
+	
+	<select id="queryCanUseCardDao" parameterType="SelectCharacterDTO" resultType="Integer">
+	
+		SELECT
+		 	count(1) 
+		FROM
+			d_player_record dpr, d_player dp
+		WHERE
+			dpr.camp = #{camp} AND dpr.player_id = dp.id AND dp.game_id = #{gameId}
+	
+	</select>
+	
+	<select id="queryGamePlayerNumDao" parameterType="long" resultType="Integer">
+	
+		SELECT
+			dg.player_num
+		FROM
+			d_game dg
+		WHERE
+			dg.id = #{gameId}
+	
+	</select>
+	
+	<delete id="deleteSelectedCharacterDao" parameterType="SelectCharacterDTO">
+	
+		DELETE 
+			dpr
+		FROM
+			d_player_record dpr, d_player dp
+		WHERE	
+			dpr.character_id = #{characterId} AND dpr.player_id = dp.id AND dp.game_id = #{gameId} AND dpr.use_card = 0;
+			
+	
+	</delete>
+
+</mapper>
