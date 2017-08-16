@@ -59,9 +59,7 @@ public class PlayerServiceImpl implements PlayerService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Assert.isTrue(playerId > 0 , "参数异常");
 		PlayerOpreation opreation = playerMapper.getPlayerOpreation(playerId);
-		Map<String, String> param = new HashMap<>();
-		param.put("playerId", String.valueOf(playerId));
-		result.putAll(HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/getPlayerOpreation", param));
+		result.putAll(HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/getPlayerOperation", String.valueOf(playerId)));
 		result.put("opreation", opreation);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");

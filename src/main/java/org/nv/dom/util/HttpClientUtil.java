@@ -19,8 +19,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;  
 import org.apache.http.util.EntityUtils;
 import org.nv.dom.util.json.JacksonJSONUtils;
-
-import com.alibaba.fastjson.JSON;  
   
 public class HttpClientUtil {  
   
@@ -116,6 +114,7 @@ public class HttpClientUtil {
         try {  
             // 创建Http Post请求  
             HttpPost httpPost = new HttpPost(url);  
+            httpPost.setHeader("source", "nv-client");
             // 创建请求内容  
             StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);  
             httpPost.setEntity(entity);  
@@ -136,8 +135,8 @@ public class HttpClientUtil {
         return resultString;  
     }  
     
-    public static Map<String, Object> doPostAndGetMap(String url, Map<String, String> param){
-    	String response = doPostJson(url, JSON.toJSONString(param));
+    public static Map<String, Object> doPostAndGetMap(String url, String param){
+    	String response = doPostJson(url, param);
     	try{
     		return JacksonJSONUtils.jsonToMap(response, String.class, Object.class);
     	} catch (Exception e) {
