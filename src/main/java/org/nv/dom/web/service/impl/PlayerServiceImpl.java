@@ -13,6 +13,8 @@ import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.SubmitOpreationDTO;
 import org.nv.dom.enums.PlayerStatus;
+import org.nv.dom.util.ConfigUtil;
+import org.nv.dom.util.HttpClientUtil;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,9 @@ public class PlayerServiceImpl implements PlayerService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Assert.isTrue(playerId > 0 , "参数异常");
 		PlayerOpreation opreation = playerMapper.getPlayerOpreation(playerId);
+		Map<String, String> param = new HashMap<>();
+		param.put("playerId", String.valueOf(playerId));
+		result.putAll(HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/getPlayerOpreation", param));
 		result.put("opreation", opreation);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");
