@@ -21,6 +21,8 @@ import org.nv.dom.enums.GameFinalResult;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.IdentityCode;
 import org.nv.dom.enums.PlayerStatus;
+import org.nv.dom.util.ConfigUtil;
+import org.nv.dom.util.HttpClientUtil;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
@@ -171,6 +173,15 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "查询成功");
 		return result;
+	}
+
+	@Override
+	public Map<String, Object> getOpreationTarget(long gameId, int type) {
+		Assert.isTrue(gameId > 0 , "参数异常");
+		Map<String, Object> param = new HashMap<>();
+		param.put("type", type);
+		param.put("gameId", gameId);
+		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/game/getOperationTarget", JSON.toJSONString(param));	
 	}
 
 }

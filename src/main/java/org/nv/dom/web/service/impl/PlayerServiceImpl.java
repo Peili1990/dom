@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
-import org.nv.dom.domain.player.PlayerOpreation;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.SubmitOpreationDTO;
@@ -20,6 +19,8 @@ import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import com.alibaba.fastjson.JSON;
 
 @Service("playerServiceImpl")
 public class PlayerServiceImpl implements PlayerService {
@@ -55,15 +56,12 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public Map<String, Object> getPlayerOpreation(long playerId) {
-		Map<String, Object> result = new HashMap<String, Object>();
+	public Map<String, Object> getPlayerOpreation(long playerId, long gameId) {
 		Assert.isTrue(playerId > 0 , "参数异常");
-		PlayerOpreation opreation = playerMapper.getPlayerOpreation(playerId);
-		result.putAll(HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/getPlayerOperation", String.valueOf(playerId)));
-		result.put("opreation", opreation);
-		result.put(PageParamType.BUSINESS_STATUS, 1);
-		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");
-		return result;
+		Map<String, Object> param = new HashMap<>();
+		param.put("playerId", playerId);
+		param.put("gameId", gameId);
+		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/getPlayerOperation", JSON.toJSONString(param));	
 	}
 	
 	@Override

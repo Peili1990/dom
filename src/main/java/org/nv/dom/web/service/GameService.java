@@ -20,5 +20,7 @@ public interface GameService {
 	public Map<String, Object> selectCharacter(SelectCharacterDTO selectCharacterDTO);
 
 	public Map<String, Object> queryCharacter(SelectCharacterDTO selectCharacterDTO);
+
+	public Map<String, Object> getOpreationTarget(long gameId, int type);
 	
 }

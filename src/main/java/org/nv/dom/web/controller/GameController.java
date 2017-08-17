@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -83,8 +84,16 @@ public class GameController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/getPlayerOpreation", method = RequestMethod.POST)
 	public Map<String, Object> getPlayerOpreation(HttpSession session){
-		Long playerId = (long) session.getAttribute(PageParamType.player_id_in_session);
-		return playerService.getPlayerOpreation(playerId);
+		long playerId = (long) session.getAttribute(PageParamType.player_id_in_session);
+		long gameId = (long) session.getAttribute(PageParamType.game_id_in_session); 
+		return playerService.getPlayerOpreation(playerId, gameId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getOpreationTarget", method = RequestMethod.POST)
+	public Map<String, Object> getOpreationTarget(@RequestParam("type")Integer type, HttpSession session){
+		long gameId = (long) session.getAttribute(PageParamType.game_id_in_session); 
+		return gameService.getOpreationTarget(gameId,type);
 	}
 
 }

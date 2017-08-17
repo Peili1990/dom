@@ -531,4 +531,18 @@ time{
 	width:80%;
 }
 
+#operation-list {
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+#operation-list .am-btn {
+	margin-right:5px;
+	margin-bottom:5px;
+}
+
+.operation-param {
+	min-width:30px;
+	text-decoration:underline;
+} 
 

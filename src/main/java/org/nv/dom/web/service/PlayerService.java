@@ -9,7 +9,7 @@ public interface PlayerService {
 	
 	public PlayerInfo getPlayerInfoByUserId(long userId);
 	
-	public Map<String, Object> getPlayerOpreation(long playerId);
+	public Map<String, Object> getPlayerOpreation(long playerId, long gameId);
 	
 	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO);
 	
