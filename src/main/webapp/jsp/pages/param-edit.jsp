@@ -15,12 +15,12 @@
 		$(".am-header-title").text("输入操作详情")
 		$("#icon-finish").css({"display":"block"}).unbind("click").click(function(){
 			var content = recoverTag($("#param-content").val())
-			$(span).html(content == "" ? "______" : "__"+content+"__");
+			$(span).html(content == "" ? "______" : content);
 			var index = operationRecord.indexOfKey("operationId",operationId);
 			var param = operationRecord[index].param;
 			if(param == null) param = new Array($(span).index()+1);
 			if(param.length < $(span).index()+1 ) param.length = $(span).index()+1;
-			param[$(span).index()]=recoverTag($("#param-content").val());
+			param[$(span).index()]=content;
 			operationRecord[index].param=param;
 			$("#icon-arrow-2").click();
 		});

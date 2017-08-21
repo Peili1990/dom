@@ -65,6 +65,7 @@ var operationRecord;
 		$(row).remove();
 		$("#operation-"+operationId).data("cur-num",curNum);
 		$("#operation-"+operationId).removeAttr("disabled");
+		adjustContainerHeight(getCurActPage());
 	}
 	
 	function addOperation(button,operationId,immediately){
@@ -77,7 +78,7 @@ var operationRecord;
 		var builder = new StringBuilder();
 		var index = operationList.indexOfKey("operationId", operationId);
 		builder.append('<tr>');
-		builder.appendFormat('<td valign="top"><button type="button" class="am-btn am-btn-danger" onclick="removeOperation(this,{0})">{1}</button><td>',operationId,operationList[index].operationName);
+		builder.appendFormat('<td><button type="button" class="am-btn am-btn-danger" onclick="removeOperation(this,{0})">{1}</button><td>',operationId,operationList[index].operationName);
 		builder.appendFormat('<td>{0}</td>',buildblank(operationId,operationList[index].template))
 		builder.append('</tr>');
 		$("#operation-record").append(builder.toString());
@@ -85,6 +86,7 @@ var operationRecord;
 			operationId : operationId,
 			immediately : immediately == 1 ? true : false
 		})
+		adjustContainerHeight(getCurActPage());
 	}
 	
 	function buildblank(operationId,template){
@@ -114,7 +116,7 @@ var operationRecord;
 				);
 			$('#param_select').click();
 			$("#param_select").unbind("change").change(function(){
-				$(span).text("__"+$("#param_select option:selected").text()+"__");
+				$(span).text($("#param_select option:selected").text());
 				var index = $(span).parent().parent().index();
 				var param = operationRecord[index].param;
 				if(param == null) param = new Array($(span).index()+1);
