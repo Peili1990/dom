@@ -78,7 +78,8 @@ var operationRecord;
 	}
 	
 	function buildblank(operationId,template){
-		return template.replace(new RegExp("%c","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,1)">______</span>');
+		return template.replace(new RegExp("%c","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,1)">______</span>')
+					   .replace(new RegExp("%w","gm"),'<span class="operation-param" onclick="inputParam(this)">______</span>');
 		
 	}
 	
@@ -111,8 +112,11 @@ var operationRecord;
 				param[$(span).index()]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
 				operationRecord[index].param=param;
 			})			
-		})
-		
+		})	
+	}
+	
+	function inputParam(span){
+		pageSwitch('#pageB','#pageE',1,2);
 	}
 
 	function submit(gameId,playerId){

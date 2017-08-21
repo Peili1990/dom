@@ -25,12 +25,15 @@
       <li id="pageD" class="page-container" style="left:200%;display:none"> 
       	<jsp:include page="pages/essay-edit.jsp" ></jsp:include> 
       </li>
+      <li id="pageE" class="page-container" style="left:200%;display:none"> 
+      	<jsp:include page="pages/param-edit.jsp" ></jsp:include> 
+      </li>
       <li id="pageF" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="pages/apply.jsp" ></jsp:include> 
       </li>
       <li id="pageG" class="page-container" style="left:100%;display:none"> 
       	<jsp:include page="pages/character-select.jsp" ></jsp:include> 
-      </li>
+      </li>     
     </ul>
    
   </section>
