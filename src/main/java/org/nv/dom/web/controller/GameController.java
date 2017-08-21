@@ -1,5 +1,6 @@
 package org.nv.dom.web.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,10 +77,11 @@ public class GameController extends BaseController{
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/submitOpreation", method = RequestMethod.POST)
-	public Map<String, Object> submitOpreation(@ModelAttribute("submitOpreationDTO") SubmitOpreationDTO submitOpreationDTO, HttpSession session){
-		submitOpreationDTO.setPlayerId((long) session.getAttribute(PageParamType.player_id_in_session));
-		return playerService.submitOpreation(submitOpreationDTO);
+	@RequestMapping(value = "/submitOperation", method = RequestMethod.POST)
+	public Map<String, Object> submitOperation(@RequestBody List<SubmitOpreationDTO> submitOpreationDTO, HttpSession session){
+		long playerId = (long) session.getAttribute(PageParamType.player_id_in_session);
+		long gameId = (long) session.getAttribute(PageParamType.game_id_in_session);
+		return playerService.submitOpreation(submitOpreationDTO, playerId , gameId);
 	}
 	
 	@ResponseBody

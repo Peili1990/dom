@@ -1,5 +1,6 @@
 package org.nv.dom.web.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.domain.player.PlayerInfo;
@@ -11,7 +12,7 @@ public interface PlayerService {
 	
 	public Map<String, Object> getPlayerOpreation(long playerId, long gameId);
 	
-	public Map<String, Object> submitOpreation(SubmitOpreationDTO submitOpreationDTO);
+	public Map<String, Object> submitOpreation(List<SubmitOpreationDTO> submitOpreationDTO, long playerId, long gameId);
 	
 	public Map<String, Object> getPlayerReplaceSkin(long playerId);
 

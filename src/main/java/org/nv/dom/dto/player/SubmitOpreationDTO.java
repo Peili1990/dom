@@ -2,39 +2,54 @@ package org.nv.dom.dto.player;
 
 public class SubmitOpreationDTO {
 	
-	/** 玩家id */
+	private long gameId;
+	
 	private long playerId;
-	/** 行动 */
-	private String action;
-	/** 特权 */
-	private String privilege;
-	/** 投票 */
-	private String vote;
+	
+	private long operationId;
+	
+	private boolean immediately;
+	
+	private Object[] param;
+
+	public long getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(long gameId) {
+		this.gameId = gameId;
+	}
+
 	public long getPlayerId() {
 		return playerId;
 	}
+
 	public void setPlayerId(long playerId) {
 		this.playerId = playerId;
 	}
-	public String getAction() {
-		return action;
+
+	public long getOperationId() {
+		return operationId;
 	}
-	public void setAction(String action) {
-		this.action = action;
+
+	public void setOperationId(long operationId) {
+		this.operationId = operationId;
 	}
-	public String getPrivilege() {
-		return privilege;
+
+	public boolean isImmediately() {
+		return immediately;
 	}
-	public void setPrivilege(String privilege) {
-		this.privilege = privilege;
+
+	public void setImmediately(boolean immediately) {
+		this.immediately = immediately;
 	}
-	public String getVote() {
-		return vote;
+
+	public Object[] getParam() {
+		return param;
 	}
-	public void setVote(String vote) {
-		this.vote = vote;
-	}
-	
-	
+
+	public void setParam(Object[] param) {
+		this.param = param;
+	}	
 
 }

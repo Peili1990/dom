@@ -536,7 +536,17 @@ time{
 	margin-bottom:10px;
 }
 
-#operation-list .am-btn {
+#operation-list .am-btn{
+	margin-right:5px;
+	margin-bottom:5px;
+}
+
+#operation-list .badge{
+	top:-15px;
+	padding:3px 7px;
+}
+
+#operation-record .am-btn{
 	margin-right:5px;
 	margin-bottom:5px;
 }

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="default">
-
 	<div class="card">
 		<div class="card-body">
 			<form class="am-form">
@@ -11,8 +10,8 @@
 					<div class="group">
 						<div id="operation-list">
 						</div>
-						<div id="operation-record">							
-						</div>
+						<table id="operation-record">
+						</table>
 					</div>
 				</fieldset>
 			</form>
@@ -20,13 +19,14 @@
 	</div>
 	<div class="group">
 		<div class="group-body">
-			<input type="button" class="am-btn am-btn-secondary sumbit-btn" onclick="submit(${playerInfo.gameId},${playerInfo.playerId})"
+			<input type="button" class="am-btn am-btn-secondary sumbit-btn" onclick="submit()"
 				style="width: 100%" value="提交">
 		</div>
 	</div>
 	<div class="invisible">
 		<input type="text" id="param_select_dummy" class="am-form-field">
 	  	<select id="param_select">	
+	  	</select>
   	</div>
 </div>
 
@@ -44,43 +44,53 @@ var operationRecord;
 			$("#operation-list").empty();
 			$.each(data.operationList,function(index,operation){
 				var builder = new StringBuilder();
-				builder.appendFormat('<button type="button" class="am-btn am-btn-primary" onclick="editOperation(this,{0})">{1}</button>',operation.operationId,operation.operationName)
+				builder.appendFormat('<button id="operation-{0}" type="button" data-cur-num="0" data-max-num="{1}" data-multiple="{2}" ',operation.operationId,operation.times,operation.multiple);
+				builder.appendFormat('class="am-btn am-btn-primary" onclick="addOperation(this,{0},{1})">{2}',operation.operationId,operation.immediately,operation.operationName);
+				if(operation.immediately==1){
+					builder.appendFormat('<span class="badge badge-alert badge-rounded">!</span>');
+				}
+				builder.append('</button>')
 				$("#operation-list").append(builder.toString());
 			})
 			adjustContainerHeight(getCurActPage());				
 		})
 	}
 	
-	function editOperation(button,operationId){
-		if($(button).hasClass("am-btn-primary")){
-			$(button).removeClass("am-btn-primary").addClass("am-btn-danger");		
-			addOperation(operationId);			
-		} else {
-			$(button).removeClass("am-btn-danger").addClass("am-btn-primary");
-			removeOperation(operationId);
-		}
+	function removeOperation(button,operationId){
+		var row = $(button).parent().parent();
+		var index = $(row).index();
+		operationRecord.splice(index,1);	
+		var curNum = $("#operation-"+operationId).data("cur-num");
+		curNum--;
+		$(row).remove();
+		$("#operation-"+operationId).data("cur-num",curNum);
+		$("#operation-"+operationId).removeAttr("disabled");
 	}
 	
-	function removeOperation(operationId){
-		$("#operation-"+operationId).remove();
-		operationRecord.removeKey("operationId", operationId);
-	}
-	
-	function addOperation(operationId){
+	function addOperation(button,operationId,immediately){
+		var curNum = $(button).data("cur-num");
+		curNum++;
+		$("#operation-"+operationId).data("cur-num",curNum);
+		if($("#operation-"+operationId).data("multiple")==0 || $("#operation-"+operationId).data("cur-num") == $("#operation-"+operationId).data("max-num")){
+			$("#operation-"+operationId).attr("disabled","disabled");
+		} 	
 		var builder = new StringBuilder();
 		var index = operationList.indexOfKey("operationId", operationId);
-		builder.appendFormat('<p id="operation-{0}">{1}',operationId,operationList[index].operationName);
-		builder.appendFormat('{0}</p>',operationList[index].template ? "："+buildblank(operationId,operationList[index].template):"");
+		builder.append('<tr>');
+		builder.appendFormat('<td valign="top"><button type="button" class="am-btn am-btn-danger" onclick="removeOperation(this,{0})">{1}</button><td>',operationId,operationList[index].operationName);
+		builder.appendFormat('<td>{0}</td>',buildblank(operationId,operationList[index].template))
+		builder.append('</tr>');
 		$("#operation-record").append(builder.toString());
 		operationRecord.push({
-			operationId : operationId			
+			operationId : operationId,
+			immediately : immediately == 1 ? true : false
 		})
 	}
 	
 	function buildblank(operationId,template){
 		return template.replace(new RegExp("%c","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,1)">______</span>')
-					   .replace(new RegExp("%w","gm"),'<span class="operation-param" onclick="inputParam(this)">______</span>');
-		
+					   .replace(new RegExp("%w","gm"),'<span class="operation-param" onclick="inputParam('+operationId+',this)">______</span>')
+					   .replace(new RegExp("%k","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,2)">______</span>')
 	}
 	
 	function selectParam(operationId,span,type){
@@ -105,7 +115,7 @@ var operationRecord;
 			$('#param_select').click();
 			$("#param_select").unbind("change").change(function(){
 				$(span).text("__"+$("#param_select option:selected").text()+"__");
-				var index = operationRecord.indexOfKey("operationId",operationId);
+				var index = $(span).parent().parent().index();
 				var param = operationRecord[index].param;
 				if(param == null) param = new Array($(span).index()+1);
 				if(param.length < $(span).index()+1 ) param.length = $(span).index()+1;
@@ -115,32 +125,22 @@ var operationRecord;
 		})	
 	}
 	
-	function inputParam(span){
-		pageSwitch('#pageB','#pageE',1,2);
+	function inputParam(operationId,span){
+		pageSwitch('#pageB','#pageE',1,2,editParam(operationId,span,$(span).html().replace(new RegExp("__","gm"),"")));
 	}
 
-	function submit(gameId,playerId){
-		var action=$("input[name='action']").val().trim();
-		var privilege=$("input[name='privilege']").val().trim();
-		var vote=$("input[name='vote']").val().trim();
-		if(action==""&&privilege==""&&vote==""){
+	function submit(){
+		if(operationRecord.length == 0){
 			myAlert("请至少提交一项操作");
 			return;
 		}
 		var common = new Common();
-		var url = "http://" + "${chatServer}" + "/submitOpreation";
-		var options = {
-				gameId : gameId,
-				playerId : playerId,
-				action : action,
-				privilege : privilege,
-				vote : vote
-		}
-		common.callAction(options, url, function(data){
+		var url = getRootPath() + "/game/submitOperation";
+		common.callAction(JSON.stringify(operationRecord), url, function(data){
 			myInfo("提交操作成功！",function(){
 				window.location = getRootPath() + "/index";
 			});				
-		})
+		},"application/json;charset=utf-8")
 	}
 
 </script>

@@ -423,7 +423,11 @@ function pageSwitch(pageA,pageB,startNum,endNum,callback){
 		'curScroll':$(document).scrollTop()
 	})
 	window.scroll(0,0);
-	eval(callback);
+	if(typeof callback === "function"){
+		callback();
+	} else {
+		eval(callback);
+	}
 	$('#pages').css({'-webkit-transform' : 'translate3d(-'+endNum+'00%, 0px, 0px)' , 
 		 		   	 '-webkit-transition' : '300ms',
 				   	 'transform':'translate3d(-'+endNum+'00%, 0px, 0px)' ,
