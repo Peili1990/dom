@@ -92,7 +92,7 @@
 			<div class="group">
 				<div class="group-body">
 					<input type="button" class="am-btn am-btn-primary" value="提交操作"
-						style="width: 100%" onclick="pageSwitch('#pageA','#pageB',0,1,'getOpreation()')">
+						style="width: 100%" onclick="pageSwitch('#pageA','#pageB',0,1,'getOpreation(${playerInfo.characterName})')">
 				</div>
 			</div>
 		</c:if>

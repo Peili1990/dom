@@ -71,7 +71,7 @@ public class PlayerServiceImpl implements PlayerService {
 			operation.setPlayerId(playerId);
 			operation.setGameId(gameId);
 		});
-		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/game/submitOperation", JSON.toJSONString(submitOpreationDTO));
+		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/submitOperation", JSON.toJSONString(submitOpreationDTO));
 	}
 	
 	private boolean testChandler(PlayerInfo playerInfo){

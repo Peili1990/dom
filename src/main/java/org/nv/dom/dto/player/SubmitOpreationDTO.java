@@ -11,6 +11,8 @@ public class SubmitOpreationDTO {
 	private boolean immediately;
 	
 	private Object[] param;
+	
+	private String operationStr;
 
 	public long getGameId() {
 		return gameId;
@@ -50,6 +52,14 @@ public class SubmitOpreationDTO {
 
 	public void setParam(Object[] param) {
 		this.param = param;
+	}
+
+	public String getOperationStr() {
+		return operationStr;
+	}
+
+	public void setOperationStr(String operationStr) {
+		this.operationStr = operationStr;
 	}	
 
 }

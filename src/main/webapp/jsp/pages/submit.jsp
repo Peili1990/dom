@@ -33,15 +33,20 @@
 <script type="text/javascript">
 var operationList;
 var operationRecord;
+var hasChanged;
+var characterName;
 
-	function getOpreation(){
+	function getOpreation(characterName){
 		var common = new Common();
 		var url=getRootPath() + "/game/getPlayerOpreation";
 		common.callAction(null, url, function(data){
 			operationList = data.operationList;
-			operationRecord = data.operationRecord;
+			operationRecord = [];
+			hasChanged = false;
+			characterName = characterName;
 			$("#cur-stage").text(operationList.length == 0 ? "当前没有任何操作可提交" : "当前"+data.curStage+"，请提交你的操作：");			
 			$("#operation-list").empty();
+			$("#operation-record").empty();
 			$.each(data.operationList,function(index,operation){
 				var builder = new StringBuilder();
 				builder.appendFormat('<button id="operation-{0}" type="button" data-cur-num="0" data-max-num="{1}" data-multiple="{2}" ',operation.operationId,operation.times,operation.multiple);
@@ -52,7 +57,15 @@ var operationRecord;
 				builder.append('</button>')
 				$("#operation-list").append(builder.toString());
 			})
-			adjustContainerHeight(getCurActPage());				
+			$.each(data.operationRecord,function(index,record){
+				addOperation($("#operation-"+record.operationId),record.operationId,record.immediately);
+				var params = JSON.parse(record.param);
+				operationRecord[index].param=params;
+				$.each($("#operation-record").find("tr").eq(index).find("span"),function(i,span){
+					var array = params[i].split(",")
+					$(span).text(array[array.length-1]);
+				})
+			})							
 		})
 	}
 	
@@ -66,6 +79,7 @@ var operationRecord;
 		$("#operation-"+operationId).data("cur-num",curNum);
 		$("#operation-"+operationId).removeAttr("disabled");
 		adjustContainerHeight(getCurActPage());
+		hasChanged=true;
 	}
 	
 	function addOperation(button,operationId,immediately){
@@ -87,6 +101,7 @@ var operationRecord;
 			immediately : immediately == 1 ? true : false
 		})
 		adjustContainerHeight(getCurActPage());
+		hasChanged=true;
 	}
 	
 	function buildblank(operationId,template){
@@ -123,6 +138,8 @@ var operationRecord;
 				if(param.length < $(span).index()+1 ) param.length = $(span).index()+1;
 				param[$(span).index()]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
 				operationRecord[index].param=param;
+				operationRecord[index].operationStr=characterName+"提交操作："+$(span).parent().text();
+				hasChanged=true;
 			})			
 		})	
 	}
@@ -132,8 +149,8 @@ var operationRecord;
 	}
 
 	function submit(){
-		if(operationRecord.length == 0){
-			myAlert("请至少提交一项操作");
+		if(!hasChanged){
+			myInfo("操作未更改，无需提交！");
 			return;
 		}
 		var common = new Common();

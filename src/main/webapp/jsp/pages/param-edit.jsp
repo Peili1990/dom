@@ -23,6 +23,7 @@
 			param[$(span).index()]=content;
 			operationRecord[index].param=param;
 			$("#icon-arrow-2").click();
+			hasChanged=true;
 		});
 	}
 
