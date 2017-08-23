@@ -34,16 +34,15 @@
 var operationList;
 var operationRecord;
 var hasChanged;
-var characterName;
+var characterName='${playerInfo.characterName}';
 
-	function getOpreation(characterName){
+	function getOpreation(){
 		var common = new Common();
 		var url=getRootPath() + "/game/getPlayerOpreation";
 		common.callAction(null, url, function(data){
 			operationList = data.operationList;
 			operationRecord = [];
 			hasChanged = false;
-			characterName = characterName;
 			$("#cur-stage").text(operationList.length == 0 ? "当前没有任何操作可提交" : "当前"+data.curStage+"，请提交你的操作：");			
 			$("#operation-list").empty();
 			$("#operation-record").empty();
