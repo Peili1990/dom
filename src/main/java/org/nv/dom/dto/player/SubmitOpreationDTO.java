@@ -12,6 +12,8 @@ public class SubmitOpreationDTO {
 	
 	private Object[] param;
 	
+	private String operator;
+	
 	private String operationStr;
 
 	public long getGameId() {
@@ -52,6 +54,14 @@ public class SubmitOpreationDTO {
 
 	public void setParam(Object[] param) {
 		this.param = param;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
 	}
 
 	public String getOperationStr() {

@@ -137,7 +137,8 @@ var characterName='${playerInfo.characterName}';
 				if(param.length < $(span).index()+1 ) param.length = $(span).index()+1;
 				param[$(span).index()]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
 				operationRecord[index].param=param;
-				operationRecord[index].operationStr=characterName+"提交操作："+$(span).parent().text();
+				operationRecord[index].operator=characterName;
+				operationRecord[index].operationStr=$(span).parent().text();
 				hasChanged=true;
 			})			
 		})	

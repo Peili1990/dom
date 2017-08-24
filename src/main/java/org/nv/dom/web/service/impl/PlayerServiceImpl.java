@@ -67,11 +67,15 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> submitOpreation(List<SubmitOpreationDTO> submitOpreationDTO, long playerId, long gameId) {
 		Assert.isTrue(playerId > 0 && gameId > 0, "参数异常");
-		submitOpreationDTO.forEach(operation ->{
-			operation.setPlayerId(playerId);
+		submitOpreationDTO.forEach(operation -> {
 			operation.setGameId(gameId);
+			operation.setPlayerId(playerId);
 		});
-		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/submitOperation", JSON.toJSONString(submitOpreationDTO));
+		Map<String, Object> param = new HashMap<>();
+		param.put("playerId", playerId);
+		param.put("gameId", gameId);
+		param.put("records", submitOpreationDTO);
+		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/submitOperation", JSON.toJSONString(param));
 	}
 	
 	private boolean testChandler(PlayerInfo playerInfo){
