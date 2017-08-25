@@ -57,13 +57,15 @@ var characterName='${playerInfo.characterName}';
 				$("#operation-list").append(builder.toString());
 			})
 			$.each(data.operationRecord,function(index,record){
-				addOperation($("#operation-"+record.operationId),record.operationId,record.immediately);
-				var params = JSON.parse(record.param);
-				operationRecord[index].param=params;
-				$.each($("#operation-record").find("tr").eq(index).find("span"),function(i,span){
-					var array = params[i].split(",")
-					$(span).text(array[array.length-1]);
-				})
+				if(operationList.indexOfKey("operationId",record.operationId) > -1){
+					addOperation($("#operation-"+record.operationId),record.operationId,record.immediately);
+					var params = JSON.parse(record.param);
+					operationRecord[index].param=params;
+					$.each($("#operation-record").find("tr").eq(index).find("span"),function(i,span){
+						var array = params[i].split(",")
+						$(span).text(array[array.length-1]);
+					})
+				}		
 			})							
 		})
 	}
