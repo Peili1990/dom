@@ -93,8 +93,8 @@ var characterName='${playerInfo.characterName}';
 		var builder = new StringBuilder();
 		var index = operationList.indexOfKey("operationId", operationId);
 		builder.append('<tr>');
-		builder.appendFormat('<td><button type="button" class="am-btn am-btn-danger" onclick="removeOperation(this,{0})">{1}</button><td>',operationId,operationList[index].operationName);
-		builder.appendFormat('<td>{0}</td>',buildblank(operationId,operationList[index].template))
+		builder.appendFormat('<td><button type="button" class="am-btn am-btn-danger" onclick="removeOperation(this,{0})">{1}</button></td>',operationId,operationList[index].operationName);
+		builder.appendFormat('<td style="width:100%">{0}</td>',buildblank(operationId,operationList[index].template))
 		builder.append('</tr>');
 		$("#operation-record").append(builder.toString());
 		operationRecord.push({
