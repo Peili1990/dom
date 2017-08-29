@@ -49,7 +49,7 @@ var characterName='${playerInfo.characterName}';
 			$.each(data.operationList,function(index,operation){
 				var builder = new StringBuilder();
 				builder.appendFormat('<button id="operation-{0}" type="button" data-cur-num="0" data-max-num="{1}" data-multiple="{2}" ',operation.operationId,operation.times,operation.multiple);
-				builder.appendFormat('class="am-btn am-btn-primary" onclick="addOperation(this,{0},{1})">{2}',operation.operationId,operation.immediately,operation.operationName);
+				builder.appendFormat('class="am-btn am-btn-primary" onclick="addOperation(this,{0})">{1}',operation.operationId,operation.operationName);
 				if(operation.immediately==1){
 					builder.appendFormat('<span class="badge badge-alert badge-rounded">!</span>');
 				}
@@ -58,7 +58,7 @@ var characterName='${playerInfo.characterName}';
 			})
 			$.each(data.operationRecord,function(index,record){
 				if(operationList.indexOfKey("operationId",record.operationId) > -1){
-					addOperation($("#operation-"+record.operationId),record.operationId,record.immediately);
+					addOperation($("#operation-"+record.operationId),record.operationId);
 					var params = JSON.parse(record.param);
 					operationRecord[index].param=params;
 					$.each($("#operation-record").find("tr").eq(index).find("span"),function(i,span){
@@ -83,7 +83,7 @@ var characterName='${playerInfo.characterName}';
 		hasChanged=true;
 	}
 	
-	function addOperation(button,operationId,immediately){
+	function addOperation(button,operationId){
 		var curNum = $(button).data("cur-num");
 		curNum++;
 		$("#operation-"+operationId).data("cur-num",curNum);
@@ -99,7 +99,9 @@ var characterName='${playerInfo.characterName}';
 		$("#operation-record").append(builder.toString());
 		operationRecord.push({
 			operationId : operationId,
-			immediately : immediately == 1 ? true : false
+			immediately : operationList[index].immediately == 1 ? true : false,
+			operator : characterName,
+			operationStr : operationList[index].operationName
 		})
 		adjustContainerHeight(getCurActPage());
 		hasChanged=true;
@@ -159,7 +161,7 @@ var characterName='${playerInfo.characterName}';
 		var url = getRootPath() + "/game/submitOperation";
 		common.callAction(JSON.stringify(operationRecord), url, function(data){
 			myInfo("提交操作成功！",function(){
-				window.location = getRootPath() + "/index";
+				$("#icon-arrow-1").click();
 			});				
 		},"application/json;charset=utf-8")
 	}

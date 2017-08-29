@@ -155,6 +155,7 @@
 			appendChatDetail(content,false);
 			scrollTobottom();
 		} else {
+			saveOfflineChat(content);
 			chatId = content.chatId;
 			chatMessage = getCache("nv_chat"+chatId);
 			setCache("nv_chat"+chatId,chatMessage ? ++chatMessage : 1);
@@ -189,6 +190,19 @@
 				
 			}
 		}	
+	}
+	
+	function saveOfflineChat(content){
+		var url = "http://" + "${chatServer}" + "/saveOfflineChat";
+		var common = new Common();
+		var options = {
+				userId : userId,
+				chatId : content.chatId,
+				createTime : content.createTime
+		};
+		common.callAction(options, url, function(data) {
+			
+		})
 	}
 	
 	function setRedspot(){
