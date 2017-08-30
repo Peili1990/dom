@@ -180,7 +180,7 @@
 		           	    setRedspotOnChat();		           			
 		          	})
 				} else {
-					$("#chat-list .card:eq("+chatPosition+") .chat-content").find("p").text(content.content);
+					$("#chat-list .card:eq("+chatPosition+") .chat-content").find("span").text(content.content);
 					var node = $("#chat-list .card:eq("+chatPosition+")").remove();
 					$("#chat-list").prepend(node);
 					chatList.remove(chatId);
