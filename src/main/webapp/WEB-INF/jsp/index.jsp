@@ -13,7 +13,7 @@
     <!-- view container -->
     <ul id="pages" class="view-container">
       <!-- pageA container -->
-      <li id="pageA" class="page-container"> 
+      <li id="pageA" class="page-container" style="display:block"> 
       	<jsp:include page="pages/welcome.jsp"></jsp:include> 
       </li>
       <li id="pageB" class="page-container" style="left:100%;display:none"> 
