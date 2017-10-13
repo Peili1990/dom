@@ -61,7 +61,7 @@ var characterName='${playerInfo.characterName}';
 					addOperation($("#operation-"+record.operationId),record.operationId);
 					var params = JSON.parse(record.param);
 					operationRecord[index].param=params;
-					$.each($("#operation-record").find("tr").eq(index).find("span"),function(i,span){
+					$.each($("#operation-record").find("tr").eq(index).find(".operation-param"),function(i,span){
 						var array = params[i].split(",")
 						$(span).text(array[array.length-1]);
 					})
@@ -111,19 +111,27 @@ var characterName='${playerInfo.characterName}';
 		return template.replace(new RegExp("%c","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,1)">______</span>')
 					   .replace(new RegExp("%w","gm"),'<span class="operation-param" onclick="inputParam('+operationId+',this)">______</span>')
 					   .replace(new RegExp("%k","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,2)">______</span>')
+					   .replace(new RegExp("%o","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,3)">______</span>')
 	}
 	
 	function selectParam(operationId,span,type){
 		var common = new Common();
 		var url = getRootPath() + "/game/getOpreationTarget";
 		var options = {
-				type : type
+				type : type,
+				operationId : operationId
 		}
 		common.callAction(options, url, function(data){
 			$("#param_select").empty()
-			for(target in data.operationTarget){
-				$("#param_select").append("<option value='"+target+"'>"+data.operationTarget[target]+"</option>")
-	        }
+			if(type == 3){
+				$.each(data.operationOption, function(index,option){
+					$("#param_select").append("<option value='"+option.sequence+"' data-template='"+option.template+"'>"+option.optionName+"</option>")
+				})
+			} else {
+				for(target in data.operationTarget){
+					$("#param_select").append("<option value='"+target+"'>"+data.operationTarget[target]+"</option>")
+		        }
+			}		
 			$('#param_select').val('').scroller('destroy').scroller(
 			        $.extend({preset : 'select'}, { 
 			             theme:'android-ics light', 
@@ -135,14 +143,23 @@ var characterName='${playerInfo.characterName}';
 			$('#param_select').click();
 			$("#param_select").unbind("change").change(function(){
 				$(span).text($("#param_select option:selected").text());
-				var index = $(span).parent().parent().index();
+				if(type == 3){
+					$(span).parent().find(".operation-option").remove();
+					var template = $("#param_select option:selected").data("template");
+					if(template != ""){
+						$(span).parent().append("<span class='operation-option'>，"+buildblank(operationId,template)+"</span>")
+					}
+					
+				}
+				var index = $(span).parents("tr").index();
+				var spanIndex = $(span).parents("td").find(".operation-param").index($(span));
 				var param = operationRecord[index].param;
-				if(param == null) param = new Array($(span).index()+1);
-				if(param.length < $(span).index()+1 ) param.length = $(span).index()+1;
-				param[$(span).index()]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
+				if(param == null) param = new Array(spanIndex+1);
+				if(param.length < spanIndex+1 ) param.length = spanIndex+1;
+				param[spanIndex]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
 				operationRecord[index].param=param;
 				operationRecord[index].operator=characterName;
-				operationRecord[index].operationStr=$(span).parent().text();
+				operationRecord[index].operationStr=$(span).parents("td").text();
 				hasChanged=true;
 			})			
 		})	

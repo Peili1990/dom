@@ -13,6 +13,7 @@ import org.nv.dom.domain.character.NVCharacter;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.Game;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.game.GetOperationTargetDTO;
 import org.nv.dom.dto.player.ChangeStatusDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
@@ -176,10 +177,11 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	}
 
 	@Override
-	public Map<String, Object> getOpreationTarget(long gameId, int type) {
+	public Map<String, Object> getOpreationTarget(long gameId, GetOperationTargetDTO getOperationTargetDTO) {
 		Assert.isTrue(gameId > 0 , "参数异常");
 		Map<String, Object> param = new HashMap<>();
-		param.put("type", type);
+		param.put("type", getOperationTargetDTO.getType());
+		param.put("operationId", getOperationTargetDTO.getOperationId());
 		param.put("gameId", gameId);
 		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/game/getOperationTarget", JSON.toJSONString(param));	
 	}

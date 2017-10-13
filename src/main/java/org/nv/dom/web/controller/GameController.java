@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.game.GetOperationTargetDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
 import org.nv.dom.dto.player.SubmitOpreationDTO;
@@ -94,9 +95,9 @@ public class GameController extends BaseController{
 	
 	@ResponseBody
 	@RequestMapping(value = "/getOpreationTarget", method = RequestMethod.POST)
-	public Map<String, Object> getOpreationTarget(@RequestParam("type")Integer type, HttpSession session){
+	public Map<String, Object> getOpreationTarget(@ModelAttribute("getOperationTargetDTO")GetOperationTargetDTO getOperationTargetDTO, HttpSession session){
 		long gameId = (long) session.getAttribute(PageParamType.game_id_in_session); 
-		return gameService.getOpreationTarget(gameId,type);
+		return gameService.getOpreationTarget(gameId,getOperationTargetDTO);
 	}
 
 }

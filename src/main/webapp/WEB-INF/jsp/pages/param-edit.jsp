@@ -17,11 +17,14 @@
 			var content = recoverTag($("#param-content").val())
 			$(span).html(content == "" ? "______" : content);
 			var index = operationRecord.indexOfKey("operationId",operationId);
+			var spanIndex = $(span).parents("td").find(".operation-param").index($(span));
 			var param = operationRecord[index].param;
-			if(param == null) param = new Array($(span).index()+1);
-			if(param.length < $(span).index()+1 ) param.length = $(span).index()+1;
-			param[$(span).index()]=content;
+			if(param == null) param = new Array(spanIndex+1);
+			if(param.length < spanIndex+1 ) param.length = spanIndex+1;
+			param[spanIndex]=content;
 			operationRecord[index].param=param;
+			operationRecord[index].operator=characterName;
+			operationRecord[index].operationStr=$(span).parents("td").text();
 			$("#icon-arrow-2").click();
 			hasChanged=true;
 		});

@@ -4,6 +4,7 @@ package org.nv.dom.web.service;
 import java.util.Map;
 
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.game.GetOperationTargetDTO;
 import org.nv.dom.dto.player.GetCharacterListDTO;
 import org.nv.dom.dto.player.SelectCharacterDTO;
 
@@ -21,6 +22,6 @@ public interface GameService {
 
 	public Map<String, Object> queryCharacter(SelectCharacterDTO selectCharacterDTO);
 
-	public Map<String, Object> getOpreationTarget(long gameId, int type);
+	public Map<String, Object> getOpreationTarget(long gameId, GetOperationTargetDTO getOperationTargetDTO);
 	
 }
