@@ -57,14 +57,23 @@ var characterName='${playerInfo.characterName}';
 				$("#operation-list").append(builder.toString());
 			})
 			$.each(data.operationRecord,function(index,record){
-				if(operationList.indexOfKey("operationId",record.operationId) > -1){
+				var listIndex = operationList.indexOfKey("operationId",record.operationId);
+				if(listIndex > -1){
 					addOperation($("#operation-"+record.operationId),record.operationId);
 					var params = JSON.parse(record.param);
 					operationRecord[index].param=params;
 					$.each($("#operation-record").find("tr").eq(index).find(".operation-param"),function(i,span){
 						var array = params[i].split(",")
 						$(span).text(array[array.length-1]);
-					})
+						if(operationList[listIndex].options && operationList[listIndex].options[array[0]-1].template != ""){
+							$(span).parent().append("<span class='operation-option'>，"
+									+ buildblank(operationList[listIndex].operationId,operationList[listIndex].options[array[0]-1].template)+"</span>")
+							$.each($(span).parent().find(".operation-option").find(".operation-param"),function(j,optionSpan){
+								var optionArray = params[i+1+j].split(",")
+								$(optionSpan).text(optionArray[optionArray.length-1]);
+							})
+						}
+					})			
 				}		
 			})							
 		})
@@ -115,54 +124,61 @@ var characterName='${playerInfo.characterName}';
 	}
 	
 	function selectParam(operationId,span,type){
-		var common = new Common();
-		var url = getRootPath() + "/game/getOpreationTarget";
-		var options = {
-				type : type,
-				operationId : operationId
-		}
-		common.callAction(options, url, function(data){
-			$("#param_select").empty()
-			if(type == 3){
-				$.each(data.operationOption, function(index,option){
-					$("#param_select").append("<option value='"+option.sequence+"' data-template='"+option.template+"'>"+option.optionName+"</option>")
-				})
-			} else {
-				for(target in data.operationTarget){
-					$("#param_select").append("<option value='"+target+"'>"+data.operationTarget[target]+"</option>")
-		        }
-			}		
-			$('#param_select').val('').scroller('destroy').scroller(
-			        $.extend({preset : 'select'}, { 
-			             theme:'android-ics light', 
-			              mode:'scroller', 
-			           display:'bottom', 
-			              lang:'zh'
-			        })
-				);
+		$("#param_select").empty();
+		$('#param_select').val('').scroller('destroy').scroller(
+	        $.extend({preset : 'select'}, { 
+	             theme:'android-ics light', 
+	              mode:'scroller', 
+	           display:'bottom', 
+	              lang:'zh'
+	        })
+		);
+		if(type == 3){
+			var index = operationList.indexOfKey("operationId", operationId);
+			$.each(operationList[index].options, function(index,option){
+				$("#param_select").append("<option value='"+option.sequence+"' data-template='"+option.template+"'>"+option.optionName+"</option>")
+			})
 			$('#param_select').click();
 			$("#param_select").unbind("change").change(function(){
-				$(span).text($("#param_select option:selected").text());
-				if(type == 3){
-					$(span).parent().find(".operation-option").remove();
-					var template = $("#param_select option:selected").data("template");
-					if(template != ""){
-						$(span).parent().append("<span class='operation-option'>，"+buildblank(operationId,template)+"</span>")
-					}
-					
+				$(span).parent().find(".operation-option").remove();
+				var template = $("#param_select option:selected").data("template");
+				if(template != ""){
+					$(span).parent().append("<span class='operation-option'>，"+buildblank(operationId,template)+"</span>")
 				}
-				var index = $(span).parents("tr").index();
-				var spanIndex = $(span).parents("td").find(".operation-param").index($(span));
-				var param = operationRecord[index].param;
-				if(param == null) param = new Array(spanIndex+1);
-				if(param.length < spanIndex+1 ) param.length = spanIndex+1;
-				param[spanIndex]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
-				operationRecord[index].param=param;
-				operationRecord[index].operator=characterName;
-				operationRecord[index].operationStr=$(span).parents("td").text();
-				hasChanged=true;
-			})			
-		})	
+				fillParam(span);		
+			})	
+		} else {
+			var common = new Common();
+			var url = getRootPath() + "/game/getOpreationTarget";
+			var options = {
+					type : type,
+					operationId : operationId
+			}
+			common.callAction(options, url, function(data){				
+				for(target in data.operationTarget){
+					$("#param_select").append("<option value='"+target+"'>"+data.operationTarget[target]+"</option>")
+		        }		
+				$('#param_select').click();
+				$("#param_select").unbind("change").change(function(){
+					fillParam(span);
+				})			
+			})	
+		}
+		
+	}
+	
+	function fillParam(span){
+		$(span).text($("#param_select option:selected").text());
+		var index = $(span).parents("tr").index();
+		var spanIndex = $(span).parents("td").find(".operation-param").index($(span));
+		var param = operationRecord[index].param;
+		if(param == null) param = new Array(spanIndex+1);
+		if(param.length < spanIndex+1 ) param.length = spanIndex+1;
+		param[spanIndex]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
+		operationRecord[index].param=param;
+		operationRecord[index].operator=characterName;
+		operationRecord[index].operationStr=$(span).parents("td").text();
+		hasChanged=true;
 	}
 	
 	function inputParam(operationId,span){
