@@ -36,7 +36,7 @@ public class PlayerServiceImpl implements PlayerService {
 			PlayerInfo playerInfo = playerMapper.getPlayerInfo(userId);
 			if(playerInfo == null){
 				return null;
-			}else if(testChandler(playerInfo)){
+			}else if(needHidden(playerInfo)){
 				playerInfo.setSign(NVTermConstant.UNKNOWN_SIGN);
 				playerInfo.setSignAvatar(NVTermConstant.UNKNOWN_SIGN_AVATAR);
 				playerInfo.setCamp(NVTermConstant.GOOD_CAMP);
@@ -78,11 +78,14 @@ public class PlayerServiceImpl implements PlayerService {
 		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/submitOperation", JSON.toJSONString(param));
 	}
 	
-	private boolean testChandler(PlayerInfo playerInfo){
+	private boolean needHidden(PlayerInfo playerInfo){
 		Integer sign = playerInfo.getSign();
-		return playerInfo.getCharacterId() == 42 
+		return (playerInfo.getCharacterId() == 42 
 					&& NVTermConstant.IS_SP.equals(playerInfo.getIsSp())
-					&& !(sign == 11 || sign == 12 || sign == 23);
+					&& !(sign == 11 || sign == 12 || sign == 23)) || 
+			   (playerInfo.getCharacterId() == 54
+				    && playerMapper.getPlayerOperationRecord(playerInfo.getGameId())
+				    .stream().noneMatch(record -> record.getOperationId() == 235 && record.getPlayerId() == playerInfo.getPlayerId()));
 	}
 
 	@Override

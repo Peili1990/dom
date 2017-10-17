@@ -121,6 +121,8 @@ var characterName='${playerInfo.characterName}';
 					   .replace(new RegExp("%w","gm"),'<span class="operation-param" onclick="inputParam('+operationId+',this)">______</span>')
 					   .replace(new RegExp("%k","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,2)">______</span>')
 					   .replace(new RegExp("%o","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,3)">______</span>')
+					   .replace(new RegExp("%d","gm"),'<span class="operation-param" onclick="selectParam('+operationId+',this,4)">______</span>')
+						
 	}
 	
 	function selectParam(operationId,span,type){

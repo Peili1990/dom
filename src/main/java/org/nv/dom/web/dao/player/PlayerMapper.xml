@@ -37,7 +37,7 @@
 		
 	</update>
 	
-	<select id="getPlayerOpreation" parameterType="long" resultType="PlayerOpreation">
+	<select id="getPlayerOpreation" parameterType="long" resultType="PlayerOperationRecord">
 	
 		SELECT 
 			df.header AS curStage,
@@ -111,5 +111,17 @@
 		
 	
 	</update>
+	
+	<select id="getPlayerOperationRecord" parameterType="Long" resultType="PlayerOperationRecord">
+	
+		SELECT
+			dpor.player_id AS playerId,
+			dpor.operation_id AS operationId
+		FROM
+			d_player_operation_record dpor, d_form df
+		WHERE
+			dpor.form_id = df.id AND df.game_id = #{gameId}	
+	
+	</select>
 
 </mapper>
