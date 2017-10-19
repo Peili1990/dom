@@ -48,7 +48,7 @@
 			
 	</select>
 	
-	<select id="getPlayerNumDao" parameterType="long" resultType="Integer">
+	<select id="getPlayerNumDao" parameterType="long" resultType="int">
 	
 		SELECT
 			COUNT(dp.role)

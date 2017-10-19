@@ -75,7 +75,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	public Map<String, Object> applyForGame(ApplyDTO applyDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Assert.isTrue(gameMapper.queryHasAttendGameDao(applyDTO) == 0, "您已报名或参加其他版杀");
-		Assert.isTrue(gameMapper.getPlayerNumDao(applyDTO.getGameId()) < applyDTO.getPlayerNum(), "人数已报满");	
+		Assert.isTrue(!(gameMapper.getPlayerNumDao(applyDTO.getGameId()) == applyDTO.getPlayerNum()), "人数已报满");	
 		Assert.isTrue(gameMapper.applyForGameDao(applyDTO) == 1 && 
 				gameMapper.applyForGameDaoSecStep(applyDTO.getPlayerId()) == 1, "报名失败，请重试");			
 		result.put(PageParamType.BUSINESS_STATUS, 1);
