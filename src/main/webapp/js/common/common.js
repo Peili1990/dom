@@ -204,6 +204,10 @@ String.prototype.endsWith = function(str) {
 	return reg.test(this);
 };
 
+String.prototype.shorten = function(length) {
+	return this.length <= length ? this : this.substring(0,length) + "...";
+}
+
 function StringBuilder() {
 	this._buffers = [];
 	this._length = 0;
