@@ -61,6 +61,7 @@
 			du.motto AS toUserMotto,
 			dom.chat_id AS chatId,
 			dom.content AS latestContent,
+			dom.pay_load AS payLoad,
 			dom.create_time AS latestTime
 		FROM
 			d_user du,d_offline_message dom
@@ -136,7 +137,8 @@
 			dom.from_user_id AS fromUserId,
 			dom.to_user_id AS toUserId,
 			dom.content AS content,
-			dom.create_time AS createTime
+			dom.create_time AS createTime,
+			dom.pay_load AS payLoad
 		FROM
 			d_offline_message dom
 		WHERE

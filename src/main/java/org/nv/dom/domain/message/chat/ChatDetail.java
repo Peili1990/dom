@@ -9,6 +9,7 @@ public class ChatDetail {
 	private String content;
 	private String createTime;
 	private Integer isRead;
+	private String payLoad;
 	
 	public String getMessage() {
 		return message;
@@ -51,6 +52,12 @@ public class ChatDetail {
 	}
 	public void setIsRead(Integer isRead) {
 		this.isRead = isRead;
+	}
+	public String getPayLoad() {
+		return payLoad;
+	}
+	public void setPayLoad(String payLoad) {
+		this.payLoad = payLoad;
 	}
 	
 }

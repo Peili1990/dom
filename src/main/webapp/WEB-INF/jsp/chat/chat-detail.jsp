@@ -16,9 +16,9 @@
 	var activeToUserId = 0;
 	var nomoreflag = false;
 	var pageNum = 0;
+	var payLoad = "";
 
 	function getChatDetail(toUserId){
-		nomoreflag = false;
 		if(toUserId == 0 ){
 			return;
 		}
@@ -34,6 +34,9 @@
 		var common = new Common();
 		common.callAction(options,url,function(data){
 			$.each(data.chatDetails,function(index,detail){
+				if(index == 0){
+					payLoad = detail.payLoad;
+				}
 				appendChatDetail(detail,true);
 			})
 			$(window).scrollTop($(window).height());
@@ -73,6 +76,7 @@
 		}else{
 			$("#chat-detail-list").append(builder.toString());
 			adjustContainerHeight(getCurActPage());
+			payLoad = chatDetail.payLoad;
 			scrollTobottom();
 		}
 	}
@@ -87,7 +91,8 @@
 				chatId : chatId,
 				toUserId : toUserId,
 				fromUserId : userId,
-				content : recoverTag(content)
+				content : recoverTag(content),
+				payLoad : payLoad
 		}
 		$("#nv-chatbar .messages").val("").keyup();
 		var common = new Common();
@@ -97,7 +102,7 @@
 	}
 	
 	function loadchatRecord(chatId){
-		if(nomoreflag){
+		if(nomoreflag && pageNum > 0){
 			myAlert("没有更多聊天记录");
 			return;
 		}
