@@ -35,6 +35,7 @@ var operationList;
 var operationRecord;
 var hasChanged;
 var characterName='${playerInfo.characterName}';
+var isSp=${playerInfo.isSp};
 
 	function getOpreation(){
 		var common = new Common();
@@ -109,7 +110,7 @@ var characterName='${playerInfo.characterName}';
 		operationRecord.push({
 			operationId : operationId,
 			immediately : operationList[index].immediately == 1 ? true : false,
-			operator : characterName,
+			operator : isSp == 1 ? "sp" : "" + characterName,
 			operationStr : operationList[index].operationName
 		})
 		adjustContainerHeight(getCurActPage());
@@ -178,7 +179,7 @@ var characterName='${playerInfo.characterName}';
 		if(param.length < spanIndex+1 ) param.length = spanIndex+1;
 		param[spanIndex]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
 		operationRecord[index].param=param;
-		operationRecord[index].operator=characterName;
+		operationRecord[index].operator=isSp == 1 ? "sp" : "" + characterName;
 		operationRecord[index].operationStr=$(span).parents("td").text();
 		hasChanged=true;
 	}
