@@ -35,15 +35,14 @@ var operationList;
 var operationRecord;
 var hasChanged;
 var characterName='${playerInfo.characterName}';
-var isSp=${playerInfo.isSp};
+var isSp='${playerInfo.isSp}';
 
 	function getOpreation(){
 		var common = new Common();
 		var url=getRootPath() + "/game/getPlayerOpreation";
 		common.callAction(null, url, function(data){
 			operationList = data.operationList;
-			operationRecord = [];
-			hasChanged = false;
+			operationRecord = [];			
 			$("#cur-stage").text(operationList.length == 0 ? "当前"+data.curStage+"，暂无操作可提交" : "当前"+data.curStage+"，请提交你的操作：");			
 			$("#operation-list").empty();
 			$("#operation-record").empty();
@@ -63,6 +62,7 @@ var isSp=${playerInfo.isSp};
 					addOperation($("#operation-"+record.operationId),record.operationId);
 					var params = JSON.parse(record.param);
 					operationRecord[index].param=params;
+					operationRecord[index].operationStr=record.operationStr;
 					$.each($("#operation-record").find("tr").eq(index).find(".operation-param"),function(i,span){
 						var array = params[i].split(",")
 						$(span).text(array[array.length-1]);
@@ -75,7 +75,8 @@ var isSp=${playerInfo.isSp};
 							})
 						}
 					})			
-				}		
+				}	
+				hasChanged = false;
 			})							
 		})
 	}
@@ -110,7 +111,7 @@ var isSp=${playerInfo.isSp};
 		operationRecord.push({
 			operationId : operationId,
 			immediately : operationList[index].immediately == 1 ? true : false,
-			operator : isSp == 1 ? "sp" : "" + characterName,
+			operator : (isSp == 1 ? "sp" : "") + characterName,
 			operationStr : operationList[index].operationName
 		})
 		adjustContainerHeight(getCurActPage());
@@ -179,7 +180,7 @@ var isSp=${playerInfo.isSp};
 		if(param.length < spanIndex+1 ) param.length = spanIndex+1;
 		param[spanIndex]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
 		operationRecord[index].param=param;
-		operationRecord[index].operator=isSp == 1 ? "sp" : "" + characterName;
+		operationRecord[index].operator= (isSp == 1 ? "sp") : "" + characterName;
 		operationRecord[index].operationStr=$(span).parents("td").text();
 		hasChanged=true;
 	}

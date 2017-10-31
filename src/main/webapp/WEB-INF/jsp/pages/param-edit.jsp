@@ -23,7 +23,7 @@
 			if(param.length < spanIndex+1 ) param.length = spanIndex+1;
 			param[spanIndex]=content;
 			operationRecord[index].param=param;
-			operationRecord[index].operator=isSp == 1 ? "sp" : "" + characterName;
+			operationRecord[index].operator= (isSp == 1 ? "sp" : "") + characterName;
 			operationRecord[index].operationStr=$(span).parents("td").text();
 			$("#icon-arrow-2").click();
 			hasChanged=true;
