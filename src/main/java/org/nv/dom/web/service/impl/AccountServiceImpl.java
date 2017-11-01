@@ -37,9 +37,9 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 	
 	private String defaultAvatar = ConfigUtil.getBasicProperty("default.avatar");
 	
-	private String mailVerifyPath = "jsp" + File.separator + "account" + File.separator + "email-content.jsp";
+	private String mailVerifyPath = "WEB-INF/jsp" + File.separator + "account" + File.separator + "email-content.jsp";
 	
-	private String mailResetPath = "jsp" + File.separator + "account" + File.separator + "email-reset.jsp";
+	private String mailResetPath = "WEB-INF/jsp" + File.separator + "account" + File.separator + "email-reset.jsp";
 	
 	private String host = EncryptUtil.decryptDES(ConfigUtil.getMailProperty("mail.host"), EncryptUtil.KEY);
 	
