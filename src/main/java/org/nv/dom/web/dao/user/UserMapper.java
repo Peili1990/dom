@@ -1,6 +1,7 @@
 package org.nv.dom.web.dao.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.nv.dom.domain.message.OfflineMessage;
 import org.nv.dom.domain.message.chat.ChatDetail;
@@ -94,4 +95,10 @@ public interface UserMapper {
 	 */
 	
 	public int equipBadge(EquipBadgeDTO equipBadgeDTO);
+	
+	/**
+	 * <p>根据用户Id查询聊天会话信息</p>
+	 */
+	
+	public Optional<ChatInfo> getChatInfoByUserIdDaoOptional(long toUserId);
 }

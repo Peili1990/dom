@@ -96,6 +96,20 @@
 	
 	</select>
 	
+	<select id="getChatInfoByUserIdDaoOptional" parameterType="long" resultType="ChatInfo">
+	
+		SELECT 
+			du.id AS toUserId,
+			du.nickname AS toUserNickname,
+			du.avatar AS toUserAvatar,
+			du.motto AS toUserMotto
+		FROM
+			d_user du
+		WHERE
+			du.id = #{toUserId}		
+	
+	</select>
+	
 	<select id="getOfflineChatDao" parameterType="long" resultType="OfflineChat">
 	
 		SELECT 

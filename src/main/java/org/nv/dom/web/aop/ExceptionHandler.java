@@ -28,6 +28,7 @@ public class ExceptionHandler {
      */
     public Object handleException(ProceedingJoinPoint pjd, Throwable e) {  
     	NVException nvException;
+    	logger.error(e.getMessage(),e);
     	if (e instanceof NVException) {
     		nvException = (NVException)e;
         }else {
@@ -42,7 +43,7 @@ public class ExceptionHandler {
             }
             nvException = new NVException(-1, errorMsg);
         }
-    	logger.error(nvException.getMessage());
+
     	Map<String, Object> result = new HashMap<>();
     	result.put(PageParamType.BUSINESS_STATUS, -1);
     	result.put(PageParamType.BUSINESS_MESSAGE, nvException.getMessage());

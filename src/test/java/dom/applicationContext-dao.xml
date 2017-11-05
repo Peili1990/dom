@@ -85,7 +85,7 @@
 	<bean id="domSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		lazy-init="true">
 		<property name="dataSource" ref="domDataSource"></property>
-		<property name="configLocation" value="mybatis-config.xml" /> 
+		<property name="configLocation" value="classpath:mybatis-config.xml" /> 
 		<property name="typeAliasesPackage" value="org.nv.dom.domain,org.nv.dom.dto,
 		org.nv.dom.model"></property>
 	</bean>
@@ -103,9 +103,9 @@
 	
 	<aop:aspectj-autoproxy />
 	
-	<aop:config>
+	<aop:config proxy-target-class="true">
         <aop:pointcut id="service" expression="execution(* org.nv.dom.web..*.*(..))"/>
-        <aop:pointcut id="listenerCut" expression="execution(* org.nv.dom.web.dao..*.*(..))" />  
+        <aop:pointcut id="listenerCut" expression="execution(* org.apache.ibatis.binding..*.*(..))" />  
         <!--todo 这里需要修改确认是否是正确的切面-->
         <aop:aspect ref="exceptionAspect" order="0">
             <aop:around pointcut-ref="service" method="handle"/>

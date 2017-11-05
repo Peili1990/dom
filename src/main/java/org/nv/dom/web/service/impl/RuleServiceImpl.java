@@ -55,7 +55,6 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 		return result;
 	}
 	
-	@PostConstruct
 	public void storeRuleIntoRedis(){
 		try {
 			List<RuleRow> ruleRows = ruleMapper.getRuleRowContent();		
