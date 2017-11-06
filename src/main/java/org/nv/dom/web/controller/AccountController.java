@@ -41,9 +41,11 @@ public class AccountController extends BaseController {
 		Map<String, Object> result = accountService.loginAction(loginDTO);
 		if((int)result.get("status")==1){
 			User user = (User) result.get("user");
-			user.setPassword("");
-			request.getSession().setAttribute(PageParamType.user_in_session, user);
-			result.remove("user");
+			if(user != null){
+				user.setPassword("");
+				request.getSession().setAttribute(PageParamType.user_in_session, user);
+				result.remove("user");
+			}	
 		}
 		return result;
 	}
