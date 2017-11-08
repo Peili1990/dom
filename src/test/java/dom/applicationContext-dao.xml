@@ -99,20 +99,20 @@
 	<!-- 异常拦截 -->
 	<bean id="exceptionAspect" class="org.nv.dom.web.aop.ExceptionHandler" />
 	
-	<bean id="listener" class="org.nv.dom.web.aop.OptionalHandler"/> 
+<!-- 	<bean id="listener" class="org.nv.dom.web.aop.OptionalHandler"/>  -->
 	
 	<aop:aspectj-autoproxy />
 	
-	<aop:config proxy-target-class="true">
+	<aop:config>
         <aop:pointcut id="service" expression="execution(* org.nv.dom.web..*.*(..))"/>
-        <aop:pointcut id="listenerCut" expression="execution(* org.apache.ibatis.binding..*.*(..))" />  
+<!--         <aop:pointcut id="listenerCut" expression="execution(* org.apache.ibatis.binding..*.*(..))" />   -->
         <!--todo 这里需要修改确认是否是正确的切面-->
         <aop:aspect ref="exceptionAspect" order="0">
             <aop:around pointcut-ref="service" method="handle"/>
         </aop:aspect>
-        <aop:aspect id="myListener" ref="listener">    
-            <aop:around method="around" pointcut-ref="listenerCut"/>   
-        </aop:aspect> 
+<!--         <aop:aspect id="myListener" ref="listener">     -->
+<!--             <aop:around method="around" pointcut-ref="listenerCut"/>    -->
+<!--         </aop:aspect>  -->
     </aop:config>
 	
 	<!-- end -->

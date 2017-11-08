@@ -20,6 +20,7 @@ public class OptionalTest {
 	@Test
 	public void tryfunc(){
 		Optional<ChatInfo> info = userMapper.getChatInfoByUserIdDaoOptional(1);
+		System.out.println(info.get());
 	}
 
 }
