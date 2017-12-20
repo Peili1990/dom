@@ -123,5 +123,16 @@
 			dpor.form_id = df.id AND df.game_id = #{gameId}	
 	
 	</select>
+	
+	<select id="getPlayerStatusList" parameterType="Long" resultType="Long">
+	
+		SELECT
+			status_id
+		FROM
+			d_player_status
+		WHERE
+			player_id = #{playerId}
+	
+	</select>
 
 </mapper>

@@ -26,5 +26,7 @@ public interface PlayerMapper {
 	public int consumeUserCardDao(SelectCharacterDTO selectCharacterDTO); 
 	
 	public List<PlayerOperationRecord> getPlayerOperationRecord(long gameId);
+	
+	public List<Long> getPlayerStatusList(long playerId);
 
 }

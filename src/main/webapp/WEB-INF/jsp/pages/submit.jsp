@@ -180,7 +180,7 @@ var isSp='${playerInfo.isSp}';
 		if(param.length < spanIndex+1 ) param.length = spanIndex+1;
 		param[spanIndex]=$("#param_select option:selected").val()+","+$("#param_select option:selected").text();
 		operationRecord[index].param=param;
-		operationRecord[index].operator= (isSp == 1 ? "sp") : "" + characterName;
+		operationRecord[index].operator= (isSp == 1 ? "sp" : "") + characterName;
 		operationRecord[index].operationStr=$(span).parents("td").text();
 		hasChanged=true;
 	}
@@ -193,6 +193,11 @@ var isSp='${playerInfo.isSp}';
 		if(!hasChanged){
 			myInfo("操作未更改，无需提交！");
 			return;
+		}
+		for(record in operationRecord){
+			if(operationRecord[record].operationStr.indexOf("______")>0){
+				myAlert("操作未填写完整！");
+			}
 		}
 		var common = new Common();
 		var url = getRootPath() + "/game/submitOperation";

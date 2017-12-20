@@ -36,12 +36,8 @@ public class PlayerServiceImpl implements PlayerService {
 			PlayerInfo playerInfo = playerMapper.getPlayerInfo(userId);
 			if(playerInfo == null){
 				return null;
-			}else if(needHidden(playerInfo)){
-				playerInfo.setSign(NVTermConstant.UNKNOWN_SIGN);
-				playerInfo.setSignAvatar(NVTermConstant.UNKNOWN_SIGN_AVATAR);
-				playerInfo.setCamp(NVTermConstant.GOOD_CAMP);
-				playerInfo.setIdentityDesc(NVTermConstant.UNKNOWN_IDENTITY);
 			}
+			checkPlayerInfo(playerInfo);
 			if(PlayerStatus.INDENTITY_OBTAINED.getCode() == playerInfo.getStatus()){
 				ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
 				changeStatusDTO.setPlayerId(playerInfo.getPlayerId());
@@ -78,14 +74,20 @@ public class PlayerServiceImpl implements PlayerService {
 		return HttpClientUtil.doPostAndGetMap(ConfigUtil.getVersionConfigProperty("judger.server")+"/submitOperation", JSON.toJSONString(param));
 	}
 	
-	private boolean needHidden(PlayerInfo playerInfo){
-		Integer sign = playerInfo.getSign();
-		return (playerInfo.getCharacterId() == 42 
-					&& NVTermConstant.IS_SP.equals(playerInfo.getIsSp())
-					&& !(sign == 11 || sign == 12 || sign == 23)) || 
-			   (playerInfo.getCharacterId() == 54
-				    && playerMapper.getPlayerOperationRecord(playerInfo.getGameId())
-				    .stream().noneMatch(record -> record.getOperationId() == 235 && record.getPlayerId() == playerInfo.getPlayerId()));
+	private void checkPlayerInfo(PlayerInfo playerInfo){
+		List<Long> statusList = playerMapper.getPlayerStatusList(playerInfo.getPlayerId());
+		if(statusList.contains(4L)){
+			playerInfo.setIsMute(1);
+		}
+		if(statusList.contains(26L) || statusList.contains(27L)){
+			playerInfo.setIsLife(0);
+		}
+		if(statusList.contains(25L)){
+			playerInfo.setSign(NVTermConstant.UNKNOWN_SIGN);
+			playerInfo.setSignAvatar(NVTermConstant.UNKNOWN_SIGN_AVATAR);
+			playerInfo.setCamp(NVTermConstant.GOOD_CAMP);
+			playerInfo.setIdentityDesc(NVTermConstant.UNKNOWN_IDENTITY);
+		}
 	}
 
 	@Override
