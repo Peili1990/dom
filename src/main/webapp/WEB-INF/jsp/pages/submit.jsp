@@ -66,7 +66,7 @@ var isSp='${playerInfo.isSp}';
 					$.each($("#operation-record").find("tr").eq(index).find(".operation-param"),function(i,span){
 						var array = params[i].split(",")
 						$(span).text(array[array.length-1]);
-						if(operationList[listIndex].options && operationList[listIndex].options[array[0]-1].template != ""){
+						if(operationList[listIndex].options.length > 0 && operationList[listIndex].options[array[0]-1].template != ""){
 							$(span).parent().append("<span class='operation-option'>，"
 									+ buildblank(operationList[listIndex].operationId,operationList[listIndex].options[array[0]-1].template)+"</span>")
 							$.each($(span).parent().find(".operation-option").find(".operation-param"),function(j,optionSpan){
@@ -194,10 +194,9 @@ var isSp='${playerInfo.isSp}';
 			myInfo("操作未更改，无需提交！");
 			return;
 		}
-		for(record in operationRecord){
-			if(operationRecord[record].operationStr.indexOf("______")>0){
-				myAlert("操作未填写完整！");
-			}
+		if($("#operation-record")[0].innerText.indexOf("______")>0){
+			myAlert("操作未填写完整！");
+			return;
 		}
 		var common = new Common();
 		var url = getRootPath() + "/game/submitOperation";
