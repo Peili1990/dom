@@ -76,6 +76,9 @@ public class PlayerServiceImpl implements PlayerService {
 	
 	private void checkPlayerInfo(PlayerInfo playerInfo){
 		List<Long> statusList = playerMapper.getPlayerStatusList(playerInfo.getPlayerId());
+		if(statusList.contains(18L)){
+			playerInfo.setIsMute(2);
+		}
 		if(statusList.contains(4L)){
 			playerInfo.setIsMute(1);
 		}
