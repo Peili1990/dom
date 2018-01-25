@@ -4,5 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <plugins>
+        <plugin interceptor="org.nv.dom.plugin.LogRecordPlugin">
+        </plugin>
+    </plugins>
 
 </configuration>

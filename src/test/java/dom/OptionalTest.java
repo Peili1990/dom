@@ -1,10 +1,11 @@
 package dom;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nv.dom.domain.message.chat.ChatInfo;
+import org.nv.dom.dto.player.ChangeStatusDTO;
+import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,10 +18,20 @@ public class OptionalTest {
 	@Autowired
 	UserMapper userMapper;
 	
+	@Autowired
+	PlayerMapper PlayerMapper;
+	
+
+	
 	@Test
-	public void tryfunc(){
-		Optional<ChatInfo> info = userMapper.getChatInfoByUserIdDaoOptional(1);
-		System.out.println(info.get());
+	public void tryfunc1(){
+		ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
+		changeStatusDTO.setPlayerId(50);
+		changeStatusDTO.setStatus(9);
+		PlayerMapper.changePlayerStatus(changeStatusDTO);
+		
 	}
+	
+	
 
 }

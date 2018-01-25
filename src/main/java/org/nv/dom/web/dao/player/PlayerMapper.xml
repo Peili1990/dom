@@ -123,5 +123,21 @@
 			dpor.form_id = df.id AND df.game_id = #{gameId}	
 	
 	</select>
+	
+	<update id="updateTest">
+	
+		UPDATE
+			d_player dp
+		SET	
+			dp.status = 88
+		WHERE
+			id IN (
+			<foreach collection="list" item="item" separator="," >
+				#{item}
+			</foreach>)
+			AND id = #{playerId}
+			
+	
+	</update>
 
 </mapper>

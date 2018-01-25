@@ -2,6 +2,7 @@ package org.nv.dom.web.dao.player;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
@@ -26,5 +27,7 @@ public interface PlayerMapper {
 	public int consumeUserCardDao(SelectCharacterDTO selectCharacterDTO); 
 	
 	public List<PlayerOperationRecord> getPlayerOperationRecord(long gameId);
+	
+	public int updateTest(@Param("list")List<Long> playerIds,@Param("playerId")Long playerId);
 
 }
