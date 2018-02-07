@@ -15,5 +15,7 @@ public interface PlayerService {
 	public Map<String, Object> submitOpreation(List<SubmitOpreationDTO> submitOpreationDTO, long playerId, long gameId);
 	
 	public Map<String, Object> getPlayerReplaceSkin(long playerId);
+	
+	void test();
 
 }

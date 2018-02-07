@@ -33,7 +33,7 @@
 		SET
 			dp.status=#{status}
 		WHERE
-			dp.id=#{playerId}
+			dp.user_id=#{playerId}
 		
 	</update>
 	

@@ -23,7 +23,6 @@ private static final String JAVADATESTR = "java.util.Date";
 public static Map<String, Object> objectToMap(Object obj) throws IllegalAccessException {
     Map<String, Object> map = new HashMap<>();
     Class<?> clazz = obj.getClass();
-    System.out.println(clazz);
     for (Field field : clazz.getDeclaredFields()) {
         field.setAccessible(true);
         String fieldName = field.getName();

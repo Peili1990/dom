@@ -26,11 +26,13 @@ import org.apache.ibatis.session.Configuration;
 import org.nv.dom.util.ObjectUtil;
 import org.nv.dom.util.ReflectionUtil;
 
+import com.alibaba.fastjson.JSON;
+
 @Intercepts(@Signature(
         type = Executor.class,
         method = "update",
         args = {MappedStatement.class, Object.class}))
-public class LogRecordPlugin implements Interceptor{
+public class UpdateRecordPlugin implements Interceptor{
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {	
@@ -40,6 +42,7 @@ public class LogRecordPlugin implements Interceptor{
 		String tableName = resultSet.getMetaData().getTableName(1);	
 		String primaryKey = findPrimaryKey(con, resultSet);
 		Map<Long, Map<String, Object>> preModifiedData = buildMap(resultSet, primaryKey);
+		System.out.println(JSON.toJSONString(preModifiedData));
 		
 		Object object = invocation.proceed();	
 		
@@ -47,7 +50,10 @@ public class LogRecordPlugin implements Interceptor{
 		resultSet = con.prepareStatement(afterModifiedSql).executeQuery();	
 		Map<Long, Map<String, Object>> afterModifiedData = buildMap(resultSet, primaryKey);	
 		
-		List<ModifiedResult> modifiedResult = compareModifiedResult(preModifiedData, afterModifiedData);
+//		List<ModifiedResult> modifiedResult = compareModifiedResult(preModifiedData, afterModifiedData);
+		System.out.println(JSON.toJSONString(afterModifiedData));
+		
+		con.close();
 		
 		return object;
 	}

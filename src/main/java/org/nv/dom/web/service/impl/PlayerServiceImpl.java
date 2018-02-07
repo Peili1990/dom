@@ -18,6 +18,7 @@ import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSON;
@@ -98,6 +99,19 @@ public class PlayerServiceImpl implements PlayerService {
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取替代发言称呼成功");
 		return result;
+	}
+	
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public void test(){
+		
+		ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();
+		changeStatusDTO.setPlayerId(39);
+		changeStatusDTO.setStatus(7);
+		playerMapper.changePlayerStatus(changeStatusDTO);
+		
+		System.out.println(8/0);
+		
 	}
 	
 }
