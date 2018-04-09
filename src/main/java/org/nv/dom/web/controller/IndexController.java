@@ -1,5 +1,8 @@
 package org.nv.dom.web.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
@@ -14,11 +17,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ipr.search.api.dto.request.SearchDocumentsDTO;
+import com.ipr.search.api.dto.request.SolrQuery;
+import com.ipr.search.api.enums.Operation;
+import com.ipr.search.api.service.ISolrService;
+import com.zhubajie.common.dto.Request;
 
 
 @Controller
 public class IndexController extends BaseController {
+	
+	@Autowired
+	ISolrService solrService;
 	
 	@Autowired
 	UserService userService;
@@ -65,6 +79,26 @@ public class IndexController extends BaseController {
 		ModelAndView mav = new ModelAndView("pages/not-support");
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
+	}
+	
+	@RequestMapping(value = "/solr", method = RequestMethod.GET)
+	public ModelAndView solrIndexView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("pages/solr");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/solrSearch", method = RequestMethod.POST)
+	public Map<String,Object> solrSearch(@RequestParam("regUsername") String regUsername, HttpSession session){
+		SearchDocumentsDTO searchDocumentsDTO = new SearchDocumentsDTO("copyright");
+		searchDocumentsDTO.setQuery(new SolrQuery().equal(Operation.AND, "regUsername", regUsername));
+		Request<SearchDocumentsDTO> request = new Request<>();
+		request.setData(searchDocumentsDTO);
+		Map<String,Object> result = new HashMap<>();
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put("documents", solrService.searchDocuments(request));
+		return result;
 	}
 
 }

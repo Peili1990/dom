@@ -24,6 +24,8 @@
 	<context:annotation-config></context:annotation-config>
 
 	<context:spring-configured></context:spring-configured>
+	
+	<import resource="dubbo.xml" />
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">

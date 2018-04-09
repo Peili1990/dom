@@ -93,6 +93,8 @@
 			<mvc:exclude-mapping path="/register" />
 			<mvc:exclude-mapping path="/emailverify" />
 			<mvc:exclude-mapping path="/resetPassword" />
+			<mvc:exclude-mapping path="/solr" />
+			<mvc:exclude-mapping path="/solrSearch" />			
 			<mvc:exclude-mapping path="/account/**" />
 			<bean class="org.nv.dom.web.interceptors.LoginInterceptor">
 				<property name="sessionTimeoutHandle" ref="sessionTimeoutHandle" />

@@ -225,6 +225,7 @@ public class EncryptUtil {
 	}
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException {
+		System.out.println(string2MD5("123214214"));
 //		System.out.println(encryptDES("smtp.qq.com", KEY));
 //		System.out.println(encryptDES("noreply@rightoo.com", KEY));
 //		System.out.println(encryptDES("rt20130401", KEY));
