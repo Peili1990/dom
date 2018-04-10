@@ -12,6 +12,7 @@
 <!-- 				<p>反馈：死亡请留遗言反馈：死亡请留遗言反馈：死亡请留遗言反馈：死亡请留遗言反馈：死亡请留遗言</p> -->
 <!-- 			</div> -->
 <!-- 			<span class="badge badge-alert badge-rounded invisible">1</span> -->
+<!-- 			<span class="cross am-icon-close"></span> -->
 <!-- 		</div> -->
 <!-- 	</div> -->
 	
@@ -33,7 +34,17 @@
            	   	chatList.push(chatInfo.chatId);
            	   	setChatPosition(chatInfo,false);
            	})
-           	setRedspotOnChat();     			
+           	setRedspotOnChat();  
+           	$.each($("#chat-list .card"),function(index,card){
+           		$(card).longPress(function(){
+           			$(card).find(".cross").css({"opacity":"1"}).click(function(){
+           				deleteChat($(card));
+           				event.stopPropagation();
+           			});	
+           		},function(){
+           			$(card).find(".cross").delay(3000).animate({opacity:"0"}).unbind("click");
+           		})
+           	})
           })
 	}
 	
@@ -42,7 +53,7 @@
 		builder.appendFormat('<div class="card" id="{0}" onclick="pageSwitch({1},{2},0,1,{3})"><div class="card-body">',chatInfo.chatId,"'#pageA'","'#pageB'","'getChatDetail("+chatInfo.toUserId+")'");
 		builder.appendFormat('<img src="{0}{1}" class="am-comment-avatar avatar">',picServer,chatInfo.toUserAvatar);
 		builder.appendFormat('<div class="chat-content"><h3>{0}</h3><span>{1}</span></div>',chatInfo.toUserNickname,replaceEmoji(chatInfo.latestContent,emoji));
-		builder.append('<span class="badge badge-alert badge-rounded invisible"></span>');
+		builder.append('<span class="badge badge-alert badge-rounded invisible"></span><span class="cross am-icon-close"></span>');
 		builder.appendFormat('<input type="hidden" name="chat-id" value="{0}"></div></div>',chatInfo.chatId);
 		if(preAppend){
 			$("#chat-list").prepend(builder.toString());
@@ -64,5 +75,11 @@
 			}
 		})
 	}	
+	
+	function deleteChat(card){
+		myConfirm("确定删除会话吗？这会清空聊天记录",function(){
+			
+		});
+	}
 
 </script>
