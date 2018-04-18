@@ -35,15 +35,3 @@
 	top:10px;
 	left:5%;
 }
-
-.cross {
-	opacity: 0;
-	-webkit-transition: all .3s;
-    transition: all .3s;
-    cursor:pointer;
-    left: 10%;
-    top: -15px;
-    position: relative;
-}
-
-
