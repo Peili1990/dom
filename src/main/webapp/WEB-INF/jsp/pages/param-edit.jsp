@@ -16,7 +16,7 @@
 		$("#icon-finish").css({"display":"block"}).unbind("click").click(function(){
 			var content = recoverTag($("#param-content").val())
 			$(span).html(content == "" ? "______" : content);
-			var index = operationRecord.indexOfKey("operationId",operationId);
+			var index = $("#operation-record").find("tr").index($(span).parents("tr"));
 			var spanIndex = $(span).parents("td").find(".operation-param").index($(span));
 			var param = operationRecord[index].param;
 			if(param == null) param = new Array(spanIndex+1);
