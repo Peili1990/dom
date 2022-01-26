@@ -87,20 +87,20 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	public Map<String, Object> getCharacterListThree(GetCharacterListDTO getCharacterListDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Assert.isTrue(getCharacterListDTO.getPlayerId() > 0 || getCharacterListDTO.getGameId() > 0, "参数异常");
-			String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
+			String characterStr = redisGetHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 					String.valueOf(getCharacterListDTO.getPlayerId()));
 			List<NVCharacter> characters = new ArrayList<NVCharacter>();
 			if(StringUtil.isNullOrEmpty(characterStr)){
-				List<Integer> availableList = JSON.parseArray(redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
+				List<Integer> availableList = JSON.parseArray(redisGetHSet(RedisConstant.AVAILABLE_LIST, 
 						String.valueOf(getCharacterListDTO.getGameId())), Integer.class);
 				if(availableList != null && availableList.size() > 2){
 					Collections.shuffle(availableList);
 					List<Integer> availableListThree = availableList.subList(0, 3);
 					availableList = availableList.subList(3, availableList.size());
-					redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(getCharacterListDTO.getGameId()),
+					redisSetHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(getCharacterListDTO.getGameId()),
 							JSON.toJSONString(availableList));
 					characters = gameMapper.queryCharacterListThree(availableListThree);
-					redisClient.setHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(getCharacterListDTO.getPlayerId()), 
+					redisSetHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(getCharacterListDTO.getPlayerId()), 
 							JSON.toJSONString(characters));
 				}
 			} else {
@@ -132,18 +132,18 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 					gameMapper.queryGamePlayerNumDao(selectCharacterDTO.getGameId())));				
 		}
 		selectCharacterDTO.setIdentityDesc(IdentityCode.getMessageByCode(selectCharacterDTO.getSign()));
-		String characterStr = redisClient.getHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
+		String characterStr = redisGetHSet(RedisConstant.CHARACTER_SELECTING_LIST, 
 				String.valueOf(selectCharacterDTO.getPlayerId()));
 		if(StringUtil.isNullOrEmpty(characterStr)){
 			Assert.isTrue(gameMapper.queryCharacterAvailable(selectCharacterDTO) == 0, "该角色已被选择");
 		} else {
 			List<NVCharacter> characters = JSON.parseArray(characterStr, NVCharacter.class);
-			List<Integer> availableList = JSON.parseArray(redisClient.getHSet(RedisConstant.AVAILABLE_LIST, 
+			List<Integer> availableList = JSON.parseArray(redisGetHSet(RedisConstant.AVAILABLE_LIST, 
 						String.valueOf(selectCharacterDTO.getGameId())),Integer.class);
 			availableList.addAll(getCharacterList(characters, selectCharacterDTO.getCharacterId()));
-			redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(selectCharacterDTO.getGameId()),
+			redisSetHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(selectCharacterDTO.getGameId()),
 					JSON.toJSONString(availableList));
-			redisClient.delHSet(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
+			redisDelHset(RedisConstant.CHARACTER_SELECTING_LIST, String.valueOf(selectCharacterDTO.getPlayerId()));
 		}
 		gameMapper.selectCharacterDAO(selectCharacterDTO);
 		ChangeStatusDTO changeStatusDTO = new ChangeStatusDTO();

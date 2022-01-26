@@ -652,4 +652,8 @@ public class RedisClient {
 		return shardedJedis.decr(key);
 	}
 	
+	public void close() {
+		shardedJedis.close();
+	}
+	
 }

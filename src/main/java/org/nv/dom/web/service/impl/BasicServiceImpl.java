@@ -22,7 +22,7 @@ public class BasicServiceImpl implements BasicService {
 	
 	private int port = Integer.parseInt(ConfigUtil.getVersionConfigProperty("redis.port")); 
 
-	protected RedisClient redisClient = new RedisClient(host, port, name);
+	protected RedisClient redisClient;
 	
 	@Override
 	public Map<String, Object> getSessionUserService(HttpSession session) {
@@ -44,5 +44,44 @@ public class BasicServiceImpl implements BasicService {
 		result.put(PageParamType.base_url, CacheData.getBaseUrl());
 		return result;
 	}
+	
+	public String redisGet(String key) {
+		redisClient = new RedisClient(host, port, name);
+		String str = redisClient.get(key,"");
+		redisClient.close();
+		return str;
+	}
+	
+	public void redisSet(String key, String value) {
+		redisClient = new RedisClient(host, port, name);
+		redisClient.set(key, value);
+		redisClient.close();
+	}
+	
+	public void redisDel(String key) {
+		redisClient = new RedisClient(host, port, name);
+		redisClient.del(key);
+		redisClient.close();
+	}
+	
+	public String redisGetHSet(String domain, String key) {
+		redisClient = new RedisClient(host, port, name);
+		String str = redisClient.getHSet(domain, key);
+		redisClient.close();
+		return str;
+	}
+	
+	public void redisSetHSet(String domain, String key, String value) {
+		redisClient = new RedisClient(host, port, name);
+		redisClient.setHSet(domain, key, value);
+		redisClient.close();
+	}
+	
+	public void redisDelHset(String domain, String key) {
+		redisClient = new RedisClient(host, port, name);
+		redisClient.delHSet(domain, key);
+		redisClient.close();
+	}
+	
 
 }

@@ -130,7 +130,7 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 			result.put("email", email);
 			return result;
 		}
-		redisClient.set(email, 3600, RedisConstant.WAITING_TO_BE_VERIFY);
+		redisSet(email, RedisConstant.WAITING_TO_BE_VERIFY);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "邮箱验证成功");
 		result.put("email", email);
@@ -168,8 +168,8 @@ public class AccountServiceImpl extends BasicServiceImpl implements AccountServi
 			result.put(PageParamType.BUSINESS_MESSAGE, "密码修改成功");
 		} else {
 			Assert.isTrue(StringUtil.isEmail(pwdChangeDTO.getAccount()), "不可重置密码");
-			Assert.isTrue(redisClient.get(pwdChangeDTO.getAccount(), "").equals(RedisConstant.WAITING_TO_BE_VERIFY), "不可重置密码");
-			redisClient.del(pwdChangeDTO.getAccount());
+			Assert.isTrue(redisGet(pwdChangeDTO.getAccount()).equals(RedisConstant.WAITING_TO_BE_VERIFY), "不可重置密码");
+			redisDel(pwdChangeDTO.getAccount());
 			accountMapper.changePasswordDao(pwdChangeDTO);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "密码重置成功");

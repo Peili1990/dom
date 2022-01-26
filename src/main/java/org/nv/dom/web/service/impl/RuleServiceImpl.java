@@ -32,7 +32,7 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 	@Override
 	public Map<String, Object> getRuleContent(GetRuleContentDTO getRuleContentDTO) {
 		Map<String, Object> result = new HashMap<>();
-		String rule = redisClient.getHSet(RedisConstant.RULE_ROW+getRuleContentDTO.getRow(), RedisConstant.RULE_INDEX+getRuleContentDTO.getIndex());
+		String rule = redisGetHSet(RedisConstant.RULE_ROW+getRuleContentDTO.getRow(), RedisConstant.RULE_INDEX+getRuleContentDTO.getIndex());
 		if(StringUtil.isNullOrEmpty(rule)){
 			rule = ruleMapper.getRuleIndexContent(getRuleContentDTO);
 		}
@@ -45,7 +45,7 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 	@Override
 	public Map<String, Object> getRuleRow() {
 		Map<String, Object> result = new HashMap<>();
-		List<RuleRow> ruleRows = JSON.parseArray(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
+		List<RuleRow> ruleRows = JSON.parseArray(redisGet(RedisConstant.RULE_ROW_CONTENT), RuleRow.class);
 		if(ruleRows == null || ruleRows.isEmpty()){
 			ruleRows = ruleMapper.getRuleRowContent();
 		}
@@ -59,10 +59,10 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 	public void storeRuleIntoRedis(){
 		try {
 			List<RuleRow> ruleRows = ruleMapper.getRuleRowContent();		
-			redisClient.set(RedisConstant.RULE_ROW_CONTENT, JacksonJSONUtils.beanToJSON(ruleRows));			
+			redisSet(RedisConstant.RULE_ROW_CONTENT, JacksonJSONUtils.beanToJSON(ruleRows));			
 			List<RuleIndex> ruleIndexs = ruleMapper.getAllRuleIndexContent();			
 			for(RuleIndex rule : ruleIndexs){
-				redisClient.setHSet(RedisConstant.RULE_ROW+rule.getChapterId(), RedisConstant.RULE_INDEX+rule.getIndexId(), rule.getContent());
+				redisSetHSet(RedisConstant.RULE_ROW+rule.getChapterId(), RedisConstant.RULE_INDEX+rule.getIndexId(), rule.getContent());
 			}			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
